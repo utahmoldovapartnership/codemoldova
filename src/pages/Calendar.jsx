@@ -89,8 +89,8 @@ function isSameCalendarDate(a, b) {
 function CalendarViewToggle({ view, onViewChange }) {
   /** Segmented control: one track, mutually exclusive choices (clearer than two separate buttons). */
   const seg =
-    'min-h-9 flex-1 rounded-pill px-3 py-2 font-mono text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon sm:min-h-9 sm:px-4'
-  const segOn = 'bg-white/[0.12] text-primary shadow-[0_1px_0_rgba(0,0,0,0.35)]'
+    'relative z-10 min-h-9 rounded-pill px-3 py-2 font-mono text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon sm:min-h-9 sm:px-4'
+  const segOn = 'text-primary'
   const segOff = 'text-muted hover:text-primary'
 
   return (
@@ -99,8 +99,14 @@ function CalendarViewToggle({ view, onViewChange }) {
       <div
         role="tablist"
         aria-label="Choose how sessions are displayed"
-        className="inline-flex h-11 w-[min(100%,20rem)] shrink-0 rounded-pill border border-white/[0.12] bg-surface/70 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+        className="relative inline-grid h-11 w-[min(100%,20rem)] shrink-0 grid-cols-2 rounded-pill border border-white/[0.12] bg-surface/70 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
       >
+        <span
+          className={`pointer-events-none absolute inset-y-1 left-1 w-[calc(50%-0.25rem)] rounded-pill bg-white/[0.12] shadow-[0_1px_0_rgba(0,0,0,0.35)] transition-transform duration-300 ease-out motion-reduce:transition-none ${
+            view === 'grid' ? 'translate-x-full' : 'translate-x-0'
+          }`}
+          aria-hidden
+        />
         <button
           type="button"
           role="tab"

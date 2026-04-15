@@ -109,6 +109,10 @@ export default function Resources() {
   const baseId = useId()
   const activeConfig = TABS.find((t) => t.id === active) ?? TABS[0]
   const list = resources[active] ?? []
+  const activeIndex = Math.max(
+    0,
+    TABS.findIndex((t) => t.id === active),
+  )
 
   return (
     <PageChrome>
@@ -149,32 +153,39 @@ export default function Resources() {
       </div>
 
       <div className="mb-6 overflow-x-auto overscroll-x-contain pb-1 [-webkit-overflow-scrolling:touch]">
-        <div
-          className="flex min-w-0 gap-2 rounded-elem border border-white/[0.08] bg-surface/50 p-1.5 sm:inline-flex sm:flex-wrap"
-          role="tablist"
-          aria-label="Resource categories"
-        >
-          {TABS.map((tab) => {
-            const selected = active === tab.id
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                role="tab"
-                aria-selected={selected}
-                id={`${baseId}-tab-${tab.id}`}
-                aria-controls={`${baseId}-panel-${tab.id}`}
-                onClick={() => setActive(tab.id)}
-                className={`shrink-0 rounded-elem px-4 py-2.5 font-mono text-xs transition-colors sm:text-sm ${
-                  selected
-                    ? 'bg-white/[0.1] text-primary'
-                    : 'text-muted hover:bg-white/[0.05] hover:text-primary'
-                }`}
-              >
-                {tab.label}
-              </button>
-            )
-          })}
+        <div className="flex justify-center">
+          <div
+            className="relative inline-grid h-11 min-w-[34rem] grid-cols-5 rounded-pill border border-white/[0.12] bg-surface/70 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+            role="tablist"
+            aria-label="Resource categories"
+          >
+            <div className="pointer-events-none absolute inset-y-1 left-1 right-1">
+              <span
+                className="absolute inset-y-0 w-1/5 rounded-pill bg-white/[0.12] shadow-[0_1px_0_rgba(0,0,0,0.35)] transition-transform duration-300 ease-out motion-reduce:transition-none"
+                style={{ transform: `translateX(${activeIndex * 100}%)` }}
+                aria-hidden
+              />
+            </div>
+            {TABS.map((tab) => {
+              const selected = active === tab.id
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={selected}
+                  id={`${baseId}-tab-${tab.id}`}
+                  aria-controls={`${baseId}-panel-${tab.id}`}
+                  onClick={() => setActive(tab.id)}
+                  className={`relative z-10 min-h-9 rounded-pill px-3 py-2 font-mono text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon sm:text-sm ${
+                    selected ? 'text-primary' : 'text-muted hover:text-primary'
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              )
+            })}
+          </div>
         </div>
       </div>
 

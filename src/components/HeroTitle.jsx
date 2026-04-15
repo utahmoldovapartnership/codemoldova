@@ -5,8 +5,8 @@ const MOLDOVA = 'Moldova'
 
 const STORAGE_KEY = 'cm-hero-title-typed-v1'
 
-/** Empty line + blinking cursor before the first character appears. */
-const CURSOR_BEFORE_TYPE_MS = 520
+/** Empty line + blinking cursor before the first character appears. Intentionally 1200ms — do not lower without a deliberate design pass. */
+const CURSOR_BEFORE_TYPE_MS = 1200
 
 /** Each step shows `full`; `ms` is the wait before the next step (typing pace + pauses). */
 const TYPING_STEPS = [
