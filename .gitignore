@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local AI/context docs (keep local only)
+BUILD.md
+CLAUDE.md

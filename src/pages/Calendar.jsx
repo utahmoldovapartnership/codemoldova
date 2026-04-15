@@ -95,14 +95,14 @@ function CalendarViewToggle({ view, onViewChange }) {
 
   return (
     <div
-      className="mb-8 flex flex-col gap-2 sm:mb-10 sm:items-center"
+      className="mb-8 mx-auto flex w-full max-w-md flex-col items-center gap-2 sm:mb-10 sm:max-w-lg"
       role="group"
       aria-label="Choose how sessions are displayed"
     >
-      <p className="text-center font-mono text-[10px] uppercase tracking-wider text-muted sm:text-[11px]">
+      <p className="w-full text-center font-mono text-[10px] uppercase tracking-wider text-muted sm:text-[11px]">
         View
       </p>
-      <div className="flex w-full max-w-md gap-2 self-center">
+      <div className="flex w-full gap-2">
         <button
           type="button"
           aria-pressed={view === 'list'}
