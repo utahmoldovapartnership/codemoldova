@@ -87,34 +87,34 @@ function isSameCalendarDate(a, b) {
 }
 
 function CalendarViewToggle({ view, onViewChange }) {
-  const btn =
-    'min-h-11 flex-1 rounded-elem border px-3 py-2.5 font-mono text-sm transition-colors sm:min-h-0 sm:flex-none sm:px-5'
-  const active = 'border-white/[0.18] bg-white/[0.08] text-primary'
-  const idle =
-    'border-white/[0.08] bg-surface text-muted hover:border-white/[0.12] hover:text-primary active:bg-surface2'
+  /** Segmented control: one track, mutually exclusive choices (clearer than two separate buttons). */
+  const seg =
+    'min-h-9 flex-1 rounded-pill px-3 py-2 font-mono text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon sm:min-h-9 sm:px-4'
+  const segOn = 'bg-white/[0.12] text-primary shadow-[0_1px_0_rgba(0,0,0,0.35)]'
+  const segOff = 'text-muted hover:text-primary'
 
   return (
-    <div
-      className="mb-8 mx-auto flex w-full max-w-md flex-col items-center gap-2 sm:mb-10 sm:max-w-lg"
-      role="group"
-      aria-label="Choose how sessions are displayed"
-    >
-      <p className="w-full text-center font-mono text-[10px] uppercase tracking-wider text-muted sm:text-[11px]">
-        View
-      </p>
-      <div className="flex w-full gap-2">
+    <div className="hero-in hero-in-5 mb-8 flex w-full flex-col items-center gap-2.5 sm:mb-10">
+      <p className="font-mono text-[10px] uppercase tracking-wider text-muted sm:text-[11px]">View</p>
+      <div
+        role="tablist"
+        aria-label="Choose how sessions are displayed"
+        className="inline-flex h-11 w-[min(100%,20rem)] shrink-0 rounded-pill border border-white/[0.12] bg-surface/70 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+      >
         <button
           type="button"
-          aria-pressed={view === 'list'}
-          className={`${btn} ${view === 'list' ? active : idle}`}
+          role="tab"
+          aria-selected={view === 'list'}
+          className={`${seg} ${view === 'list' ? segOn : segOff}`}
           onClick={() => onViewChange('list')}
         >
           List
         </button>
         <button
           type="button"
-          aria-pressed={view === 'grid'}
-          className={`${btn} ${view === 'grid' ? active : idle}`}
+          role="tab"
+          aria-selected={view === 'grid'}
+          className={`${seg} ${view === 'grid' ? segOn : segOff}`}
           onClick={() => onViewChange('grid')}
         >
           Month
