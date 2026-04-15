@@ -1,7 +1,7 @@
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import PageChrome from '../components/PageChrome.jsx'
 import { getSessionByWeekAndDay } from '../data/curriculum'
-import { getAdjacentSessions } from '../data/schedule'
+import { getAdjacentSessions, sessions } from '../data/schedule'
 import LessonModule from '../components/LessonModule'
 import ThursdayChallenges from '../components/ThursdayChallenges'
 
@@ -78,6 +78,7 @@ function LessonNotFound() {
 }
 
 export default function Lesson() {
+  const navigate = useNavigate()
   const { week, day } = useParams()
   const dayKey = day?.toLowerCase()
   const weekNum = Number(week)
@@ -97,42 +98,107 @@ export default function Lesson() {
 
   const meta = DAY_META[dayKey]
   const isThu = dayKey === 'thu'
+  const weekOptions = Array.from(new Set(sessions.map((lesson) => lesson.week)))
+  const dayOptions = sessions.filter((lesson) => lesson.week === weekNum)
+
+  const handleWeekChange = (e) => {
+    const selectedWeek = Number(e.target.value)
+    if (!Number.isFinite(selectedWeek)) return
+
+    const sameDayInSelectedWeek = sessions.find((lesson) => lesson.week === selectedWeek && lesson.day === dayKey)
+    const fallbackDay = sessions.find((lesson) => lesson.week === selectedWeek)?.day
+    const nextDay = sameDayInSelectedWeek?.day || fallbackDay
+
+    if (nextDay) {
+      navigate(`/lesson/${selectedWeek}/${nextDay}`)
+    }
+  }
+
+  const handleDayChange = (e) => {
+    const selectedDay = e.target.value
+    if (!selectedDay) return
+    navigate(`/lesson/${weekNum}/${selectedDay}`)
+  }
 
   return (
     <PageChrome>
       <article className="layout-article">
         <nav className="hero-in hero-in-1 mb-8 font-mono text-[12px] text-muted sm:text-[13px]" aria-label="Breadcrumb">
-        <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
-          <li>
-            <Link to="/" className="text-muted transition-colors hover:text-primary">
-              Home
-            </Link>
-          </li>
-          <li aria-hidden className="text-white/25">
-            /
-          </li>
-          <li>
-            <Link to="/roadmap" className="text-muted transition-colors hover:text-primary">
-              Roadmap
-            </Link>
-          </li>
-          <li aria-hidden className="text-white/25">
-            /
-          </li>
-          <li>
-            <Link to="/calendar" className="text-muted transition-colors hover:text-primary">
-              Calendar
-            </Link>
-          </li>
-          <li aria-hidden className="text-white/25">
-            /
-          </li>
-          <li className="text-primary">Week {weekNum}</li>
-          <li aria-hidden className="text-white/25">
-            /
-          </li>
-          <li className="text-primary">{meta.label}</li>
-        </ol>
+          <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <li>
+              <Link to="/" className="text-muted transition-colors hover:text-primary">
+                Home
+              </Link>
+            </li>
+            <li aria-hidden className="text-white/25">
+              /
+            </li>
+            <li>
+              <Link to="/roadmap" className="text-muted transition-colors hover:text-primary">
+                Roadmap
+              </Link>
+            </li>
+            <li aria-hidden className="text-white/25">
+              /
+            </li>
+            <li>
+              <Link to="/calendar" className="text-muted transition-colors hover:text-primary">
+                Calendar
+              </Link>
+            </li>
+            <li aria-hidden className="text-white/25">
+              /
+            </li>
+            <li>
+              <label htmlFor="lesson-week-jump" className="sr-only">
+                Jump to week
+              </label>
+              <span className="relative inline-flex items-center text-primary">
+                <span>{`Week ${weekNum}`}</span>
+                <span aria-hidden className="ml-1 text-[11px] text-muted">
+                  ▾
+                </span>
+                <select
+                  id="lesson-week-jump"
+                  value={weekNum}
+                  onChange={handleWeekChange}
+                  className="absolute inset-0 cursor-pointer appearance-none bg-transparent opacity-0"
+                >
+                  {weekOptions.map((week) => (
+                    <option key={week} value={week}>
+                      Week {week}
+                    </option>
+                  ))}
+                </select>
+              </span>
+            </li>
+            <li aria-hidden className="text-white/25">
+              /
+            </li>
+            <li>
+              <label htmlFor="lesson-day-jump" className="sr-only">
+                Jump to day
+              </label>
+              <span className="relative inline-flex items-center text-primary">
+                <span>{meta.label}</span>
+                <span aria-hidden className="ml-1 text-[11px] text-muted">
+                  ▾
+                </span>
+                <select
+                  id="lesson-day-jump"
+                  value={dayKey}
+                  onChange={handleDayChange}
+                  className="absolute inset-0 cursor-pointer appearance-none bg-transparent opacity-0"
+                >
+                  {dayOptions.map((lesson) => (
+                    <option key={lesson.day} value={lesson.day}>
+                      {DAY_META[lesson.day]?.label ?? lesson.day}
+                    </option>
+                  ))}
+                </select>
+              </span>
+            </li>
+          </ol>
         </nav>
 
         <header className="border-b border-white/[0.08] pb-8">
