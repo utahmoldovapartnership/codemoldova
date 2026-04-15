@@ -152,8 +152,26 @@ export default function Resources() {
         <p className="mt-1 text-sm text-muted">Pick a tab to filter the list.</p>
       </div>
 
-      <div className="mb-6 overflow-x-auto overscroll-x-contain pb-1 [-webkit-overflow-scrolling:touch]">
-        <div className="flex justify-center">
+      <div className="mb-6">
+        <div className="sm:hidden">
+          <label htmlFor={`${baseId}-topic-select`} className="sr-only">
+            Choose resource category
+          </label>
+          <select
+            id={`${baseId}-topic-select`}
+            value={active}
+            onChange={(e) => setActive(e.target.value)}
+            className="w-full rounded-elem border border-white/[0.14] bg-surface px-3 py-2.5 font-mono text-sm text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon"
+          >
+            {TABS.map((tab) => (
+              <option key={tab.id} value={tab.id}>
+                {tab.label}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="hidden sm:flex sm:justify-center">
           <div
             className="relative inline-grid h-11 min-w-[34rem] grid-cols-5 rounded-pill border border-white/[0.12] bg-surface/70 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
             role="tablist"
