@@ -1,63 +1,16 @@
-# CodeMoldova 2025
+# React + Vite
 
-A free, hands-on programming course running May–July 2025 in Moldova. Open to everyone — no experience needed.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## What this repo is
+Currently, two official plugins are available:
 
-This is the course website: a single `index.html` file that students can visit to see the weekly roadmap, click into each session, and find links and resources. It's deployed on Vercel and auto-updates whenever this file changes.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## Course structure
+## React Compiler
 
-8 weeks · 3 sessions per week · 1 hour each
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-| Day | Focus |
-|---|---|
-| Monday | Teach & Learn — new concepts, live demos |
-| Wednesday | AI Exploration — play with AI tools, understand what they can and can't do |
-| Thursday | Build Together — hands-on project work |
+## Expanding the ESLint configuration
 
-### Phases
-
-- **Phase 1 (Weeks 1–2)** — Foundations: Python basics, terminal, logic & loops
-- **Phase 2 (Weeks 3–4)** — Python Projects: data structures, APIs, AI-powered scripts
-- **Phase 3 (Weeks 5–6)** — Web Development: HTML, CSS, JavaScript, GitHub, Vercel
-- **Phase 4 (Weeks 7–8)** — Final Project: demo day, deployment, portfolios
-
-## How to update the site
-
-### Add an announcement or resource
-
-Edit the `announcements-grid` section near the bottom of `index.html`. Copy an existing card block and change the text:
-
-```html
-<div class="announcement-card">
-  <div class="ann-date">Week 3</div>
-  <div class="ann-tag">Resource</div>
-  <div class="ann-title">Your title here</div>
-  <div class="ann-body">A short description of what this is.</div>
-  <a class="ann-link" href="https://..." target="_blank">Link text →</a>
-</div>
-```
-
-Tag options: default (green), `tool` (yellow), `reading` (purple)
-
-### Update session content
-
-Each week's content lives in the `phases` array in the `<script>` section of `index.html`. Find the week and day you want to edit and update the `title`, `desc`, `points`, or `resources` fields.
-
-### Deploy changes
-
-Just commit and push to this repo — Vercel redeploys automatically within ~60 seconds.
-
-## Tools students will use
-
-- Python 3.12 — [python.org/downloads](https://www.python.org/downloads/)
-- VS Code — [code.visualstudio.com](https://code.visualstudio.com/)
-- GitHub — [github.com](https://github.com)
-- Vercel — [vercel.com](https://vercel.com)
-- Figma — [figma.com](https://figma.com)
-- Claude — [claude.ai](https://claude.ai)
-
-## About
-
-This course is organized as a nonprofit initiative. Students find us through Facebook. It's free, always has been, and always will be.
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.

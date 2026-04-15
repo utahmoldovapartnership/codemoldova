@@ -1,0 +1,211 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: #0d0f14;
+    color: theme('colors.primary');
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+}
+
+@layer components {
+  /**
+   * Site layout system — one horizontal gutter + max width everywhere (nav, main, footer).
+   * Mobile: 16px · sm+: 20px · max content 72rem (max-w-6xl).
+   */
+  .layout-shell {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-5;
+  }
+
+  /** Full route pages: Calendar, Resources, Roadmap */
+  .layout-page {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-5 py-10 sm:py-14;
+  }
+
+  /** Stacked sections on Home (and similar marketing blocks) */
+  .layout-section {
+    @apply mx-auto w-full max-w-6xl px-4 sm:px-5 py-12 sm:py-16;
+  }
+
+  /** Lesson page — same content width as Roadmap, Calendar, Resources */
+  .layout-article {
+    @apply mx-auto w-full max-w-6xl px-4 py-10 pb-14 sm:px-5 sm:py-12 sm:pb-16;
+  }
+
+  /** Page intro headings (max-w-3xl prose column aligned with shell) */
+  .layout-prose-heading {
+    @apply mb-8 max-w-3xl sm:mb-10;
+  }
+
+  /** Horizontal padding only (e.g. hero) — matches shell gutter without max-width */
+  .layout-gutter {
+    @apply px-4 sm:px-5;
+  }
+
+  /** Home hero — soft blue radial at top; drift animation uses transform on this layer */
+  .hero-top-glow {
+    background: radial-gradient(
+      ellipse 130% 48% at 50% -12%,
+      rgba(79, 124, 255, 0.09) 0%,
+      transparent 48%
+    );
+  }
+}
+
+@keyframes hero-glow-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  25% {
+    transform: translate3d(2.5%, 1.5%, 0);
+  }
+  50% {
+    transform: translate3d(-2%, 2.5%, 0);
+  }
+  75% {
+    transform: translate3d(-3%, -1%, 0);
+  }
+}
+
+@keyframes arrow-bob {
+  0%,
+  100% {
+    transform: translateY(2px);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+}
+
+@keyframes arrow-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.88);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.12);
+  }
+}
+
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hero-cursor-blink {
+  0%,
+  40% {
+    opacity: 1;
+  }
+  50%,
+  90% {
+    opacity: 0.18;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-arrow-bob {
+    animation: none;
+  }
+  .animate-glow-pulse {
+    animation: none;
+  }
+  .animate-hero-cursor-blink {
+    animation: none;
+  }
+  .animate-hero-glow-drift {
+    animation: none;
+  }
+  .hero-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+@layer utilities {
+  /** Staggered hero load-in — techy, minimal motion */
+  .hero-in {
+    animation: hero-fade-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .hero-in-1 {
+    animation-delay: 0.05s;
+  }
+  .hero-in-2 {
+    animation-delay: 0.11s;
+  }
+  .hero-in-3 {
+    animation-delay: 0.18s;
+  }
+  .hero-in-4 {
+    animation-delay: 0.25s;
+  }
+  .hero-in-5 {
+    animation-delay: 0.34s;
+  }
+
+  /** Scroll-driven sections (see Reveal.jsx) */
+  .reveal {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  .reveal.reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .animate-hero-glow-drift {
+    animation: hero-glow-drift 50s ease-in-out infinite;
+  }
+  .animate-arrow-bob {
+    animation: arrow-bob 8s ease-in-out infinite;
+  }
+  .animate-glow-pulse {
+    animation: arrow-glow-pulse 6.4s ease-in-out infinite;
+  }
+  .animate-hero-cursor-blink {
+    animation: hero-cursor-blink 0.95s ease-in-out infinite;
+  }
+  .border-subtle {
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+  .border-default {
+    border-color: rgba(255, 255, 255, 0.14);
+  }
+}
