@@ -1,7 +1,7 @@
 import CodeVibeBackground from './CodeVibeBackground.jsx'
 
 /**
- * Same ambient background as the home hero — dot grid, vignette, and drifting top glow —
+ * Same ambient background as the home hero (dot grid, vignette, drifting top glow)
  * so route pages feel consistent with how Home loads visually.
  */
 export default function PageChrome({ children }) {

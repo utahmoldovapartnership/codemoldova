@@ -1,5 +1,5 @@
 /**
- * Subtle dot grid with slow drift — keeps the hero readable with a soft vignette.
+ * Subtle dot grid with slow drift. Keeps the hero readable with a soft vignette.
  */
 export default function CodeVibeBackground() {
   return (

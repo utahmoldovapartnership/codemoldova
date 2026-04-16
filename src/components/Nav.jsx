@@ -9,12 +9,12 @@ const links = [
 ]
 
 const linkClass = ({ isActive }) =>
-  `rounded-elem px-4 py-2 font-mono text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon ${
+  `rounded-elem px-4 py-2.5 font-mono text-base transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon ${
     isActive ? 'bg-white/[0.08] text-primary' : 'text-muted hover:text-primary'
   }`
 
 const mobileLinkClass = ({ isActive }) =>
-  `flex min-h-11 items-center rounded-elem px-2 font-mono text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon ${
+  `flex min-h-12 items-center rounded-elem px-3 font-mono text-base transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon ${
     isActive ? 'bg-white/[0.06] text-primary' : 'text-muted active:bg-white/[0.04]'
   }`
 
@@ -39,12 +39,12 @@ export default function Nav() {
   return (
     <nav
       className="sticky top-0 z-50 border-b border-white/[0.08] bg-surface/90 pt-[env(safe-area-inset-top,0px)] backdrop-blur"
-      aria-label="Primary"
+      aria-label="Main menu"
     >
-      <div className="layout-shell flex items-center justify-between gap-3 py-3 sm:py-4">
+      <div className="layout-shell flex items-center justify-between gap-3 py-3.5 sm:py-5">
         <NavLink
           to="/"
-          className="flex h-11 min-w-0 shrink items-center font-display text-lg font-extrabold leading-[1.08] tracking-tight text-primary focus-visible:rounded-elem focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon sm:text-xl"
+          className="flex h-12 min-w-0 shrink items-center font-display text-xl font-extrabold leading-[1.08] tracking-tight text-primary focus-visible:rounded-elem focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon sm:text-2xl"
           onClick={() => setOpen(false)}
         >
           Code<span className="text-mon">Moldova</span>
@@ -86,7 +86,7 @@ export default function Nav() {
           id={menuId}
           className="absolute left-0 right-0 top-full z-[60] max-h-[min(70vh,24rem)] overflow-y-auto overscroll-contain border-b border-white/[0.12] bg-surface/95 px-4 py-2 shadow-lg shadow-black/25 backdrop-blur sm:hidden"
           role="navigation"
-          aria-label="Mobile"
+          aria-label="Pages"
         >
           {links.map(({ to, label }) => (
             <NavLink

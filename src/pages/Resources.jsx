@@ -6,27 +6,27 @@ const TABS = [
   {
     id: 'python',
     label: 'Python',
-    description: 'Language basics, docs, and practice — weeks 1–4 focus here most.',
+    description: 'Basics of the language, official docs, and practice sites. Weeks 1 to 4 use this the most.',
   },
   {
     id: 'web',
     label: 'Web dev',
-    description: 'HTML, CSS, JavaScript, design tools, and hosting when we build for the browser.',
+    description: 'HTML, CSS, JavaScript, simple design tools, and how to put a site online.',
   },
   {
     id: 'ai',
     label: 'AI tools',
-    description: 'Assistants and APIs for Wednesday labs and AI-powered scripts.',
+    description: 'Chat bots and APIs for Wednesday class and for small scripts with AI.',
   },
   {
     id: 'terminal',
     label: 'Terminal & Git',
-    description: 'Command line, version control, and a few APIs you’ll touch in projects.',
+    description: 'The command line, Git, GitHub, and a few APIs you may use in projects.',
   },
   {
     id: 'extras',
     label: 'Extras',
-    description: 'Databases, SQL practice, CS breadth, and polish for your portfolio.',
+    description: 'Databases, SQL practice, wider computer science topics, and ideas for your portfolio.',
   },
 ]
 
@@ -64,17 +64,17 @@ function ResourceCard({ item }) {
         href={item.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="group flex min-h-[44px] flex-col rounded-card border border-white/[0.08] bg-surface/60 p-4 transition-colors hover:border-white/[0.16] hover:bg-surface2/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon active:bg-surface2"
+        className="group flex min-h-[44px] flex-col rounded-card border border-white/[0.08] bg-surface/60 p-5 transition-colors hover:border-white/[0.16] hover:bg-surface2/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon active:bg-surface2 sm:p-6"
       >
         <div className="flex flex-wrap items-start justify-between gap-2">
-          <h3 className="font-display text-base font-bold leading-snug text-primary group-hover:text-primary sm:text-[17px]">
+          <h3 className="font-display text-lg font-bold leading-snug text-primary group-hover:text-primary sm:text-xl">
             {item.title}
           </h3>
           <ExternalLinkIcon />
         </div>
-        <p className="mt-2 flex-1 text-pretty text-sm leading-relaxed text-muted">{item.desc}</p>
+        <p className="mt-3 flex-1 text-pretty text-base leading-relaxed text-muted">{item.desc}</p>
         <span
-          className={`mt-3 inline-flex w-fit rounded-pill border px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-wider ${tagClass}`}
+          className={`mt-4 inline-flex w-fit rounded-pill border px-2.5 py-1 font-mono text-[11px] uppercase tracking-wider ${tagClass}`}
         >
           {item.tag}
         </span>
@@ -91,13 +91,13 @@ function StartHereCard({ item }) {
         href={item.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex min-h-[52px] flex-col rounded-card border border-mon/25 bg-mon/[0.06] p-4 transition-colors hover:border-mon/40 hover:bg-mon/[0.1] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon active:bg-mon/[0.12]"
+        className="flex min-h-[52px] flex-col rounded-card border border-mon/25 bg-mon/[0.06] p-5 transition-colors hover:border-mon/40 hover:bg-mon/[0.1] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon active:bg-mon/[0.12] sm:p-6"
       >
         <div className="flex items-start justify-between gap-2">
-          <h3 className="font-display text-base font-bold text-primary">{item.title}</h3>
+          <h3 className="font-display text-lg font-bold text-primary">{item.title}</h3>
           <ExternalLinkIcon />
         </div>
-        <p className="mt-1.5 text-sm leading-relaxed text-muted">{item.desc}</p>
+        <p className="mt-2 text-base leading-relaxed text-muted">{item.desc}</p>
         <span className="sr-only"> (opens in a new tab)</span>
       </a>
     </li>
@@ -118,50 +118,50 @@ export default function Resources() {
     <PageChrome>
       <div className="layout-page">
         <header className="layout-prose-heading">
-          <p className="hero-in hero-in-1 font-mono text-[11px] uppercase tracking-widest text-muted">Library</p>
-          <h1 className="hero-in hero-in-2 mt-2 font-display text-[clamp(1.75rem,4.5vw,2.35rem)] font-extrabold text-primary">
+          <p className="hero-in hero-in-1 font-mono text-xs uppercase tracking-widest text-muted">Library</p>
+          <h1 className="hero-in hero-in-2 mt-2 font-display text-[clamp(1.85rem,4.5vw,2.5rem)] font-extrabold leading-tight text-primary">
             Course resources
           </h1>
-          <p className="hero-in hero-in-3 mt-4 text-pretty text-sm leading-relaxed text-muted sm:text-[15px]">
-            One place for links we mention in class and extras worth bookmarking.{' '}
-            <span className="text-primary/95">Nothing here is required homework</span> — use what helps you ship projects
-            and understand the ideas. In class we’ll always say what matters for that week.
+          <p className="hero-in hero-in-3 mt-5 max-w-2xl text-pretty text-base leading-relaxed text-muted">
+            Links we use in class and a few extra links to save.{' '}
+            <span className="text-primary/95">You do not have to read everything here.</span> Use what helps you build
+            projects and understand the lesson. Each week in class we say what is important for that week.
           </p>
-          <p className="hero-in hero-in-4 mt-3 text-pretty text-sm text-muted/90">
-            <span className="font-mono text-[11px] text-muted">Tip:</span> Each link title says where it goes so it still
-            makes sense out of context (good for bookmarks and screen readers).
+          <p className="hero-in hero-in-4 mt-4 max-w-2xl text-pretty text-base text-muted/90">
+            <span className="font-mono text-xs text-muted">Tip:</span> Each link title tells you where the link goes.
+            That helps when you save a bookmark or use a screen reader.
           </p>
         </header>
 
-      <section className="mb-10 rounded-card border border-white/[0.1] bg-surface/40 p-5 sm:p-6" aria-labelledby="start-heading">
-        <h2 id="start-heading" className="font-display text-lg font-bold text-primary sm:text-xl">
-          Start here (before Week 1)
+      <section className="mb-12 rounded-card border border-white/[0.1] bg-surface/40 p-6 sm:p-8" aria-labelledby="start-heading">
+        <h2 id="start-heading" className="font-display text-xl font-bold text-primary sm:text-2xl">
+          Before week 1: install these
         </h2>
-        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
-          Install these once; you’ll use them all course long. Takes about 20–30 minutes total.
+        <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted">
+          Install each tool one time. You will use them all course long. Plan about 20 to 30 minutes in total.
         </p>
-        <ul className="mt-5 grid gap-3 sm:grid-cols-3">
+        <ul className="mt-6 grid gap-4 sm:grid-cols-3">
           {startHere.map((item) => (
             <StartHereCard key={item.title} item={item} />
           ))}
         </ul>
       </section>
 
-      <div className="mb-4">
-        <h2 className="font-display text-lg font-bold text-primary sm:text-xl">Browse by topic</h2>
-        <p className="mt-1 text-sm text-muted">Pick a tab to filter the list.</p>
+      <div className="mb-6">
+        <h2 className="font-display text-xl font-bold text-primary sm:text-2xl">Browse by topic</h2>
+        <p className="mt-2 text-base text-muted">Pick a tab to change the list below.</p>
       </div>
 
-      <div className="mb-6">
+      <div className="mb-8">
         <div className="sm:hidden">
           <label htmlFor={`${baseId}-topic-select`} className="sr-only">
-            Choose resource category
+            Choose a topic
           </label>
           <select
             id={`${baseId}-topic-select`}
             value={active}
             onChange={(e) => setActive(e.target.value)}
-            className="w-full rounded-elem border border-white/[0.14] bg-surface px-3 py-2.5 font-mono text-sm text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon"
+            className="w-full rounded-elem border border-white/[0.14] bg-surface px-4 py-3 font-mono text-base text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon"
           >
             {TABS.map((tab) => (
               <option key={tab.id} value={tab.id}>
@@ -173,7 +173,7 @@ export default function Resources() {
 
         <div className="hidden sm:flex sm:justify-center">
           <div
-            className="relative inline-grid h-11 min-w-[34rem] grid-cols-5 rounded-pill border border-white/[0.12] bg-surface/70 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
+            className="relative inline-grid h-12 min-w-[34rem] grid-cols-5 rounded-pill border border-white/[0.12] bg-surface/70 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
             role="tablist"
             aria-label="Resource categories"
           >
@@ -195,7 +195,7 @@ export default function Resources() {
                   id={`${baseId}-tab-${tab.id}`}
                   aria-controls={`${baseId}-panel-${tab.id}`}
                   onClick={() => setActive(tab.id)}
-                  className={`relative z-10 min-h-9 rounded-pill px-3 py-2 font-mono text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon sm:text-sm ${
+                  className={`relative z-10 min-h-10 rounded-pill px-3 py-2 font-mono text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon sm:text-base ${
                     selected ? 'text-primary' : 'text-muted hover:text-primary'
                   }`}
                 >
@@ -212,16 +212,16 @@ export default function Resources() {
         id={`${baseId}-panel-${active}`}
         aria-labelledby={`${baseId}-tab-${active}`}
       >
-        <p className="mb-6 max-w-2xl text-sm leading-relaxed text-muted">{activeConfig.description}</p>
-        <ul className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+        <p className="mb-8 max-w-2xl text-base leading-relaxed text-muted">{activeConfig.description}</p>
+        <ul className="grid gap-4 sm:grid-cols-2 sm:gap-5">
           {list.map((item, i) => (
             <ResourceCard key={`${item.url}-${i}`} item={item} />
           ))}
         </ul>
       </div>
 
-      <p className="mx-auto mt-10 max-w-2xl text-pretty text-center text-sm text-muted sm:mt-12">
-        Spot a broken link? Tell Weston in class or via the cohort channel — we’ll fix it for everyone.
+      <p className="mx-auto mt-12 max-w-2xl text-pretty text-center text-base text-muted sm:mt-14">
+        If a link is broken, tell Weston in class or in Slack. We fix it for everyone.
       </p>
       </div>
     </PageChrome>

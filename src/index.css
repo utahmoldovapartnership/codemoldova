@@ -13,8 +13,8 @@
     background-color: #0d0f14;
     color: theme('colors.primary');
     font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 17px;
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: clip;
@@ -25,39 +25,39 @@
 
 @layer components {
   /**
-   * Site layout system — one horizontal gutter + max width everywhere (nav, main, footer).
-   * Mobile: 16px · sm+: 20px · max content 72rem (max-w-6xl).
+   * Site layout system. One horizontal gutter and max width everywhere (nav, main, footer).
+   * Mobile 16px, sm and up 20px, max content 72rem (max-w-6xl).
    */
   .layout-shell {
-    @apply mx-auto w-full max-w-6xl px-4 sm:px-5;
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-6;
   }
 
   /** Full route pages: Calendar, Resources, Roadmap */
   .layout-page {
-    @apply mx-auto w-full max-w-6xl px-4 sm:px-5 py-10 sm:py-14;
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-6 py-14 sm:py-20;
   }
 
   /** Stacked sections on Home (and similar marketing blocks) */
   .layout-section {
-    @apply mx-auto w-full max-w-6xl px-4 sm:px-5 py-12 sm:py-16;
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-6 py-16 sm:py-24;
   }
 
-  /** Lesson page — same content width as Roadmap, Calendar, Resources */
+  /** Lesson page: same content width as Roadmap, Calendar, Resources */
   .layout-article {
-    @apply mx-auto w-full max-w-6xl px-4 py-10 pb-14 sm:px-5 sm:py-12 sm:pb-16;
+    @apply mx-auto w-full max-w-6xl px-5 py-12 pb-16 sm:px-6 sm:py-16 sm:pb-20;
   }
 
-  /** Page intro headings (max-w-3xl prose column aligned with shell) */
+  /** Page intro: comfortable measure for titles and lead copy */
   .layout-prose-heading {
-    @apply mb-8 max-w-3xl sm:mb-10;
+    @apply mb-10 max-w-3xl sm:mb-12;
   }
 
-  /** Horizontal padding only (e.g. hero) — matches shell gutter without max-width */
+  /** Horizontal padding only (e.g. hero). Matches shell gutter without max-width */
   .layout-gutter {
-    @apply px-4 sm:px-5;
+    @apply px-5 sm:px-6;
   }
 
-  /** Home hero — soft blue radial at top; drift animation uses transform on this layer */
+  /** Home hero: soft blue radial at top; drift animation uses transform on this layer */
   .hero-top-glow {
     background: radial-gradient(
       ellipse 130% 48% at 50% -12%,
@@ -156,7 +156,7 @@
 }
 
 @layer utilities {
-  /** Staggered hero load-in — techy, minimal motion */
+  /** Staggered hero load-in: techy, minimal motion */
   .hero-in {
     animation: hero-fade-up 0.65s cubic-bezier(0.22, 1, 0.36, 1) both;
   }

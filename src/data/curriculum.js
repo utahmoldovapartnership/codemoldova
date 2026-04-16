@@ -9,54 +9,177 @@ export const phases = [
         mon: {
           title: "How computers think",
           date: "May 11",
-          desc: "We start from zero. You'll open a terminal for the first time, run Python, and make the computer say your name. By the end of class, you'll have written and run your first real program.",
+          desc: "Monday is taught live: a slide deck at the front (with demos and any clips embedded there), then hands-on time. This page is your cheat sheet and practice set—short reminders, copy-paste snippets, and Try it tasks you redo after class. It is not meant to replace being in the room.",
+          preview: "Slides + demos in class · site = backup + practice · terminal, REPL, variables, hello.py, intro card lab.",
+          slideDeck: {
+            label: "Week 1 · Day one slide deck",
+            url: "",
+            hint: "Paste your shared deck URL in curriculum.js (slideDeck.url) when it is ready. Until then, the link is announced in class and Slack.",
+          },
           steps: [
             {
-              title: "What is a terminal?",
-              content: "The terminal is a text-based way to talk to your computer. Instead of clicking, you type commands. It sounds old-fashioned, but every developer uses it every day.",
-              code: { lang: "bash", snippet: "python3 --version" },
-              task: "Open your terminal and type python3 --version. What version do you have?",
+              title: "Slides first, this page second",
+              timing: "With instructor",
+              content:
+                "During lecture, keep your eyes on the room and the deck. Open this tab in the background so you can:\n\n• Copy commands when the pace picks up.\n• Re-read a definition without rewinding a video.\n• Finish a Try it after we cut you loose for lab time.\n\nIf you try to read ahead while I am explaining something new, you will miss the why behind it.",
+              tips: [
+                "When you hear hands on keyboards from the front, that is your cue to use the next section on this page.",
+                "Raise your hand for environment issues (Python not found, wrong folder) before you spiral in search results.",
+              ],
+              task: "Bookmark /lesson/1/mon now so you can reopen it tonight without hunting the chat.",
             },
             {
-              title: "Your live coding playground",
-              content: "Type python3 in the terminal and press enter. You're now inside the Python REPL — a place where every line you type runs immediately. It's the fastest way to try things out.",
-              code: { lang: "bash", snippet: "python3\n>>> 2 + 2\n4" },
-              task: "Try some math in the REPL: 10 * 5, 100 / 4, 2 ** 8. What does ** do?",
+              title: "Practice · Prove Python from the shell",
+              timing: "Lab",
+              content:
+                "The slides walk through what a terminal is versus the Python app. When we pause for setup, confirm your machine answers. We standardize on python3 in class—if only python works, grab a mentor.",
+              links: [
+                { label: "Python downloads (official)", href: "https://www.python.org/downloads/" },
+                {
+                  label: "Invoking the interpreter (official docs)",
+                  href: "https://docs.python.org/3/tutorial/interpreter.html",
+                },
+              ],
+              code: { lang: "bash", snippet: "python3 --version\nwhich python3" },
+              tips: [
+                "Ctrl+C (Windows/Linux) or Control+C (macOS) cancels a stuck command.",
+                "Copy paths slowly—typos are the #1 first-day bug.",
+              ],
+              task: "Run python3 --version. Paste the output into Slack or your notes so mentors can spot odd versions quickly.",
             },
             {
-              title: "Variables: storing information",
-              content: "A variable is a label for a piece of data. You create one with a name, an equals sign, and a value. Python remembers it for the rest of your program.",
-              code: { lang: "python", snippet: 'name = "Maria"\nage = 20\ncity = "Chișinău"\nprint(name, age, city)' },
-              task: "Create variables for your name, age, and favorite food. Print them all on one line.",
+              title: "Practice · Folders you control",
+              timing: "Lab",
+              content:
+                "Slides introduce pwd, ls, cd, mkdir. Use the diagram below as the mental model we keep all year: you type a command, the shell runs a program, text comes back.",
+              images: [
+                {
+                  src: "/lesson/terminal-flow.svg",
+                  alt: "Diagram: command in, shell runs program, text output",
+                  caption: "When you are lost, ask: am I talking to the shell ($ or %) or to Python (>>> )?",
+                },
+              ],
+              tips: [
+                "Tab completes folder names after a few letters—use it.",
+                "Avoid spaces in folder names for this course; they work but add quoting pain.",
+              ],
+              task: "Create codemoldova-week1, cd into it, run pwd and ls. Stay in that folder for the rest of class builds.",
             },
             {
-              title: "print() and input()",
-              content: "print() sends text to the screen. input() pauses the program and waits for the user to type something. Together, they let your program have a conversation.",
-              code: { lang: "python", snippet: 'name = input("What is your name? ")\nprint("Hello,", name + "!")' },
-              task: "Ask the user for their name and their city, then print a greeting that uses both.",
+              title: "Practice · Python REPL experiments",
+              timing: "Lab",
+              content:
+                "Slides show how to enter and exit the REPL (python3 with no file). The REPL is for quick experiments; Thursday-sized programs live in .py files.",
+              code: { lang: "bash", snippet: "python3\n>>> 2 + 2\n4\n>>> exit()" },
+              tips: [
+                "If you see >>> you are inside Python—shell commands like cd will not work until you exit.",
+                "Power operator: ** raises to a power (example: 2 ** 8).",
+              ],
+              task: "In the REPL, estimate your age in days using *, +, and parentheses (rough guess is fine).",
             },
             {
-              title: "Your first real program",
-              content: "Let's put it all together. Save your code in a .py file and run it from the terminal. That's it — you're a programmer now.",
-              code: { lang: "python", snippet: '# hello.py\nname = input("What is your name? ")\nprint("Hello,", name + "!")\nprint("Welcome to CodeMoldova!")' },
-              task: "Save the code above as hello.py and run it with: python3 hello.py",
+              title: "Practice · Variables, text, and f-strings",
+              timing: "Lab",
+              content:
+                "Slides connect names to values and show how to build readable output. Variables use letters, digits, underscores; cannot start with a digit. f-strings stay our default style for combining text and values.",
+              code: {
+                lang: "python",
+                snippet:
+                  'name = "Maria"\nage = 20\nprint(name, age)\ncourse = "CodeMoldova"\nweek = 1\nprint(f"{course} — week {week}")',
+              },
+              task: "In the REPL, store your name, a snack you like, and a year that matters to you. print() them once, then print an f-string that mentions all three.",
+            },
+            {
+              title: "Practice · input() and print() together",
+              timing: "Lab",
+              content:
+                "Slides demo a tiny conversation: input() always returns text (a string), even when someone types digits. print() can take several comma-separated values and inserts spaces between them.",
+              code: {
+                lang: "python",
+                snippet:
+                  'name = input("What is your name? ")\ncity = input("What city are you joining from? ")\nprint("Hello,", name + "!")\nprint(f"Glad you are here from {city}.")',
+              },
+              tips: [
+                "Leave a space before the closing quote inside input(\"... \") so typing does not touch the prompt text.",
+              ],
+              task: "Ask for two fun facts, store them, then print one f-string sentence that uses both.",
+            },
+            {
+              title: "Practice · Read an error, fix it once",
+              timing: "Lab",
+              content:
+                "Slides stress that red text is information. The last line of a traceback names the problem; later in the course we read the whole stack. Today: NameError means Python never saw that name.",
+              code: { lang: "python", snippet: "print(hello)" },
+              tips: [
+                "Fix the snippet by quoting \"hello\" or defining hello = \"world\" above print.",
+                "Read tracebacks bottom-up when they grow longer.",
+              ],
+              task: "In the REPL, trigger print(hello) without defining hello, then fix it on the very next line. Note the fix you used.",
+            },
+            {
+              title: "Practice · Save hello.py and run it",
+              timing: "Lab",
+              content:
+                "Slides close the loop: editor → plain-text file on disk → python3 file.py from the same folder. Save inside codemoldova-week1 so paths stay short.",
+              images: [
+                {
+                  src: "/lesson/edit-save-run.svg",
+                  alt: "Edit hello.py, file on disk, run python3 hello.py",
+                  caption: "File not found? Run pwd and ls before you panic.",
+                },
+              ],
+              links: [{ label: "Download Visual Studio Code", href: "https://code.visualstudio.com/" }],
+              code: {
+                lang: "python",
+                snippet:
+                  '# hello.py\nname = input("What is your name? ")\nprint("Hello,", name + "!")\nprint("Welcome to CodeMoldova!")',
+              },
+              task: "Save the starter as hello.py, run python3 hello.py, answer the prompt, and confirm both printed lines show up.",
             },
           ],
-          homework: {
-            title: "Build a mini greeting program",
-            desc: "Write a Python program that asks for the user's name and age, then prints a personalized greeting.",
+          inClassChallenge: {
+            title: 'Build a "first week" intro card',
+            duration: "~18 min · solo or pairs",
+            intro:
+              "This matches the final build segment of the deck. Ship something another student can run without coaching. The win is: saves, runs, prints readable lines on the first try.",
             tasks: [
-              "Ask for the user's name with input()",
-              "Ask for their age with input()",
-              "Print a message that uses both (example: 'Hi Ana, you are 19 years old!')",
-              "Bonus: print how old they'll be in 10 years",
+              "Stay inside codemoldova-week1.",
+              "Create intro_card.py.",
+              "Ask for name, one hobby, and one reason they joined CodeMoldova (three input() prompts).",
+              "Use at least one f-string to print a four-line card: greeting, blank line, hobby summary, closing line that mentions Thursday build day.",
+              "Run python3 intro_card.py yourself, then swap with a partner and run theirs without editing their file.",
+            ],
+            shareOut:
+              "If time allows: pairs read the printed card aloud while the author stands by for crashes.",
+            stretch:
+              "Add a fifth line that asks for a weekly practice goal (text is fine) and echoes it back in an encouraging f-string.",
+          },
+          homework: {
+            title: "Polish your greeting program",
+            desc: "Extend hello.py (or greet_homework.py) using the same ideas from class and the deck. Bring questions to Slack before Wednesday.",
+            tasks: [
+              "Ask for name, city, and favorite hobby (three prompts).",
+              "Print at least two lines using f-strings that use those answers.",
+              "Mention which week of CodeMoldova we are on (hard-code week 1 or use a variable).",
+              "Bonus: ask how many hours they will practice this week and echo it in an f-string.",
+            ],
+          },
+          postClass: {
+            title: "Optional review (not part of lecture)",
+            desc: "Watch these only if you want extra context after class. Monday is led from the deck, not from these links.",
+            links: [
+              { label: "Crash Course Computer Science #1 (historical context)", href: "https://www.youtube.com/watch?v=O5nskjZ_GoI" },
+              { label: "Traversy Media — command line crash course (full walkthrough)", href: "https://www.youtube.com/watch?v=uwAqEzhyjtw" },
+              { label: "CS Dojo — Python variables for beginners", href: "https://www.youtube.com/watch?v=Z1Yd7upQsXY" },
             ],
           },
         },
+
         wed: {
           title: "What can AI actually do?",
           date: "May 13",
-          desc: "No lecture today — just exploration. We'll try out different AI tools together: image generators, text AI, code helpers. The goal is to build intuition for what AI is good at, what it gets wrong, and why that matters for you as someone learning to code.",
+          desc: "No lecture today, just exploration. We'll try out different AI tools together: image generators, text AI, code helpers. The goal is to build intuition for what AI is good at, what it gets wrong, and why that matters for you as someone learning to code.",
+          preview: "Hands-on with ChatGPT, Claude, and image tools: strengths, limits, and honest mistakes.",
           steps: [
             {
               title: "Try ChatGPT and Claude",
@@ -65,7 +188,7 @@ export const phases = [
             },
             {
               title: "Generate images with prompts",
-              content: "AI can generate images from text descriptions. The quality of your prompt matters a lot — vague prompts get generic results, specific prompts get interesting ones.",
+              content: "AI can generate images from text descriptions. The quality of your prompt matters a lot. Vague prompts get generic results, and specific prompts get interesting ones.",
               task: "Try an image generator. Write a prompt for a scene in Moldova. Then rewrite it with more detail. Notice the difference.",
             },
             {
@@ -89,7 +212,7 @@ export const phases = [
             desc: "Pick one AI tool (Claude, ChatGPT, or an image generator) and spend 15 minutes exploring it.",
             tasks: [
               "Ask it to explain something you've always been curious about",
-              "Ask it something you already know — does it get it right?",
+              "Ask it something you already know. Does it get it right?",
               "Find one answer where it seems confident but might be wrong",
               "Write down: what surprised you most?",
             ],
@@ -98,24 +221,25 @@ export const phases = [
         thu: {
           title: "Mad libs generator",
           date: "May 14",
-          desc: "Your first real build. We'll use everything from Monday — variables, input(), print() — to make an interactive story where the user fills in the blanks. Pair up if you want, go solo if you prefer.",
+          desc: "Your first real build. We'll use everything from Monday (variables, input(), print()) to make an interactive story where the user fills in the blanks. Pair up if you want, go solo if you prefer.",
+          preview: "A fill-in-the-blanks story using variables, input(), and print().",
           steps: [
             {
               title: "Plan your story",
-              content: "Before writing code, plan the story. What blanks will the user fill in? Pick a theme — adventure, food, sports, whatever's funny to your group.",
+              content: "Before writing code, plan the story. What blanks will the user fill in? Pick a theme: adventure, food, sports, whatever's funny to your group.",
               task: "Write out your story on paper with blanks. Mark each blank: [noun], [verb], [adjective], [name], etc.",
             },
             {
               title: "Collect input from the user",
-              content: "Use input() for each blank. Store each answer in its own variable. Don't reveal the story yet — the surprise is part of the fun.",
+              content: "Use input() for each blank. Store each answer in its own variable. Don't reveal the story yet. The surprise is part of the fun.",
               code: { lang: "python", snippet: 'noun = input("Give me a noun: ")\nverb = input("Give me a verb: ")\nadjective = input("Give me an adjective: ")' },
               task: "Write all your input() prompts and store the answers in well-named variables.",
             },
             {
               title: "Build the story string",
-              content: "Now combine the variables into the story. Use an f-string for the cleanest result — wrap the whole string in f'...' and put variable names inside {}.",
+              content: "Now combine the variables into the story. Use an f-string for the cleanest result: wrap the whole string in f'...' and put variable names inside {}.",
               code: { lang: "python", snippet: 'story = f"One day, {noun} decided to {verb} across the {adjective} field."\nprint(story)' },
-              task: "Write your story using an f-string. Test it — does it read right?",
+              task: "Write your story using an f-string. Test it. Does it read right?",
             },
             {
               title: "Run it, share it, laugh",
@@ -176,10 +300,11 @@ export const phases = [
         mon: {
           title: "Logic & loops",
           date: "May 18",
-          desc: "This is where programming gets interesting. We'll teach the computer to make decisions and repeat tasks. These two ideas — if/else and loops — are the core of almost every program ever written.",
+          desc: "This is where programming gets interesting. We'll teach the computer to make decisions and repeat tasks. These two ideas, if/else and loops, are the core of almost every program ever written.",
+          preview: "if/else, loops, and functions. How programs decide and repeat.",
           steps: [
             {
-              title: "if / elif / else — making decisions",
+              title: "if / elif / else: making decisions",
               content: "An if statement runs code only when a condition is true. You can chain conditions with elif (else if) and catch everything else with else.",
               code: { lang: "python", snippet: 'age = int(input("How old are you? "))\nif age >= 18:\n    print("You can vote!")\nelif age >= 16:\n    print("Almost there.")\nelse:\n    print("Not yet.")' },
               task: "Write an if/elif/else that checks a temperature: hot (>30), warm (15-30), cold (<15).",
@@ -191,13 +316,13 @@ export const phases = [
               task: "In the REPL, test all 6 comparison operators. What does each one return?",
             },
             {
-              title: "for loops — doing something N times",
+              title: "for loops: doing something N times",
               content: "A for loop repeats code a fixed number of times. range(5) gives you the numbers 0, 1, 2, 3, 4.",
               code: { lang: "python", snippet: 'for i in range(5):\n    print("Lap", i + 1)\n\n# Loop over a list\nfruits = ["apple", "banana", "cherry"]\nfor fruit in fruits:\n    print(fruit)' },
               task: "Write a for loop that prints the numbers 1 through 10. Then write one that prints them in reverse.",
             },
             {
-              title: "while loops — keep going until...",
+              title: "while loops: keep going until...",
               content: "A while loop runs as long as a condition is true. Use it when you don't know in advance how many times to repeat.",
               code: { lang: "python", snippet: 'count = 0\nwhile count < 5:\n    print("count is", count)\n    count += 1' },
               task: "Write a while loop that keeps asking the user to guess a secret word until they get it right.",
@@ -215,7 +340,7 @@ export const phases = [
             tasks: [
               "Use a for loop with range(1, 101)",
               "Use if/elif/else with the modulo operator %",
-              "Test your output — do 15, 30, 45 all say FizzBuzz?",
+              "Test your output. Do 15, 30, 45 all say FizzBuzz?",
               "Bonus: wrap it in a function called fizzbuzz(n) that works for any limit",
             ],
           },
@@ -223,7 +348,8 @@ export const phases = [
         wed: {
           title: "AI as your coding assistant",
           date: "May 20",
-          desc: "Today we learn to use AI as a tool, not a crutch. You'll paste broken code into Claude and ask it to explain the error. You'll ask it to write a function. You'll also see where it gives wrong answers — and why checking its work matters.",
+          desc: "Today we learn to use AI as a tool, not a crutch. You'll paste broken code into Claude and ask it to explain the error. You'll ask it to write a function. You'll also see where it gives wrong answers, and why checking its work matters.",
+          preview: "Use AI to debug and generate code, then verify what it outputs.",
           steps: [
             {
               title: "Paste an error into Claude",
@@ -238,7 +364,7 @@ export const phases = [
             {
               title: "Read and understand what it wrote",
               content: "Never just copy AI code without reading it. If you don't understand it, ask Claude to explain it line by line. You need to be able to debug it when it breaks.",
-              task: "Take the function Claude wrote and ask it to explain each line. Then modify one line yourself — does it still work?",
+              task: "Take the function Claude wrote and ask it to explain each line. Then modify one line yourself. Does it still work?",
             },
             {
               title: "Ask AI to explain code line by line",
@@ -257,7 +383,7 @@ export const phases = [
             tasks: [
               "Introduce 3 different bugs into your FizzBuzz code",
               "Paste each broken version into Claude one at a time",
-              "Read Claude's explanation — do you understand why it was broken?",
+              "Read Claude's explanation. Do you understand why it was broken?",
               "Fix each bug yourself (don't just copy Claude's fix)",
             ],
           },
@@ -265,7 +391,8 @@ export const phases = [
         thu: {
           title: "Number guessing game",
           date: "May 21",
-          desc: "Build a complete game using loops and conditionals. The computer picks a secret number, you guess, it tells you higher or lower. Add a score counter, add difficulty levels — make it yours.",
+          desc: "Build a complete game using loops and conditionals. The computer picks a secret number, you guess, it tells you higher or lower. Add a score counter, add difficulty levels, and make it yours.",
+          preview: "Higher-or-lower guessing game: loops, conditions, and your own rules.",
           steps: [
             {
               title: "Pick the secret number",
@@ -277,7 +404,7 @@ export const phases = [
               title: "The guessing loop",
               content: "Use a while loop that keeps running until the player guesses correctly. Inside, use input() to get their guess.",
               code: { lang: "python", snippet: 'guess = None\nwhile guess != secret:\n    guess = int(input("Guess: "))\n    if guess < secret:\n        print("Higher!")\n    elif guess > secret:\n        print("Lower!")\n    else:\n        print("You got it!")' },
-              task: "Add this loop to your program. Test it — does it work?",
+              task: "Add this loop to your program. Test it. Does it work?",
             },
             {
               title: "Count the guesses",
@@ -291,7 +418,7 @@ export const phases = [
             },
             {
               title: "Difficulty modes",
-              content: "Let the player choose easy (1–50, 10 guesses), medium (1–100, 7 guesses), or hard (1–200, 5 guesses) before the game starts.",
+              content: "Let the player choose easy (1 to 50, 10 guesses), medium (1 to 100, 7 guesses), or hard (1 to 200, 5 guesses) before the game starts.",
               task: "Add a menu at the start that sets the range and max guesses based on difficulty.",
             },
           ],
@@ -307,7 +434,7 @@ export const phases = [
           challenges: {
             base: {
               title: "Number guessing game",
-              desc: "The computer picks a number 1–100. The player guesses until they get it right.",
+              desc: "The computer picks a number from 1 to 100. The player guesses until they get it right.",
               steps: [
                 "Use random.randint(1, 100) for the secret number",
                 "Loop until the player guesses correctly",
@@ -328,7 +455,7 @@ export const phases = [
               title: "Difficulty modes + replay",
               desc: "Let the player choose difficulty. After each game, ask if they want to play again.",
               steps: [
-                "Add a difficulty menu: easy (1-50, 10 guesses), medium (1-100, 7 guesses), hard (1-200, 5 guesses)",
+                "Add a difficulty menu: easy (1 to 50, 10 guesses), medium (1 to 100, 7 guesses), hard (1 to 200, 5 guesses)",
                 "Set the range and max guesses based on the choice",
                 "Add a play again loop after the game ends",
                 "Track total wins across multiple rounds",
@@ -351,7 +478,8 @@ export const phases = [
         mon: {
           title: "Data structures",
           date: "May 25",
-          desc: "Lists and dictionaries are how Python holds collections of information. They're everywhere — every app, every database, every website. Understanding them unlocks the next level of what you can build.",
+          desc: "Lists and dictionaries are how Python holds collections of information. They're everywhere: every app, every database, every website. Understanding them unlocks the next level of what you can build.",
+          preview: "Lists, dictionaries, and saving data to files.",
           steps: [
             {
               title: "Lists: ordered collections",
@@ -367,7 +495,7 @@ export const phases = [
             },
             {
               title: "Dictionaries: key-value pairs",
-              content: "A dictionary stores data as key-value pairs — like a contacts book where you look up a person by name. Keys are unique; values can be anything.",
+              content: "A dictionary stores data as key-value pairs, like a contacts book where you look up a person by name. Keys are unique; values can be anything.",
               code: { lang: "python", snippet: 'student = {\n    "name": "Ana",\n    "age": 20,\n    "city": "Chișinău"\n}\nprint(student["name"])  # Ana\nstudent["grade"] = "A"' },
               task: "Create a dictionary for yourself with keys: name, age, city, hobby. Print each value using its key.",
             },
@@ -398,13 +526,14 @@ export const phases = [
         wed: {
           title: "AI + real data",
           date: "May 27",
-          desc: "We'll download a real dataset — maybe local weather, maybe school enrollment numbers — and ask an AI to help us understand it. Then we'll verify its answers with actual Python code. This is how professionals use AI: as a starting point, not a final answer.",
+          desc: "We'll download a real dataset (maybe local weather, maybe school enrollment numbers) and ask an AI to help us understand it. Then we'll verify its answers with actual Python code. This is how professionals use AI: as a starting point, not a final answer.",
+          preview: "Open a real dataset, ask AI, then check the answers in Python.",
           steps: [
             {
               title: "Open a CSV file with Python",
               content: "CSV files are spreadsheets in plain text. Python's built-in csv module can read them. We'll also look at pandas, which is more powerful.",
               code: { lang: "python", snippet: "import csv\nwith open('data.csv') as f:\n    reader = csv.DictReader(f)\n    for row in reader:\n        print(row)" },
-              task: "Download a CSV from Kaggle (any simple one — world population, country capitals, etc.). Open it in Python and print the first 5 rows.",
+              task: "Download a CSV from Kaggle (any simple one, like world population or country capitals). Open it in Python and print the first 5 rows.",
             },
             {
               title: "Ask Claude about the data",
@@ -418,7 +547,7 @@ export const phases = [
             },
             {
               title: "Spot where AI guesses vs. where it's right",
-              content: "AI is good at general patterns but bad at exact numbers. It may summarize correctly but get specific counts wrong. Your code is the truth — Claude is a starting point.",
+              content: "AI is good at general patterns but bad at exact numbers. It may summarize correctly but get specific counts wrong. Your code is the truth. Claude is a starting point.",
               task: "Find one place where Claude was wrong or imprecise. Show the class.",
             },
             {
@@ -442,6 +571,7 @@ export const phases = [
           title: "Personal expense tracker",
           date: "May 28",
           desc: "Build a real CLI app you'll actually use. Add an expense, see your total, save it to a file so it persists. This brings together everything from the past 3 weeks.",
+          preview: "Expense tracker in the terminal: add lines, totals, and a file that persists.",
           steps: [
             {
               title: "The menu loop",
@@ -521,12 +651,13 @@ export const phases = [
         mon: {
           title: "APIs & the internet",
           date: "Jun 1",
-          desc: "How do apps talk to each other? Through APIs — a way for programs to request data from servers. Today you'll make Python fetch real live data from the internet: weather, jokes, whatever you want.",
+          desc: "How do apps talk to each other? Through APIs, which are a way for programs to request data from servers. Today you'll make Python fetch real live data from the internet: weather, jokes, whatever you want.",
+          preview: "requests + JSON: pull live data from the web into Python.",
           steps: [
             {
               title: "What is an API?",
-              content: "An API (Application Programming Interface) is a URL that returns data when you visit it from code. Instead of a webpage, you get raw data — usually in JSON format.",
-              task: "Open this URL in your browser: https://api.open-meteo.com/v1/forecast?latitude=47.0&longitude=28.8&current_weather=true — you're looking at a real API response for Chișinău weather.",
+              content: "An API (Application Programming Interface) is a URL that returns data when you visit it from code. Instead of a webpage, you get raw data, usually in JSON format.",
+              task: "Open this URL in your browser: https://api.open-meteo.com/v1/forecast?latitude=47.0&longitude=28.8&current_weather=true. You're looking at a real API response for Chișinău weather.",
             },
             {
               title: "Install and use requests",
@@ -536,7 +667,7 @@ export const phases = [
             },
             {
               title: "Fetch and parse JSON",
-              content: "API responses come back as JSON — a text format that Python can turn into a dictionary. Call .json() on the response to get a Python dict.",
+              content: "API responses come back as JSON, a text format that Python can turn into a dictionary. Call .json() on the response to get a Python dict.",
               code: { lang: "python", snippet: "import requests\nurl = 'https://api.open-meteo.com/v1/forecast?latitude=47.0&longitude=28.8&current_weather=true'\ndata = requests.get(url).json()\nprint(data['current_weather']['temperature'])" },
               task: "Fetch the weather data and print the temperature and wind speed for Chișinău.",
             },
@@ -565,12 +696,13 @@ export const phases = [
         wed: {
           title: "Build an AI-powered script",
           date: "Jun 3",
-          desc: "Today you call an AI from your own Python code. You'll use the Anthropic or OpenAI API to send a message and get a response — the same thing Claude.ai does, but you're building it yourself.",
+          desc: "Today you call an AI from your own Python code. You'll use the Anthropic or OpenAI API to send a message and get a response. It's the same thing Claude.ai does, but you're building it yourself.",
+          preview: "Call Claude or GPT from a script: API keys and a working mini-tool.",
           steps: [
             {
               title: "Get an API key",
-              content: "To use Claude or GPT from code, you need an API key. We'll do this together — Anthropic offers free credits to try the API.",
-              task: "Sign up at console.anthropic.com. Go to API Keys and create a key. Keep it secret — never share it or commit it to GitHub.",
+              content: "To use Claude or GPT from code, you need an API key. We'll do this together. Anthropic offers free credits to try the API.",
+              task: "Sign up at console.anthropic.com. Go to API Keys and create a key. Keep it secret. Never share it or commit it to GitHub.",
             },
             {
               title: "Install the library",
@@ -610,17 +742,18 @@ export const phases = [
         thu: {
           title: "Mini project sprint",
           date: "Jun 4",
-          desc: "45 minutes to build something. 15 minutes to show it. Pick one: a weather app, a trivia game that quizzes you from a file, or an AI chatbot. No pressure — a working small thing beats an ambitious broken thing.",
+          desc: "45 minutes to build something. 15 minutes to show it. Pick one: a weather app, a trivia game that quizzes you from a file, or an AI chatbot. No pressure. A working small thing beats an ambitious broken thing.",
+          preview: "Sprint: weather fetch, file trivia, or AI chatbot. Pick one and ship.",
           steps: [
             {
               title: "Pick your project",
-              content: "Choose one: (A) Weather app — fetch weather for any city and display it nicely. (B) Trivia game — load questions from a file, quiz the user, keep score. (C) AI chatbot — a Claude-powered assistant with a specific personality or purpose.",
+              content: "Choose one: (A) Weather app: fetch weather for any city and display it nicely. (B) Trivia game: load questions from a file, quiz the user, keep score. (C) AI chatbot: a Claude-powered assistant with a specific personality or purpose.",
               task: "Decide in 2 minutes. Tell the teacher your choice so they can help you scope it.",
             },
             {
               title: "Skeleton first",
               content: "Get the structure working before worrying about details. If it's a game, get the loop running. If it's an app, get the API call working.",
-              task: "In the first 10 minutes, get something running — even if it's incomplete.",
+              task: "In the first 10 minutes, get something running, even if it's incomplete.",
             },
             {
               title: "Build for 30 more minutes",
@@ -695,10 +828,11 @@ export const phases = [
           title: "HTML & CSS",
           date: "Jun 8",
           desc: "Today we switch from Python to the web. HTML is the structure of every website you've ever visited. CSS makes it look good. By the end of class you'll have a personal bio page running in your browser.",
+          preview: "HTML structure and CSS: a bio page that runs in the browser.",
           steps: [
             {
               title: "How browsers render HTML",
-              content: "HTML is a markup language — you wrap content in tags to give it meaning. The browser reads the tags and decides how to display them. Every website you've ever seen is HTML at its core.",
+              content: "HTML is a markup language. You wrap content in tags to give it meaning. The browser reads the tags and decides how to display them. Every website you've ever seen is HTML at its core.",
               code: { lang: "html", snippet: "<!doctype html>\n<html>\n  <head>\n    <title>My Page</title>\n  </head>\n  <body>\n    <h1>Hello, world!</h1>\n    <p>This is a paragraph.</p>\n  </body>\n</html>" },
               task: "Create a file called index.html, paste this in, and open it in your browser. You've got a webpage.",
             },
@@ -741,11 +875,12 @@ export const phases = [
         wed: {
           title: "Design with AI",
           date: "Jun 10",
-          desc: "What should your site look like? Use AI to generate ideas, copy, and even mock layouts. Then we'll do a crash course in Figma — sketch your site before you build it. Designers work this way. Now you do too.",
+          desc: "What should your site look like? Use AI to generate ideas, copy, and even mock layouts. Then we'll do a crash course in Figma so you can sketch your site before you build it. Designers work this way. Now you do too.",
+          preview: "AI drafts and a Figma wireframe before you write more HTML.",
           steps: [
             {
               title: "Ask Claude to write your bio copy",
-              content: "Give Claude a few facts about yourself and ask it to write a short bio paragraph in a specific tone — professional, casual, funny, whatever fits you.",
+              content: "Give Claude a few facts about yourself and ask it to write a short bio paragraph in a specific tone (professional, casual, funny, whatever fits you).",
               task: "Give Claude 5 facts about yourself and ask it to write a 3-sentence bio in a casual tone. Edit the result to sound more like you.",
             },
             {
@@ -760,7 +895,7 @@ export const phases = [
             },
             {
               title: "Wireframe your personal site",
-              content: "A wireframe is a rough sketch of your layout — no final colors, just boxes and text placeholders. It's faster to rearrange a wireframe than rewrite HTML.",
+              content: "A wireframe is a rough sketch of your layout with no final colors, just boxes and text placeholders. It's faster to rearrange a wireframe than rewrite HTML.",
               task: "In Figma, wireframe your bio page: header, a hero section, a skills or hobbies section, a footer. Just boxes and labels.",
             },
             {
@@ -776,14 +911,15 @@ export const phases = [
               "Apply your chosen color palette to the Figma wireframe",
               "Add real typography (import a Google Font)",
               "Add placeholder content: your actual name, bio, a photo box",
-              "Screenshot the mockup — you'll use it as a reference on Thursday",
+              "Screenshot the mockup. You'll use it as a reference on Thursday",
             ],
           },
         },
         thu: {
-          title: "Personal website — live!",
+          title: "Personal website goes live",
           date: "Jun 11",
           desc: "Polish your bio page, push it to GitHub, and deploy it on Vercel. By the end of this session, you'll have a real URL on the real internet that anyone in the world can visit. That's yours.",
+          preview: "GitHub plus Vercel: your site live at a real URL.",
           steps: [
             {
               title: "Clean up the HTML/CSS",
@@ -820,7 +956,7 @@ export const phases = [
               "Add a Projects section (even if your only project so far is this site)",
               "Add a contact link (email or social)",
               "Make it look great on mobile",
-              "Push the changes — they deploy automatically",
+              "Push the changes. They deploy automatically",
             ],
           },
           challenges: {
@@ -863,11 +999,12 @@ export const phases = [
         mon: {
           title: "JavaScript",
           date: "Jun 15",
-          desc: "HTML structures, CSS styles, JavaScript acts. JS is what makes websites interactive — buttons that do things, content that changes without reloading. Today you'll make your page come alive.",
+          desc: "HTML structures, CSS styles, JavaScript acts. JS is what makes websites interactive: buttons that do things, content that changes without reloading. Today you'll make your page come alive.",
+          preview: "DOM, click handlers, and fetch(): real interactivity in the browser.",
           steps: [
             {
               title: "What JavaScript does",
-              content: "JavaScript runs in the browser and can change the page, react to clicks, fetch data, and more — without refreshing. It's the only programming language that runs directly in a browser.",
+              content: "JavaScript runs in the browser and can change the page, react to clicks, fetch data, and more, all without refreshing. It's the only programming language that runs directly in a browser.",
               code: { lang: "html", snippet: "<script>\n  console.log('Hello from JavaScript!');\n  alert('The page has loaded.');\n</script>" },
               task: "Add a <script> tag to your bio page and log a message to the console. Open DevTools (F12) to see it.",
             },
@@ -889,7 +1026,7 @@ export const phases = [
               task: "Create a list with 3 items. Add a button that adds a new item to the list each time it's clicked.",
             },
             {
-              title: "fetch() — loading data from an API",
+              title: "fetch(): loading data from an API",
               content: "fetch() is JavaScript's way to call APIs. It's like requests in Python but for the browser. It returns a Promise, so you chain .then() to get the data.",
               code: { lang: "js", snippet: "fetch('https://api.open-meteo.com/v1/forecast?latitude=47.0&longitude=28.8&current_weather=true')\n  .then(res => res.json())\n  .then(data => {\n    console.log(data.current_weather.temperature);\n  });" },
               task: "Add a 'Get Weather' button to your page that fetches the current temperature in Chișinău and displays it.",
@@ -902,7 +1039,7 @@ export const phases = [
               "A button that does something meaningful (not just an alert)",
               "An element that changes when the user interacts with it",
               "Bonus: fetch data from an API and display it on the page",
-              "Push to GitHub when done — changes deploy automatically",
+              "Push to GitHub when done. Changes deploy automatically",
             ],
           },
         },
@@ -910,6 +1047,7 @@ export const phases = [
           title: "Vibe coding session",
           date: "Jun 17",
           desc: "No rules today. Use AI to build something ridiculous, fun, or weird. A meme generator. A daily horoscope app. A 'is this fake news?' checker. The goal: explore what's possible when you combine what you know with AI assistance.",
+          preview: "One silly or surprising page: AI-generated code, then you tweak and ship.",
           steps: [
             {
               title: "Pick your absurd idea",
@@ -928,12 +1066,12 @@ export const phases = [
             },
             {
               title: "Add one personal touch",
-              content: "Add something that Claude didn't put there — a color you chose, a feature you thought of, a message that's uniquely yours.",
+              content: "Add something that Claude didn't put there: a color you chose, a feature you thought of, a message that's uniquely yours.",
               task: "Add one thing that's your own idea, not Claude's suggestion.",
             },
             {
               title: "Demo to the class",
-              content: "Show your creation. It doesn't need to be polished — it needs to be fun or interesting or both.",
+              content: "Show your creation. It doesn't need to be polished. It needs to be fun or interesting or both.",
               task: "2-minute demo: show the app working, then show the weirdest line of code in it.",
             },
           ],
@@ -951,6 +1089,7 @@ export const phases = [
           title: "Interactive web app",
           date: "Jun 18",
           desc: "Take your personal site to the next level. Add something interactive: a contact form, a live API call that shows something cool, or an animation. Make your site something worth bookmarking.",
+          preview: "Form, live API widget, or animation: one standout feature on your site.",
           steps: [
             {
               title: "Choose your feature",
@@ -960,7 +1099,7 @@ export const phases = [
             {
               title: "Write the JavaScript",
               content: "For forms: use addEventListener on the form submit event. For APIs: use fetch(). For animations: use CSS @keyframes with a JS trigger.",
-              task: "Get the core JavaScript working in isolation first — test in the browser console before adding to your page.",
+              task: "Get the core JavaScript working in isolation first. Test in the browser console before adding to your page.",
             },
             {
               title: "Connect to your HTML",
@@ -1036,11 +1175,12 @@ export const phases = [
         mon: {
           title: "Databases + backend basics",
           date: "Jun 22",
-          desc: "Where does data live? Databases. Today we'll talk about what they are, how they work, and you'll see a simple one in action. We'll use Supabase — a free, easy database that works great with web projects.",
+          desc: "Where does data live? Databases. Today we'll talk about what they are, how they work, and you'll see a simple one in action. We'll use Supabase, a free, easy database that works great with web projects.",
+          preview: "Tables, rows, and Supabase. See data read and written for real.",
           steps: [
             {
               title: "What is a database?",
-              content: "A database is an organized way to store and retrieve data. Think of it like a spreadsheet, but structured for computers to read quickly — even with millions of rows.",
+              content: "A database is an organized way to store and retrieve data. Think of it like a spreadsheet, but structured for computers to read quickly, even with millions of rows.",
               task: "Think about your expense tracker from Week 3. How would you store 10,000 expenses in a spreadsheet? What problems would you hit? That's why databases exist.",
             },
             {
@@ -1061,7 +1201,7 @@ export const phases = [
             },
             {
               title: "You don't need to be an expert",
-              content: "Databases are a deep topic — full courses exist just on SQL. Today's goal is understanding the concept and seeing it work. You'll use Supabase for your final project if you want persistent data.",
+              content: "Databases are a deep topic. Full courses exist just on SQL. Today's goal is understanding the concept and seeing it work. You'll use Supabase for your final project if you want persistent data.",
               task: "In pairs: what kind of data does your final project idea need to store? Would a database help?",
             },
           ],
@@ -1078,11 +1218,12 @@ export const phases = [
         wed: {
           title: "Final project brainstorm",
           date: "Jun 24",
-          desc: "What will you build? Today we figure that out together. Use AI to help you scope it, wireframe it, and make sure it's achievable in one week. You'll pitch your idea in 60 seconds — simple, clear, focused.",
+          desc: "What will you build? Today we figure that out together. Use AI to help you scope it, wireframe it, and make sure it's achievable in one week. You'll pitch your idea in 60 seconds: simple, clear, focused.",
+          preview: "Scope, wireframe, and a 60-second pitch for your final project.",
           steps: [
             {
               title: "Brainstorm ideas",
-              content: "A good final project is something you'd actually use, something that shows what you've learned, or something that solves a real problem — even a small one.",
+              content: "A good final project is something you'd actually use, something that shows what you've learned, or something that solves a real problem, even a small one.",
               task: "Spend 5 minutes writing down every project idea you have, no matter how small. At least 5. Then pick your top 2.",
             },
             {
@@ -1093,7 +1234,7 @@ export const phases = [
             {
               title: "Wireframe your project",
               content: "Sketch the main screen(s) of your project. What does the user see? What can they do? A simple wireframe saves a lot of confused coding later.",
-              task: "Draw a wireframe on paper or in Figma for your chosen project. It doesn't need to be pretty — just clear.",
+              task: "Draw a wireframe on paper or in Figma for your chosen project. It doesn't need to be pretty, just clear.",
             },
             {
               title: "60-second pitch",
@@ -1118,9 +1259,10 @@ export const phases = [
           },
         },
         thu: {
-          title: "Final project — day 1",
+          title: "Final project day 1",
           date: "Jun 25",
-          desc: "Time to build. Work solo or with a partner. The goal today is a working skeleton — something that runs, even if it's not pretty. Teacher will float around the room and help whoever's stuck.",
+          desc: "Time to build. Work solo or with a partner. The goal today is a working skeleton, something that runs, even if it's not pretty. Teacher will float around the room and help whoever's stuck.",
+          preview: "Repo, layout, and one core feature running end-to-end.",
           steps: [
             {
               title: "Set up your project",
@@ -1130,7 +1272,7 @@ export const phases = [
             },
             {
               title: "Build the main UI skeleton",
-              content: "Get the main screen(s) of your app looking roughly right — even with placeholder content. Don't style yet, just structure.",
+              content: "Get the main screen(s) of your app looking roughly right, even with placeholder content. Don't style yet, just structure.",
               task: "Write the HTML for your main screen. Add placeholder content so you can see the layout.",
             },
             {
@@ -1201,6 +1343,7 @@ export const phases = [
           title: "Git, deployment & portfolios",
           date: "Jun 29",
           desc: "Today we wrap up the technical skills: clean Git workflow, deploying your final project, and packaging your work as a portfolio piece that future employers or collaborators can find.",
+          preview: "Commits, deploy, README, and a dry run before Demo Day.",
           steps: [
             {
               title: "Git best practices",
@@ -1226,7 +1369,7 @@ export const phases = [
             },
             {
               title: "Practice your demo",
-              content: "Tomorrow is Demo Day. You have 3–5 minutes. Plan what you'll show: what the app does, one feature you're proud of, and one thing you'd add.",
+              content: "Tomorrow is Demo Day. You have 3 to 5 minutes. Plan what you'll show: what the app does, one feature you're proud of, and one thing you'd add.",
               task: "Do a practice run of your demo. Time yourself. What needs to be cut?",
             },
           ],
@@ -1244,7 +1387,8 @@ export const phases = [
         wed: {
           title: "Demo Day",
           date: "Jul 1",
-          desc: "The final session. Everyone presents their project — what it does, how you built it, what was hard, what you're proud of. No grades, no judgment. This is a celebration of how far you've come in 8 weeks.",
+          desc: "The final session. Everyone presents their project: what it does, how you built it, what was hard, what you're proud of. No grades, no judgment. This is a celebration of how far you've come in 8 weeks.",
+          preview: "Demo Day: show the app, one hard problem, and what's next.",
           steps: [
             {
               title: "Setup time",
@@ -1252,8 +1396,8 @@ export const phases = [
               task: "Open your project on your device. Have the GitHub repo open in another tab.",
             },
             {
-              title: "Each project gets 3–5 minutes",
-              content: "Show the app working first — don't explain before showing. Then show one piece of code that you're proud of or that was hard.",
+              title: "Each project gets 3 to 5 minutes",
+              content: "Show the app working first. Don't explain before showing. Then show one piece of code that you're proud of or that was hard.",
               task: "When it's your turn: show, then explain. Keep it to 5 minutes.",
             },
             {

@@ -1,4 +1,4 @@
-/** Short list for the top of the Resources page — install & accounts before Week 1. */
+/** Short list for the top of the Resources page (install and accounts before Week 1). */
 export const startHere = [
   {
     title: 'Install Python 3.12+',
@@ -8,7 +8,7 @@ export const startHere = [
   },
   {
     title: 'Install VS Code',
-    desc: 'Free editor — works great with Python and web projects.',
+    desc: 'Free editor that works well with Python and web projects.',
     url: 'https://code.visualstudio.com/',
     tag: 'setup',
   },
@@ -30,13 +30,13 @@ export const resources = {
     },
     {
       title: "Real Python",
-      desc: "Articles and tutorials from basics to intermediate — great when you want a second explanation.",
+      desc: "Articles and tutorials from basics to intermediate. Great when you want a second explanation.",
       url: "https://realpython.com/",
       tag: "article",
     },
     {
       title: "Python Tutorial (Official)",
-      desc: "The official beginner tutorial — covers variables, loops, functions, and more.",
+      desc: "The official beginner tutorial. It covers variables, loops, functions, and more.",
       url: "https://docs.python.org/3/tutorial/",
       tag: "docs",
     },
@@ -48,13 +48,13 @@ export const resources = {
     },
     {
       title: "Automate the Boring Stuff",
-      desc: "Free book focused on practical Python — files, spreadsheets, web scraping, and more.",
+      desc: "Free book focused on practical Python: files, spreadsheets, web scraping, and more.",
       url: "https://automatetheboringstuff.com",
       tag: "book",
     },
     {
       title: "Pandas Docs",
-      desc: "Official documentation for Pandas — the go-to library for working with data in Python.",
+      desc: "Official documentation for Pandas, the common library for working with data in Python.",
       url: "https://pandas.pydata.org/docs/",
       tag: "docs",
     },
@@ -75,7 +75,7 @@ export const resources = {
     },
     {
       title: "web.dev Learn",
-      desc: "Google’s structured HTML/CSS/JS lessons — short modules with clear goals.",
+      desc: "Google’s structured HTML, CSS, and JS lessons. Short modules with clear goals.",
       url: "https://web.dev/learn/html",
       tag: "course",
     },
@@ -105,7 +105,7 @@ export const resources = {
     },
     {
       title: "GitHub Pages",
-      desc: "Host a static website directly from a GitHub repo — completely free.",
+      desc: "Host a static website directly from a GitHub repo. It is completely free.",
       url: "https://pages.github.com",
       tag: "tool",
     },
@@ -156,7 +156,7 @@ export const resources = {
     },
     {
       title: "OpenAI Cookbook",
-      desc: "Examples and patterns for building with the OpenAI API — practical snippets.",
+      desc: "Examples and patterns for building with the OpenAI API, with practical snippets.",
       url: "https://cookbook.openai.com/",
       tag: "article",
     },
@@ -168,7 +168,7 @@ export const resources = {
     },
     {
       title: "Public APIs List",
-      desc: "A massive list of free public APIs — weather, jokes, trivia, space data, and more.",
+      desc: "A massive list of free public APIs: weather, jokes, trivia, space data, and more.",
       url: "https://github.com/public-apis/public-apis",
       tag: "article",
     },
@@ -201,7 +201,7 @@ export const resources = {
     },
     {
       title: "GitHub CLI",
-      desc: "Optional: run GitHub from the terminal — useful once you’re comfortable with the basics.",
+      desc: "Optional: run GitHub from the terminal. Useful once you’re comfortable with the basics.",
       url: "https://cli.github.com/",
       tag: "tool",
     },
@@ -222,7 +222,7 @@ export const resources = {
     },
     {
       title: "SQLBolt",
-      desc: "Learn SQL basics interactively — queries, filters, joins. Free and browser-based.",
+      desc: "Learn SQL basics interactively: queries, filters, joins. Free and browser-based.",
       url: "https://sqlbolt.com",
       tag: "course",
     },

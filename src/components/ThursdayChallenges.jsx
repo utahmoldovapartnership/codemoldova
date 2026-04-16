@@ -14,12 +14,12 @@ function TierCard({ title, tier, desc, steps, code }) {
     tier === 'base' ? 'Base' : tier === 'medium' ? 'Medium' : tier === 'hard' ? 'Hard' : 'Bonus'
 
   return (
-    <div className={`rounded-card border p-5 ${border}`}>
-      <p className="font-mono text-[10px] uppercase tracking-wider text-muted">{label}</p>
-      <h3 className="mt-1 font-display text-lg font-bold text-primary">{title}</h3>
-      {desc ? <p className="mt-2 text-sm leading-relaxed text-muted">{desc}</p> : null}
+    <div className={`rounded-card border p-6 sm:p-7 ${border}`}>
+      <p className="font-mono text-xs uppercase tracking-wider text-muted">{label}</p>
+      <h3 className="mt-2 font-display text-xl font-bold text-primary">{title}</h3>
+      {desc ? <p className="mt-3 text-base leading-relaxed text-muted">{desc}</p> : null}
       {steps?.length ? (
-        <ol className="mt-4 list-decimal space-y-2 pl-5 text-sm leading-relaxed text-primary/95">
+        <ol className="mt-5 list-decimal space-y-3 pl-5 text-base leading-relaxed text-primary/95">
           {steps.map((s, i) => (
             <li key={i}>{s}</li>
           ))}
@@ -40,14 +40,14 @@ export default function ThursdayChallenges({ challenges }) {
   const { base, medium, hard, bonus } = challenges
 
   return (
-    <section className="space-y-4" aria-labelledby="challenges-heading">
-      <h2 id="challenges-heading" className="font-display text-xl font-bold text-primary sm:text-2xl">
-        Thursday build — challenge tiers
+    <section className="space-y-6" aria-labelledby="challenges-heading">
+      <h2 id="challenges-heading" className="font-display text-2xl font-bold text-primary sm:text-3xl">
+        Thursday project: four levels
       </h2>
-      <p className="text-sm leading-relaxed text-muted">
-        Everyone finishes <span className="text-wed">Base</span>. Level up if you have time.
+      <p className="max-w-prose text-base leading-relaxed text-muted">
+        Everyone does <span className="text-wed">Base</span> first. If you have time, try a harder level.
       </p>
-      <div className="grid gap-4">
+      <div className="grid gap-5">
         {base ? (
           <TierCard tier="base" title={base.title} desc={base.desc} steps={base.steps} code={base.code} />
         ) : null}
@@ -58,9 +58,9 @@ export default function ThursdayChallenges({ challenges }) {
           <TierCard tier="hard" title={hard.title} desc={hard.desc} steps={hard.steps} code={hard.code} />
         ) : null}
         {bonus ? (
-          <div className="rounded-card border border-dashed border-white/[0.2] bg-surface/40 p-5">
-            <p className="font-mono text-[10px] uppercase tracking-wider text-muted">Bonus</p>
-            <p className="mt-2 text-sm leading-relaxed text-primary">{bonus}</p>
+          <div className="rounded-card border border-dashed border-white/[0.2] bg-surface/40 p-6">
+            <p className="font-mono text-xs uppercase tracking-wider text-muted">Bonus</p>
+            <p className="mt-2 text-base leading-relaxed text-primary">{bonus}</p>
           </div>
         ) : null}
       </div>

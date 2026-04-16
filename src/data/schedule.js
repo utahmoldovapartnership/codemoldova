@@ -17,7 +17,7 @@ export const sessions = [
 
   { week: 5, day: "mon", date: "2026-06-08", label: "HTML & CSS" },
   { week: 5, day: "wed", date: "2026-06-10", label: "Design with AI" },
-  { week: 5, day: "thu", date: "2026-06-11", label: "Personal website — live!" },
+  { week: 5, day: "thu", date: "2026-06-11", label: "Personal website goes live" },
 
   { week: 6, day: "mon", date: "2026-06-15", label: "JavaScript" },
   { week: 6, day: "wed", date: "2026-06-17", label: "Vibe coding session" },
@@ -25,7 +25,7 @@ export const sessions = [
 
   { week: 7, day: "mon", date: "2026-06-22", label: "Databases + backend basics" },
   { week: 7, day: "wed", date: "2026-06-24", label: "Final project brainstorm" },
-  { week: 7, day: "thu", date: "2026-06-25", label: "Final project — day 1" },
+  { week: 7, day: "thu", date: "2026-06-25", label: "Final project day 1" },
 
   { week: 8, day: "mon", date: "2026-06-29", label: "Git, deployment & portfolios" },
   { week: 8, day: "wed", date: "2026-07-01", label: "Demo Day" },
