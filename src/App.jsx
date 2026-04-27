@@ -4,36 +4,56 @@ import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop.jsx'
 import Home from './pages/Home'
 import Roadmap from './pages/Roadmap'
-import Calendar from './pages/Calendar'
 import Resources from './pages/Resources'
 import Lesson from './pages/Lesson'
+import LessonMockup from './pages/LessonMockup'
+import RoadmapMockup from './pages/RoadmapMockup'
+import ResourcesMockup from './pages/ResourcesMockup'
 
-export default function App() {
+function AppShell() {
+  const isHome = true
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <div className="flex min-h-dvh min-h-[100dvh] flex-col bg-bg font-body text-primary pb-[env(safe-area-inset-bottom,0px)]">
-        <a
-          href="#main-content"
-          className="sr-only rounded-elem bg-mon px-4 py-2 font-mono text-sm text-white focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-white"
-        >
-          Skip to content
-        </a>
-        <Nav />
+    <div
+      className={`flex min-h-dvh min-h-[100dvh] flex-col font-body pb-[env(safe-area-inset-bottom,0px)] ${
+        isHome ? 'bg-paper text-ink' : 'bg-bg text-primary'
+      }`}
+    >
+      <a
+        href="#main-content"
+        className={
+          isHome
+            ? 'sr-only rounded-elem bg-dart px-4 py-2 font-mono text-sm text-paper focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-ink'
+            : 'sr-only rounded-elem bg-mon px-4 py-2 font-mono text-sm text-white focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-white'
+        }
+      >
+        Skip to content
+      </a>
+      <Nav homeLight={isHome} />
         <main id="main-content" className="flex min-h-0 flex-1 flex-col outline-none" tabIndex={-1}>
           <div className="flex min-h-full min-h-0 flex-1 flex-col">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/roadmap" element={<Roadmap />} />
-              <Route path="/calendar" element={<Calendar />} />
+              <Route path="/calendar" element={<Navigate to="/roadmap" replace />} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/about" element={<Navigate to="/" replace />} />
               <Route path="/lesson/:week/:day" element={<Lesson />} />
+              <Route path="/lesson-mockup" element={<LessonMockup />} />
+              <Route path="/roadmap-mockup" element={<RoadmapMockup />} />
+              <Route path="/resources-mockup" element={<ResourcesMockup />} />
             </Routes>
           </div>
         </main>
-        <Footer />
+        <Footer homeLight={isHome} />
       </div>
+  )
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <ScrollToTop />
+      <AppShell />
     </BrowserRouter>
   )
 }

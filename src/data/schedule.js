@@ -1,5 +1,5 @@
 export const sessions = [
-  { week: 1, day: "mon", date: "2026-05-11", label: "How computers think" },
+  { week: 1, day: "mon", date: "2026-05-11", label: "Intro + how computers think" },
   { week: 1, day: "wed", date: "2026-05-13", label: "What can AI actually do?" },
   { week: 1, day: "thu", date: "2026-05-14", label: "Mad libs generator" },
 

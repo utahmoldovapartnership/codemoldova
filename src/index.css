@@ -7,11 +7,12 @@
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
+    background-color: #ffffff;
   }
 
   body {
-    background-color: #0d0f14;
-    color: theme('colors.primary');
+    background-color: #ffffff;
+    color: theme('colors.ink');
     font-family: 'DM Sans', sans-serif;
     font-size: 17px;
     line-height: 1.65;
@@ -32,9 +33,22 @@
     @apply mx-auto w-full max-w-6xl px-5 sm:px-6;
   }
 
-  /** Full route pages: Calendar, Resources, Roadmap */
+  /** Full route pages: Resources, Roadmap */
   .layout-page {
     @apply mx-auto w-full max-w-6xl px-5 sm:px-6 py-14 sm:py-20;
+  }
+
+  /**
+   * Home top fold (marquee + course hero): fill the viewport *below* the sticky nav
+   * so vertical centering targets the area minus nav, not 100dvh of main.
+   */
+  .hm-hero-fold {
+    min-height: calc(100dvh - 4.25rem - env(safe-area-inset-top, 0px));
+  }
+  @media (min-width: 640px) {
+    .hm-hero-fold {
+      min-height: calc(100dvh - 4.5rem - env(safe-area-inset-top, 0px));
+    }
   }
 
   /** Stacked sections on Home (and similar marketing blocks) */
@@ -42,7 +56,7 @@
     @apply mx-auto w-full max-w-6xl px-5 sm:px-6 py-16 sm:py-24;
   }
 
-  /** Lesson page: same content width as Roadmap, Calendar, Resources */
+  /** Lesson page: same content width as Roadmap, Resources */
   .layout-article {
     @apply mx-auto w-full max-w-6xl px-5 py-12 pb-16 sm:px-6 sm:py-16 sm:pb-20;
   }

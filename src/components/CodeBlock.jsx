@@ -1,7 +1,9 @@
 import { useState } from 'react'
 
-export default function CodeBlock({ lang, snippet }) {
+/** @param {{ lang?: string, snippet: string, tone?: 'light' | 'onInk' }} props */
+export default function CodeBlock({ lang, snippet, tone = 'light' }) {
   const [copied, setCopied] = useState(false)
+  const onInk = tone === 'onInk'
 
   async function handleCopy() {
     try {
@@ -14,13 +16,23 @@ export default function CodeBlock({ lang, snippet }) {
   }
 
   return (
-    <div className="relative rounded-elem border border-white/[0.1] bg-[#0a0c10]">
-      <div className="flex items-center justify-between gap-2 border-b border-white/[0.08] px-4 py-2.5">
-        <span className="font-mono text-xs uppercase tracking-wider text-muted">{lang || 'code'}</span>
+    <div className={`overflow-hidden border bg-bg ${onInk ? 'border-paper/20' : 'border-ink/20'}`}>
+      <div
+        className={`flex items-center justify-between gap-2 border-b px-4 py-2.5 ${
+          onInk ? 'border-paper/15 bg-paper/[0.08]' : 'border-ink/20 bg-ink/[0.04]'
+        }`}
+      >
+        <span className={`font-mono text-[11px] uppercase tracking-[0.2em] ${onInk ? 'text-paper/60' : 'text-ink/55'}`}>
+          {lang || 'code'}
+        </span>
         <button
           type="button"
           onClick={handleCopy}
-          className="rounded-elem px-2.5 py-1.5 font-mono text-xs text-muted transition-colors hover:bg-white/[0.06] hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon"
+          className={`px-2.5 py-1.5 font-mono text-[11px] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun ${
+            onInk
+              ? 'text-paper/70 hover:bg-paper/10 hover:text-paper'
+              : 'text-ink/60 hover:bg-ink/10 hover:text-ink focus-visible:outline-mon'
+          }`}
         >
           {copied ? 'Copied' : 'Copy'}
         </button>

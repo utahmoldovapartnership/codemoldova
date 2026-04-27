@@ -1,5 +1,6 @@
-import { useId, useState } from 'react'
-import PageChrome from '../components/PageChrome.jsx'
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
+import PixelIcon from '../components/PixelIcon.jsx'
+import ScrollReveal from '../components/ScrollReveal.jsx'
 import { resources, startHere } from '../data/resources'
 
 const TABS = [
@@ -30,77 +31,148 @@ const TABS = [
   },
 ]
 
-const TAG_CLASS = {
-  docs: 'border-mon/35 bg-mon/10 text-mon',
-  video: 'border-wed/35 bg-wed/10 text-wed',
-  book: 'border-white/[0.14] bg-white/[0.04] text-primary',
-  tool: 'border-thu/35 bg-thu/10 text-thu',
-  course: 'border-wed/30 bg-wed/5 text-wed',
-  article: 'border-white/[0.12] bg-surface2/80 text-muted',
-  setup: 'border-mon/40 bg-mon/10 text-mon',
+/** Tag chips: `.res-tag` + variant (colors from `cm-palette.css` `.res-page`). */
+const TAG_RES = {
+  docs: 'res-tag res-tag--docs',
+  video: 'res-tag res-tag--video',
+  book: 'res-tag res-tag--book',
+  tool: 'res-tag res-tag--tool',
+  course: 'res-tag res-tag--course',
+  article: 'res-tag res-tag--article',
+  setup: 'res-tag res-tag--setup',
 }
 
-function ExternalLinkIcon() {
-  return (
-    <span className="inline-block shrink-0 opacity-60" aria-hidden>
-      <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="translate-y-px">
-        <path
-          d="M10 2h4v4M14 2L6 10M8 2H3a1 1 0 00-1 1v10a1 1 0 001 1h10a1 1 0 001-1V8"
-          stroke="currentColor"
-          strokeWidth="1.3"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    </span>
-  )
-}
+const START_TILE_ACCENT = ['res-tile-dart', 'res-tile-sun', 'res-tile-ube']
 
-function ResourceCard({ item }) {
-  const tagClass = TAG_CLASS[item.tag] ?? TAG_CLASS.article
+function ResourceLink({ item }) {
+  const tagRes = TAG_RES[item.tag] ?? TAG_RES.article
+  const tagKind = TAG_RES[item.tag] ? item.tag : 'article'
   return (
-    <li>
-      <a
-        href={item.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group flex min-h-[44px] flex-col rounded-card border border-white/[0.08] bg-surface/60 p-5 transition-colors hover:border-white/[0.16] hover:bg-surface2/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon active:bg-surface2 sm:p-6"
-      >
-        <div className="flex flex-wrap items-start justify-between gap-2">
-          <h3 className="font-display text-lg font-bold leading-snug text-primary group-hover:text-primary sm:text-xl">
-            {item.title}
-          </h3>
-          <ExternalLinkIcon />
+    <a
+      href={item.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      data-res-kind={tagKind}
+      className="res-row cm-paper-hover group flex gap-5 py-7 pl-2 pr-1 sm:pl-3 sm:pr-3 sm:py-8"
+    >
+      <div className="min-w-0 flex-1">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <h3 className="font-serif text-xl font-medium tracking-tight text-ink sm:text-2xl">{item.title}</h3>
+          <PixelIcon icon="arrow" size={12} className="mt-1 shrink-0 text-ink/35 transition-colors group-hover:text-ink" />
         </div>
-        <p className="mt-3 flex-1 text-pretty text-base leading-relaxed text-muted">{item.desc}</p>
+        <p className="mt-3 max-w-prose text-pretty text-base leading-relaxed text-ink/75">{item.desc}</p>
         <span
-          className={`mt-4 inline-flex w-fit rounded-pill border px-2.5 py-1 font-mono text-[11px] uppercase tracking-wider ${tagClass}`}
+          className={`mt-4 inline-flex w-fit px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.2em] ${tagRes}`}
         >
           {item.tag}
         </span>
-        <span className="sr-only"> (opens in a new tab)</span>
-      </a>
-    </li>
+      </div>
+      <span className="sr-only"> (opens in a new tab)</span>
+    </a>
   )
 }
 
-function StartHereCard({ item }) {
+function StartHereTile({ item, topAccentClass }) {
+  const tagRes = TAG_RES[item.tag] ?? TAG_RES.setup
   return (
-    <li>
-      <a
-        href={item.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex min-h-[52px] flex-col rounded-card border border-mon/25 bg-mon/[0.06] p-5 transition-colors hover:border-mon/40 hover:bg-mon/[0.1] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon active:bg-mon/[0.12] sm:p-6"
+    <a
+      href={item.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`cm-paper-hover group flex h-full flex-col px-2 py-10 transition-colors duration-200 sm:px-6 sm:py-12 ${topAccentClass}`}
+    >
+      <div className="flex items-start justify-between gap-2">
+        <h3 className="font-serif text-2xl font-medium tracking-tight text-ink sm:text-3xl">{item.title}</h3>
+        <PixelIcon icon="arrow" size={12} className="mt-1 shrink-0 text-ink/35 group-hover:text-ink" />
+      </div>
+      <p className="mt-4 max-w-sm text-base leading-relaxed text-ink/75">{item.desc}</p>
+      <span
+        className={`mt-6 inline-flex w-fit px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.2em] ${tagRes}`}
       >
-        <div className="flex items-start justify-between gap-2">
-          <h3 className="font-display text-lg font-bold text-primary">{item.title}</h3>
-          <ExternalLinkIcon />
-        </div>
-        <p className="mt-2 text-base leading-relaxed text-muted">{item.desc}</p>
-        <span className="sr-only"> (opens in a new tab)</span>
-      </a>
-    </li>
+        {item.tag}
+      </span>
+      <span className="sr-only"> (opens in a new tab)</span>
+    </a>
+  )
+}
+
+function TopicTabBar({ baseId, active, onChange, tabs, panelId }) {
+  const scrollRef = useRef(null)
+  const innerRef = useRef(null)
+  const btnRefs = useRef({})
+  const [line, setLine] = useState({ left: 0, width: 0 })
+
+  const measure = useCallback(() => {
+    const inner = innerRef.current
+    const btn = btnRefs.current[active]
+    if (!inner || !btn) return
+    const l = inner.getBoundingClientRect().left
+    const b = btn.getBoundingClientRect()
+    setLine({ left: b.left - l, width: b.width })
+  }, [active])
+
+  useLayoutEffect(() => {
+    const id = requestAnimationFrame(() => {
+      requestAnimationFrame(() => measure())
+    })
+    return () => cancelAnimationFrame(id)
+  }, [measure])
+
+  useEffect(() => {
+    const sc = scrollRef.current
+    const onScroll = () => measure()
+    sc?.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', measure)
+    const ro = new ResizeObserver(() => measure())
+    if (innerRef.current) ro.observe(innerRef.current)
+    return () => {
+      sc?.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', measure)
+      ro.disconnect()
+    }
+  }, [measure])
+
+  return (
+    <div
+      ref={scrollRef}
+      onScroll={measure}
+      className="relative -mx-1 max-w-full overflow-x-auto [scrollbar-width:thin] sm:mx-0"
+    >
+      <div
+        ref={innerRef}
+        className="relative flex w-max min-w-0 border-b border-ink"
+        role="tablist"
+        aria-label="Resource categories"
+      >
+        {tabs.map((tab) => {
+          const selected = active === tab.id
+          return (
+            <button
+              key={tab.id}
+              type="button"
+              ref={(el) => {
+                btnRefs.current[tab.id] = el
+              }}
+              role="tab"
+              aria-selected={selected}
+              id={`${baseId}-tab-${tab.id}`}
+              aria-controls={panelId}
+              onClick={() => onChange(tab.id)}
+              className={`relative z-10 shrink-0 px-3 py-3.5 font-mono text-[11px] uppercase tracking-[0.28em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-val ${
+                selected ? 'text-ink' : 'text-ink/50 hover:text-ink/90'
+              }`}
+            >
+              {tab.label}
+            </button>
+          )
+        })}
+        <span
+          aria-hidden
+          className="res-tabline pointer-events-none absolute bottom-0 left-0 z-0 transition-[left,width] duration-300 ease-out"
+          style={{ left: line.left, width: line.width, transform: 'translateZ(0)' }}
+        />
+      </div>
+    </div>
   )
 }
 
@@ -109,121 +181,95 @@ export default function Resources() {
   const baseId = useId()
   const activeConfig = TABS.find((t) => t.id === active) ?? TABS[0]
   const list = resources[active] ?? []
-  const activeIndex = Math.max(
-    0,
-    TABS.findIndex((t) => t.id === active),
-  )
 
   return (
-    <PageChrome>
-      <div className="layout-page">
-        <header className="layout-prose-heading">
-          <p className="hero-in hero-in-1 font-mono text-xs uppercase tracking-widest text-muted">Library</p>
-          <h1 className="hero-in hero-in-2 mt-2 font-display text-[clamp(1.85rem,4.5vw,2.5rem)] font-extrabold leading-tight text-primary">
-            Course resources
-          </h1>
-          <p className="hero-in hero-in-3 mt-5 max-w-2xl text-pretty text-base leading-relaxed text-muted">
-            Links we use in class and a few extra links to save.{' '}
-            <span className="text-primary/95">You do not have to read everything here.</span> Use what helps you build
-            projects and understand the lesson. Each week in class we say what is important for that week.
-          </p>
-          <p className="hero-in hero-in-4 mt-4 max-w-2xl text-pretty text-base text-muted/90">
-            <span className="font-mono text-xs text-muted">Tip:</span> Each link title tells you where the link goes.
-            That helps when you save a bookmark or use a screen reader.
-          </p>
-        </header>
+    <div className="res-page hm-page min-h-full flex-1 font-body antialiased">
+      <div className="layout-shell max-w-6xl pb-20 pt-10 sm:pb-28 sm:pt-14">
+        <ScrollReveal rootMargin="0px 0px 12% 0px">
+          <header className="border-b border-ink pb-12 sm:pb-16">
+            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink">Library</p>
+            <h1 className="mt-3 font-serif text-[clamp(2.25rem,6vw,4.25rem)] font-medium leading-[1.02] tracking-tight text-ink">
+              Course resources
+            </h1>
+            <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-ink/80">
+              Links we use in class and a few extra links to save.{' '}
+              <em className="hm-val font-serif italic">You do not have to read everything here.</em> Use what helps you
+              build projects and understand the lesson. Each week in class we say what is important for that week.
+            </p>
+            <p className="mt-5 max-w-2xl text-pretty text-base leading-relaxed text-ink/70">
+              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-ink/50">Tip:</span> Each link
+              title tells you where the link goes. That helps when you save a bookmark or use a screen reader.
+            </p>
+          </header>
+        </ScrollReveal>
 
-      <section className="mb-12 rounded-card border border-white/[0.1] bg-surface/40 p-6 sm:p-8" aria-labelledby="start-heading">
-        <h2 id="start-heading" className="font-display text-xl font-bold text-primary sm:text-2xl">
-          Before week 1: install these
-        </h2>
-        <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted">
-          Install each tool one time. You will use them all course long. Plan about 20 to 30 minutes in total.
-        </p>
-        <ul className="mt-6 grid gap-4 sm:grid-cols-3">
-          {startHere.map((item) => (
-            <StartHereCard key={item.title} item={item} />
-          ))}
-        </ul>
-      </section>
-
-      <div className="mb-6">
-        <h2 className="font-display text-xl font-bold text-primary sm:text-2xl">Browse by topic</h2>
-        <p className="mt-2 text-base text-muted">Pick a tab to change the list below.</p>
-      </div>
-
-      <div className="mb-8">
-        <div className="sm:hidden">
-          <label htmlFor={`${baseId}-topic-select`} className="sr-only">
-            Choose a topic
-          </label>
-          <select
-            id={`${baseId}-topic-select`}
-            value={active}
-            onChange={(e) => setActive(e.target.value)}
-            className="w-full rounded-elem border border-white/[0.14] bg-surface px-4 py-3 font-mono text-base text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon"
-          >
-            {TABS.map((tab) => (
-              <option key={tab.id} value={tab.id}>
-                {tab.label}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div className="hidden sm:flex sm:justify-center">
-          <div
-            className="relative inline-grid h-12 min-w-[34rem] grid-cols-5 rounded-pill border border-white/[0.12] bg-surface/70 p-1 shadow-[inset_0_1px_0_rgba(255,255,255,0.05)]"
-            role="tablist"
-            aria-label="Resource categories"
-          >
-            <div className="pointer-events-none absolute inset-y-1 left-1 right-1">
-              <span
-                className="absolute inset-y-0 w-1/5 rounded-pill bg-white/[0.12] shadow-[0_1px_0_rgba(0,0,0,0.35)] transition-transform duration-300 ease-out motion-reduce:transition-none"
-                style={{ transform: `translateX(${activeIndex * 100}%)` }}
-                aria-hidden
-              />
-            </div>
-            {TABS.map((tab) => {
-              const selected = active === tab.id
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={selected}
-                  id={`${baseId}-tab-${tab.id}`}
-                  aria-controls={`${baseId}-panel-${tab.id}`}
-                  onClick={() => setActive(tab.id)}
-                  className={`relative z-10 min-h-10 rounded-pill px-3 py-2 font-mono text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon sm:text-base ${
-                    selected ? 'text-primary' : 'text-muted hover:text-primary'
+        <ScrollReveal className="py-16 sm:py-20" delayMs={60} rootMargin="0px 0px 10% 0px">
+          <section aria-labelledby="start-heading">
+            <h2
+              id="start-heading"
+              className="font-serif text-4xl font-medium tracking-tight text-ink sm:text-5xl"
+            >
+              Before week 1: install these
+            </h2>
+            <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink/80">
+              Install each tool one time. You will use them all course long. Plan about 20 to 30 minutes in total.
+            </p>
+            <div className="mt-12 grid grid-cols-1 border-t border-ink sm:grid-cols-3">
+              {startHere.map((item, i) => (
+                <ScrollReveal
+                  key={item.title}
+                  className={`min-h-0 ${i < startHere.length - 1 ? 'sm:border-r sm:border-ink' : ''} ${
+                    i > 0 ? 'border-t border-ink sm:border-t-0' : ''
                   }`}
+                  delayMs={80 + i * 100}
+                  hiddenTranslate="translate-y-5"
+                  rootMargin="0px 0px 15% 0px"
                 >
-                  {tab.label}
-                </button>
-              )
-            })}
+                  <StartHereTile item={item} topAccentClass={START_TILE_ACCENT[i]} />
+                </ScrollReveal>
+              ))}
+            </div>
+          </section>
+        </ScrollReveal>
+
+        <ScrollReveal className="border-t border-ink pt-16 sm:pt-20" delayMs={40}>
+            <div className="flex flex-col gap-3 border-b border-ink pb-8 sm:flex-row sm:items-end sm:justify-between">
+              <h2 className="font-serif text-4xl font-medium tracking-tight text-ink sm:text-5xl">
+                Browse by topic
+              </h2>
+              <p className="shrink-0 font-mono text-[11px] uppercase tracking-[0.25em] text-ink">Pick a tab below</p>
+            </div>
+          </ScrollReveal>
+
+          <div className="py-6 sm:py-8">
+            <TopicTabBar
+              baseId={baseId}
+              active={active}
+              onChange={setActive}
+              tabs={TABS}
+              panelId={`${baseId}-panel-resources`}
+            />
           </div>
-        </div>
-      </div>
 
-      <div
-        role="tabpanel"
-        id={`${baseId}-panel-${active}`}
-        aria-labelledby={`${baseId}-tab-${active}`}
-      >
-        <p className="mb-8 max-w-2xl text-base leading-relaxed text-muted">{activeConfig.description}</p>
-        <ul className="grid gap-4 sm:grid-cols-2 sm:gap-5">
-          {list.map((item, i) => (
-            <ResourceCard key={`${item.url}-${i}`} item={item} />
-          ))}
-        </ul>
+          <div
+            role="tabpanel"
+            id={`${baseId}-panel-resources`}
+            aria-labelledby={`${baseId}-tab-${active}`}
+          >
+            <p className="mb-10 max-w-2xl text-base leading-relaxed text-ink/80">
+              {activeConfig.description}
+            </p>
+            <ul className="border-t border-ink">
+              {list.map((item, i) => (
+                <li key={`${item.url}-${i}`} className="border-b border-ink">
+                  <ScrollReveal className="block" delayMs={30 + i * 45} hiddenTranslate="translate-y-3" threshold={0.05}>
+                    <ResourceLink item={item} />
+                  </ScrollReveal>
+                </li>
+              ))}
+            </ul>
+          </div>
       </div>
-
-      <p className="mx-auto mt-12 max-w-2xl text-pretty text-center text-base text-muted sm:mt-14">
-        If a link is broken, tell Weston in class or in Slack. We fix it for everyone.
-      </p>
-      </div>
-    </PageChrome>
+    </div>
   )
 }

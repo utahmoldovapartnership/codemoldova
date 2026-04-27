@@ -7,19 +7,19 @@ function TierCard({ title, tier, desc, steps, code }) {
       : tier === 'medium'
         ? 'border-thu/40 bg-thu/[0.06]'
         : tier === 'hard'
-          ? 'border-rose-400/35 bg-rose-500/[0.07]'
-          : 'border-white/[0.12] bg-surface2/50'
+          ? 'border-mon/40 bg-mon/[0.07]'
+          : 'border-ink/20 bg-ink/[0.04]'
 
   const label =
     tier === 'base' ? 'Base' : tier === 'medium' ? 'Medium' : tier === 'hard' ? 'Hard' : 'Bonus'
 
   return (
-    <div className={`rounded-card border p-6 sm:p-7 ${border}`}>
-      <p className="font-mono text-xs uppercase tracking-wider text-muted">{label}</p>
-      <h3 className="mt-2 font-display text-xl font-bold text-primary">{title}</h3>
-      {desc ? <p className="mt-3 text-base leading-relaxed text-muted">{desc}</p> : null}
+    <div className={`border p-6 sm:p-7 ${border}`}>
+      <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-ink/50">{label}</p>
+      <h3 className="mt-2 font-serif text-xl font-medium tracking-tight text-ink">{title}</h3>
+      {desc ? <p className="mt-3 text-base leading-relaxed text-ink/70">{desc}</p> : null}
       {steps?.length ? (
-        <ol className="mt-5 list-decimal space-y-3 pl-5 text-base leading-relaxed text-primary/95">
+        <ol className="mt-5 list-decimal space-y-3 pl-5 text-base leading-relaxed text-ink/90">
           {steps.map((s, i) => (
             <li key={i}>{s}</li>
           ))}
@@ -41,10 +41,10 @@ export default function ThursdayChallenges({ challenges }) {
 
   return (
     <section className="space-y-6" aria-labelledby="challenges-heading">
-      <h2 id="challenges-heading" className="font-display text-2xl font-bold text-primary sm:text-3xl">
+      <h2 id="challenges-heading" className="font-serif text-2xl font-medium tracking-tight text-ink sm:text-3xl">
         Thursday project: four levels
       </h2>
-      <p className="max-w-prose text-base leading-relaxed text-muted">
+      <p className="max-w-prose text-base leading-relaxed text-ink/70">
         Everyone does <span className="text-wed">Base</span> first. If you have time, try a harder level.
       </p>
       <div className="grid gap-5">
@@ -54,13 +54,11 @@ export default function ThursdayChallenges({ challenges }) {
         {medium ? (
           <TierCard tier="medium" title={medium.title} desc={medium.desc} steps={medium.steps} code={medium.code} />
         ) : null}
-        {hard ? (
-          <TierCard tier="hard" title={hard.title} desc={hard.desc} steps={hard.steps} code={hard.code} />
-        ) : null}
+        {hard ? <TierCard tier="hard" title={hard.title} desc={hard.desc} steps={hard.steps} code={hard.code} /> : null}
         {bonus ? (
-          <div className="rounded-card border border-dashed border-white/[0.2] bg-surface/40 p-6">
-            <p className="font-mono text-xs uppercase tracking-wider text-muted">Bonus</p>
-            <p className="mt-2 text-base leading-relaxed text-primary">{bonus}</p>
+          <div className="border border-dashed border-ink/30 bg-ink/[0.02] p-6">
+            <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-ink/50">Bonus</p>
+            <p className="mt-2 text-base leading-relaxed text-ink/90">{bonus}</p>
           </div>
         ) : null}
       </div>

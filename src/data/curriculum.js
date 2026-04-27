@@ -7,7 +7,7 @@ export const phases = [
       {
         num: 1,
         mon: {
-          title: "How computers think",
+          title: "Intro + how computers think",
           date: "May 11",
           desc: "Monday is taught live: a slide deck at the front (with demos and any clips embedded there), then hands-on time. This page is your cheat sheet and practice set—short reminders, copy-paste snippets, and Try it tasks you redo after class. It is not meant to replace being in the room.",
           preview: "Slides + demos in class · site = backup + practice · terminal, REPL, variables, hello.py, intro card lab.",
@@ -21,7 +21,7 @@ export const phases = [
               title: "Slides first, this page second",
               timing: "With instructor",
               content:
-                "During lecture, keep your eyes on the room and the deck. Open this tab in the background so you can:\n\n• Copy commands when the pace picks up.\n• Re-read a definition without rewinding a video.\n• Finish a Try it after we cut you loose for lab time.\n\nIf you try to read ahead while I am explaining something new, you will miss the why behind it.",
+                "During the workshop, keep your eyes on the room and the deck. Open this tab in the background so you can:\n\n• Copy commands when the pace picks up.\n• Re-read a definition without rewinding a video.\n• Finish a Try it after we cut you loose for lab time.\n\nIf you try to read ahead while I am explaining something new, you will miss the why behind it.",
               tips: [
                 "When you hear hands on keyboards from the front, that is your cue to use the next section on this page.",
                 "Raise your hand for environment issues (Python not found, wrong folder) before you spiral in search results.",
@@ -165,7 +165,7 @@ export const phases = [
             ],
           },
           postClass: {
-            title: "Optional review (not part of lecture)",
+            title: "Optional review (not part of the workshop)",
             desc: "Watch these only if you want extra context after class. Monday is led from the deck, not from these links.",
             links: [
               { label: "Crash Course Computer Science #1 (historical context)", href: "https://www.youtube.com/watch?v=O5nskjZ_GoI" },
@@ -178,7 +178,7 @@ export const phases = [
         wed: {
           title: "What can AI actually do?",
           date: "May 13",
-          desc: "No lecture today, just exploration. We'll try out different AI tools together: image generators, text AI, code helpers. The goal is to build intuition for what AI is good at, what it gets wrong, and why that matters for you as someone learning to code.",
+          desc: "No workshop today, just exploration. We'll try out different AI tools together: image generators, text AI, code helpers. The goal is to build intuition for what AI is good at, what it gets wrong, and why that matters for you as someone learning to code.",
           preview: "Hands-on with ChatGPT, Claude, and image tools: strengths, limits, and honest mistakes.",
           steps: [
             {

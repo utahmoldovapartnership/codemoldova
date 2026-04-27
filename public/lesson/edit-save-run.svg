@@ -2,17 +2,17 @@
   <title id="e1">Edit a .py file, save, then run it with python3 filename.py</title>
   <rect width="720" height="200" rx="14" fill="#13161e" stroke="rgba(255,255,255,0.12)"/>
   <rect x="32" y="48" width="196" height="104" rx="10" fill="#1a1e28" stroke="rgba(79,124,255,0.35)"/>
-  <text x="130" y="36" text-anchor="middle" fill="#7c8099" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13">1 · Editor</text>
+  <text x="130" y="36" text-anchor="middle" fill="#7c8099" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13">1 ï¿½ Editor</text>
   <text x="130" y="88" text-anchor="middle" fill="#e8eaf0" font-family="ui-monospace,Menlo,monospace" font-size="14">hello.py</text>
-  <text x="130" y="118" text-anchor="middle" fill="#7c8099" font-family="ui-monospace,Menlo,monospace" font-size="12">write code · Save</text>
-  <text x="248" y="108" fill="rgba(255,255,255,0.25)" font-family="ui-sans-serif,sans-serif" font-size="22">’</text>
+  <text x="130" y="118" text-anchor="middle" fill="#7c8099" font-family="ui-monospace,Menlo,monospace" font-size="12">write code ï¿½ Save</text>
+  <text x="248" y="108" fill="rgba(255,255,255,0.25)" font-family="ui-sans-serif,sans-serif" font-size="22">ï¿½</text>
   <rect x="276" y="48" width="196" height="104" rx="10" fill="#1a1e28" stroke="rgba(240,165,0,0.35)"/>
-  <text x="374" y="36" text-anchor="middle" fill="#7c8099" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13">2 · Disk</text>
+  <text x="374" y="36" text-anchor="middle" fill="#7c8099" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13">2 ï¿½ Disk</text>
   <text x="374" y="88" text-anchor="middle" fill="#e8eaf0" font-family="ui-monospace,Menlo,monospace" font-size="14">file on disk</text>
   <text x="374" y="118" text-anchor="middle" fill="#7c8099" font-family="ui-monospace,Menlo,monospace" font-size="12">.py is plain text</text>
-  <text x="492" y="108" fill="rgba(255,255,255,0.25)" font-family="ui-sans-serif,sans-serif" font-size="22">’</text>
+  <text x="492" y="108" fill="rgba(255,255,255,0.25)" font-family="ui-sans-serif,sans-serif" font-size="22">ï¿½</text>
   <rect x="520" y="48" width="168" height="104" rx="10" fill="#1a1e28" stroke="rgba(46,194,126,0.35)"/>
-  <text x="604" y="36" text-anchor="middle" fill="#7c8099" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13">3 · Terminal</text>
+  <text x="604" y="36" text-anchor="middle" fill="#7c8099" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13">3 ï¿½ Terminal</text>
   <text x="604" y="88" text-anchor="middle" fill="#e8eaf0" font-family="ui-monospace,Menlo,monospace" font-size="13">python3</text>
   <text x="604" y="112" text-anchor="middle" fill="#e8eaf0" font-family="ui-monospace,Menlo,monospace" font-size="13">hello.py</text>
   <text x="360" y="182" text-anchor="middle" fill="#5c6078" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12">cd into the folder first so Python finds your file.</text>

@@ -1,159 +1,171 @@
-import { useState } from 'react'
 import CodeBlock from './CodeBlock'
 
-export default function LessonModule({ steps }) {
-  const [index, setIndex] = useState(0)
+/** @param {{ steps: object[], variant?: 'paper' | 'ink', noRounded?: boolean }} props */
+export default function LessonModule({ steps, variant = 'paper', noRounded = false }) {
   const total = steps?.length ?? 0
-  const step = total ? steps[index] : null
+  const ink = variant === 'ink'
 
-  if (!total || !step) {
+  if (!total) {
     return (
-      <p className="rounded-card border border-white/[0.08] bg-surface/60 p-5 text-base text-muted">
+      <p
+        className={
+          ink
+            ? 'border border-paper/15 p-5 text-base text-paper/65'
+            : `${noRounded ? '' : 'rounded-card '}border border-ink/20 bg-ink/[0.02] p-5 text-base text-ink/70`
+        }
+      >
         Step-by-step content for this class is not ready yet.
       </p>
     )
   }
 
-  const atStart = index === 0
-  const atEnd = index === total - 1
-
   return (
     <div className="space-y-8">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="font-mono text-xs uppercase tracking-wider text-muted">
-          Step {index + 1} of {total}
-        </p>
-        <div className="flex gap-1.5" role="tablist" aria-label="Lesson parts">
-          {steps.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              role="tab"
-              aria-selected={i === index}
-              aria-label={`Go to step ${i + 1}`}
-              onClick={() => setIndex(i)}
-              className={`h-2 w-2 rounded-full transition-colors sm:h-2 sm:w-2 ${
-                i === index ? 'bg-mon' : 'bg-white/[0.15] hover:bg-white/[0.25]'
+      {steps.map((step, i) => (
+        <div
+          className={
+            ink
+              ? `${noRounded ? '' : 'rounded-card '}border border-paper/15 bg-paper/[0.06] p-6 sm:p-8`
+              : `${noRounded ? '' : 'rounded-card '}border border-ink/20 bg-ink/[0.02] p-6 sm:p-8`
+          }
+          key={`${step.title}-${i}`}
+        >
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <h2
+              className={`font-serif text-2xl font-medium leading-tight sm:text-[1.65rem] ${
+                ink ? 'text-paper' : 'text-ink'
               }`}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div
-        className="rounded-card border border-white/[0.1] bg-surface/50 p-6 sm:p-8"
-        key={index}
-      >
-        <div className="flex flex-wrap items-start justify-between gap-3">
-          <h2 className="font-display text-2xl font-bold leading-tight text-primary sm:text-[1.65rem]">{step.title}</h2>
-          {step.timing ? (
-            <span className="shrink-0 rounded-pill border border-white/[0.12] px-2.5 py-1 font-mono text-[11px] uppercase tracking-wide text-muted">
-              {step.timing}
-            </span>
-          ) : null}
-        </div>
-        <p className="mt-5 max-w-prose whitespace-pre-line text-pretty text-base leading-[1.7] text-muted sm:text-[17px]">
-          {step.content}
-        </p>
-
-        {step.video?.youtubeId ? (
-          <div className="mt-6 space-y-2">
-            <div className="aspect-video w-full overflow-hidden rounded-elem border border-white/[0.1] bg-black/50">
-              <iframe
-                className="h-full w-full"
-                src={`https://www.youtube-nocookie.com/embed/${step.video.youtubeId}?rel=0`}
-                title={step.video.title || step.title}
-                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="strict-origin-when-cross-origin"
-              />
-            </div>
-            {step.video.caption ? (
-              <p className="text-sm leading-relaxed text-muted">{step.video.caption}</p>
+            >
+              {step.title}
+            </h2>
+            {step.timing ? (
+              <span
+                className={`shrink-0 border px-2.5 py-1 font-mono text-[11px] uppercase tracking-wide ${
+                  ink ? 'border-paper/25 text-paper/60' : 'border-ink/20 text-ink/55'
+                }`}
+              >
+                {step.timing}
+              </span>
             ) : null}
           </div>
-        ) : null}
+          <p
+            className={`mt-5 max-w-prose whitespace-pre-line text-pretty text-base leading-[1.7] sm:text-[17px] ${
+              ink ? 'text-paper/85' : 'text-ink/80'
+            }`}
+          >
+            {step.content}
+          </p>
 
-        {step.images?.length ? (
-          <div className="mt-6 space-y-4">
-            {step.images.map((img) => (
-              <figure key={img.src} className="space-y-2">
-                <img
-                  src={img.src}
-                  alt={img.alt}
-                  className="w-full rounded-elem border border-white/[0.08] bg-surface2/30"
+          {step.video?.youtubeId ? (
+            <div className="mt-6 space-y-2">
+              <div
+                className={`aspect-video w-full overflow-hidden border bg-bg ${
+                  ink ? 'border-paper/20' : 'border-ink/20'
+                }`}
+              >
+                <iframe
+                  className="h-full w-full"
+                  src={`https://www.youtube-nocookie.com/embed/${step.video.youtubeId}?rel=0`}
+                  title={step.video.title || step.title}
+                  allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
                   loading="lazy"
+                  referrerPolicy="strict-origin-when-cross-origin"
                 />
-                {img.caption ? (
-                  <figcaption className="text-center text-sm text-muted">{img.caption}</figcaption>
-                ) : null}
-              </figure>
-            ))}
-          </div>
-        ) : null}
+              </div>
+              {step.video.caption ? (
+                <p className={`text-sm leading-relaxed ${ink ? 'text-paper/55' : 'text-ink/60'}`}>{step.video.caption}</p>
+              ) : null}
+            </div>
+          ) : null}
 
-        {step.links?.length ? (
-          <ul className="mt-6 space-y-2">
-            {step.links.map((link) => (
-              <li key={link.href}>
-                <a
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-sm text-mon underline decoration-mon/40 underline-offset-2 transition-colors hover:text-primary hover:decoration-primary/50"
-                >
-                  {link.label}
-                  <span className="sr-only"> (opens in a new tab)</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : null}
+          {step.images?.length ? (
+            <div className="mt-6 space-y-4">
+              {step.images.map((img) => (
+                <figure key={img.src} className="space-y-2">
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    className={`w-full border ${ink ? 'border-paper/20 bg-paper/[0.04]' : 'border-ink/20 bg-ink/[0.02]'}`}
+                    loading="lazy"
+                  />
+                  {img.caption ? (
+                    <figcaption className={`text-center text-sm ${ink ? 'text-paper/55' : 'text-ink/60'}`}>
+                      {img.caption}
+                    </figcaption>
+                  ) : null}
+                </figure>
+              ))}
+            </div>
+          ) : null}
 
-        {step.tips?.length ? (
-          <div className="mt-6 rounded-elem border border-wed/30 bg-wed/[0.06] px-5 py-4">
-            <p className="font-mono text-xs uppercase tracking-wider text-wed">Tips</p>
-            <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-primary/95">
-              {step.tips.map((t, i) => (
-                <li key={i}>{t}</li>
+          {step.links?.length ? (
+            <ul className="mt-6 space-y-2">
+              {step.links.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={
+                      ink
+                        ? 'font-mono text-sm text-sun underline decoration-sun/50 underline-offset-2 transition-colors hover:text-paper hover:decoration-paper/50'
+                        : 'font-mono text-sm text-mon underline decoration-mon/40 underline-offset-2 transition-colors hover:text-ink hover:decoration-ink/40'
+                    }
+                  >
+                    {link.label}
+                    <span className="sr-only"> (opens in a new tab)</span>
+                  </a>
+                </li>
               ))}
             </ul>
-          </div>
-        ) : null}
+          ) : null}
 
-        {step.code ? (
-          <div className="mt-6">
-            <CodeBlock lang={step.code.lang} snippet={step.code.snippet} />
-          </div>
-        ) : null}
+          {step.tips?.length ? (
+            <div
+              className={
+                ink
+                  ? 'mt-6 border border-sun/35 bg-sun/10 px-5 py-4'
+                  : 'mt-6 border border-wed/30 bg-wed/[0.06] px-5 py-4'
+              }
+            >
+              <p className={`font-mono text-[11px] uppercase tracking-[0.2em] ${ink ? 'text-sun' : 'text-wed'}`}>Tips</p>
+              <ul
+                className={`mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed ${
+                  ink ? 'text-paper/90' : 'text-ink/90'
+                }`}
+              >
+                {step.tips.map((t, tIdx) => (
+                  <li key={tIdx}>{t}</li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
 
-        {step.task ? (
-          <div className="mt-7 border-l-4 border-thu/60 bg-thu/[0.06] px-5 py-4">
-            <p className="font-mono text-xs uppercase tracking-wider text-thu">Try it</p>
-            <p className="mt-2 text-base leading-relaxed text-primary">{step.task}</p>
-          </div>
-        ) : null}
-      </div>
+          {step.code ? (
+            <div className="mt-6">
+              <CodeBlock lang={step.code.lang} snippet={step.code.snippet} tone={ink ? 'onInk' : 'light'} />
+            </div>
+          ) : null}
 
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <button
-          type="button"
-          onClick={() => setIndex((i) => Math.max(0, i - 1))}
-          disabled={atStart}
-          className="min-h-12 rounded-elem border border-white/[0.12] bg-surface px-5 font-mono text-base text-primary transition-colors enabled:hover:border-white/[0.2] enabled:hover:bg-surface2 disabled:cursor-not-allowed disabled:opacity-40"
-        >
-          ← Back
-        </button>
-        <button
-          type="button"
-          onClick={() => setIndex((i) => Math.min(total - 1, i + 1))}
-          disabled={atEnd}
-          className="min-h-12 rounded-elem border border-mon/35 bg-mon/15 px-5 font-mono text-base text-primary transition-colors enabled:hover:border-mon/50 enabled:hover:bg-mon/25 disabled:cursor-not-allowed disabled:opacity-40"
-        >
-          Next →
-        </button>
-      </div>
+          {step.task ? (
+            <div
+              className={
+                ink
+                  ? 'mt-7 border-l-4 border-sun/70 bg-sun/10 px-5 py-4'
+                  : 'mt-7 border-l-4 border-thu/60 bg-thu/[0.06] px-5 py-4'
+              }
+            >
+              <p
+                className={`font-mono text-[11px] uppercase tracking-[0.2em] ${ink ? 'text-sun' : 'text-thu'}`}
+              >
+                Try it
+              </p>
+              <p className={`mt-2 text-base leading-relaxed ${ink ? 'text-paper/90' : 'text-ink/90'}`}>{step.task}</p>
+            </div>
+          ) : null}
+        </div>
+      ))}
     </div>
   )
 }

@@ -1,0 +1,403 @@
+/**
+ * CodeMoldova 2026 palette — real hex + !important so colors always show
+ * (does not depend on Tailwind detecting class names).
+ */
+:root {
+  --cm-paper: #ffffff;
+  --cm-surface: #13161e;
+  --cm-ink: #000000;
+  --cm-dart: #097251;
+  --cm-val: #ef453f;
+  --cm-sun: #f69c40;
+  --cm-ube: #dd8cf1;
+  --cm-mon: #4f7cff;
+  /* Same as Tailwind `wed` / `thu` (schedule days); used for Resources tag chips. */
+  --cm-wed: #2ec27e;
+  --cm-thu: #f0a500;
+  /** Home roadmap rows + Roadmap week buttons: shared neutral hover on paper. */
+  --cm-row-hover: rgba(0, 0, 0, 0.055);
+}
+
+/* ─── Home marketing ─────────────────────────────────────────────────────── */
+
+.hm-page {
+  background-color: var(--cm-paper) !important;
+  /* Intentionally no `color: … !important` here — it defeated Tailwind `text-dart`, `text-sun`, etc. on
+     Resources and anywhere we use accent text. Default ink comes from `body` in index.css. */
+}
+
+/* Mobile nav sheet: portaled + fixed; solid fill so nothing bleeds from page layers. */
+.cm-nav-mobile-panel--light {
+  background-color: var(--cm-paper) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+.cm-nav-mobile-panel--dark {
+  background-color: var(--cm-surface) !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+.hm-marquee {
+  background-color: var(--cm-paper) !important;
+  color: var(--cm-ink) !important;
+}
+
+.hm-marquee svg {
+  color: var(--cm-ink) !important;
+}
+
+.hm-marquee-window {
+  overflow: hidden;
+}
+
+.hm-marquee-track {
+  display: flex;
+  width: max-content;
+  flex-wrap: nowrap;
+  align-items: center;
+  animation: hm-marquee-scroll 48s linear infinite;
+}
+
+@keyframes hm-marquee-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-marquee-track {
+    animation: none;
+  }
+}
+
+.hm-pill-free {
+  background-color: var(--cm-val) !important;
+  border-color: var(--cm-val) !important;
+  color: var(--cm-paper) !important;
+}
+
+.hm-val {
+  color: var(--cm-val) !important;
+}
+
+.hm-btn-dart {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--cm-dart) !important;
+  color: var(--cm-paper) !important;
+}
+
+.hm-btn-dart::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: var(--cm-val) !important;
+  transform: scaleX(0);
+  transform-origin: left center;
+  backface-visibility: hidden;
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hm-btn-dart:hover::before,
+.hm-btn-dart:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.hm-btn-dart > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hm-btn-dart svg {
+  color: var(--cm-paper) !important;
+}
+
+.hm-pillar-ube {
+  background-color: var(--cm-ube) !important;
+}
+
+.hm-pillar-sun {
+  background-color: var(--cm-sun) !important;
+}
+
+.hm-pillar-val {
+  background-color: var(--cm-val) !important;
+}
+
+.hm-icon-ube {
+  color: var(--cm-ube) !important;
+}
+
+.hm-icon-sun {
+  color: var(--cm-sun) !important;
+}
+
+.hm-icon-val {
+  color: var(--cm-val) !important;
+}
+
+.hm-week-row:hover {
+  background-color: var(--cm-row-hover) !important;
+}
+
+/** Resources (and other paper surfaces): neutral row hover, same as week rows. */
+.cm-paper-hover:hover {
+  background-color: var(--cm-row-hover) !important;
+}
+
+.hm-check {
+  color: var(--cm-val) !important;
+}
+
+.hm-how-rail {
+  border-left-width: 2px !important;
+  border-left-style: solid !important;
+}
+
+.hm-how-rail--val {
+  border-left-color: var(--cm-val) !important;
+}
+
+.hm-how-rail--ube {
+  border-left-color: var(--cm-ube) !important;
+}
+
+.hm-how-rail--sun {
+  border-left-color: var(--cm-sun) !important;
+}
+
+.hm-slack-band {
+  background-color: var(--cm-dart) !important;
+  color: var(--cm-paper) !important;
+}
+
+.hm-slack-muted {
+  color: rgba(255, 255, 255, 0.62) !important;
+}
+
+.hm-slack-body {
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+
+.hm-slack-accent {
+  color: var(--cm-sun) !important;
+}
+
+.hm-btn-sun {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-color: var(--cm-paper) !important;
+  color: var(--cm-dart) !important;
+}
+
+.hm-btn-sun::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: var(--cm-sun) !important;
+  transform: scaleX(0);
+  transform-origin: left center;
+  backface-visibility: hidden;
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hm-btn-sun:hover::before,
+.hm-btn-sun:focus-visible::before {
+  transform: scaleX(1);
+}
+
+.hm-btn-sun > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hm-btn-sun svg {
+  color: var(--cm-dart) !important;
+}
+
+/* Hero Join Slack: outline by default, sun fill on hover (must beat .hm-page background). */
+.hm-hero-join-slack {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-color: var(--cm-ink) !important;
+  color: var(--cm-ink) !important;
+  background-color: transparent !important;
+  transition: border-color 0.35s ease;
+}
+
+.hm-hero-join-slack::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-color: var(--cm-sun) !important;
+  transform: scaleX(0);
+  transform-origin: left center;
+  backface-visibility: hidden;
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hm-hero-join-slack > * {
+  position: relative;
+  z-index: 1;
+}
+
+.hm-hero-join-slack:hover,
+.hm-hero-join-slack:focus-visible,
+.hm-hero-join-slack:active {
+  border-color: var(--cm-sun) !important;
+  color: var(--cm-ink) !important;
+}
+
+.hm-hero-join-slack:hover::before,
+.hm-hero-join-slack:focus-visible::before,
+.hm-hero-join-slack:active::before {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-btn-dart::before,
+  .hm-btn-sun::before,
+  .hm-hero-join-slack::before {
+    transition-duration: 0.01ms;
+  }
+}
+
+/* Nav / footer: logo terminal pixel */
+.cm-logo-term-light {
+  color: var(--cm-ink) !important;
+}
+
+.cm-logo-term-dark {
+  color: var(--cm-mon) !important;
+}
+
+/*
+ * Shared: Bright Ube sweep behind the label on hover/focus-visible (Nav + Footer).
+ * Does not set font-weight, underline, or text color — only the highlight layer.
+ * z-index: -1 + isolation keeps the wash under the link’s own text and backgrounds.
+ */
+.cm-link-sweep {
+  position: relative;
+  isolation: isolate;
+  transform: translateZ(0);
+}
+
+.cm-link-sweep::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: 0;
+  background-color: var(--cm-ube);
+  transform: translate3d(0, 0, 0) scaleX(0);
+  transform-origin: left center;
+  backface-visibility: hidden;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cm-link-sweep:hover::before,
+.cm-link-sweep:focus-visible::before {
+  transform: translate3d(0, 0, 0) scaleX(1);
+}
+
+/* Footer partnership on dark shell: keep label readable (highlight only). */
+.cm-link-sweep--dark {
+  color: var(--cm-paper) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cm-link-sweep::before {
+    transition-duration: 0.01ms;
+  }
+}
+
+/* Roadmap page: week row button hover (same wash as `.hm-week-row` on Home). */
+.rm-week-row-btn:hover {
+  background-color: var(--cm-row-hover) !important;
+}
+
+/* ─── Resources page — explicit palette (same `!important` + tokens as other marketing).      */
+/* Renders on `/resources` only; avoids relying on Tailwind order and matches visible tints. */
+.res-page .res-tile-dart {
+  border-top: 4px solid var(--cm-dart) !important;
+}
+.res-page .res-tile-sun {
+  border-top: 4px solid var(--cm-sun) !important;
+}
+.res-page .res-tile-ube {
+  border-top: 4px solid var(--cm-ube) !important;
+}
+.res-page .res-row {
+  border-left: 4px solid transparent !important;
+  transition: border-color 0.2s ease !important;
+}
+/* Hover bar = same core token as the row’s tag chip */
+.res-page .res-row[data-res-kind='docs']:hover {
+  border-left-color: var(--cm-mon) !important;
+}
+.res-page .res-row[data-res-kind='video']:hover {
+  border-left-color: var(--cm-sun) !important;
+}
+.res-page .res-row[data-res-kind='book']:hover {
+  border-left-color: var(--cm-thu) !important;
+}
+.res-page .res-row[data-res-kind='tool']:hover {
+  border-left-color: var(--cm-ube) !important;
+}
+.res-page .res-row[data-res-kind='course']:hover {
+  border-left-color: var(--cm-wed) !important;
+}
+.res-page .res-row[data-res-kind='article']:hover {
+  border-left-color: var(--cm-val) !important;
+}
+.res-page .res-row[data-res-kind='setup']:hover {
+  border-left-color: var(--cm-dart) !important;
+}
+.res-page .res-tabline {
+  background-color: var(--cm-val) !important;
+  height: 3px;
+}
+/* Tag chips: fills = chromatic core (`--cm-mon` … `--cm-thu` in :root, same as Tailwind);
+   label text = `--cm-paper` or `--cm-ink` only. */
+.res-page .res-tag {
+  border: 1px solid transparent !important;
+}
+.res-page .res-tag--docs {
+  background-color: var(--cm-mon) !important;
+  color: var(--cm-paper) !important;
+}
+.res-page .res-tag--video {
+  background-color: var(--cm-sun) !important;
+  color: var(--cm-ink) !important;
+}
+.res-page .res-tag--book {
+  background-color: var(--cm-thu) !important;
+  color: var(--cm-ink) !important;
+}
+.res-page .res-tag--tool {
+  background-color: var(--cm-ube) !important;
+  color: var(--cm-ink) !important;
+}
+.res-page .res-tag--course {
+  background-color: var(--cm-wed) !important;
+  color: var(--cm-paper) !important;
+}
+.res-page .res-tag--article {
+  background-color: var(--cm-val) !important;
+  color: var(--cm-paper) !important;
+}
+.res-page .res-tag--setup {
+  background-color: var(--cm-dart) !important;
+  color: var(--cm-paper) !important;
+}

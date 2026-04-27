@@ -1,211 +1,316 @@
-import { useState, useId } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import PageChrome from '../components/PageChrome.jsx'
 import { phases } from '../data/curriculum'
 import { sessions } from '../data/schedule'
+import LazyInView from '../components/LazyInView.jsx'
+import PixelIcon from '../components/PixelIcon.jsx'
+import ScrollReveal from '../components/ScrollReveal.jsx'
+import { formatWeekRangeString } from '../lib/formatWeekDateRange.js'
 
-const DAY_COLORS = {
-  mon: { accent: 'text-mon', border: 'border-mon/30', bg: 'bg-mon/10', bar: 'bg-mon', dayName: 'Monday', typeShort: 'Lecture' },
-  wed: { accent: 'text-wed', border: 'border-wed/30', bg: 'bg-wed/10', bar: 'bg-wed', dayName: 'Wednesday', typeShort: 'AI' },
-  thu: { accent: 'text-thu', border: 'border-thu/30', bg: 'bg-thu/10', bar: 'bg-thu', dayName: 'Thursday', typeShort: 'Build' },
+const DAY_META = {
+  mon: {
+    label: 'Monday',
+    short: 'Mon',
+    type: 'Workshop',
+    swatch: '#DD8CF1',
+    icon: 'terminal',
+    substatement: 'New concepts, live demos, and the core lesson for the week.',
+  },
+  wed: {
+    label: 'Wednesday',
+    short: 'Wed',
+    type: 'AI Day',
+    swatch: '#F69C40',
+    icon: 'sparkle',
+    substatement: 'Hands-on with AI tools: prompt, test, and verify outputs together.',
+  },
+  thu: {
+    label: 'Thursday',
+    short: 'Thu',
+    type: 'Build',
+    swatch: '#EF453F',
+    icon: 'rocket',
+    substatement: 'Project day: ship a small working build and level it up.',
+  },
 }
 
-/** Short date for the day line, e.g. "11 May". Matches en-GB style used elsewhere. */
-function formatCardDate(iso) {
-  if (!iso) return '?'
+function parseISO(iso) {
+  if (!iso) return null
   const [y, m, d] = iso.split('-').map(Number)
-  if (!Number.isFinite(y) || !Number.isFinite(m) || !Number.isFinite(d)) return iso
-  return new Date(y, m - 1, d).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+  if (!Number.isFinite(y)) return null
+  return new Date(y, m - 1, d)
 }
 
-const PHASE_COLORS = ['#6c63ff', '#3eb8c0', '#e05c97', '#f0a500']
+function formatShortDate(iso) {
+  const d = parseISO(iso)
+  if (!d) return '?'
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
+}
 
-function getCurrentWeek() {
+function getSessionsForWeek(weekNum) {
+  return ['mon', 'wed', 'thu'].reduce((acc, day) => {
+    const s = sessions.find((x) => x.week === weekNum && x.day === day)
+    if (s) acc[day] = s
+    return acc
+  }, {})
+}
+
+function getCohortStatus() {
   const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const sortedDates = sessions.map((s) => parseISO(s.date)).filter(Boolean).sort((a, b) => a - b)
+  if (!sortedDates.length) return { status: 'upcoming', currentWeek: 1 }
+  const first = sortedDates[0]
+  const last = sortedDates[sortedDates.length - 1]
+  if (today < first) return { status: 'upcoming', currentWeek: 1 }
+  if (today > last) return { status: 'complete', currentWeek: 8 }
   const upcoming = sessions
-    .filter(s => new Date(s.date) >= today)
-    .sort((a, b) => new Date(a.date) - new Date(b.date))
-  return upcoming.length ? upcoming[0].week : null
+    .map((s) => ({ ...s, parsed: parseISO(s.date) }))
+    .filter((s) => s.parsed && s.parsed >= today)
+    .sort((a, b) => a.parsed - b.parsed)
+  return { status: 'live', currentWeek: upcoming[0]?.week ?? 1 }
 }
 
-function DayCard({ week, day, session }) {
-  const c = DAY_COLORS[day]
+function DayCardLarge({ week, day, session }) {
+  const meta = DAY_META[day]
+  if (!session) return null
   return (
     <Link
       to={`/lesson/${week}/${day}`}
-      className={`group relative flex min-h-[44px] flex-col overflow-hidden rounded-card border border-white/[0.08] bg-surface p-5 transition-all duration-200 active:border-white/[0.14] active:bg-surface2 sm:p-6 sm:hover:-translate-y-0.5 sm:hover:border-white/[0.14] sm:focus-visible:-translate-y-0.5 sm:focus-visible:border-white/[0.14]`}
+      className="group relative flex h-full min-h-[420px] flex-col justify-between overflow-hidden p-6 text-ink transition-transform duration-300 hover:-translate-y-1 sm:min-h-[460px] sm:p-7"
+      style={{ backgroundColor: meta.swatch }}
     >
-      <div className={`absolute inset-x-0 top-0 h-0.5 ${c.bar} opacity-60`} />
-      <div className={`mb-2 font-mono text-[11px] font-medium uppercase tracking-widest ${c.accent}`}>
-        {c.dayName} · {formatCardDate(session.date)} · {c.typeShort}
+      <div className="flex items-start justify-between">
+        <div>
+          <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/70">
+            <PixelIcon icon={meta.icon} size={12} className="text-ink" />
+            <span>
+              {meta.short} · {meta.type}
+            </span>
+          </p>
+          <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-ink/60">{formatShortDate(session.date)}</p>
+        </div>
+        <PixelIcon icon="arrow" size={16} className="text-ink/50 transition-opacity group-hover:text-ink" />
       </div>
-      <div className="mb-2 font-display text-base font-bold leading-snug text-primary sm:text-[17px]">
-        {session.title}
+      <div>
+        <h3 className="font-serif text-3xl font-medium leading-[1.05] tracking-tight sm:text-4xl">{session.label}</h3>
+        <p className="mt-4 max-w-[34ch] text-sm leading-relaxed text-ink/75">{meta.substatement}</p>
+        <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.3em] text-ink/60 opacity-0 transition-opacity group-hover:opacity-100">
+          Go to lesson →
+        </p>
       </div>
-      <p className="text-sm leading-relaxed text-muted sm:text-[15px]">{session.preview ?? session.desc}</p>
-      <p className="mt-3 font-mono text-xs text-muted opacity-100 transition-opacity duration-200 sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
-        Open lesson
-      </p>
     </Link>
   )
 }
 
-function Chevron({ open }) {
+function ThisWeekHero({ status, currentWeek }) {
+  const weekSessions = useMemo(() => getSessionsForWeek(currentWeek), [currentWeek])
+  const heroRangeStr = useMemo(() => formatWeekRangeString(weekSessions), [weekSessions])
+
+  const eyebrow = {
+    upcoming: "Let's get started!",
+    live: `This week — Week ${String(currentWeek).padStart(2, '0')}`,
+    complete: 'Course complete',
+  }[status]
+
+  const headline = {
+    upcoming: (
+      <span className="sm:whitespace-nowrap">
+        <span className="block sm:inline">The first week. </span>
+        <em className="block font-normal italic sm:inline hm-val">May 11.</em>
+      </span>
+    ),
+    live: (
+      <>
+        What you&apos;re doing <em className="hm-val italic">this week.</em>
+      </>
+    ),
+    complete: (
+      <>
+        Demo Day shipped. <em className="hm-val italic">Cohort 2026.</em>
+      </>
+    ),
+  }[status]
+
   return (
-    <span
-      className={`inline-block shrink-0 text-muted transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
-      aria-hidden
-    >
-      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-muted">
-        <path
-          d="M5 7.5L10 12.5L15 7.5"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    </span>
+    <section className="border-b border-ink">
+      <ScrollReveal className="border-b border-ink py-12 sm:py-16" rootMargin="0px 0px 10% 0px">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
+          <div>
+            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">{eyebrow}</p>
+            <h1 className="mt-3 font-serif text-[clamp(2.25rem,6vw,4.5rem)] font-medium leading-[1] tracking-tight text-ink">{headline}</h1>
+          </div>
+          {heroRangeStr ? (
+            <p className="w-full whitespace-nowrap text-right font-mono text-[11px] uppercase tracking-[0.25em] text-ink/60 sm:min-w-0 sm:overflow-x-auto">
+              {heroRangeStr}
+            </p>
+          ) : (
+            <p className="w-full text-right font-mono text-[11px] uppercase tracking-[0.25em] text-ink/60">Schedule TBA</p>
+          )}
+        </div>
+      </ScrollReveal>
+
+      {status === 'complete' ? (
+        <ScrollReveal className="py-16 sm:py-20" delayMs={80} rootMargin="0px 0px 10% 0px">
+          <p className="max-w-2xl text-lg leading-relaxed text-ink/80">
+            The 2026 cohort wrapped on July 1. Browse the full roadmap below, or check out what students built on Demo Day.
+          </p>
+        </ScrollReveal>
+      ) : (
+        <div className="grid grid-cols-1 gap-4 py-10 sm:grid-cols-3 sm:gap-5 sm:py-14">
+          {['mon', 'wed', 'thu'].map((day, i) => (
+            <ScrollReveal
+              key={day}
+              className="h-full min-h-0"
+              delayMs={100 + i * 130}
+              hiddenTranslate="translate-y-6"
+              rootMargin="0px 0px 15% 0px"
+            >
+              <DayCardLarge week={currentWeek} day={day} session={weekSessions[day]} />
+            </ScrollReveal>
+          ))}
+        </div>
+      )}
+    </section>
   )
 }
 
-function WeekRow({ week, currentWeek, isOpen, onToggle }) {
-  const uid = useId()
-  const panelId = `week-panel-${week.num}-${uid}`
-  const triggerId = `week-trigger-${week.num}-${uid}`
-
-  const isCurrent = week.num === currentWeek
-
-  const HeaderInner = (
-    <>
-      <div className="flex min-w-0 items-center gap-3 sm:gap-4">
-        <div className="flex items-baseline gap-2">
-          <div className="font-mono text-xs uppercase tracking-wider text-muted">Wk</div>
-          <div className="font-display text-3xl font-extrabold leading-none text-primary">{week.num}</div>
-        </div>
-      </div>
-      <Chevron open={isOpen} />
-    </>
-  )
-
-  const headerClass =
-    'flex w-full min-h-[3rem] items-center justify-between gap-3 px-5 py-4 text-left outline-none transition-colors focus-visible:ring-2 focus-visible:ring-mon/50 focus-visible:ring-offset-2 focus-visible:ring-offset-bg bg-surface/60 hover:bg-surface2/80 active:bg-surface2'
+function WeekRow({ weekNum, isCurrent, isOpen, onToggle, revealDelay = 0 }) {
+  const weekSessions = getSessionsForWeek(weekNum)
+  const monTitle = weekSessions.mon?.label ?? '—'
 
   return (
-    <div
-      aria-current={isCurrent ? 'true' : undefined}
-      className={`overflow-hidden rounded-card border transition-colors ${
-        isCurrent ? 'border-mon/25 bg-mon/[0.04]' : 'border-white/[0.08] bg-surface/40'
-      }`}
-    >
-      <div className="divide-y divide-white/[0.08]">
+    <li className={`border-b border-ink ${isCurrent ? 'bg-val/[0.04]' : ''}`}>
+      <ScrollReveal
+        className="block"
+        delayMs={revealDelay}
+        hiddenTranslate="translate-y-4"
+        threshold={0.06}
+      >
         <button
           type="button"
-          id={triggerId}
-          aria-expanded={isOpen}
-          aria-controls={panelId}
           onClick={onToggle}
-          className={headerClass}
+          aria-expanded={isOpen}
+          aria-current={isCurrent ? 'true' : undefined}
+          title={isOpen ? 'Click to collapse this week' : 'Click to expand this week'}
+          className="rm-week-row-btn group relative flex w-full max-w-full cursor-pointer items-center gap-3 px-0 py-7 text-left transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dart/30 focus-visible:ring-offset-2 focus-visible:ring-offset-paper sm:gap-4 sm:py-9 md:gap-8"
         >
-          {HeaderInner}
+          <span className="shrink-0 font-serif text-5xl font-medium leading-none tracking-tight tabular-nums sm:leading-none sm:text-7xl">
+            {String(weekNum).padStart(2, '0')}
+          </span>
+          <span className="flex min-w-0 flex-1 items-center justify-between gap-3 sm:gap-4">
+            <span className="min-w-0 flex-1 font-serif text-xl leading-tight tracking-tight sm:text-3xl">
+              {monTitle}
+            </span>
+            <PixelIcon
+              icon="arrow"
+              size={12}
+              className={`shrink-0 text-current transition-transform duration-200 ease-out ${isOpen ? 'rotate-90' : 'rotate-0 group-hover:rotate-90'}`}
+            />
+          </span>
         </button>
+      </ScrollReveal>
 
-        {isOpen && (
-          <div id={panelId} role="region" aria-labelledby={triggerId}>
-            <div className="p-4 sm:p-5">
-              <div className="grid grid-cols-1 gap-4 lg:grid-cols-[minmax(0,72px)_1fr_1fr_1fr] lg:items-stretch lg:gap-3">
-                <div className="hidden lg:flex lg:flex-col lg:items-center lg:justify-center lg:rounded-card lg:border lg:border-white/[0.08] lg:bg-surface lg:px-2 lg:py-5">
-                  <div className="font-mono text-xs uppercase tracking-wider text-muted">Wk</div>
-                  <div className="font-display text-3xl font-extrabold leading-none text-primary">{week.num}</div>
-                </div>
-
-                {['mon', 'wed', 'thu'].map((day) =>
-                  week[day] ? (
-                    <DayCard key={day} week={week.num} day={day} session={week[day]} />
-                  ) : (
-                    <div key={day} className="hidden lg:block" />
-                  ),
-                )}
-              </div>
-            </div>
+      {isOpen ? (
+        <div className="border-t border-ink bg-paper py-6 sm:py-8">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
+            {['mon', 'wed', 'thu'].map((day) => {
+              const s = weekSessions[day]
+              const meta = DAY_META[day]
+              if (!s) return <div key={day} className="hidden sm:block" />
+              return (
+                <Link
+                  key={day}
+                  to={`/lesson/${weekNum}/${day}`}
+                  className="group flex flex-col justify-between border border-ink bg-paper p-5 transition-colors hover:bg-ink hover:text-paper"
+                >
+                  <div>
+                    <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/60 group-hover:text-paper/60">
+                      <span aria-hidden className="inline-block h-2 w-2" style={{ backgroundColor: meta.swatch }} />
+                      <span>
+                        {meta.label} · {meta.type}
+                      </span>
+                    </p>
+                    <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-ink/50 group-hover:text-paper/50">{formatShortDate(s.date)}</p>
+                    <h4 className="mt-4 font-serif text-xl font-medium leading-tight tracking-tight">{s.label}</h4>
+                  </div>
+                  <p className="mt-6 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-ink/50 group-hover:text-paper/70">
+                    <span>Open lesson</span>
+                    <PixelIcon icon="arrow" size={10} className="text-current" />
+                  </p>
+                </Link>
+              )
+            })}
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      ) : null}
+    </li>
+  )
+}
+
+function CompleteRoadmap({ currentWeek }) {
+  const [openWeeks, setOpenWeeks] = useState(() => new Set(currentWeek != null ? [currentWeek] : []))
+  const toggle = (n) =>
+    setOpenWeeks((prev) => {
+      const next = new Set(prev)
+      next.has(n) ? next.delete(n) : next.add(n)
+      return next
+    })
+
+  let weekRevealIndex = 0
+
+  return (
+    <section id="full-roadmap" className="border-b border-ink py-20 lg:py-28">
+      <ScrollReveal className="mb-10 flex items-end justify-between gap-6 border-b border-ink pb-8">
+        <div>
+          <h2 className="font-serif text-5xl font-medium tracking-tight text-ink sm:text-6xl">The Roadmap</h2>
+        </div>
+        <p className="hidden font-mono text-xs uppercase tracking-[0.25em] text-ink/60 sm:block">May 11 — Jul 01</p>
+      </ScrollReveal>
+
+      {phases.map((phase, phaseIdx) => (
+        <div key={phase.id ?? phaseIdx} className="mt-14 first:mt-0">
+          <ScrollReveal
+            className="mb-3 flex flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-ink pt-6"
+            delayMs={phaseIdx * 70}
+            hiddenTranslate="translate-y-5"
+          >
+            <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">Phase {String(phaseIdx + 1).padStart(2, '0')}</span>
+            <h3 className="font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">{phase.title}</h3>
+          </ScrollReveal>
+
+          <ul className="border-t border-ink">
+            {phase.weeks.map((week) => {
+              const revealDelay = 40 + weekRevealIndex * 50
+              weekRevealIndex += 1
+              return (
+                <WeekRow
+                  key={week.num}
+                  weekNum={week.num}
+                  isCurrent={week.num === currentWeek}
+                  isOpen={openWeeks.has(week.num)}
+                  onToggle={() => toggle(week.num)}
+                  revealDelay={revealDelay}
+                />
+              )
+            })}
+          </ul>
+        </div>
+      ))}
+    </section>
   )
 }
 
 export default function Roadmap() {
-  const currentWeek = getCurrentWeek()
-  const [openWeeks, setOpenWeeks] = useState(
-    () => new Set(currentWeek != null ? [currentWeek] : []),
-  )
-
-  const isWeekOpen = (weekNum) => openWeeks.has(weekNum)
-
-  const toggleWeek = (weekNum) => {
-    setOpenWeeks((prev) => {
-      const next = new Set(prev)
-      if (next.has(weekNum)) next.delete(weekNum)
-      else next.add(weekNum)
-      return next
-    })
-  }
-
+  const { status, currentWeek } = getCohortStatus()
   return (
-    <PageChrome>
-      <div className="layout-page">
-        <header className="layout-prose-heading">
-          <p className="hero-in hero-in-1 font-mono text-xs uppercase tracking-widest text-muted">Roadmap</p>
-          <h1 className="hero-in hero-in-2 mt-2 font-display text-[clamp(1.85rem,4.5vw,2.5rem)] font-extrabold leading-tight text-primary">
-            Course roadmap
-          </h1>
-          <p className="hero-in hero-in-3 mt-5 max-w-2xl text-pretty text-base leading-relaxed text-muted">
-            The course has four parts: Python, projects, the web, then your final project. Open a week to see Monday,
-            Wednesday, and Thursday. Tap a card to open that class page.
-          </p>
-        </header>
-
-        <div className="hero-in hero-in-4 mb-10 flex flex-col gap-4 border-y border-white/[0.08] py-5 text-left text-base text-muted sm:mb-12 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-8 sm:gap-y-3 sm:py-6 sm:text-center">
-        <div className="flex min-h-10 items-center gap-2.5 sm:min-h-0">
-          <div className="h-2.5 w-2.5 shrink-0 rounded-full bg-mon" /> Monday: class with new topics
-        </div>
-        <div className="flex min-h-10 items-center gap-2.5 sm:min-h-0">
-          <div className="h-2.5 w-2.5 shrink-0 rounded-full bg-wed" /> Wednesday: AI tools
-        </div>
-        <div className="flex min-h-10 items-center gap-2.5 sm:min-h-0">
-          <div className="h-2.5 w-2.5 shrink-0 rounded-full bg-thu" /> Thursday: build projects
-        </div>
+    <div className="hm-page min-h-full flex-1 font-body antialiased">
+      <div className="layout-shell max-w-6xl">
+        <ThisWeekHero status={status} currentWeek={currentWeek} />
+        <LazyInView placeholderClassName="min-h-[36rem] lg:min-h-[42rem]">
+          <CompleteRoadmap currentWeek={status === 'live' ? currentWeek : null} />
+        </LazyInView>
       </div>
-
-      <div className="pb-8 sm:pb-10">
-        {phases.map((phase, i) => (
-          <section key={phase.id} className="mb-16 sm:mb-20">
-            <div className="mb-6 flex flex-col gap-2 sm:mb-8 sm:flex-row sm:items-center sm:gap-4">
-              <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                <span className="font-mono text-xs uppercase tracking-widest text-muted">Phase {i + 1}</span>
-                <span className="font-display text-xl font-bold sm:text-2xl" style={{ color: PHASE_COLORS[i] }}>
-                  {phase.title}
-                </span>
-              </div>
-              <div className="hidden h-px flex-1 bg-white/[0.08] sm:block" />
-            </div>
-
-            <div className="flex flex-col gap-3">
-              {phase.weeks.map((week) => (
-                <WeekRow
-                  key={week.num}
-                  week={week}
-                  currentWeek={currentWeek}
-                  isOpen={isWeekOpen(week.num)}
-                  onToggle={() => toggleWeek(week.num)}
-                />
-              ))}
-            </div>
-          </section>
-        ))}
-      </div>
-      </div>
-    </PageChrome>
+    </div>
   )
 }

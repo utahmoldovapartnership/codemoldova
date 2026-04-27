@@ -1,12 +1,24 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
+  /** Home marketing colors: keep in bundle even if class names are composed dynamically. */
+  safelist: [
+    { pattern: /^(bg|text|border)-(paper|ink|dart|val|sun|ube)(\/(10|15|60|70|80|85|95))?$/ },
+    'hover:bg-dart',
+    'hover:bg-val',
+    'hover:bg-paper',
+    'hover:text-paper',
+    'group-hover:text-paper',
+    'group-hover:text-paper/70',
+  ],
   theme: {
     extend: {
       fontFamily: {
         display: ['Syne', 'sans-serif'],
         body: ['DM Sans', 'sans-serif'],
         mono: ['DM Mono', 'monospace'],
+        /** Editorial display for marketing / home (pair with `font-serif`). */
+        serif: ['Fraunces', 'Georgia', 'serif'],
       },
       colors: {
         bg: '#0d0f14',
@@ -17,6 +29,13 @@ export default {
         thu: '#f0a500',
         primary: '#e8eaf0',
         muted: '#7c8099',
+        /** 2026 home / light marketing palette (see product spec). */
+        paper: '#ffffff',
+        ink: '#000000',
+        dart: '#097251',
+        val: '#ef453f',
+        sun: '#f69c40',
+        ube: '#dd8cf1',
       },
       borderRadius: {
         card: '12px',
