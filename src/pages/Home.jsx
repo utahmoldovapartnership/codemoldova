@@ -8,7 +8,7 @@ import { slackInviteUrl } from '../data/site.js'
 /**
  * Home marketing palette (Tailwind: paper, ink, dart, val, sun, ube):
  * - White paper: page bg, type on dart (Slack block, marquee).
- * - Black ink: copy, hairline borders (`border-ink`).
+ * - Black ink: copy; rules use `border-hairline` (light gray).
  * - Dartmouth dart: marquee band, View roadmap fill, Slack section bg.
  * - Valentine val: Free Course pill, italics, outcome checks, Thu pillar.
  * - Sunshade sun: marquee hearts, Wed pillar, Slack CTA label accent + Join Slack button.
@@ -126,7 +126,7 @@ function Hero() {
             <span
               key={pill}
               className={`inline-flex min-h-9 items-center border px-4 font-mono text-[11px] uppercase tracking-[0.2em] ${
-                i === 0 ? 'hm-pill-free' : 'border-ink text-ink'
+                i === 0 ? 'hm-pill-free' : 'border-hairline text-ink'
               }`}
             >
               {pill}
@@ -177,7 +177,7 @@ function Hero() {
 
 function About() {
   return (
-    <section className="grid grid-cols-1 gap-10 border-b border-ink py-20 lg:grid-cols-12 lg:gap-12 lg:py-24">
+    <section className="grid grid-cols-1 gap-10 border-b border-hairline py-20 lg:grid-cols-12 lg:gap-12 lg:py-24">
       <ScrollReveal className="lg:col-span-5">
         <h2 className="font-serif text-5xl font-medium tracking-tight text-ink sm:text-6xl">What is this course?</h2>
       </ScrollReveal>
@@ -198,7 +198,7 @@ function About() {
 
 function WhoCanJoin() {
   return (
-    <section id="who" className="scroll-mt-28 border-b border-ink py-20 lg:py-24">
+    <section id="who" className="scroll-mt-28 border-b border-hairline py-20 lg:py-24">
       <ScrollReveal className="mb-12 max-w-2xl">
         <h2 className="font-serif text-5xl font-medium tracking-tight text-ink sm:text-6xl">Who is this for?</h2>
         <p className="mt-5 text-lg leading-relaxed text-ink/80">
@@ -207,14 +207,14 @@ function WhoCanJoin() {
           the habit of searching error messages without embarrassment. Every developer does that.
         </p>
       </ScrollReveal>
-      <div className="grid grid-cols-1 border-t border-ink sm:grid-cols-3">
+      <div className="grid grid-cols-1 border-t border-hairline sm:grid-cols-3">
         {WHO.map((w, i) => (
           <ScrollReveal
             key={w.kicker}
             delayMs={70 + i * 120}
             hiddenTranslate="translate-y-6"
-            className={`px-2 py-10 sm:px-6 sm:py-12 ${i < WHO.length - 1 ? 'sm:border-r sm:border-ink' : ''} ${
-              i > 0 ? 'border-t border-ink sm:border-t-0' : ''
+            className={`px-2 py-10 sm:px-6 sm:py-12 ${i < WHO.length - 1 ? 'sm:border-r sm:border-hairline' : ''} ${
+              i > 0 ? 'border-t border-hairline sm:border-t-0' : ''
             } `}
           >
             <h3 className="flex items-center gap-3 font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">
@@ -231,8 +231,8 @@ function WhoCanJoin() {
 
 function Pillars() {
   return (
-    <section id="rhythm" className="scroll-mt-28 border-b border-ink">
-      <ScrollReveal className="border-b border-ink py-12">
+    <section id="rhythm" className="scroll-mt-28 border-b border-hairline">
+      <ScrollReveal className="border-b border-hairline py-12">
         <h2 className="font-serif text-5xl font-medium tracking-tight text-ink sm:text-6xl">The weekly rhythm</h2>
       </ScrollReveal>
       <div className="grid grid-cols-1 sm:grid-cols-3">
@@ -241,8 +241,8 @@ function Pillars() {
             key={p.label}
             delayMs={80 + i * 130}
             hiddenTranslate="translate-y-6"
-            className={`relative py-14 sm:px-4 sm:py-20 ${i < PILLARS.length - 1 ? 'sm:border-r sm:border-ink' : ''} ${
-              i > 0 ? 'border-t border-ink sm:border-t-0' : ''
+            className={`relative py-14 sm:px-4 sm:py-20 ${i < PILLARS.length - 1 ? 'sm:border-r sm:border-hairline' : ''} ${
+              i > 0 ? 'border-t border-hairline sm:border-t-0' : ''
             } `}
           >
             <span
@@ -276,8 +276,8 @@ function Pillars() {
 
 function Weeks() {
   return (
-    <section id="weeks" className="scroll-mt-28 border-b border-ink py-20 lg:py-28">
-      <ScrollReveal className="flex items-end justify-between gap-6 border-b border-ink pb-8">
+    <section id="weeks" className="scroll-mt-28 border-b border-hairline py-20 lg:py-28">
+      <ScrollReveal className="flex items-end justify-between gap-6 border-b border-hairline pb-8">
         <div>
           <h2 className="font-serif text-5xl font-medium tracking-tight text-ink sm:text-6xl">The Roadmap</h2>
         </div>
@@ -285,7 +285,7 @@ function Weeks() {
       </ScrollReveal>
       <ol>
         {WEEKS.map((w, i) => (
-          <li key={w.n} className="border-b border-ink">
+          <li key={w.n} className="border-b border-hairline">
             <ScrollReveal
               delayMs={40 + i * 55}
               hiddenTranslate="translate-y-4"
@@ -314,7 +314,7 @@ function Weeks() {
 
 function Outcomes() {
   return (
-    <section id="outcomes" className="scroll-mt-28 border-b border-ink py-20 lg:py-28">
+    <section id="outcomes" className="scroll-mt-28 border-b border-hairline py-20 lg:py-28">
       <ScrollReveal className="mb-12 max-w-3xl">
         <h2 className="font-serif text-[clamp(1.85rem,4vw,2.5rem)] font-medium leading-tight text-ink sm:text-4xl">
           What you&apos;ll be able to do <em className="hm-val italic">by the end.</em>
@@ -329,7 +329,7 @@ function Outcomes() {
         {OUTCOMES.map((o, i) => (
           <li
             key={o.title}
-            className={`border-t border-ink ${i % 2 === 0 ? 'sm:border-r sm:border-ink' : ''} `}
+            className={`border-t border-hairline ${i % 2 === 0 ? 'sm:border-r sm:border-hairline' : ''} `}
           >
             <ScrollReveal
               delayMs={50 + i * 75}
@@ -353,7 +353,7 @@ function Outcomes() {
 
 function HowWeLearn() {
   return (
-    <section className="border-b border-ink py-20 lg:py-28">
+    <section className="border-b border-hairline py-20 lg:py-28">
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
         <ScrollReveal className="lg:col-span-5">
           <h2 className="font-serif text-5xl font-medium tracking-tight text-ink sm:text-6xl">How we learn</h2>
@@ -426,7 +426,7 @@ export default function Home() {
           id="course"
           className="scroll-mt-28 flex min-h-0 flex-1 flex-col"
         >
-          <div className="layout-shell flex min-h-0 w-full max-w-6xl flex-1 flex-col justify-center border-b border-ink py-10 sm:py-14 lg:py-16">
+          <div className="layout-shell flex min-h-0 w-full max-w-6xl flex-1 flex-col justify-center border-b border-hairline py-10 sm:py-14 lg:py-16">
             <div className="w-full min-w-0 text-left">
               <Hero />
             </div>

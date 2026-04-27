@@ -24,11 +24,11 @@ function courseLinkClass(homeLight) {
     `${footerLinkBase(homeLight)} ${
       homeLight
         ? isActive
-          ? 'bg-ink/[0.08] text-ink'
-          : 'text-ink/60 hover:text-ink'
+          ? 'font-bold text-ink'
+          : 'font-normal text-ink/60 hover:text-ink'
         : isActive
-          ? 'bg-white/[0.08] text-primary'
-          : 'text-muted hover:text-primary'
+          ? 'font-bold text-primary'
+          : 'font-normal text-muted hover:text-primary'
     }`
 }
 
@@ -46,7 +46,7 @@ export default function Footer({ homeLight = false }) {
     >
       <div
         className={
-          homeLight ? 'layout-shell border-t border-ink pt-12 sm:pt-14' : 'layout-shell border-t border-white/[0.08] pt-12 sm:pt-14'
+          homeLight ? 'layout-shell border-t border-hairline pt-12 sm:pt-14' : 'layout-shell border-t border-hairline-dark pt-12 sm:pt-14'
         }
       >
         <h2 id="footer-nav-heading" className="sr-only">
@@ -141,8 +141,8 @@ export default function Footer({ homeLight = false }) {
       <div
         className={
           homeLight
-            ? 'layout-shell mt-12 border-t border-ink/15 pt-10 pb-3 sm:mt-14 sm:pt-10 sm:pb-3'
-            : 'layout-shell mt-12 border-t border-white/[0.06] pt-10 pb-3 sm:mt-14 sm:pt-10 sm:pb-3'
+            ? 'layout-shell mt-12 border-t border-hairline/60 pt-10 pb-3 sm:mt-14 sm:pt-10 sm:pb-3'
+            : 'layout-shell mt-12 border-t border-hairline-dark/50 pt-10 pb-3 sm:mt-14 sm:pt-10 sm:pb-3'
         }
       >
         <p

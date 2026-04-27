@@ -16,10 +16,18 @@ export default function CodeBlock({ lang, snippet, tone = 'light' }) {
   }
 
   return (
-    <div className={`overflow-hidden border bg-bg ${onInk ? 'border-paper/20' : 'border-ink/20'}`}>
+    <div
+      className={
+        onInk
+          ? 'overflow-hidden border border-hairline-dark/30 bg-bg'
+          : 'overflow-hidden border border-hairline/50 bg-paper'
+      }
+    >
       <div
         className={`flex items-center justify-between gap-2 border-b px-4 py-2.5 ${
-          onInk ? 'border-paper/15 bg-paper/[0.08]' : 'border-ink/20 bg-ink/[0.04]'
+          onInk
+            ? 'border-hairline-dark/30 bg-paper/[0.08]'
+            : 'border-hairline/50 bg-ink/[0.04]'
         }`}
       >
         <span className={`font-mono text-[11px] uppercase tracking-[0.2em] ${onInk ? 'text-paper/60' : 'text-ink/55'}`}>
@@ -37,8 +45,14 @@ export default function CodeBlock({ lang, snippet, tone = 'light' }) {
           {copied ? 'Copied' : 'Copy'}
         </button>
       </div>
-      <pre className="overflow-x-auto p-4 sm:p-5">
-        <code className="font-mono text-[13px] leading-relaxed text-primary/95 sm:text-sm">{snippet}</code>
+      <pre
+        className={
+          onInk
+            ? 'overflow-x-auto bg-bg p-4 text-[13px] text-primary/95 sm:p-5 sm:text-sm'
+            : 'overflow-x-auto bg-paper p-4 text-[13px] text-ink/90 sm:p-5 sm:text-sm'
+        }
+      >
+        <code className="font-mono leading-relaxed text-inherit">{snippet}</code>
       </pre>
     </div>
   )

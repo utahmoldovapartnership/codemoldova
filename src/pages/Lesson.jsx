@@ -8,7 +8,6 @@ import {
   LessonChallengesAccordion,
   LessonHero,
   LessonHomework,
-  LessonInClassBuild,
   LessonLabBand,
   LessonMainPoints,
   LessonMistakes,
@@ -282,6 +281,7 @@ export default function Lesson() {
   const artifacts = buildArtifacts(session)
   const challengesList = isThu ? buildChallengesAccordionList(session.challenges) : []
   const labExample = resolveLabExample(session)
+  const showLab = Boolean(session.steps?.length)
 
   return (
     <div className="min-h-full flex-1 bg-paper font-body text-ink antialiased">
@@ -309,26 +309,16 @@ export default function Lesson() {
           {mainPoints?.length ? <LessonMainPoints points={mainPoints} /> : null}
           {artifacts.length ? <LessonArtifacts artifacts={artifacts} /> : null}
 
-          {session.steps?.length ? (
+          {showLab ? (
             <LessonLabBand
+              dayKey={dayKey}
               title={session.title}
               intro={session.desc || ''}
               exampleHref={labExample.href}
               exampleLabel={labExample.label}
             >
-              <LessonModule steps={session.steps} variant="paper" noRounded />
+              <LessonModule steps={session.steps} variant="paper" noRounded dayKey={dayKey} />
             </LessonLabBand>
-          ) : null}
-
-          {!isThu && session.inClassChallenge ? (
-            <LessonInClassBuild
-              title={session.inClassChallenge.title}
-              duration={session.inClassChallenge.duration}
-              intro={session.inClassChallenge.intro}
-              tasks={session.inClassChallenge.tasks}
-              shareOut={session.inClassChallenge.shareOut}
-              stretch={session.inClassChallenge.stretch}
-            />
           ) : null}
           {isThu && challengesList.length ? <LessonChallengesAccordion challenges={challengesList} /> : null}
           {session.challenges && isThu && !challengesList.length ? (
@@ -340,7 +330,7 @@ export default function Lesson() {
           {session.mistakes?.length ? <LessonMistakes mistakes={session.mistakes} /> : null}
           {session.vocab?.length ? <LessonVocab vocab={session.vocab} /> : null}
           {session.resources?.length ? <LessonResources resources={session.resources} /> : null}
-          <LessonPrevNext prev={prev} next={next} />
+          <LessonPrevNext currentDay={dayKey} prev={prev} next={next} />
         </div>
       </PageChrome>
     </div>

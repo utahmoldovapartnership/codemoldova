@@ -74,7 +74,7 @@ function ResourceRow({ item }) {
       href={item.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group grid grid-cols-12 items-baseline gap-3 border-b border-dart/85 px-2 py-5 transition-colors hover:bg-ink hover:text-paper sm:gap-6 sm:px-4 sm:py-7"
+      className="group grid grid-cols-12 items-baseline gap-3 border-b border-hairline px-2 py-5 transition-colors hover:bg-ink hover:text-paper sm:gap-6 sm:px-4 sm:py-7"
     >
       <div className="col-span-12 flex items-center gap-3 sm:col-span-2">
         <TagChip tag={item.tag} />
@@ -99,7 +99,7 @@ function Marquee() {
   const items = ['RESOURCES', 'INSTALL FIRST', 'BOOKMARK THIS PAGE', 'STUCK? START HERE', 'PYTHON · WEB · AI']
   const loop = [...items, ...items, ...items, ...items]
   return (
-    <div className="overflow-hidden border-y border-dart/85 bg-dart text-paper">
+    <div className="overflow-hidden border-y border-paper/20 bg-dart text-paper">
       <div className="flex animate-[marquee_38s_linear_infinite] gap-12 whitespace-nowrap py-3 font-mono text-[11px] uppercase tracking-[0.25em]">
         {loop.map((t, i) => (
           <span key={i} className="flex items-center gap-12">
@@ -115,7 +115,7 @@ function Marquee() {
 
 function PreviewBar() {
   return (
-    <div className="border-b border-dart/85 bg-paper px-6 py-3 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/60 sm:px-10">
+    <div className="border-b border-hairline bg-paper px-6 py-3 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/60 sm:px-10">
       <div className="flex items-center justify-between gap-6">
         <span>Resources preview · /resources-mockup</span>
         <Link to="/" className="text-ink/50 underline-offset-4 hover:text-ink hover:underline">← exit preview</Link>
@@ -126,7 +126,7 @@ function PreviewBar() {
 
 function Hero() {
   return (
-    <section className="border-b border-dart/85 px-6 py-16 sm:px-10 lg:py-24">
+    <section className="border-b border-hairline px-6 py-16 sm:px-10 lg:py-24">
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
         <div className="lg:col-span-8">
           <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">№ 01 — Resources</p>
@@ -134,7 +134,7 @@ function Hero() {
             Bookmark this page. <em className="italic text-val">Use it weekly.</em>
           </h1>
         </div>
-        <div className="lg:col-span-4 lg:border-l lg:border-dart/85 lg:pl-10">
+        <div className="lg:col-span-4 lg:border-l lg:border-hairline lg:pl-10">
           <p className="font-body text-base leading-relaxed text-ink/80 sm:text-lg">
             A working library of every link we point at in class. Install steps first, then docs, articles,
             videos, and tools — grouped by topic, tagged by format, searchable from the top.
@@ -147,7 +147,7 @@ function Hero() {
 
 function StartHere() {
   return (
-    <section id="start-here" className="border-b border-dart/85 px-6 py-16 sm:px-10 lg:py-20">
+    <section id="start-here" className="border-b border-hairline px-6 py-16 sm:px-10 lg:py-20">
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">Before week 1</p>
@@ -195,7 +195,7 @@ function StartHere() {
 
 function FilterBar({ query, setQuery, activeTags, toggleTag, clearAll, total, visible }) {
   return (
-    <div className="sticky top-0 z-30 border-b border-dart/85 bg-paper/95 px-6 py-4 backdrop-blur sm:px-10">
+    <div className="sticky top-0 z-30 border-b border-hairline bg-paper/95 px-6 py-4 backdrop-blur sm:px-10">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5">
         <label className="relative flex-1 sm:max-w-md">
           <span className="sr-only">Search resources</span>
@@ -204,7 +204,7 @@ function FilterBar({ query, setQuery, activeTags, toggleTag, clearAll, total, vi
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search title or topic…"
-            className="h-11 w-full border border-dart/85 bg-paper px-4 pr-10 font-mono text-sm text-ink placeholder:text-ink/40 focus:border-ink focus:outline-none"
+            className="h-11 w-full border border-hairline bg-paper px-4 pr-10 font-mono text-sm text-ink placeholder:text-ink/40 focus:border-ink focus:outline-none"
           />
           <span aria-hidden className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 font-mono text-xs text-ink/40">
             /
@@ -254,7 +254,7 @@ function FilterBar({ query, setQuery, activeTags, toggleTag, clearAll, total, vi
 function CategorySection({ cat, items }) {
   if (!items.length) return null
   return (
-    <section id={cat.id} className="border-b border-dart/85 px-6 py-14 sm:px-10 sm:py-20">
+    <section id={cat.id} className="border-b border-hairline px-6 py-14 sm:px-10 sm:py-20">
       <div className="mb-8 grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-10">
         <div className="lg:col-span-5">
           <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">№ {cat.num}</p>
@@ -264,7 +264,7 @@ function CategorySection({ cat, items }) {
           {cat.blurb}
         </p>
       </div>
-      <div className="border-t border-dart/85">
+      <div className="border-t border-hairline">
         {items.map((item) => (
           <ResourceRow key={item.url} item={item} />
         ))}
@@ -275,7 +275,7 @@ function CategorySection({ cat, items }) {
 
 function EmptyState({ onClear }) {
   return (
-    <section className="border-b border-dart/85 px-6 py-24 text-center sm:px-10">
+    <section className="border-b border-hairline px-6 py-24 text-center sm:px-10">
       <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">Nothing matches</p>
       <h2 className="mt-4 font-serif text-3xl font-medium tracking-tight sm:text-4xl">
         Try a different word — or <em className="italic text-val">clear filters.</em>
@@ -296,7 +296,7 @@ function CategoryNav({ visibleCategories }) {
   return (
     <nav
       aria-label="Resource categories"
-      className="border-b border-dart/85 bg-paper px-6 py-3 sm:px-10"
+      className="border-b border-hairline bg-paper px-6 py-3 sm:px-10"
     >
       <ul className="flex flex-wrap gap-x-4 gap-y-2 font-mono text-[10px] uppercase tracking-[0.25em]">
         <li>

@@ -3,7 +3,7 @@ export default {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   /** Home marketing colors: keep in bundle even if class names are composed dynamically. */
   safelist: [
-    { pattern: /^(bg|text|border)-(paper|ink|dart|val|sun|ube)(\/(10|15|60|70|80|85|95))?$/ },
+    { pattern: /^(bg|text|border)-(paper|ink|dart|val|sun|ube|hairline|hairline-dark)(\/(10|15|20|30|40|45|50|60|70|80|85|95))?$/ },
     'hover:bg-dart',
     'hover:bg-val',
     'hover:bg-paper',
@@ -36,6 +36,11 @@ export default {
         val: '#ef453f',
         sun: '#f69c40',
         ube: '#dd8cf1',
+        /** 1px rules: light gray on light backgrounds, subtle on dark (`border-hairline-dark`). */
+        hairline: {
+          DEFAULT: '#d4d6de',
+          dark: 'rgba(255, 255, 255, 0.18)',
+        },
       },
       borderRadius: {
         card: '12px',

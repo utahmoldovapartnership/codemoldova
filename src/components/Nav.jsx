@@ -78,8 +78,8 @@ export default function Nav({ homeLight = false }) {
       ref={navRef}
       className={
         homeLight
-          ? 'sticky top-0 z-50 border-b border-ink bg-paper/95 pt-[env(safe-area-inset-top,0px)] backdrop-blur'
-          : 'sticky top-0 z-50 border-b border-white/[0.08] bg-surface/90 pt-[env(safe-area-inset-top,0px)] backdrop-blur'
+          ? 'sticky top-0 z-50 border-b border-hairline bg-paper/95 pt-[env(safe-area-inset-top,0px)] backdrop-blur'
+          : 'sticky top-0 z-50 border-b border-hairline-dark bg-surface/90 pt-[env(safe-area-inset-top,0px)] backdrop-blur'
       }
       aria-label="Main menu"
     >
@@ -144,8 +144,8 @@ export default function Nav({ homeLight = false }) {
               id={menuId}
               className={
                 homeLight
-                  ? 'cm-nav-mobile-panel--light fixed left-0 right-0 z-[200] overflow-y-auto overscroll-contain border-b border-ink px-4 py-2 shadow-lg shadow-ink/10 sm:hidden'
-                  : 'cm-nav-mobile-panel--dark fixed left-0 right-0 z-[200] overflow-y-auto overscroll-contain border-b border-white/[0.12] px-4 py-2 shadow-lg shadow-black/25 sm:hidden'
+                  ? 'cm-nav-mobile-panel--light fixed left-0 right-0 z-[200] overflow-y-auto overscroll-contain border-b border-hairline px-4 py-2 shadow-lg shadow-ink/10 sm:hidden'
+                  : 'cm-nav-mobile-panel--dark fixed left-0 right-0 z-[200] overflow-y-auto overscroll-contain border-b border-hairline-dark px-4 py-2 shadow-lg shadow-black/25 sm:hidden'
               }
               style={{
                 top: menuTop,

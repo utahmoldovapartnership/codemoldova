@@ -265,6 +265,34 @@
   transform: scaleX(1);
 }
 
+/* Lesson prev/next: sweep + border — color from *current* day + role (val / ube / sun). */
+.hm-hero-join-slack--val::before {
+  background-color: var(--cm-val) !important;
+}
+.hm-hero-join-slack--val:hover,
+.hm-hero-join-slack--val:focus-visible,
+.hm-hero-join-slack--val:active {
+  border-color: var(--cm-val) !important;
+}
+
+.hm-hero-join-slack--ube::before {
+  background-color: var(--cm-ube) !important;
+}
+.hm-hero-join-slack--ube:hover,
+.hm-hero-join-slack--ube:focus-visible,
+.hm-hero-join-slack--ube:active {
+  border-color: var(--cm-ube) !important;
+}
+
+.hm-hero-join-slack--sun::before {
+  background-color: var(--cm-sun) !important;
+}
+.hm-hero-join-slack--sun:hover,
+.hm-hero-join-slack--sun:focus-visible,
+.hm-hero-join-slack--sun:active {
+  border-color: var(--cm-sun) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hm-btn-dart::before,
   .hm-btn-sun::before,

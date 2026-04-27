@@ -82,13 +82,13 @@ function DayCardLarge({ week, day, session }) {
     >
       <div className="flex items-start justify-between">
         <div>
-          <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/70">
+          <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] text-ink">
             <PixelIcon icon={meta.icon} size={12} className="text-ink" />
             <span>
               {meta.short} · {meta.type}
             </span>
           </p>
-          <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-ink/60">{formatShortDate(session.date)}</p>
+          <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-ink">{formatShortDate(session.date)}</p>
         </div>
         <PixelIcon icon="arrow" size={16} className="text-ink/50 transition-opacity group-hover:text-ink" />
       </div>
@@ -133,8 +133,8 @@ function ThisWeekHero({ status, currentWeek }) {
   }[status]
 
   return (
-    <section className="border-b border-ink">
-      <ScrollReveal className="border-b border-ink py-12 sm:py-16" rootMargin="0px 0px 10% 0px">
+    <section className="border-b border-hairline">
+      <ScrollReveal className="border-b border-hairline py-12 sm:py-16" rootMargin="0px 0px 10% 0px">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
           <div>
             <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">{eyebrow}</p>
@@ -180,7 +180,7 @@ function WeekRow({ weekNum, isCurrent, isOpen, onToggle, revealDelay = 0 }) {
   const monTitle = weekSessions.mon?.label ?? '—'
 
   return (
-    <li className={`border-b border-ink ${isCurrent ? 'bg-val/[0.04]' : ''}`}>
+    <li className={`border-b border-hairline ${isCurrent ? 'bg-val/[0.04]' : ''}`}>
       <ScrollReveal
         className="block"
         delayMs={revealDelay}
@@ -212,7 +212,7 @@ function WeekRow({ weekNum, isCurrent, isOpen, onToggle, revealDelay = 0 }) {
       </ScrollReveal>
 
       {isOpen ? (
-        <div className="border-t border-ink bg-paper py-6 sm:py-8">
+        <div className="border-t border-hairline bg-paper py-6 sm:py-8">
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
             {['mon', 'wed', 'thu'].map((day) => {
               const s = weekSessions[day]
@@ -222,21 +222,21 @@ function WeekRow({ weekNum, isCurrent, isOpen, onToggle, revealDelay = 0 }) {
                 <Link
                   key={day}
                   to={`/lesson/${weekNum}/${day}`}
-                  className="group flex flex-col justify-between border border-ink bg-paper p-5 transition-colors hover:bg-ink hover:text-paper"
+                  className="group cm-paper-hover flex flex-col justify-between border border-hairline bg-paper p-5 transition-colors"
                 >
                   <div>
-                    <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/60 group-hover:text-paper/60">
+                    <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] text-ink">
                       <span aria-hidden className="inline-block h-2 w-2" style={{ backgroundColor: meta.swatch }} />
                       <span>
                         {meta.label} · {meta.type}
                       </span>
                     </p>
-                    <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-ink/50 group-hover:text-paper/50">{formatShortDate(s.date)}</p>
+                    <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-ink">{formatShortDate(s.date)}</p>
                     <h4 className="mt-4 font-serif text-xl font-medium leading-tight tracking-tight">{s.label}</h4>
                   </div>
-                  <p className="mt-6 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-ink/50 group-hover:text-paper/70">
+                  <p className="mt-6 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-ink/50 transition-colors group-hover:text-ink/80">
                     <span>Open lesson</span>
-                    <PixelIcon icon="arrow" size={10} className="text-current" />
+                    <PixelIcon icon="arrow" size={10} className="text-ink/35 transition-colors group-hover:text-ink" />
                   </p>
                 </Link>
               )
@@ -260,8 +260,8 @@ function CompleteRoadmap({ currentWeek }) {
   let weekRevealIndex = 0
 
   return (
-    <section id="full-roadmap" className="border-b border-ink py-20 lg:py-28">
-      <ScrollReveal className="mb-10 flex items-end justify-between gap-6 border-b border-ink pb-8">
+    <section id="full-roadmap" className="border-b border-hairline py-20 lg:py-28">
+      <ScrollReveal className="mb-10 flex items-end justify-between gap-6 border-b border-hairline pb-8">
         <div>
           <h2 className="font-serif text-5xl font-medium tracking-tight text-ink sm:text-6xl">The Roadmap</h2>
         </div>
@@ -271,7 +271,7 @@ function CompleteRoadmap({ currentWeek }) {
       {phases.map((phase, phaseIdx) => (
         <div key={phase.id ?? phaseIdx} className="mt-14 first:mt-0">
           <ScrollReveal
-            className="mb-3 flex flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-ink pt-6"
+            className="mb-3 flex flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-hairline pt-6"
             delayMs={phaseIdx * 70}
             hiddenTranslate="translate-y-5"
           >
@@ -279,7 +279,7 @@ function CompleteRoadmap({ currentWeek }) {
             <h3 className="font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">{phase.title}</h3>
           </ScrollReveal>
 
-          <ul className="border-t border-ink">
+          <ul className="border-t border-hairline">
             {phase.weeks.map((week) => {
               const revealDelay = 40 + weekRevealIndex * 50
               weekRevealIndex += 1

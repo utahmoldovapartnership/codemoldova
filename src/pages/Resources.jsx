@@ -140,7 +140,7 @@ function TopicTabBar({ baseId, active, onChange, tabs, panelId }) {
     >
       <div
         ref={innerRef}
-        className="relative flex w-max min-w-0 border-b border-ink"
+        className="relative flex w-max min-w-0 border-b border-hairline"
         role="tablist"
         aria-label="Resource categories"
       >
@@ -186,7 +186,7 @@ export default function Resources() {
     <div className="res-page hm-page min-h-full flex-1 font-body antialiased">
       <div className="layout-shell max-w-6xl pb-20 pt-10 sm:pb-28 sm:pt-14">
         <ScrollReveal rootMargin="0px 0px 12% 0px">
-          <header className="border-b border-ink pb-12 sm:pb-16">
+          <header className="border-b border-hairline pb-12 sm:pb-16">
             <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink">Library</p>
             <h1 className="mt-3 font-serif text-[clamp(2.25rem,6vw,4.25rem)] font-medium leading-[1.02] tracking-tight text-ink">
               Course resources
@@ -214,12 +214,12 @@ export default function Resources() {
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink/80">
               Install each tool one time. You will use them all course long. Plan about 20 to 30 minutes in total.
             </p>
-            <div className="mt-12 grid grid-cols-1 border-t border-ink sm:grid-cols-3">
+            <div className="mt-12 grid grid-cols-1 border-t border-hairline sm:grid-cols-3">
               {startHere.map((item, i) => (
                 <ScrollReveal
                   key={item.title}
-                  className={`min-h-0 ${i < startHere.length - 1 ? 'sm:border-r sm:border-ink' : ''} ${
-                    i > 0 ? 'border-t border-ink sm:border-t-0' : ''
+                  className={`min-h-0 ${i < startHere.length - 1 ? 'sm:border-r sm:border-hairline' : ''} ${
+                    i > 0 ? 'border-t border-hairline sm:border-t-0' : ''
                   }`}
                   delayMs={80 + i * 100}
                   hiddenTranslate="translate-y-5"
@@ -232,8 +232,8 @@ export default function Resources() {
           </section>
         </ScrollReveal>
 
-        <ScrollReveal className="border-t border-ink pt-16 sm:pt-20" delayMs={40}>
-            <div className="flex flex-col gap-3 border-b border-ink pb-8 sm:flex-row sm:items-end sm:justify-between">
+        <ScrollReveal className="border-t border-hairline pt-16 sm:pt-20" delayMs={40}>
+            <div className="flex flex-col gap-3 border-b border-hairline pb-8 sm:flex-row sm:items-end sm:justify-between">
               <h2 className="font-serif text-4xl font-medium tracking-tight text-ink sm:text-5xl">
                 Browse by topic
               </h2>
@@ -259,9 +259,9 @@ export default function Resources() {
             <p className="mb-10 max-w-2xl text-base leading-relaxed text-ink/80">
               {activeConfig.description}
             </p>
-            <ul className="border-t border-ink">
+            <ul className="border-t border-hairline">
               {list.map((item, i) => (
-                <li key={`${item.url}-${i}`} className="border-b border-ink">
+                <li key={`${item.url}-${i}`} className="border-b border-hairline">
                   <ScrollReveal className="block" delayMs={30 + i * 45} hiddenTranslate="translate-y-3" threshold={0.05}>
                     <ResourceLink item={item} />
                   </ScrollReveal>

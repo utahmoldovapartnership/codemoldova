@@ -9,8 +9,8 @@ export const phases = [
         mon: {
           title: "Intro + how computers think",
           date: "May 11",
-          desc: "Monday is taught live: a slide deck at the front (with demos and any clips embedded there), then hands-on time. This page is your cheat sheet and practice set—short reminders, copy-paste snippets, and Try it tasks you redo after class. It is not meant to replace being in the room.",
-          preview: "Slides + demos in class · site = backup + practice · terminal, REPL, variables, hello.py, intro card lab.",
+          desc: "The deck runs in the room; this page is for commands, snippets, and try-again practice. Work through the steps in order—last step is the one you ship to a partner.",
+          preview: "Terminal, Python, hello.py, then a small intro card in one file.",
           slideDeck: {
             label: "Week 1 · Day one slide deck",
             url: "",
@@ -18,142 +18,93 @@ export const phases = [
           },
           steps: [
             {
-              title: "Slides first, this page second",
-              timing: "With instructor",
+              title: "In the room",
+              timing: "Workshop",
               content:
-                "During the workshop, keep your eyes on the room and the deck. Open this tab in the background so you can:\n\n• Copy commands when the pace picks up.\n• Re-read a definition without rewinding a video.\n• Finish a Try it after we cut you loose for lab time.\n\nIf you try to read ahead while I am explaining something new, you will miss the why behind it.",
-              tips: [
-                "When you hear hands on keyboards from the front, that is your cue to use the next section on this page.",
-                "Raise your hand for environment issues (Python not found, wrong folder) before you spiral in search results.",
-              ],
-              task: "Bookmark /lesson/1/mon now so you can reopen it tonight without hunting the chat.",
+                "Follow the live deck. Keep this page open in another tab to copy commands and re-read a step without rewinding. When we switch to hands-on, pick up in the next section.",
+              task: "Bookmark this lesson so you can reopen it after class.",
             },
             {
-              title: "Practice · Prove Python from the shell",
+              title: "Shell check · python3",
               timing: "Lab",
               content:
-                "The slides walk through what a terminal is versus the Python app. When we pause for setup, confirm your machine answers. We standardize on python3 in class—if only python works, grab a mentor.",
+                "In the terminal, confirm Python is there. In class we use python3. If a command fails, get help before you chase random search results.",
               links: [
-                { label: "Python downloads (official)", href: "https://www.python.org/downloads/" },
-                {
-                  label: "Invoking the interpreter (official docs)",
-                  href: "https://docs.python.org/3/tutorial/interpreter.html",
-                },
+                { label: "Python downloads", href: "https://www.python.org/downloads/" },
+                { label: "Invoking the interpreter (docs)", href: "https://docs.python.org/3/tutorial/interpreter.html" },
               ],
               code: { lang: "bash", snippet: "python3 --version\nwhich python3" },
               tips: [
-                "Ctrl+C (Windows/Linux) or Control+C (macOS) cancels a stuck command.",
-                "Copy paths slowly—typos are the #1 first-day bug.",
+                "Ctrl+C / Control+C stops a stuck run.",
+                "Type paths carefully—one wrong character breaks cd.",
               ],
-              task: "Run python3 --version. Paste the output into Slack or your notes so mentors can spot odd versions quickly.",
+              task: "Run python3 --version and keep the output in your notes or Slack so mentors can spot odd versions.",
             },
             {
-              title: "Practice · Folders you control",
+              title: "Project folder + REPL",
               timing: "Lab",
               content:
-                "Slides introduce pwd, ls, cd, mkdir. Use the diagram below as the mental model we keep all year: you type a command, the shell runs a program, text comes back.",
+                "Create a folder for this week, cd in, and stay there for the rest of today. Then open a quick REPL: python3 with no file. >>> means Python, not the shell. Exit back to the shell with exit() or quit().",
               images: [
                 {
                   src: "/lesson/terminal-flow.svg",
-                  alt: "Diagram: command in, shell runs program, text output",
-                  caption: "When you are lost, ask: am I talking to the shell ($ or %) or to Python (>>> )?",
+                  alt: "Command in, shell runs program, text out",
+                  caption: "Stuck? Ask: shell ($ or %) or Python (>>> )?",
                 },
               ],
-              tips: [
-                "Tab completes folder names after a few letters—use it.",
-                "Avoid spaces in folder names for this course; they work but add quoting pain.",
-              ],
-              task: "Create codemoldova-week1, cd into it, run pwd and ls. Stay in that folder for the rest of class builds.",
-            },
-            {
-              title: "Practice · Python REPL experiments",
-              timing: "Lab",
-              content:
-                "Slides show how to enter and exit the REPL (python3 with no file). The REPL is for quick experiments; Thursday-sized programs live in .py files.",
               code: { lang: "bash", snippet: "python3\n>>> 2 + 2\n4\n>>> exit()" },
-              tips: [
-                "If you see >>> you are inside Python—shell commands like cd will not work until you exit.",
-                "Power operator: ** raises to a power (example: 2 ** 8).",
-              ],
-              task: "In the REPL, estimate your age in days using *, +, and parentheses (rough guess is fine).",
+              tips: ["mkdir / cd for folders; in >>> you cannot run cd—exit first."],
+              task: "In codemoldova-week1 (create it with mkdir if needed), run pwd and list files. In the REPL, try a quick math expression with * and +.",
             },
             {
-              title: "Practice · Variables, text, and f-strings",
+              title: "Values, f-strings, and input()",
               timing: "Lab",
               content:
-                "Slides connect names to values and show how to build readable output. Variables use letters, digits, underscores; cannot start with a digit. f-strings stay our default style for combining text and values.",
+                "Names, numbers, f-strings. input() always returns a string. Build tiny conversations in the REPL first.",
               code: {
                 lang: "python",
                 snippet:
-                  'name = "Maria"\nage = 20\nprint(name, age)\ncourse = "CodeMoldova"\nweek = 1\nprint(f"{course} — week {week}")',
+                  'x = 20\ncourse = "CodeMoldova"\nprint(f"{course} week 1, age about {x}")\nname = input("Name? ")\nprint(f"Hi, {name}")',
               },
-              task: "In the REPL, store your name, a snack you like, and a year that matters to you. print() them once, then print an f-string that mentions all three.",
+              task: "In the REPL: store two text answers from input() and one f-string that uses both.",
             },
             {
-              title: "Practice · input() and print() together",
+              title: "hello.py from a file",
               timing: "Lab",
               content:
-                "Slides demo a tiny conversation: input() always returns text (a string), even when someone types digits. print() can take several comma-separated values and inserts spaces between them.",
-              code: {
-                lang: "python",
-                snippet:
-                  'name = input("What is your name? ")\ncity = input("What city are you joining from? ")\nprint("Hello,", name + "!")\nprint(f"Glad you are here from {city}.")',
-              },
-              tips: [
-                "Leave a space before the closing quote inside input(\"... \") so typing does not touch the prompt text.",
-              ],
-              task: "Ask for two fun facts, store them, then print one f-string sentence that uses both.",
-            },
-            {
-              title: "Practice · Read an error, fix it once",
-              timing: "Lab",
-              content:
-                "Slides stress that red text is information. The last line of a traceback names the problem; later in the course we read the whole stack. Today: NameError means Python never saw that name.",
-              code: { lang: "python", snippet: "print(hello)" },
-              tips: [
-                "Fix the snippet by quoting \"hello\" or defining hello = \"world\" above print.",
-                "Read tracebacks bottom-up when they grow longer.",
-              ],
-              task: "In the REPL, trigger print(hello) without defining hello, then fix it on the very next line. Note the fix you used.",
-            },
-            {
-              title: "Practice · Save hello.py and run it",
-              timing: "Lab",
-              content:
-                "Slides close the loop: editor → plain-text file on disk → python3 file.py from the same folder. Save inside codemoldova-week1 so paths stay short.",
+                "A .py file is plain text, saved in your week folder, run with python3 filename. Editor link below if you still need a install.",
               images: [
                 {
                   src: "/lesson/edit-save-run.svg",
-                  alt: "Edit hello.py, file on disk, run python3 hello.py",
-                  caption: "File not found? Run pwd and ls before you panic.",
+                  alt: "Edit file, save, run python3 file",
+                  caption: "File not found? pwd and ls first.",
                 },
               ],
-              links: [{ label: "Download Visual Studio Code", href: "https://code.visualstudio.com/" }],
+              links: [{ label: "Download VS Code", href: "https://code.visualstudio.com/" }],
               code: {
                 lang: "python",
                 snippet:
                   '# hello.py\nname = input("What is your name? ")\nprint("Hello,", name + "!")\nprint("Welcome to CodeMoldova!")',
               },
-              task: "Save the starter as hello.py, run python3 hello.py, answer the prompt, and confirm both printed lines show up.",
+              task: "Save that pattern as hello.py, run it, confirm it prints. Fix any NameError by defining names before you print them.",
+            },
+            {
+              title: "Main build · intro_card.py",
+              timing: "Lab",
+              content:
+                "This is the piece you would demo to a classmate. Stay in codemoldova-week1. Create intro_card.py. Use three input() lines (name, hobby, why you joined). Print a short card: at least four lines, including one f-string, and a line that mentions Thursday build day. Then run it yourself and, if a partner is free, run theirs without changing their file.",
+              code: {
+                lang: "python",
+                snippet:
+                  '# intro_card.py — your lines will differ\n# three inputs, then f-strings for the card\nname = input("Name? ")\n# ...\n# print() so the card is readable; mention Thursday in one line',
+              },
+              tips: [
+                "If time: add another input for a weekly practice goal and print it in an f-string (optional).",
+                "If time: read your card to your partner; save debugging help for real errors, not line-by-line review.",
+              ],
+              task: "Save intro_card.py, run python3 intro_card.py, and get one successful run in front of a peer or a mentor before you pack up.",
             },
           ],
-          inClassChallenge: {
-            title: 'Build a "first week" intro card',
-            duration: "~18 min · solo or pairs",
-            intro:
-              "This matches the final build segment of the deck. Ship something another student can run without coaching. The win is: saves, runs, prints readable lines on the first try.",
-            tasks: [
-              "Stay inside codemoldova-week1.",
-              "Create intro_card.py.",
-              "Ask for name, one hobby, and one reason they joined CodeMoldova (three input() prompts).",
-              "Use at least one f-string to print a four-line card: greeting, blank line, hobby summary, closing line that mentions Thursday build day.",
-              "Run python3 intro_card.py yourself, then swap with a partner and run theirs without editing their file.",
-            ],
-            shareOut:
-              "If time allows: pairs read the printed card aloud while the author stands by for crashes.",
-            stretch:
-              "Add a fifth line that asks for a weekly practice goal (text is fine) and echoes it back in an encouraging f-string.",
-          },
           homework: {
             title: "Polish your greeting program",
             desc: "Extend hello.py (or greet_homework.py) using the same ideas from class and the deck. Bring questions to Slack before Wednesday.",
@@ -165,8 +116,8 @@ export const phases = [
             ],
           },
           postClass: {
-            title: "Optional review (not part of the workshop)",
-            desc: "Watch these only if you want extra context after class. Monday is led from the deck, not from these links.",
+            title: "Optional deep-dives",
+            desc: "Extra background you can watch on your own time. The live Monday session follows the deck in the room—these are not required to keep up in class.",
             links: [
               { label: "Crash Course Computer Science #1 (historical context)", href: "https://www.youtube.com/watch?v=O5nskjZ_GoI" },
               { label: "Traversy Media — command line crash course (full walkthrough)", href: "https://www.youtube.com/watch?v=uwAqEzhyjtw" },

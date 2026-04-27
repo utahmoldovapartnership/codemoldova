@@ -97,7 +97,7 @@ const DAY_META = {
 
 function PreviewBar({ dayKey, setDayKey }) {
   return (
-    <div className="border-b border-dart/85 bg-paper px-6 py-3 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/60 sm:px-10">
+    <div className="border-b border-hairline bg-paper px-6 py-3 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/60 sm:px-10">
       <div className="flex flex-wrap items-center justify-between gap-4">
         <span>Lesson preview · /lesson-mockup</span>
         <div className="flex items-center gap-2">
@@ -133,16 +133,16 @@ function MockStaticLabContent({ lab }) {
   return (
     <>
       <h3 className="mt-10 font-mono text-[11px] uppercase tracking-[0.3em] text-paper/60">Steps</h3>
-      <ol className="mt-3 border-t border-paper/15">
+      <ol className="mt-3 border-t border-hairline-dark/40">
         {lab.steps.map((s, i) => (
-          <li key={i} className="border-b border-paper/15 py-4">
+          <li key={i} className="border-b border-hairline-dark/40 py-4">
             <span className="text-base leading-relaxed text-paper">{s}</span>
           </li>
         ))}
       </ol>
       {lab.example ? (
         <div className="mt-10 border border-paper/20">
-          <p className="border-b border-paper/15 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.25em] text-paper/60">
+          <p className="border-b border-hairline-dark/40 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.25em] text-paper/60">
             {lab.example.label}
           </p>
           <pre className="overflow-x-auto px-4 py-5 font-mono text-sm leading-relaxed text-sun">
@@ -191,15 +191,16 @@ export default function LessonMockup() {
       <LessonSectionGoal goal={SAMPLE.goal} dayMeta={meta} />
       <LessonMainPoints points={SAMPLE.mainPoints} />
       <LessonArtifacts artifacts={SAMPLE.artifacts} />
-      <LessonLabBand title={SAMPLE.lab.title} intro={SAMPLE.lab.intro} exampleLabel="Lab example">
+      <LessonLabBand dayKey={dayKey} title={SAMPLE.lab.title} intro={SAMPLE.lab.intro} exampleLabel="Lab example">
         <MockStaticLabContent lab={SAMPLE.lab} />
       </LessonLabBand>
       {isThu ? <LessonChallengesAccordion challenges={SAMPLE.challenges} /> : null}
       <LessonHomework homework={homework} />
-      <LessonMistakes mistakes={data.mistakes} />
-      <LessonVocab vocab={data.vocab} />
-      <LessonResources resources={data.resources} />
+      <LessonMistakes mistakes={SAMPLE.mistakes} />
+      <LessonVocab vocab={SAMPLE.vocab} />
+      <LessonResources resources={SAMPLE.resources} />
       <LessonPrevNext
+        currentDay={dayKey}
         prev={{ week: 1, day: 'mon', label: 'Week 1 · same route preview' }}
         next={{ week: 1, day: 'wed', label: 'Week 1 · next session preview' }}
       />

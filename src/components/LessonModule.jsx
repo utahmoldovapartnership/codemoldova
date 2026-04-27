@@ -1,9 +1,21 @@
 import CodeBlock from './CodeBlock'
 
-/** @param {{ steps: object[], variant?: 'paper' | 'ink', noRounded?: boolean }} props */
-export default function LessonModule({ steps, variant = 'paper', noRounded = false }) {
+const TRY_DAY = {
+  mon: { box: 'mt-7 border-l-4 border-ube bg-ube/[0.08] px-5 py-4' },
+  wed: { box: 'mt-7 border-l-4 border-sun bg-sun/[0.08] px-5 py-4' },
+  thu: { box: 'mt-7 border-l-4 border-val bg-val/[0.08] px-5 py-4' },
+}
+
+function tryDayForPaper(dayKey) {
+  if (dayKey in TRY_DAY) return TRY_DAY[dayKey]
+  return TRY_DAY.wed
+}
+
+/** @param {{ steps: object[], variant?: 'paper' | 'ink', noRounded?: boolean, dayKey?: 'mon' | 'wed' | 'thu' }} props */
+export default function LessonModule({ steps, variant = 'paper', noRounded = false, dayKey = 'wed' }) {
   const total = steps?.length ?? 0
   const ink = variant === 'ink'
+  const dayTry = tryDayForPaper(dayKey)
 
   if (!total) {
     return (
@@ -11,7 +23,7 @@ export default function LessonModule({ steps, variant = 'paper', noRounded = fal
         className={
           ink
             ? 'border border-paper/15 p-5 text-base text-paper/65'
-            : `${noRounded ? '' : 'rounded-card '}border border-ink/20 bg-ink/[0.02] p-5 text-base text-ink/70`
+            : `${noRounded ? '' : 'rounded-card '}border border-hairline/50 bg-paper p-5 text-base text-ink/70`
         }
       >
         Step-by-step content for this class is not ready yet.
@@ -26,14 +38,14 @@ export default function LessonModule({ steps, variant = 'paper', noRounded = fal
           className={
             ink
               ? `${noRounded ? '' : 'rounded-card '}border border-paper/15 bg-paper/[0.06] p-6 sm:p-8`
-              : `${noRounded ? '' : 'rounded-card '}border border-ink/20 bg-ink/[0.02] p-6 sm:p-8`
+              : `${noRounded ? '' : 'rounded-card '}border border-hairline/50 bg-paper p-6 sm:p-8`
           }
           key={`${step.title}-${i}`}
         >
           <div className="flex flex-wrap items-start justify-between gap-3">
             <h2
               className={`font-serif text-2xl font-medium leading-tight sm:text-[1.65rem] ${
-                ink ? 'text-paper' : 'text-ink'
+                ink ? 'text-paper' : 'text-ink/90'
               }`}
             >
               {step.title}
@@ -41,7 +53,7 @@ export default function LessonModule({ steps, variant = 'paper', noRounded = fal
             {step.timing ? (
               <span
                 className={`shrink-0 border px-2.5 py-1 font-mono text-[11px] uppercase tracking-wide ${
-                  ink ? 'border-paper/25 text-paper/60' : 'border-ink/20 text-ink/55'
+                  ink ? 'border-paper/25 text-paper/60' : 'border-hairline/40 text-ink/55'
                 }`}
               >
                 {step.timing}
@@ -50,7 +62,7 @@ export default function LessonModule({ steps, variant = 'paper', noRounded = fal
           </div>
           <p
             className={`mt-5 max-w-prose whitespace-pre-line text-pretty text-base leading-[1.7] sm:text-[17px] ${
-              ink ? 'text-paper/85' : 'text-ink/80'
+              ink ? 'text-paper/85' : 'text-ink/70'
             }`}
           >
             {step.content}
@@ -60,7 +72,7 @@ export default function LessonModule({ steps, variant = 'paper', noRounded = fal
             <div className="mt-6 space-y-2">
               <div
                 className={`aspect-video w-full overflow-hidden border bg-bg ${
-                  ink ? 'border-paper/20' : 'border-ink/20'
+                  ink ? 'border-paper/20' : 'border-hairline/40'
                 }`}
               >
                 <iframe
@@ -86,7 +98,7 @@ export default function LessonModule({ steps, variant = 'paper', noRounded = fal
                   <img
                     src={img.src}
                     alt={img.alt}
-                    className={`w-full border ${ink ? 'border-paper/20 bg-paper/[0.04]' : 'border-ink/20 bg-ink/[0.02]'}`}
+                    className={`w-full border ${ink ? 'border-paper/20 bg-paper/[0.04]' : 'border-hairline/40 bg-ink/[0.02]'}`}
                     loading="lazy"
                   />
                   {img.caption ? (
@@ -125,14 +137,14 @@ export default function LessonModule({ steps, variant = 'paper', noRounded = fal
             <div
               className={
                 ink
-                  ? 'mt-6 border border-sun/35 bg-sun/10 px-5 py-4'
-                  : 'mt-6 border border-wed/30 bg-wed/[0.06] px-5 py-4'
+                  ? 'mt-6 border border-hairline/45 bg-sun/10 px-5 py-4'
+                  : 'mt-6 border border-hairline/50 bg-paper px-5 py-4'
               }
             >
-              <p className={`font-mono text-[11px] uppercase tracking-[0.2em] ${ink ? 'text-sun' : 'text-wed'}`}>Tips</p>
+              <p className={`font-mono text-[11px] uppercase tracking-[0.2em] ${ink ? 'text-sun' : 'text-ink/50'}`}>Tips</p>
               <ul
                 className={`mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed ${
-                  ink ? 'text-paper/90' : 'text-ink/90'
+                  ink ? 'text-paper/90' : 'text-ink/80'
                 }`}
               >
                 {step.tips.map((t, tIdx) => (
@@ -149,19 +161,8 @@ export default function LessonModule({ steps, variant = 'paper', noRounded = fal
           ) : null}
 
           {step.task ? (
-            <div
-              className={
-                ink
-                  ? 'mt-7 border-l-4 border-sun/70 bg-sun/10 px-5 py-4'
-                  : 'mt-7 border-l-4 border-thu/60 bg-thu/[0.06] px-5 py-4'
-              }
-            >
-              <p
-                className={`font-mono text-[11px] uppercase tracking-[0.2em] ${ink ? 'text-sun' : 'text-thu'}`}
-              >
-                Try it
-              </p>
-              <p className={`mt-2 text-base leading-relaxed ${ink ? 'text-paper/90' : 'text-ink/90'}`}>{step.task}</p>
+            <div className={ink ? 'mt-7 border-l-4 border-sun/70 bg-sun/10 px-5 py-4' : dayTry.box}>
+              <p className={`text-base leading-relaxed ${ink ? 'text-paper/90' : 'text-ink/80'}`}>{step.task}</p>
             </div>
           ) : null}
         </div>

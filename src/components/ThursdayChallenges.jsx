@@ -3,12 +3,12 @@ import CodeBlock from './CodeBlock'
 function TierCard({ title, tier, desc, steps, code }) {
   const border =
     tier === 'base'
-      ? 'border-wed/35 bg-wed/[0.06]'
+      ? 'border-hairline/45 bg-wed/[0.06]'
       : tier === 'medium'
-        ? 'border-thu/40 bg-thu/[0.06]'
+        ? 'border-hairline/45 bg-thu/[0.06]'
         : tier === 'hard'
-          ? 'border-mon/40 bg-mon/[0.07]'
-          : 'border-ink/20 bg-ink/[0.04]'
+          ? 'border-hairline/45 bg-mon/[0.07]'
+          : 'border-hairline/45 bg-ink/[0.04]'
 
   const label =
     tier === 'base' ? 'Base' : tier === 'medium' ? 'Medium' : tier === 'hard' ? 'Hard' : 'Bonus'
@@ -56,7 +56,7 @@ export default function ThursdayChallenges({ challenges }) {
         ) : null}
         {hard ? <TierCard tier="hard" title={hard.title} desc={hard.desc} steps={hard.steps} code={hard.code} /> : null}
         {bonus ? (
-          <div className="border border-dashed border-ink/30 bg-ink/[0.02] p-6">
+          <div className="border border-dashed border-hairline/50 bg-ink/[0.02] p-6">
             <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-ink/50">Bonus</p>
             <p className="mt-2 text-base leading-relaxed text-ink/90">{bonus}</p>
           </div>
