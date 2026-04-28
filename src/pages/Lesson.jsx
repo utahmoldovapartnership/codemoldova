@@ -110,7 +110,13 @@ function buildArtifacts(session) {
 function buildMainPoints(session) {
   if (session.mainPoints?.length) return session.mainPoints
   if (session.steps?.length) {
-    return session.steps.slice(0, 5).map((s) => s.title)
+    return session.steps.slice(0, 5).map((s) => {
+      const detail = [s.content, s.task, Array.isArray(s.tips) && s.tips.length ? s.tips[0] : '']
+        .filter((v) => typeof v === 'string' && v.trim())
+        .map((v) => v.trim())
+        .join(' ')
+      return detail ? `${s.title}. ${detail}` : s.title
+    })
   }
   return null
 }

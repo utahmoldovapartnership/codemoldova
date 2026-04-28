@@ -94,14 +94,42 @@ export function LessonSectionGoal({ goal, dayMeta }) {
 
 export function LessonMainPoints({ points }) {
   if (!points?.length) return null
+  const pointParts = points.map((point) => {
+    const text = typeof point === 'string' ? point.trim() : ''
+    if (!text) return { title: '', body: '' }
+
+    const firstSentenceMatch = text.match(/^[^.!?]+[.!?]/)
+    if (firstSentenceMatch) {
+      const title = firstSentenceMatch[0].trim()
+      const body = text.slice(firstSentenceMatch[0].length).trim()
+      return { title, body }
+    }
+    return { title: text, body: 'Focus on this during lab so you can apply it without copying step-by-step.' }
+  })
+
   return (
     <section className="mx-6 border-b border-hairline py-14 sm:mx-10 sm:py-16">
       <div className="w-full">
-        <SectionHead num="02" kicker="Main points" title="What to remember." />
-        <ol className="grid list-none border-t border-hairline sm:grid-cols-2 sm:gap-x-8">
-          {points.map((p, i) => (
-            <li key={i} className="border-b border-hairline px-2 py-5 sm:px-0 sm:py-7">
-              <span className="font-serif text-lg leading-snug tracking-tight sm:text-xl">{p}</span>
+        <SectionKicker num="02" kicker="Main points" />
+        <h2 className="mt-2 font-serif text-[clamp(1.85rem,4vw,2.5rem)] font-medium leading-tight text-ink sm:text-4xl">
+          What to <em className="text-dart italic">remember</em>.
+        </h2>
+        <p className="mt-6 max-w-3xl text-lg leading-relaxed text-ink/80">
+          These are the core takeaways from today. Focus on the ideas you can explain clearly and reuse in your next build,
+          not just the lines you copied once.
+        </p>
+        <ol className="mt-8 grid list-none grid-cols-1 border-t border-hairline sm:grid-cols-2">
+          {pointParts.map((p, i) => (
+            <li key={i} className={`border-b border-hairline ${i % 2 === 0 ? 'sm:border-r sm:border-hairline' : ''}`}>
+              <div className="flex gap-5 px-2 py-7 sm:px-6 sm:py-9">
+                <span className="mt-1 shrink-0 text-dart">
+                  <PixelIcon icon="check" size={20} className="text-current" />
+                </span>
+                <div>
+                  <h3 className="font-serif text-2xl font-medium tracking-tight text-ink">{p.title}</h3>
+                  {p.body ? <p className="mt-2 text-base leading-relaxed text-ink/80">{p.body}</p> : null}
+                </div>
+              </div>
             </li>
           ))}
         </ol>
@@ -281,7 +309,7 @@ export function LessonHomework({ homework }) {
         <ul className="mt-6 space-y-3">
           {homework.tasks.map((t, i) => (
             <li key={i} className="flex items-start gap-4 border-b border-hairline/50 pb-3">
-              <PixelIcon icon="check" size={16} className="mt-1 shrink-0 text-val" />
+              <PixelIcon icon="sparkle" size={12} className="mt-1 shrink-0 text-val" />
               <span className="font-body text-base leading-relaxed text-ink/85 sm:text-lg">{t}</span>
             </li>
           ))}
