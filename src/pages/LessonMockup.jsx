@@ -30,9 +30,8 @@ const SAMPLE = {
     'Strings go in quotes, numbers do not.',
   ],
   artifacts: [
-    { label: 'Slides', href: 'https://example.com/slides', ready: true },
-    { label: 'Recording', href: '', ready: false, hint: 'Posted after class' },
-    { label: 'Code from class', href: 'https://github.com/example', ready: true },
+    { label: 'Class slides', href: 'https://example.com/slides', ready: true },
+    { label: 'Class code', href: 'https://github.com/example', ready: true },
   ],
   lab: {
     title: 'Make Python say hello',
@@ -164,46 +163,54 @@ export default function LessonMockup() {
     <div className="min-h-dvh bg-paper font-body text-ink antialiased">
       <LessonMarquee />
       <PreviewBar dayKey={dayKey} setDayKey={setDayKey} />
-      <LessonHero
-        dayKey={dayKey}
-        dayMeta={meta}
-        date={SAMPLE.date}
-        sessionLabel={SAMPLE.sessionLabel}
-        title={SAMPLE.title}
-        breadcrumb={
-          <nav aria-label="Breadcrumb" className="mb-0 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/55">
-            <ol className="flex flex-wrap items-center gap-2">
-              <li>
-                <Link to="/" className="hover:text-ink hover:underline hover:underline-offset-4">
-                  Home
-                </Link>
-              </li>
-              <li aria-hidden>/</li>
-              <li>
-                <Link to="/roadmap" className="hover:text-ink hover:underline hover:underline-offset-4">
-                  Roadmap
-                </Link>
-              </li>
-            </ol>
-          </nav>
-        }
-      />
-      <LessonSectionGoal goal={SAMPLE.goal} dayMeta={meta} />
-      <LessonMainPoints points={SAMPLE.mainPoints} />
-      <LessonArtifacts artifacts={SAMPLE.artifacts} />
-      <LessonLabBand dayKey={dayKey} title={SAMPLE.lab.title} intro={SAMPLE.lab.intro} exampleLabel="Lab example">
-        <MockStaticLabContent lab={SAMPLE.lab} />
-      </LessonLabBand>
-      {isThu ? <LessonChallengesAccordion challenges={SAMPLE.challenges} /> : null}
-      <LessonHomework homework={homework} />
-      <LessonMistakes mistakes={SAMPLE.mistakes} />
-      <LessonVocab vocab={SAMPLE.vocab} />
-      <LessonResources resources={SAMPLE.resources} />
-      <LessonPrevNext
-        currentDay={dayKey}
-        prev={{ week: 1, day: 'mon', label: 'Week 1 · same route preview' }}
-        next={{ week: 1, day: 'wed', label: 'Week 1 · next session preview' }}
-      />
+      <div className="layout-shell">
+        <LessonHero
+          dayKey={dayKey}
+          dayMeta={meta}
+          date={SAMPLE.date}
+          sessionLabel={SAMPLE.sessionLabel}
+          title={SAMPLE.title}
+          breadcrumb={
+            <nav aria-label="Breadcrumb" className="mb-0 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/55">
+              <ol className="flex flex-wrap items-center gap-2">
+                <li>
+                  <Link to="/" className="hover:text-ink hover:underline hover:underline-offset-4">
+                    Home
+                  </Link>
+                </li>
+                <li aria-hidden>/</li>
+                <li>
+                  <Link to="/roadmap" className="hover:text-ink hover:underline hover:underline-offset-4">
+                    Roadmap
+                  </Link>
+                </li>
+              </ol>
+            </nav>
+          }
+        />
+        <LessonArtifacts artifacts={SAMPLE.artifacts} dayKey={dayKey} />
+        <LessonSectionGoal goal={SAMPLE.goal} dayMeta={meta} />
+        <LessonLabBand
+          dayKey={dayKey}
+          title={SAMPLE.lab.title}
+          intro={SAMPLE.lab.intro}
+          exampleLabel="Lab example"
+          durationLabel={SAMPLE.lab.duration}
+        >
+          <MockStaticLabContent lab={SAMPLE.lab} />
+        </LessonLabBand>
+        {isThu ? <LessonChallengesAccordion challenges={SAMPLE.challenges} /> : null}
+        <LessonHomework homework={homework} />
+        <LessonMainPoints points={SAMPLE.mainPoints} />
+        <LessonMistakes mistakes={SAMPLE.mistakes} />
+        <LessonVocab vocab={SAMPLE.vocab} />
+        <LessonResources resources={SAMPLE.resources} />
+        <LessonPrevNext
+          currentDay={dayKey}
+          prev={{ week: 1, day: 'mon', label: 'Week 1 · same route preview' }}
+          next={{ week: 1, day: 'wed', label: 'Week 1 · next session preview' }}
+        />
+      </div>
     </div>
   )
 }

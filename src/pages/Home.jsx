@@ -1,5 +1,6 @@
 import { Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import heroAccent from '../assets/home-ornaments/2-1.svg'
 import LazyInView from '../components/LazyInView.jsx'
 import PixelIcon from '../components/PixelIcon.jsx'
 import ScrollReveal from '../components/ScrollReveal.jsx'
@@ -94,7 +95,7 @@ function MarqueeSegment({ copyId }) {
     <div className="flex shrink-0 items-center gap-10 pr-10 sm:gap-12 sm:pr-12" aria-hidden={copyId === 'b'}>
       {MARQUEE_ITEMS.map((t, i) => (
         <Fragment key={`${copyId}-${t}-${i}`}>
-          {i > 0 ? <PixelIcon icon="heart" size={10} /> : null}
+          {i > 0 ? <PixelIcon icon="heart" size={10} className="hm-marquee-heart" /> : null}
           <span className="whitespace-nowrap font-mono text-[11px] uppercase tracking-[0.25em]">{t}</span>
         </Fragment>
       ))}
@@ -119,7 +120,18 @@ function Marquee() {
 
 function Hero() {
   return (
-    <div className="text-left">
+    <div className="relative text-left">
+      <ScrollReveal delayMs={140} hiddenTranslate="translate-y-4" className="pointer-events-none absolute inset-0">
+        <img
+          src={heroAccent}
+          alt=""
+          aria-hidden="true"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+          className="pointer-events-none absolute right-20 top-10 hidden w-20 select-none opacity-100 md:block xl:right-24 xl:top-80 xl:w-28"
+        />
+      </ScrollReveal>
       <ScrollReveal rootMargin="0px 0px 12% 0px">
         <div className="flex flex-wrap gap-2">
           {HERO_PILLS.map((pill, i) => (
@@ -136,10 +148,10 @@ function Hero() {
       </ScrollReveal>
 
       <ScrollReveal className="mt-6" delayMs={90} rootMargin="0px 0px 12% 0px">
-        <h1 className="font-serif text-[clamp(3rem,10vw,9rem)] font-medium leading-[0.92] tracking-[-0.02em] text-ink">
+        <h1 className="font-serif text-[clamp(3rem,10vw,9rem)] font-medium italic leading-[0.92] tracking-[-0.02em] text-ink">
           <span className="block sm:whitespace-nowrap">A coding course</span>
           <span className="block">
-            <em className="hm-val italic">worth</em> joining!
+            <span className="hm-val">worth</span> joining!
           </span>
         </h1>
       </ScrollReveal>
@@ -391,7 +403,9 @@ function SlackCTA() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
           <ScrollReveal className="lg:col-span-8">
             <h2 className="font-serif text-[clamp(2.5rem,6vw,5rem)] font-medium leading-[1] tracking-tight">
-              Ready to learn <em className="hm-slack-accent italic">how to code?</em>
+              Ready to learn <em className="hm-slack-accent italic">how</em>
+              <br />
+              <em className="hm-slack-accent italic">to code?</em>
             </h2>
             <p className="hm-slack-body mt-8 max-w-xl text-lg leading-relaxed">
               Join our Slack channel today! Meet other people learning to code, ask questions, share progress, and work

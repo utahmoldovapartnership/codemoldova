@@ -48,8 +48,8 @@ export function LessonMarquee() {
  */
 export function LessonHero({ dayKey, dayMeta, date, sessionLabel, title, breadcrumb }) {
   return (
-    <section className="border-b border-hairline/50 px-6 py-14 sm:px-10 sm:py-20">
-      <div className="mx-auto max-w-4xl">
+    <section className="mx-6 py-14 sm:mx-10 sm:py-20">
+      <div className="w-full">
         <div className="mb-8">{breadcrumb}</div>
 
         <div className="flex flex-wrap items-center gap-3">
@@ -78,8 +78,8 @@ export function LessonHero({ dayKey, dayMeta, date, sessionLabel, title, breadcr
 export function LessonSectionGoal({ goal, dayMeta }) {
   if (!goal?.trim()) return null
   return (
-    <section className="border-b border-hairline px-6 py-14 sm:px-10 sm:py-16">
-      <div className="mx-auto max-w-4xl">
+    <section className="mx-6 border-t border-hairline py-14 sm:mx-10 sm:py-16">
+      <div className="w-full">
         <SectionKicker num="01" kicker="Today's goal" />
         <p
           className="mt-4 max-w-prose border-l-4 pl-6 font-serif text-2xl font-medium leading-[1.25] tracking-tight text-ink sm:text-3xl"
@@ -95,8 +95,8 @@ export function LessonSectionGoal({ goal, dayMeta }) {
 export function LessonMainPoints({ points }) {
   if (!points?.length) return null
   return (
-    <section className="border-b border-hairline px-6 py-14 sm:px-10 sm:py-16">
-      <div className="mx-auto max-w-4xl">
+    <section className="mx-6 border-b border-hairline py-14 sm:mx-10 sm:py-16">
+      <div className="w-full">
         <SectionHead num="02" kicker="Main points" title="What to remember." />
         <ol className="grid list-none border-t border-hairline sm:grid-cols-2 sm:gap-x-8">
           {points.map((p, i) => (
@@ -110,13 +110,20 @@ export function LessonMainPoints({ points }) {
   )
 }
 
+function lessonDayHoverButtonClass(dayKey) {
+  if (dayKey === 'mon') return 'hm-hero-join-slack--ube'
+  if (dayKey === 'wed') return 'hm-hero-join-slack--sun'
+  if (dayKey === 'thu') return 'hm-hero-join-slack--val'
+  return 'hm-hero-join-slack--sun'
+}
+
 /** @param {{ label: string, href: string, ready: boolean, hint?: string }[]} props.artifacts */
-export function LessonArtifacts({ artifacts }) {
+export function LessonArtifacts({ artifacts, dayKey = 'wed' }) {
   if (!artifacts?.length) return null
+  const dayHover = lessonDayHoverButtonClass(dayKey)
   return (
-    <section className="border-b border-hairline px-6 py-14 sm:px-10 sm:py-16">
-      <div className="mx-auto max-w-4xl">
-        <SectionHead num="03" kicker="From class" title="Slides, recording, code." />
+    <section className="mx-6 -mt-8 pb-10 pt-0 sm:mx-10 sm:-mt-10 sm:pb-12">
+      <div className="w-full">
         <div className="flex flex-wrap gap-3">
           {artifacts.map((a) =>
             a.ready && a.href ? (
@@ -125,20 +132,22 @@ export function LessonArtifacts({ artifacts }) {
                 href={a.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex h-12 items-center gap-3 border border-val/40 bg-paper px-5 font-mono text-xs uppercase tracking-[0.25em] text-ink transition-colors hover:border-val hover:bg-val/10"
+                className={`hm-hero-join-slack ${dayHover} inline-flex h-12 items-center gap-3 border px-5 font-mono text-xs uppercase tracking-[0.25em]`}
               >
                 <span>{a.label}</span>
                 <PixelIcon icon="arrow" size={12} className="text-current" />
               </a>
             ) : (
-              <span
+              <a
                 key={a.label}
-                className="inline-flex h-12 cursor-not-allowed items-center gap-2 border border-dashed border-ink/30 px-5 font-mono text-xs uppercase tracking-[0.25em] text-ink/45"
+                href="#"
+                onClick={(e) => e.preventDefault()}
+                aria-disabled="true"
+                className={`hm-hero-join-slack ${dayHover} inline-flex h-12 items-center gap-3 border px-5 font-mono text-xs uppercase tracking-[0.25em]`}
               >
                 <span>{a.label}</span>
-                <span aria-hidden>·</span>
-                <span className="normal-case tracking-normal">{a.hint || 'Coming soon'}</span>
-              </span>
+                <PixelIcon icon="arrow" size={12} className="text-current" />
+              </a>
             ),
           )}
         </div>
@@ -166,35 +175,56 @@ const LAB_DAY = {
 }
 
 /**
- * @param {{ title: string, intro?: string, exampleHref?: string, exampleLabel?: string, dayKey?: 'mon' | 'wed' | 'thu', children: import('react').ReactNode }} props
+ * @param {{ title: string, intro?: string, exampleHref?: string, exampleLabel?: string, durationLabel?: string, dayKey?: 'mon' | 'wed' | 'thu', children: import('react').ReactNode }} props
  */
-export function LessonLabBand({ title, intro, exampleHref, exampleLabel = 'Example', dayKey = 'wed', children }) {
+export function LessonLabBand({ title, intro, exampleHref, exampleLabel = 'Example', durationLabel = '', dayKey = 'wed', children }) {
   if (children == null) return null
   const t = LAB_DAY[dayKey] ?? LAB_DAY.wed
+  const kicker = durationLabel?.trim() ? `Lab · ${durationLabel.trim()}` : 'Lab'
   return (
-    <section className={`border-b border-hairline px-6 py-16 text-ink sm:px-10 sm:py-20 ${t.section}`}>
-      <div className="mx-auto max-w-4xl">
-        <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">Lab</p>
-        <h2 className="mt-3 font-serif text-3xl font-medium tracking-tight sm:text-5xl">{title}.</h2>
-        {intro ? <p className="mt-6 max-w-prose font-body text-base leading-relaxed text-ink/70 sm:text-lg">{intro}</p> : null}
-        <div className="mt-6">
-          {exampleHref ? (
-            <a
-              href={exampleHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`inline-flex min-h-11 items-center border px-4 font-mono text-xs uppercase tracking-[0.22em] ${t.btn}`}
+    <section className={`relative left-1/2 w-screen max-w-none -translate-x-1/2 text-ink ${t.section}`}>
+      <div className="layout-shell">
+        <div className="mx-6 w-full py-16 sm:mx-10 sm:py-20">
+          <details open className="group">
+          <summary className="-mx-2 grid cursor-pointer grid-cols-12 items-center gap-4 px-2 py-4 transition-colors hover:bg-paper marker:hidden sm:-mx-3 sm:px-3">
+            <div className="col-span-11">
+              <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">{kicker}</p>
+              <h2 className="mt-3 font-serif text-3xl font-medium tracking-tight sm:text-5xl">{title}.</h2>
+              {intro ? <p className="mt-3 max-w-prose font-body text-sm leading-relaxed text-ink/65 sm:text-base">{intro}</p> : null}
+            </div>
+            <span
+              aria-hidden
+              className="col-span-1 flex justify-end"
             >
-              {exampleLabel}
-              <span className="sr-only"> (opens in a new tab)</span>
-            </a>
-          ) : (
-            <span className={`inline-flex min-h-11 items-center border px-4 font-mono text-xs uppercase tracking-[0.22em] ${t.btnPlaceholder}`}>
-              {exampleLabel} link coming soon
+              <PixelIcon
+                icon="arrow"
+                size={12}
+                className="shrink-0 text-ink/55 transition-transform duration-200 ease-out group-open:rotate-90 group-hover:rotate-90"
+              />
             </span>
-          )}
+          </summary>
+          <div className="pt-2">
+            <div className="mt-6">
+              {exampleHref ? (
+                <a
+                  href={exampleHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`inline-flex min-h-11 items-center border px-4 font-mono text-xs uppercase tracking-[0.22em] ${t.btn}`}
+                >
+                  {exampleLabel}
+                  <span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              ) : (
+                <span className={`inline-flex min-h-11 items-center border px-4 font-mono text-xs uppercase tracking-[0.22em] ${t.btnPlaceholder}`}>
+                  {exampleLabel} link coming soon
+                </span>
+              )}
+            </div>
+            <div className="mt-10">{children}</div>
+          </div>
+          </details>
         </div>
-        <div className="mt-10">{children}</div>
       </div>
     </section>
   )
@@ -204,8 +234,8 @@ export function LessonLabBand({ title, intro, exampleHref, exampleLabel = 'Examp
 export function LessonChallengesAccordion({ challenges }) {
   if (!challenges?.length) return null
   return (
-    <section className="border-b border-hairline px-6 py-14 sm:px-10 sm:py-16">
-      <div className="mx-auto max-w-4xl">
+    <section className="mx-6 border-b border-hairline py-14 sm:mx-10 sm:py-16">
+      <div className="w-full">
         <SectionHead num="05" kicker="Thursday challenges" title="Pick your tier." />
         <p className="mb-6 max-w-prose font-body text-base leading-relaxed text-ink/75">
           Everyone does Base. Stretch into Medium / Hard / Bonus only if you finish early — they exist so nobody gets
@@ -241,8 +271,8 @@ export function LessonHomework({ homework }) {
   const titleText = (homework.title || 'Homework').trim()
   const h2 = titleText.endsWith('.') ? titleText : `${titleText}.`
   return (
-    <section className="border-b border-hairline px-6 py-14 sm:px-10 sm:py-16" aria-labelledby="hw-heading">
-      <div className="mx-auto max-w-4xl">
+    <section className="mx-6 border-b border-hairline py-14 sm:mx-10 sm:py-16" aria-labelledby="hw-heading">
+      <div className="w-full">
         <SectionKicker num="06" kicker="Homework" />
         <h2 id="hw-heading" className="mt-2 font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">
           {h2}
@@ -264,8 +294,8 @@ export function LessonHomework({ homework }) {
 export function LessonMistakes({ mistakes }) {
   if (!mistakes?.length) return null
   return (
-    <section className="border-b border-hairline/50 px-6 py-14 sm:px-10 sm:py-16">
-      <div className="mx-auto max-w-4xl">
+    <section className="mx-6 border-b border-hairline/50 py-14 sm:mx-10 sm:py-16">
+      <div className="w-full">
         <SectionHead num="07" kicker="If you get stuck" title="Common mistakes." />
         <ul className="space-y-3">
           {mistakes.map((m, i) => (
@@ -283,8 +313,8 @@ export function LessonMistakes({ mistakes }) {
 export function LessonVocab({ vocab }) {
   if (!vocab?.length) return null
   return (
-    <section className="border-b border-hairline px-6 py-14 sm:px-10 sm:py-16">
-      <div className="mx-auto max-w-4xl">
+    <section className="mx-6 border-b border-hairline py-14 sm:mx-10 sm:py-16">
+      <div className="w-full">
         <SectionHead num="08" kicker="New words" title="Vocabulary." />
         <dl className="grid grid-cols-1 border-t border-hairline sm:grid-cols-2">
           {vocab.map((v, i) => (
@@ -302,8 +332,8 @@ export function LessonVocab({ vocab }) {
 export function LessonResources({ resources }) {
   if (!resources?.length) return null
   return (
-    <section className="border-b border-hairline px-6 py-14 sm:px-10 sm:py-16">
-      <div className="mx-auto max-w-4xl">
+    <section className="mx-6 border-b border-hairline py-14 sm:mx-10 sm:py-16">
+      <div className="w-full">
         <SectionHead num="09" kicker="Helpful resources" title="Read · Watch · Try." />
         <div className="space-y-10">
           {resources.map((g) => (
@@ -340,10 +370,10 @@ export function LessonPostClass({ postClass }) {
   if (!postClass?.links?.length) return null
   return (
     <section
-      className="border-b border-hairline px-6 py-14 sm:px-10 sm:py-16"
+      className="mx-6 border-b border-hairline py-14 sm:mx-10 sm:py-16"
       aria-labelledby="lesson-session-resources-heading"
     >
-      <div className="mx-auto max-w-4xl">
+      <div className="w-full">
         <SectionKicker kicker="Resources" />
         <h2
           id="lesson-session-resources-heading"
@@ -392,8 +422,8 @@ function lessonLinkPrevNextHoverClass(currentDayKey, role) {
  */
 export function LessonPrevNext({ currentDay, prev, next }) {
   return (
-    <section className="border-b border-hairline px-6 py-14 sm:px-10 sm:py-16">
-      <div className="mx-auto max-w-4xl">
+    <section className="mx-6 py-14 sm:mx-10 sm:py-16">
+      <div className="w-full">
         <nav aria-label="Previous and next class" className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4">
           {prev ? (
             <Link

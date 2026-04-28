@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import PageChrome from '../components/PageChrome.jsx'
 import LessonModule from '../components/LessonModule'
@@ -84,27 +85,20 @@ function buildArtifacts(session) {
   if (session.slideDeck?.label) {
     const url = typeof session.slideDeck.url === 'string' ? session.slideDeck.url.trim() : ''
     out.push({
-      label: 'Slides',
+      label: 'Class slides',
       href: url || '#',
       ready: Boolean(url),
       hint: session.slideDeck.hint || 'Link coming soon',
     })
   } else {
-    out.push({ label: 'Slides', href: '', ready: false, hint: 'Announced in class' })
+    out.push({ label: 'Class slides', href: '', ready: false, hint: 'Announced in class' })
   }
-  const rec = session.recordingUrl
-  out.push({
-    label: 'Recording',
-    href: typeof rec === 'string' ? rec : '',
-    ready: Boolean(typeof rec === 'string' && rec.trim()),
-    hint: 'Posted after class',
-  })
   const codeUrl = session.codeFromClassUrl
   if (typeof codeUrl === 'string' && codeUrl.trim()) {
-    out.push({ label: 'Code from class', href: codeUrl.trim(), ready: true })
+    out.push({ label: 'Class code', href: codeUrl.trim(), ready: true })
   } else {
     out.push({
-      label: 'Code from class',
+      label: 'Class code',
       href: '',
       ready: false,
       hint: 'Shared in class or add codeFromClassUrl in curriculum',
@@ -136,7 +130,31 @@ function resolveLabExample(session) {
   return { href: '', label: 'Lab example' }
 }
 
-function BreadcrumbWithJumps({ weekNum, dayKey, weekOptions, dayOptions, onWeekChange, onDayChange, metaLabel }) {
+function estimateLabDurationLabel(session) {
+  const direct =
+    session?.labDurationLabel ??
+    session?.labDuration ??
+    (Number.isFinite(session?.labDurationMin) ? `${session.labDurationMin} min` : '')
+  if (typeof direct === 'string' && direct.trim()) return direct.trim()
+
+  const stepCount = Array.isArray(session?.steps) ? session.steps.length : 0
+  if (stepCount <= 3) return '15 min'
+  if (stepCount <= 5) return '20 min'
+  if (stepCount <= 7) return '25 min'
+  return '30 min'
+}
+
+function BreadcrumbWithJumps({ weekNum, dayKey, weekOptions, dayOptions, onWeekSelect, onDaySelect, metaLabel }) {
+  const weekMenuRef = useRef(null)
+  const dayMenuRef = useRef(null)
+
+  const closeWeekMenu = () => {
+    if (weekMenuRef.current) weekMenuRef.current.open = false
+  }
+  const closeDayMenu = () => {
+    if (dayMenuRef.current) dayMenuRef.current.open = false
+  }
+
   return (
     <nav aria-label="Breadcrumb" className="font-mono text-[11px] uppercase tracking-[0.25em] text-ink/55">
       <ol className="flex flex-wrap items-center gap-x-2 gap-y-2">
@@ -157,52 +175,66 @@ function BreadcrumbWithJumps({ weekNum, dayKey, weekOptions, dayOptions, onWeekC
           /
         </li>
         <li>
-          <label htmlFor="lesson-week-jump" className="sr-only">
-            Change week
-          </label>
-          <span className="text-ink/50">Week</span>{' '}
-          <span className="relative inline-flex items-baseline text-ink">
-            <span className="underline decoration-dart/40 decoration-1 underline-offset-2">{weekNum}</span>
-            <select
-              id="lesson-week-jump"
-              value={weekNum}
-              onChange={onWeekChange}
-              className="absolute inset-0 cursor-pointer appearance-none opacity-0"
-              aria-label="Change week"
-            >
-              {weekOptions.map((w) => (
-                <option key={w} value={w}>
-                  {w}
-                </option>
-              ))}
-            </select>
-          </span>
+          <details ref={weekMenuRef} className="group relative inline-block">
+            <summary className="flex h-7 list-none cursor-pointer items-center gap-2 border-b border-ink px-1 text-ink transition-colors marker:hidden hover:bg-ink/[0.04]">
+              <span>{`WEEK ${weekNum}`}</span>
+              <span aria-hidden className="text-ink/55 transition-transform group-open:rotate-180">▾</span>
+            </summary>
+            <div className="absolute left-0 z-20 mt-2 min-w-[10.5rem] bg-paper p-1 shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
+              {weekOptions.map((w) => {
+                const active = w === weekNum
+                return (
+                  <button
+                    key={w}
+                    type="button"
+                    onClick={() => {
+                      onWeekSelect(w)
+                      closeWeekMenu()
+                    }}
+                    className={`flex w-full items-center justify-between px-2 py-2 text-left text-[11px] uppercase tracking-[0.22em] transition-colors ${
+                      active ? 'bg-val text-ink' : 'text-ink hover:bg-ink/[0.06]'
+                    }`}
+                    aria-current={active ? 'true' : undefined}
+                  >
+                    <span>{`WEEK ${w}`}</span>
+                  </button>
+                )
+              })}
+            </div>
+          </details>
         </li>
         <li aria-hidden className="text-ink/45">
           ·
         </li>
         <li>
-          <label htmlFor="lesson-day-jump" className="sr-only">
-            Change day
-          </label>
-          <span className="relative inline-flex text-ink">
-            <span className="normal-case tracking-normal underline decoration-dart/40 decoration-1 underline-offset-2">
-              {metaLabel}
-            </span>
-            <select
-              id="lesson-day-jump"
-              value={dayKey}
-              onChange={onDayChange}
-              className="absolute inset-0 cursor-pointer appearance-none font-body normal-case text-base tracking-normal opacity-0"
-              aria-label="Change day of week"
-            >
-              {dayOptions.map((lesson) => (
-                <option key={lesson.day} value={lesson.day}>
-                  {DAY_HERO[lesson.day]?.label ?? lesson.day}
-                </option>
-              ))}
-            </select>
-          </span>
+          <details ref={dayMenuRef} className="group relative inline-block">
+            <summary className="flex h-7 list-none cursor-pointer items-center gap-2 border-b border-ink px-1 text-ink transition-colors marker:hidden hover:bg-ink/[0.04]">
+              <span>{metaLabel.toUpperCase()}</span>
+              <span aria-hidden className="text-ink/55 transition-transform group-open:rotate-180">▾</span>
+            </summary>
+            <div className="absolute left-0 z-20 mt-2 min-w-[10.5rem] bg-paper p-1 shadow-[0_8px_24px_rgba(0,0,0,0.08)]">
+              {dayOptions.map((lesson) => {
+                const dayLabel = (DAY_HERO[lesson.day]?.label ?? lesson.day).toUpperCase()
+                const active = lesson.day === dayKey
+                return (
+                  <button
+                    key={lesson.day}
+                    type="button"
+                    onClick={() => {
+                      onDaySelect(lesson.day)
+                      closeDayMenu()
+                    }}
+                    className={`flex w-full items-center justify-between px-2 py-2 text-left text-[11px] uppercase tracking-[0.22em] transition-colors ${
+                      active ? 'bg-val text-ink' : 'text-ink hover:bg-ink/[0.06]'
+                    }`}
+                    aria-current={active ? 'true' : undefined}
+                  >
+                    <span>{dayLabel}</span>
+                  </button>
+                )
+              })}
+            </div>
+          </details>
         </li>
       </ol>
     </nav>
@@ -261,8 +293,8 @@ export default function Lesson() {
   const weekOptions = Array.from(new Set(sessions.map((lesson) => lesson.week)))
   const dayOptions = sessions.filter((lesson) => lesson.week === weekNum)
 
-  const handleWeekChange = (e) => {
-    const selectedWeek = Number(e.target.value)
+  const handleWeekSelect = (selectedWeekRaw) => {
+    const selectedWeek = Number(selectedWeekRaw)
     if (!Number.isFinite(selectedWeek)) return
     const sameDayInSelectedWeek = sessions.find((l) => l.week === selectedWeek && l.day === dayKey)
     const fallbackDay = sessions.find((l) => l.week === selectedWeek)?.day
@@ -270,8 +302,7 @@ export default function Lesson() {
     if (nextDay) navigate(`/lesson/${selectedWeek}/${nextDay}`)
   }
 
-  const handleDayChange = (e) => {
-    const selectedDay = e.target.value
+  const handleDaySelect = (selectedDay) => {
     if (!selectedDay) return
     navigate(`/lesson/${weekNum}/${selectedDay}`)
   }
@@ -281,12 +312,13 @@ export default function Lesson() {
   const artifacts = buildArtifacts(session)
   const challengesList = isThu ? buildChallengesAccordionList(session.challenges) : []
   const labExample = resolveLabExample(session)
+  const labDurationLabel = estimateLabDurationLabel(session)
   const showLab = Boolean(session.steps?.length)
 
   return (
     <div className="min-h-full flex-1 bg-paper font-body text-ink antialiased">
       <PageChrome>
-        <div className="min-h-0 w-full min-w-0 flex-1">
+        <div className="layout-shell min-h-0 min-w-0 flex-1">
           <LessonHero
             dayKey={dayKey}
             dayMeta={dayHero}
@@ -299,15 +331,14 @@ export default function Lesson() {
                 dayKey={dayKey}
                 weekOptions={weekOptions}
                 dayOptions={dayOptions}
-                onWeekChange={handleWeekChange}
-                onDayChange={handleDayChange}
+                onWeekSelect={handleWeekSelect}
+                onDaySelect={handleDaySelect}
                 metaLabel={dayHero.label}
               />
             }
           />
+          {artifacts.length ? <LessonArtifacts artifacts={artifacts} dayKey={dayKey} /> : null}
           {goal ? <LessonSectionGoal goal={goal} dayMeta={dayHero} /> : null}
-          {mainPoints?.length ? <LessonMainPoints points={mainPoints} /> : null}
-          {artifacts.length ? <LessonArtifacts artifacts={artifacts} /> : null}
 
           {showLab ? (
             <LessonLabBand
@@ -316,6 +347,7 @@ export default function Lesson() {
               intro={session.desc || ''}
               exampleHref={labExample.href}
               exampleLabel={labExample.label}
+              durationLabel={labDurationLabel}
             >
               <LessonModule steps={session.steps} variant="paper" noRounded dayKey={dayKey} />
             </LessonLabBand>
@@ -326,6 +358,7 @@ export default function Lesson() {
           ) : null}
 
           {session.homework ? <LessonHomework homework={session.homework} /> : null}
+          {mainPoints?.length ? <LessonMainPoints points={mainPoints} /> : null}
           {session.postClass ? <LessonPostClass postClass={session.postClass} /> : null}
           {session.mistakes?.length ? <LessonMistakes mistakes={session.mistakes} /> : null}
           {session.vocab?.length ? <LessonVocab vocab={session.vocab} /> : null}

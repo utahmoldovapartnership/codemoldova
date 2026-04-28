@@ -48,6 +48,10 @@
   color: var(--cm-ink) !important;
 }
 
+.hm-marquee svg.hm-marquee-heart {
+  color: var(--cm-val) !important;
+}
+
 .hm-marquee-window {
   overflow: hidden;
 }
