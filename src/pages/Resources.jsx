@@ -195,7 +195,7 @@ export default function Resources() {
               loading="eager"
               fetchPriority="high"
               decoding="async"
-              className="pointer-events-none absolute right-20 top-10 hidden w-20 select-none opacity-100 md:block xl:right-24 xl:top-80 xl:w-28"
+              className="pointer-events-none absolute right-20 top-10 hidden w-20 select-none opacity-100 md:block lg:top-8 xl:right-24 xl:top-6 xl:w-28"
             />
           </ScrollReveal>
           <ScrollReveal rootMargin="0px 0px 12% 0px">
