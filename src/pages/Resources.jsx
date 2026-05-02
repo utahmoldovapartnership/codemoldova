@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
+import resourcesHeroAccent from '../assets/resources-ornaments/5.svg'
 import PixelIcon from '../components/PixelIcon.jsx'
 import ScrollReveal from '../components/ScrollReveal.jsx'
 import { resources, startHere } from '../data/resources'
@@ -185,23 +186,35 @@ export default function Resources() {
   return (
     <div className="res-page hm-page min-h-full flex-1 font-body antialiased">
       <div className="layout-shell max-w-6xl pb-20 pt-10 sm:pb-28 sm:pt-14">
-        <ScrollReveal rootMargin="0px 0px 12% 0px">
-          <header className="border-b border-hairline pb-12 sm:pb-16">
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink">Library</p>
-            <h1 className="mt-3 font-serif text-[clamp(2.25rem,6vw,4.25rem)] font-medium leading-[1.02] tracking-tight text-ink">
-              Course resources
-            </h1>
-            <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-ink/80">
-              Links we use in class and a few extra links to save.{' '}
-              <em className="hm-val font-serif italic">You do not have to read everything here.</em> Use what helps you
-              build projects and understand the lesson. Each week in class we say what is important for that week.
-            </p>
-            <p className="mt-5 max-w-2xl text-pretty text-base leading-relaxed text-ink/70">
-              <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-ink/50">Tip:</span> Each link
-              title tells you where the link goes. That helps when you save a bookmark or use a screen reader.
-            </p>
-          </header>
-        </ScrollReveal>
+        <div className="relative text-left">
+          <ScrollReveal delayMs={140} hiddenTranslate="translate-y-4" className="pointer-events-none absolute inset-0">
+            <img
+              src={resourcesHeroAccent}
+              alt=""
+              aria-hidden="true"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+              className="pointer-events-none absolute right-20 top-10 hidden w-20 select-none opacity-100 md:block xl:right-24 xl:top-80 xl:w-28"
+            />
+          </ScrollReveal>
+          <ScrollReveal rootMargin="0px 0px 12% 0px">
+            <header className="border-b border-hairline pb-12 sm:pb-16">
+              <h1 className="font-serif text-[clamp(2.25rem,6vw,4.25rem)] font-medium leading-[1.02] tracking-tight text-ink">
+                Course resources
+              </h1>
+              <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-ink/80">
+                Links we use in class and a few extra links to save.{' '}
+                <em className="hm-val font-serif italic">You do not have to read everything here.</em> Use what helps you
+                build projects and understand the lesson. Each week in class we say what is important for that week.
+              </p>
+              <p className="mt-5 max-w-2xl text-pretty text-base leading-relaxed text-ink/70">
+                <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-ink/50">Tip:</span> Each link
+                title tells you where the link goes. That helps when you save a bookmark or use a screen reader.
+              </p>
+            </header>
+          </ScrollReveal>
+        </div>
 
         <ScrollReveal className="py-16 sm:py-20" delayMs={60} rootMargin="0px 0px 10% 0px">
           <section aria-labelledby="start-heading">
