@@ -122,18 +122,36 @@ function buildMainPoints(session) {
 }
 
 function resolveLabExample(session) {
+  const custom =
+    typeof session?.labExampleLabel === 'string' && session.labExampleLabel.trim()
+      ? session.labExampleLabel.trim()
+      : ''
+  const downloadRaw = session?.labExampleDownload
+  const downloadFilename =
+    typeof downloadRaw === 'string' && downloadRaw.trim()
+      ? downloadRaw.trim()
+      : downloadRaw === true && typeof session?.labExampleUrl === 'string'
+        ? (session.labExampleUrl.split('/').pop() || '').split('?')[0] || null
+        : null
+
+  if (typeof session?.labExampleUrl === 'string' && session.labExampleUrl.trim()) {
+    return {
+      href: session.labExampleUrl.trim(),
+      label: custom || 'Lab example',
+      downloadFilename,
+    }
+  }
   const candidates = [
-    ['labExampleUrl', 'Lab example'],
     ['exampleUrl', 'Lab example'],
     ['solutionUrl', 'Example solution'],
   ]
   for (const [key, label] of candidates) {
     const val = session?.[key]
     if (typeof val === 'string' && val.trim()) {
-      return { href: val.trim(), label }
+      return { href: val.trim(), label, downloadFilename: null }
     }
   }
-  return { href: '', label: 'Lab example' }
+  return { href: '', label: 'Lab example', downloadFilename: null }
 }
 
 function estimateLabDurationLabel(session) {
@@ -324,7 +342,7 @@ export default function Lesson() {
   return (
     <div className="min-h-full flex-1 bg-paper font-body text-ink antialiased">
       <PageChrome>
-        <div className="layout-shell min-h-0 min-w-0 flex-1">
+        <div className="layout-shell max-w-6xl min-h-0 min-w-0 flex-1">
           <LessonHero
             dayKey={dayKey}
             dayMeta={dayHero}
@@ -353,6 +371,7 @@ export default function Lesson() {
               intro={session.desc || ''}
               exampleHref={labExample.href}
               exampleLabel={labExample.label}
+              exampleDownloadFilename={labExample.downloadFilename}
               durationLabel={labDurationLabel}
             >
               <LessonModule steps={session.steps} variant="paper" noRounded dayKey={dayKey} />

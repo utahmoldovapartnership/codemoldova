@@ -1,9 +1,9 @@
 export const sessions = [
-  { week: 1, day: "mon", date: "2026-05-11", label: "Intro + how computers think" },
+  { week: 1, day: "mon", date: "2026-05-11", label: "Intro & How computers think" },
   { week: 1, day: "wed", date: "2026-05-13", label: "What can AI actually do?" },
   { week: 1, day: "thu", date: "2026-05-14", label: "Mad libs generator" },
 
-  { week: 2, day: "mon", date: "2026-05-18", label: "Logic & loops" },
+  { week: 2, day: "mon", date: "2026-05-18", label: "Logic + loops" },
   { week: 2, day: "wed", date: "2026-05-20", label: "AI as your coding assistant" },
   { week: 2, day: "thu", date: "2026-05-21", label: "Number guessing game" },
 

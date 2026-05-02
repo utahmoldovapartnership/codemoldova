@@ -1,20 +1,30 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 220" role="img" aria-labelledby="t1">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 240" role="img" aria-labelledby="t1">
   <title id="t1">You type a command in the terminal; the shell runs a program; text prints back</title>
-  <rect width="720" height="220" rx="14" fill="#13161e" stroke="rgba(255,255,255,0.12)"/>
-  <rect x="24" y="56" width="180" height="108" rx="10" fill="#1a1e28" stroke="rgba(79,124,255,0.35)"/>
-  <text x="114" y="40" text-anchor="middle" fill="#7c8099" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13">You</text>
-  <text x="114" y="92" text-anchor="middle" fill="#e8eaf0" font-family="ui-monospace,Menlo,monospace" font-size="15">$ type</text>
-  <text x="114" y="118" text-anchor="middle" fill="#7c8099" font-family="ui-monospace,Menlo,monospace" font-size="12">command + Enter</text>
-  <path d="M216 110h48" stroke="rgba(255,255,255,0.2)" stroke-width="2" marker-end="url(#a)"/>
-  <defs><marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="rgba(255,255,255,0.25)"/></marker></defs>
-  <rect x="276" y="56" width="180" height="108" rx="10" fill="#1a1e28" stroke="rgba(240,165,0,0.35)"/>
-  <text x="366" y="40" text-anchor="middle" fill="#7c8099" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13">Shell</text>
-  <text x="366" y="92" text-anchor="middle" fill="#e8eaf0" font-family="ui-monospace,Menlo,monospace" font-size="14">runs program</text>
-  <text x="366" y="118" text-anchor="middle" fill="#7c8099" font-family="ui-monospace,Menlo,monospace" font-size="12">python, scripts&</text>
-  <path d="M468 110h48" stroke="rgba(255,255,255,0.2)" stroke-width="2" marker-end="url(#b)"/>
-  <defs><marker id="b" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 Z" fill="rgba(255,255,255,0.25)"/></marker></defs>
-  <rect x="528" y="56" width="168" height="108" rx="10" fill="#1a1e28" stroke="rgba(46,194,126,0.35)"/>
-  <text x="612" y="40" text-anchor="middle" fill="#7c8099" font-family="ui-sans-serif,system-ui,sans-serif" font-size="13">Output</text>
-  <text x="612" y="100" text-anchor="middle" fill="#e8eaf0" font-family="ui-monospace,Menlo,monospace" font-size="13">text / errors</text>
-  <text x="360" y="198" text-anchor="middle" fill="#5c6078" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12">Same loop whether you run Python or list files  you are always talking through the shell.</text>
+  <defs>
+    <style type="text/css">
+      @import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500&amp;family=Syne:wght@600;700&amp;display=swap");
+      .lab { font-family: Syne, system-ui, sans-serif; font-weight: 600; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; }
+      .mono { font-family: "DM Mono", ui-monospace, monospace; font-size: 14px; fill: #0d0f14; }
+      .mono-sm { font-family: "DM Mono", ui-monospace, monospace; font-size: 12px; fill: #7c8099; }
+      .foot { font-family: "DM Sans", system-ui, sans-serif; font-size: 13px; font-weight: 400; fill: #6b7088; }
+    </style>
+    <marker id="af" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8 Z" fill="#b8bcc8"/>
+    </marker>
+  </defs>
+  <rect width="720" height="240" fill="#ffffff" stroke="#d4d6de"/>
+  <rect x="32" y="52" width="200" height="118" fill="#fef6f5" stroke="#ef453f"/>
+  <text x="132" y="40" class="lab" text-anchor="middle" fill="#ef453f">You</text>
+  <text x="132" y="96" class="mono" text-anchor="middle">$ type</text>
+  <text x="132" y="122" class="mono-sm" text-anchor="middle">command + Enter</text>
+  <path d="M236 111h40" stroke="#d4d6de" stroke-width="1.5" fill="none" marker-end="url(#af)"/>
+  <rect x="260" y="52" width="200" height="118" fill="#faf5fc" stroke="#dd8cf1"/>
+  <text x="360" y="40" class="lab" text-anchor="middle" fill="#dd8cf1">Shell</text>
+  <text x="360" y="96" class="mono" text-anchor="middle">runs program</text>
+  <text x="360" y="122" class="mono-sm" text-anchor="middle">python, scripts&amp;</text>
+  <path d="M464 111h40" stroke="#d4d6de" stroke-width="1.5" fill="none" marker-end="url(#af)"/>
+  <rect x="488" y="52" width="200" height="118" fill="#f2f9f6" stroke="#097251"/>
+  <text x="588" y="40" class="lab" text-anchor="middle" fill="#097251">Output</text>
+  <text x="588" y="100" class="mono" text-anchor="middle">text / errors</text>
+  <text x="360" y="212" class="foot" text-anchor="middle">Same loop whether you run Python or list files — you are always “talking” through the shell.</text>
 </svg>

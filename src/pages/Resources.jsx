@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react'
-import resourcesHeroAccent from '../assets/resources-ornaments/5.svg'
+import resourcesHeroAccent from '../assets/resources-ornaments/3.svg'
 import PixelIcon from '../components/PixelIcon.jsx'
 import ScrollReveal from '../components/ScrollReveal.jsx'
 import { resources, startHere } from '../data/resources'
@@ -195,7 +195,7 @@ export default function Resources() {
               loading="eager"
               fetchPriority="high"
               decoding="async"
-              className="pointer-events-none absolute right-20 top-10 hidden w-20 select-none opacity-100 md:block lg:top-8 xl:right-24 xl:top-6 xl:w-28"
+              className="pointer-events-none absolute right-12 top-6 hidden w-20 select-none opacity-100 md:right-16 md:block lg:top-8 xl:right-20 xl:top-6 xl:w-28"
             />
           </ScrollReveal>
           <ScrollReveal rootMargin="0px 0px 12% 0px">

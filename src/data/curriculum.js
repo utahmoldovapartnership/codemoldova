@@ -7,121 +7,121 @@ export const phases = [
       {
         num: 1,
         mon: {
-          title: "Intro + how computers think",
+          title: "Intro & How computers think",
           date: "May 11",
-          desc: "The deck runs in the room; this page is for commands, snippets, and try-again practice. Work through the steps in order—last step is the one you ship to a partner.",
-          preview: "Terminal, Python, hello.py, then a small intro card in one file.",
+          desc: "What a program is, Cursor, and a guided Jupyter notebook (.ipynb). The lesson steps match the notebook: keep both open and run code cells from top to bottom in week1_intro.ipynb. The last step is what you aim to finish today.",
+          preview: "Install Cursor, open the starter notebook, run cells, then complete the intro card section in the same file.",
+          labExampleUrl: "/lesson/week1_intro.ipynb",
+          labExampleDownload: "week1_intro.ipynb",
+          labExampleLabel: "Download starter notebook (.ipynb)",
           slideDeck: {
             label: "Week 1 · Day one slide deck",
             url: "",
-            hint: "Paste your shared deck URL in curriculum.js (slideDeck.url) when it is ready. Until then, the link is announced in class and Slack.",
+            hint: "When the slide deck URL is ready, add it in curriculum.js under slideDeck.url. Until then, the link is posted in Slack.",
           },
           steps: [
             {
-              title: "In the room",
-              timing: "Workshop",
-              content:
-                "Follow the live deck. Keep this page open in another tab to copy commands and re-read a step without rewinding. When we switch to hands-on, pick up in the next section.",
-              task: "Bookmark this lesson so you can reopen it after class.",
-            },
-            {
-              title: "Shell check · python3",
+              title: "Install Cursor",
               timing: "Lab",
               content:
-                "In the terminal, confirm Python is there. In class we use python3. If a command fails, get help before you chase random search results.",
+                "We use Cursor as the editor for this course: it runs Jupyter notebooks well and pairs nicely with AI assistants when you use them deliberately. Install it before you open the starter notebook.",
               links: [
-                { label: "Python downloads", href: "https://www.python.org/downloads/" },
-                { label: "Invoking the interpreter (docs)", href: "https://docs.python.org/3/tutorial/interpreter.html" },
+                { label: "Download Cursor", href: "https://cursor.com/download" },
+                { label: "Python downloads (if Cursor asks for Python)", href: "https://www.python.org/downloads/" },
               ],
-              code: { lang: "bash", snippet: "python3 --version\nwhich python3" },
-              tips: [
-                "Ctrl+C / Control+C stops a stuck run.",
-                "Type paths carefully—one wrong character breaks cd.",
-              ],
-              task: "Run python3 --version and keep the output in your notes or Slack so mentors can spot odd versions.",
+              task: "Install Cursor from the download page and launch the app once so you know it opens.",
             },
             {
-              title: "Project folder + REPL",
+              title: "Week folder + starter notebook",
               timing: "Lab",
               content:
-                "Create a folder for this week, cd in, and stay there for the rest of today. Then open a quick REPL: python3 with no file. >>> means Python, not the shell. Exit back to the shell with exit() or quit().",
+                "Create a folder for this week (for example codemoldova-week1). Use the **Download starter notebook (.ipynb)** button above the lab steps, then save the file into that folder so everything for week 1 lives in one place.",
+              tips: ["If the file lands in Downloads, move it into your week folder before opening in Cursor."],
+              task: "Create the folder and save week1_intro.ipynb inside it.",
+            },
+            {
+              title: "Open the notebook in Cursor",
+              timing: "Lab",
+              content:
+                "In Cursor: File → Open Folder… and choose your week folder. Open week1_intro.ipynb from the sidebar. When Cursor asks for a Python interpreter or Jupyter kernel, pick Python 3. You are ready when a code cell can run without a “no kernel” error.",
+              links: [{ label: "Python interpreter docs", href: "https://docs.python.org/3/tutorial/interpreter.html" }],
+              task: "Open the notebook and select a Python 3 kernel. Run the first small code cell that prints the Python version (section 2 in the notebook).",
+            },
+            {
+              title: "Cells, order, and the shell (mental model)",
+              timing: "Lab",
+              content:
+                "In a notebook, each code cell is like the >>> REPL in tutorials: Python runs your code and shows output under the cell. Run cells from top to bottom the first time through so variables exist when later cells need them. The terminal is still the “outer” layer that starts programs; today you mostly stay inside the notebook.",
               images: [
                 {
                   src: "/lesson/terminal-flow.svg",
                   alt: "Command in, shell runs program, text out",
-                  caption: "Stuck? Ask: shell ($ or %) or Python (>>> )?",
+                  caption: "Later you will live in the terminal too; today the notebook is your main loop.",
                 },
               ],
-              code: { lang: "bash", snippet: "python3\n>>> 2 + 2\n4\n>>> exit()" },
-              tips: ["mkdir / cd for folders; in >>> you cannot run cd—exit first."],
-              task: "In codemoldova-week1 (create it with mkdir if needed), run pwd and list files. In the REPL, try a quick math expression with * and +.",
+              code: { lang: "python", snippet: "2 + 2\n7 * 8" },
+              tips: ["Shift+Enter (or Shift+Return) runs the current cell and moves to the next.", "If a cell errors, fix it before continuing—downstream cells may depend on earlier names."],
+              task: "In the notebook, run the expressions section (section 3) and confirm you see numeric results under the cells.",
             },
             {
-              title: "Values, f-strings, and input()",
+              title: "Variables, print(), and f-strings",
               timing: "Lab",
               content:
-                "Names, numbers, f-strings. input() always returns a string. Build tiny conversations in the REPL first.",
+                "A variable is a name for a value. print() sends text to the cell output. f-strings let you insert values with curly braces. Work through notebook **section 4** (variables and the example print line).",
               code: {
                 lang: "python",
-                snippet:
-                  'x = 20\ncourse = "CodeMoldova"\nprint(f"{course} week 1, age about {x}")\nname = input("Name? ")\nprint(f"Hi, {name}")',
+                snippet: 'week = 1\ncourse = "CodeMoldova"\nprint(f"{course}, week {week}")',
               },
-              task: "In the REPL: store two text answers from input() and one f-string that uses both.",
+              task: "Run every cell in section 4 through the f-string example and confirm the printed line looks right.",
             },
             {
-              title: "hello.py from a file",
+              title: "input() and mini practice",
               timing: "Lab",
               content:
-                "A .py file is plain text, saved in your week folder, run with python3 filename. Editor link below if you still need a install.",
-              images: [
-                {
-                  src: "/lesson/edit-save-run.svg",
-                  alt: "Edit file, save, run python3 file",
-                  caption: "File not found? pwd and ls first.",
-                },
-              ],
-              links: [{ label: "Download VS Code", href: "https://code.visualstudio.com/" }],
+                "input() reads one line of text and always gives you a string, even if the user types digits. In Cursor/Jupyter the prompt usually appears above the cell output—type your answer and press Enter. If nothing appears, ask a mentor (setups differ). Section 5 demos one name; section 6 asks you to write two input() calls and one f-string yourself.",
               code: {
                 lang: "python",
-                snippet:
-                  '# hello.py\nname = input("What is your name? ")\nprint("Hello,", name + "!")\nprint("Welcome to CodeMoldova!")',
+                snippet: 'name = input("What is your name? ")\nprint(f"Hi, {name}")',
               },
-              task: "Save that pattern as hello.py, run it, confirm it prints. Fix any NameError by defining names before you print them.",
+              tips: ["Run section 5 before you edit the empty practice cell in section 6."],
+              task: "Run the input() demo in section 5, then complete the mini-practice cell in section 6 (two inputs, one f-string using both).",
             },
             {
-              title: "Main build · intro_card.py",
+              title: "Main build · intro card (in the notebook)",
               timing: "Lab",
               content:
-                "This is the piece you would demo to a classmate. Stay in codemoldova-week1. Create intro_card.py. Use three input() lines (name, hobby, why you joined). Print a short card: at least four lines, including one f-string, and a line that mentions Thursday build day. Then run it yourself and, if a partner is free, run theirs without changing their file.",
+                "Finish section 7 in week1_intro.ipynb: three input() prompts (for example name, hobby, why you are here), several print lines, at least one f-string, and one line that mentions Thursday (build day). Replace the pass placeholder with your own code. A filled reference notebook is linked only to compare structure—write your own prompts and wording.",
+              links: [{ label: "Reference notebook (filled example)", href: "/lesson/week1_intro_reference.ipynb" }],
               code: {
                 lang: "python",
                 snippet:
-                  '# intro_card.py — your lines will differ\n# three inputs, then f-strings for the card\nname = input("Name? ")\n# ...\n# print() so the card is readable; mention Thursday in one line',
+                  "# last code cell in week1_intro.ipynb — yours will differ\n# name = input(\"Name? \")\n# … two more input() calls …\n# print lines, at least one f-string, one line about Thursday",
               },
               tips: [
-                "If time: add another input for a weekly practice goal and print it in an f-string (optional).",
-                "If time: read your card to your partner; save debugging help for real errors, not line-by-line review.",
+                "Optional: add a fourth input (for example hours you will practice) and show it in an f-string.",
+                "Save the notebook often (Cmd/Ctrl+S).",
               ],
-              task: "Save intro_card.py, run python3 intro_card.py, and get one successful run in front of a peer or a mentor before you pack up.",
+              task: "Run your intro card cell end-to-end once with no errors. Optional: show the output to a classmate or mentor.",
             },
           ],
           homework: {
-            title: "Polish your greeting program",
-            desc: "Extend hello.py (or greet_homework.py) using the same ideas from class and the deck. Bring questions to Slack before Wednesday.",
+            title: "More practice in the notebook",
+            desc: "Same ideas as class: input(), print(), f-strings. Add new cells at the bottom of week1_intro.ipynb, or duplicate the file as week1_homework.ipynb. Post blockers in Slack before Wednesday if you get stuck.",
             tasks: [
-              "Ask for name, city, and favorite hobby (three prompts).",
-              "Print at least two lines using f-strings that use those answers.",
-              "Mention which week of CodeMoldova we are on (hard-code week 1 or use a variable).",
-              "Bonus: ask how many hours they will practice this week and echo it in an f-string.",
+              "Three input() prompts: name, city, favorite hobby.",
+              "Print at least two lines that use f-strings and include those values.",
+              "Print which course week this is (week 1 is fine as a literal or variable).",
+              "Optional: ask how many hours they will practice this week and print it in an f-string.",
             ],
           },
           postClass: {
             title: "Optional deep-dives",
-            desc: "Extra background you can watch on your own time. The live Monday session follows the deck in the room—these are not required to keep up in class.",
+            desc: "Extra context if you are curious. Not required for class.",
             links: [
               { label: "Crash Course Computer Science #1 (historical context)", href: "https://www.youtube.com/watch?v=O5nskjZ_GoI" },
-              { label: "Traversy Media — command line crash course (full walkthrough)", href: "https://www.youtube.com/watch?v=uwAqEzhyjtw" },
+              { label: "Traversy Media — command line crash course", href: "https://www.youtube.com/watch?v=uwAqEzhyjtw" },
               { label: "CS Dojo — Python variables for beginners", href: "https://www.youtube.com/watch?v=Z1Yd7upQsXY" },
+              { label: "Jupyter Notebook documentation (how cells work)", href: "https://jupyter-notebook.readthedocs.io/en/stable/" },
             ],
           },
         },
@@ -172,7 +172,7 @@ export const phases = [
         thu: {
           title: "Mad libs generator",
           date: "May 14",
-          desc: "Your first real build. We'll use everything from Monday (variables, input(), print()) to make an interactive story where the user fills in the blanks. Pair up if you want, go solo if you prefer.",
+          desc: "Your first real build. We'll use everything from Monday (variables, input(), print()—whether you practiced in a notebook or a .py file) to make an interactive story where the user fills in the blanks. Pair up if you want, go solo if you prefer.",
           preview: "A fill-in-the-blanks story using variables, input(), and print().",
           steps: [
             {
@@ -249,7 +249,7 @@ export const phases = [
       {
         num: 2,
         mon: {
-          title: "Logic & loops",
+          title: "Logic + loops",
           date: "May 18",
           desc: "This is where programming gets interesting. We'll teach the computer to make decisions and repeat tasks. These two ideas, if/else and loops, are the core of almost every program ever written.",
           preview: "if/else, loops, and functions. How programs decide and repeat.",

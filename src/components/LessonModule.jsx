@@ -42,24 +42,13 @@ export default function LessonModule({ steps, variant = 'paper', noRounded = fal
           }
           key={`${step.title}-${i}`}
         >
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <h2
-              className={`font-serif text-2xl font-medium leading-tight sm:text-[1.65rem] ${
-                ink ? 'text-paper' : 'text-ink/90'
-              }`}
-            >
-              {step.title}
-            </h2>
-            {step.timing ? (
-              <span
-                className={`shrink-0 border px-2.5 py-1 font-mono text-[11px] uppercase tracking-wide ${
-                  ink ? 'border-paper/25 text-paper/60' : 'border-hairline/40 text-ink/55'
-                }`}
-              >
-                {step.timing}
-              </span>
-            ) : null}
-          </div>
+          <h2
+            className={`font-serif text-2xl font-medium leading-tight sm:text-[1.65rem] ${
+              ink ? 'text-paper' : 'text-ink/90'
+            }`}
+          >
+            {step.title}
+          </h2>
           <p
             className={`mt-5 max-w-prose whitespace-pre-line text-pretty text-base leading-[1.7] sm:text-[17px] ${
               ink ? 'text-paper/85' : 'text-ink/70'
