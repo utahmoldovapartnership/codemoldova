@@ -443,20 +443,19 @@ export function LessonResources({ resources, embedded = false }) {
   )
 }
 
-export function LessonPostClass({ postClass }) {
+export function LessonPostClass({ postClass, embedded = false, titleId = 'lesson-session-resources-heading' }) {
   if (!postClass?.links?.length) return null
+  const El = embedded ? 'div' : 'section'
+  const outer = embedded ? 'w-full pt-10' : 'border-b border-hairline py-14 sm:py-16'
+  const sectionProps = embedded ? {} : { 'aria-labelledby': titleId }
   return (
-    <section
-      className="border-b border-hairline py-14 sm:py-16"
-      aria-labelledby="lesson-session-resources-heading"
-    >
+    <El className={outer} {...sectionProps}>
       <div className="w-full">
-        <SectionKicker kicker="Resources" />
         <h2
-          id="lesson-session-resources-heading"
-          className="mt-2 font-serif text-2xl font-medium tracking-tight text-ink sm:text-3xl"
+          id={titleId}
+          className="font-serif text-2xl font-medium tracking-tight text-ink sm:text-3xl"
         >
-          {postClass.title || 'Extra links.'}
+          {postClass.title || 'Optional deep-dives'}
         </h2>
         {postClass.desc ? <p className="mt-4 max-w-prose text-base text-ink/70">{postClass.desc}</p> : null}
         <ul className="mt-6 space-y-2">
@@ -475,7 +474,7 @@ export function LessonPostClass({ postClass }) {
           ))}
         </ul>
       </div>
-    </section>
+    </El>
   )
 }
 

@@ -381,13 +381,26 @@ function LessonTabbedBody({
         ) : null}
 
         {activeLessonTab === 'resources' ? (
-          session.resources?.length ? (
-            <LessonResources resources={session.resources} embedded />
-          ) : (
-            <LessonTabEmpty>
-              No session-specific resource links yet. Browse the Resources page for course-wide links and installs.
-            </LessonTabEmpty>
-          )
+          <>
+            {session.resources?.length ? (
+              <LessonResources resources={session.resources} embedded />
+            ) : null}
+            {session.postClass?.links?.length ? (
+              <div className={session.resources?.length ? 'mt-12 border-t border-hairline pt-10' : ''}>
+                <LessonPostClass
+                  postClass={session.postClass}
+                  embedded
+                  titleId={`${baseId}-optional-deep-dives`}
+                />
+              </div>
+            ) : null}
+            {!session.resources?.length && !session.postClass?.links?.length ? (
+              <LessonTabEmpty>
+                No session-specific links yet. Optional deep-dives and curated resources will show here when they are
+                in the lesson data. You can still use the Resources page for course-wide links and installs.
+              </LessonTabEmpty>
+            ) : null}
+          </>
         ) : null}
       </div>
     </section>
@@ -509,7 +522,6 @@ export default function Lesson() {
             <p className="px-6 py-8 text-center text-ink/60 sm:px-10">Thursday project tiers are not in the data yet.</p>
           ) : null}
 
-          {session.postClass ? <LessonPostClass postClass={session.postClass} /> : null}
           {session.mistakes?.length ? <LessonMistakes mistakes={session.mistakes} /> : null}
           {session.vocab?.length ? <LessonVocab vocab={session.vocab} /> : null}
           <LessonPrevNext currentDay={dayKey} prev={prev} next={next} />
