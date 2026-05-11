@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import PixelIcon from '../PixelIcon.jsx'
 
-export function SectionKicker({ num, kicker, className = '' }) {
+export function SectionKicker({ kicker, className = '' }) {
   return (
     <p className={`font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60 ${className}`}>
       <span>{kicker}</span>
@@ -9,10 +9,10 @@ export function SectionKicker({ num, kicker, className = '' }) {
   )
 }
 
-export function SectionHead({ num, kicker, title, className = '', kickerClassName = '' }) {
+export function SectionHead({ kicker, title, className = '', kickerClassName = '' }) {
   return (
     <div className={`mb-6 ${className}`}>
-      <SectionKicker num={num} kicker={kicker} className={kickerClassName} />
+      <SectionKicker kicker={kicker} className={kickerClassName} />
       <h2 className="mt-2 font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">{title}</h2>
     </div>
   )
@@ -39,14 +39,13 @@ export function LessonMarquee() {
 
 /**
  * @param {object} props
- * @param {string} props.dayKey
  * @param {{ label: string, type: string, swatch: string, icon: string }} props.dayMeta
  * @param {string} [props.date]
  * @param {string} [props.sessionLabel]
  * @param {string} props.title
  * @param {import('react').ReactNode} props.breadcrumb
  */
-export function LessonHero({ dayKey, dayMeta, date, sessionLabel, title, breadcrumb }) {
+export function LessonHero({ dayMeta, date, sessionLabel, title, breadcrumb }) {
   return (
     <section className="py-14 sm:py-20">
       <div className="w-full">
@@ -80,7 +79,7 @@ export function LessonSectionGoal({ goal, dayMeta }) {
   return (
     <section className="border-t border-hairline py-14 sm:py-16">
       <div className="w-full">
-        <SectionKicker num="01" kicker="Today's goal" />
+        <SectionKicker kicker="Today's goal" />
         <p
           className="mt-4 max-w-prose border-l-4 pl-6 font-serif text-2xl font-medium leading-[1.25] tracking-tight text-ink sm:text-3xl"
           style={{ borderColor: dayMeta.swatch }}
@@ -92,7 +91,7 @@ export function LessonSectionGoal({ goal, dayMeta }) {
   )
 }
 
-export function LessonMainPoints({ points }) {
+export function LessonMainPoints({ points, embedded = false }) {
   if (!points?.length) return null
   const pointParts = points.map((point) => {
     const text = typeof point === 'string' ? point.trim() : ''
@@ -107,10 +106,12 @@ export function LessonMainPoints({ points }) {
     return { title: text, body: 'Focus on this during lab so you can apply it without copying step-by-step.' }
   })
 
+  const El = embedded ? 'div' : 'section'
+  const outer = embedded ? 'w-full py-2 sm:py-4' : 'border-b border-hairline py-14 sm:py-16'
   return (
-    <section className="border-b border-hairline py-14 sm:py-16">
+    <El className={outer}>
       <div className="w-full">
-        <SectionKicker num="02" kicker="Main points" />
+        <SectionKicker kicker="Main points" />
         <h2 className="mt-2 font-serif text-[clamp(1.85rem,4vw,2.5rem)] font-medium leading-tight text-ink sm:text-4xl">
           What to <em className="text-dart italic">remember</em>.
         </h2>
@@ -134,7 +135,7 @@ export function LessonMainPoints({ points }) {
           ))}
         </ol>
       </div>
-    </section>
+    </El>
   )
 }
 
@@ -200,7 +201,7 @@ const LAB_DAY = {
 }
 
 /**
- * @param {{ title: string, intro?: string, exampleHref?: string, exampleLabel?: string, exampleDownloadFilename?: string | null, durationLabel?: string, dayKey?: 'mon' | 'wed' | 'thu', children: import('react').ReactNode }} props
+ * @param {{ title: string, intro?: string, exampleHref?: string, exampleLabel?: string, exampleDownloadFilename?: string | null, durationLabel?: string, dayKey?: 'mon' | 'wed' | 'thu', children: import('react').ReactNode, collapsible?: boolean, contained?: boolean }} props
  */
 export function LessonLabBand({
   title,
@@ -211,55 +212,87 @@ export function LessonLabBand({
   durationLabel = '',
   dayKey = 'wed',
   children,
+  collapsible = true,
+  contained = false,
 }) {
   if (children == null) return null
   const t = LAB_DAY[dayKey] ?? LAB_DAY.wed
   const labExampleHover = lessonDayHoverButtonClass(dayKey)
   const kicker = durationLabel?.trim() ? `Lab · ${durationLabel.trim()}` : 'Lab'
-  return (
-    <section className={`relative left-1/2 w-screen max-w-none -translate-x-1/2 text-ink ${t.section}`}>
-      <div className="layout-shell">
-        <div className="w-full py-16 sm:py-20">
-          <details open className="group">
-          <summary className="-mx-2 list-none cursor-pointer px-2 py-4 marker:hidden [&::-webkit-details-marker]:hidden sm:-mx-3 sm:px-3">
-            <div className="group/summary relative flex items-center justify-between gap-4 pb-5 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:right-0 after:block after:h-px after:w-full after:bg-black/20 after:content-[''] after:transition-[height,background-color] after:duration-300 after:ease-out hover:after:h-[3px] hover:after:bg-black motion-reduce:after:duration-75">
-              <div className="min-w-0 flex-1">
-                <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">{kicker}</p>
-                <h2 className="mt-3 font-serif text-3xl font-medium tracking-tight sm:text-5xl">{title}.</h2>
-                {intro ? <p className="mt-3 max-w-prose font-body text-sm leading-relaxed text-ink/65 sm:text-base">{intro}</p> : null}
-              </div>
-              <span aria-hidden className="shrink-0">
-                <PixelIcon
-                  icon="arrow"
-                  size={12}
-                  className="text-ink/55 transition-[color,transform] duration-200 ease-out group-open:rotate-90 group-hover/summary:text-ink"
-                />
-              </span>
+  const bandClass = contained
+    ? `relative w-full max-w-none text-ink ${t.section}`
+    : `relative left-1/2 w-screen max-w-none -translate-x-1/2 text-ink ${t.section}`
+  const shellPad = contained ? 'py-8 sm:py-10' : 'py-16 sm:py-20'
+
+  const headerBlock = (
+    <div className="min-w-0 flex-1">
+      <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">{kicker}</p>
+      <h2 className="mt-3 font-serif text-3xl font-medium tracking-tight sm:text-5xl">{title}.</h2>
+      {intro ? <p className="mt-3 max-w-prose font-body text-sm leading-relaxed text-ink/65 sm:text-base">{intro}</p> : null}
+    </div>
+  )
+
+  const bodyBlock = (
+    <>
+      <div className="mt-6">
+        {exampleHref ? (
+          <a
+            href={exampleHref}
+            {...(exampleDownloadFilename
+              ? { download: exampleDownloadFilename }
+              : { target: '_blank', rel: 'noopener noreferrer' })}
+            className={`hm-hero-join-slack ${labExampleHover} inline-flex h-12 items-center border px-5 font-mono text-xs uppercase tracking-[0.25em]`}
+          >
+            <span>{exampleLabel}</span>
+            <span className="sr-only">
+              {exampleDownloadFilename ? ' (downloads a file)' : ' (opens in a new tab)'}
+            </span>
+          </a>
+        ) : (
+          <span
+            className={`inline-flex min-h-11 items-center border px-4 font-mono text-xs uppercase tracking-[0.22em] ${t.btnPlaceholder}`}
+          >
+            {exampleLabel} link coming soon
+          </span>
+        )}
+      </div>
+      <div className="mt-10">{children}</div>
+    </>
+  )
+
+  if (!collapsible) {
+    return (
+      <section className={bandClass}>
+        <div className={contained ? 'w-full' : 'layout-shell'}>
+          <div className={`w-full ${shellPad}`}>
+            <div className="border-b border-black/10 pb-6">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-6">{headerBlock}</div>
             </div>
-          </summary>
-          <div className="pt-2">
-            <div className="mt-6">
-              {exampleHref ? (
-                <a
-                  href={exampleHref}
-                  {...(exampleDownloadFilename
-                    ? { download: exampleDownloadFilename }
-                    : { target: '_blank', rel: 'noopener noreferrer' })}
-                  className={`hm-hero-join-slack ${labExampleHover} inline-flex h-12 items-center border px-5 font-mono text-xs uppercase tracking-[0.25em]`}
-                >
-                  <span>{exampleLabel}</span>
-                  <span className="sr-only">
-                    {exampleDownloadFilename ? ' (downloads a file)' : ' (opens in a new tab)'}
-                  </span>
-                </a>
-              ) : (
-                <span className={`inline-flex min-h-11 items-center border px-4 font-mono text-xs uppercase tracking-[0.22em] ${t.btnPlaceholder}`}>
-                  {exampleLabel} link coming soon
-                </span>
-              )}
-            </div>
-            <div className="mt-10">{children}</div>
+            <div className="pt-6">{bodyBlock}</div>
           </div>
+        </div>
+      </section>
+    )
+  }
+
+  return (
+    <section className={bandClass}>
+      <div className="layout-shell">
+        <div className={`w-full ${shellPad}`}>
+          <details open className="group">
+            <summary className="-mx-2 list-none cursor-pointer px-2 py-4 marker:hidden [&::-webkit-details-marker]:hidden sm:-mx-3 sm:px-3">
+              <div className="group/summary relative flex items-center justify-between gap-4 pb-5 after:pointer-events-none after:absolute after:-bottom-2 after:left-0 after:right-0 after:block after:h-px after:w-full after:bg-black/20 after:content-[''] after:transition-[height,background-color] after:duration-300 after:ease-out hover:after:h-[3px] hover:after:bg-black motion-reduce:after:duration-75">
+                {headerBlock}
+                <span aria-hidden className="shrink-0">
+                  <PixelIcon
+                    icon="arrow"
+                    size={12}
+                    className="text-ink/55 transition-[color,transform] duration-200 ease-out group-open:rotate-90 group-hover/summary:text-ink"
+                  />
+                </span>
+              </div>
+            </summary>
+            <div className="pt-2">{bodyBlock}</div>
           </details>
         </div>
       </div>
@@ -267,13 +300,15 @@ export function LessonLabBand({
   )
 }
 
-/** @param {{ tier: string, title: string, desc: string }[]} props.challenges */
-export function LessonChallengesAccordion({ challenges }) {
+/** @param {{ tier: string, title: string, desc: string }[]} props.challenges @param {boolean} [props.embedded] */
+export function LessonChallengesAccordion({ challenges, embedded = false }) {
   if (!challenges?.length) return null
+  const El = embedded ? 'div' : 'section'
+  const wrapClass = embedded ? 'w-full' : 'border-b border-hairline py-14 sm:py-16'
   return (
-    <section className="border-b border-hairline py-14 sm:py-16">
+    <El className={wrapClass}>
       <div className="w-full">
-        <SectionHead num="05" kicker="Thursday challenges" title="Pick your tier." />
+        <SectionHead kicker="Thursday challenges" title="Pick your tier." />
         <p className="mb-6 max-w-prose font-body text-base leading-relaxed text-ink/75">
           Everyone does Base. Stretch into Medium / Hard / Bonus only if you finish early — they exist so nobody gets
           bored, not so anybody feels behind.
@@ -298,20 +333,23 @@ export function LessonChallengesAccordion({ challenges }) {
           ))}
         </div>
       </div>
-    </section>
+    </El>
   )
 }
 
-/** @param {{ title?: string, desc?: string, tasks: string[] } | null} props.homework */
-export function LessonHomework({ homework }) {
+/** @param {{ title?: string, desc?: string, tasks: string[] } | null} props.homework @param {boolean} [props.embedded] */
+export function LessonHomework({ homework, embedded = false }) {
   if (!homework?.tasks?.length) return null
   const titleText = (homework.title || 'Homework').trim()
   const h2 = titleText.endsWith('.') ? titleText : `${titleText}.`
+  const El = embedded ? 'div' : 'section'
+  const outer = embedded ? 'w-full py-2 sm:py-4' : 'border-b border-hairline py-14 sm:py-16'
+  const sectionProps = embedded ? {} : { 'aria-labelledby': 'hw-heading' }
   return (
-    <section className="border-b border-hairline py-14 sm:py-16" aria-labelledby="hw-heading">
+    <El className={outer} {...sectionProps}>
       <div className="w-full">
-        <SectionKicker num="06" kicker="Homework" />
-        <h2 id="hw-heading" className="mt-2 font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">
+        <SectionKicker kicker="Homework" />
+        <h2 id={embedded ? undefined : 'hw-heading'} className="mt-2 font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">
           {h2}
         </h2>
         {homework.desc ? <p className="mt-4 max-w-prose text-base text-ink/70 sm:text-base">{homework.desc}</p> : null}
@@ -324,7 +362,7 @@ export function LessonHomework({ homework }) {
           ))}
         </ul>
       </div>
-    </section>
+    </El>
   )
 }
 
@@ -333,7 +371,7 @@ export function LessonMistakes({ mistakes }) {
   return (
     <section className="border-b border-hairline/50 py-14 sm:py-16">
       <div className="w-full">
-        <SectionHead num="07" kicker="If you get stuck" title="Common mistakes." />
+        <SectionHead kicker="If you get stuck" title="Common mistakes." />
         <ul className="space-y-3">
           {mistakes.map((m, i) => (
             <li key={i} className="flex items-start gap-4 border-l-4 border-val bg-val/[0.06] px-5 py-4 font-body text-base leading-relaxed text-ink/90">
@@ -352,7 +390,7 @@ export function LessonVocab({ vocab }) {
   return (
     <section className="border-b border-hairline py-14 sm:py-16">
       <div className="w-full">
-        <SectionHead num="08" kicker="New words" title="Vocabulary." />
+        <SectionHead kicker="New words" title="Vocabulary." />
         <dl className="grid grid-cols-1 border-t border-hairline sm:grid-cols-2">
           {vocab.map((v, i) => (
             <div key={v.term} className={`border-b border-hairline px-2 py-5 sm:px-4 ${i % 2 === 0 ? 'sm:border-r sm:border-hairline' : ''}`}>
@@ -366,12 +404,14 @@ export function LessonVocab({ vocab }) {
   )
 }
 
-export function LessonResources({ resources }) {
+export function LessonResources({ resources, embedded = false }) {
   if (!resources?.length) return null
+  const El = embedded ? 'div' : 'section'
+  const outer = embedded ? 'w-full py-2 sm:py-4' : 'border-b border-hairline py-14 sm:py-16'
   return (
-    <section className="border-b border-hairline py-14 sm:py-16">
+    <El className={outer}>
       <div className="w-full">
-        <SectionHead num="09" kicker="Helpful resources" title="Read · Watch · Try." />
+        <SectionHead kicker="Helpful resources" title="Read · Watch · Try." />
         <div className="space-y-10">
           {resources.map((g) => (
             <div key={g.group}>
@@ -399,7 +439,7 @@ export function LessonResources({ resources }) {
           ))}
         </div>
       </div>
-    </section>
+    </El>
   )
 }
 

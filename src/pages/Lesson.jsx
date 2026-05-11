@@ -1,6 +1,7 @@
-import { useRef } from 'react'
+import { useRef, useState, useId } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import PageChrome from '../components/PageChrome.jsx'
+import TopicTabBar from '../components/TopicTabBar.jsx'
 import LessonModule from '../components/LessonModule'
 import { getSessionByWeekAndDay } from '../data/curriculum'
 import { getAdjacentSessions, sessions } from '../data/schedule'
@@ -269,6 +270,130 @@ function BreadcrumbWithJumps({ weekNum, dayKey, weekOptions, dayOptions, onWeekS
   )
 }
 
+function LessonTabEmpty({ children }) {
+  return (
+    <p className="max-w-prose rounded-elem border border-dashed border-ink/20 bg-ink/[0.02] px-5 py-8 text-base leading-relaxed text-ink/65">
+      {children}
+    </p>
+  )
+}
+
+function LessonTabbedBody({
+  dayKey,
+  session,
+  mainPoints,
+  challengesList,
+  isThu,
+  showLab,
+  labExample,
+  labDurationLabel,
+}) {
+  const baseId = useId()
+  const [activeLessonTab, setActiveLessonTab] = useState('lab')
+  const lessonPanelId = `${baseId}-lesson-tabs-panel`
+
+  return (
+    <section className="lesson-tabs border-t border-hairline">
+      <div className="flex flex-col gap-2 border-b border-hairline pb-6 pt-8 sm:flex-row sm:items-end sm:justify-between sm:pt-10">
+        <h2 className="font-serif text-2xl font-medium tracking-tight text-ink sm:text-3xl">Lesson content</h2>
+        <p className="shrink-0 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/50">Pick a tab</p>
+      </div>
+      <div className="py-6 sm:py-8">
+        <TopicTabBar
+          baseId={baseId}
+          active={activeLessonTab}
+          onChange={setActiveLessonTab}
+          tabs={[
+            { id: 'lab', label: 'Lab' },
+            { id: 'homework', label: 'Homework' },
+            { id: 'main', label: 'Main points' },
+            { id: 'resources', label: 'Resources' },
+          ]}
+          panelId={lessonPanelId}
+          tablistAriaLabel="Lesson sections"
+          tabLineClassName="lesson-tabline pointer-events-none absolute bottom-0 left-0 z-0 transition-[left,width] duration-300 ease-out"
+        />
+      </div>
+      <div
+        role="tabpanel"
+        id={lessonPanelId}
+        aria-labelledby={`${baseId}-tab-${activeLessonTab}`}
+        className="min-h-[16rem] border-t border-hairline pb-16 pt-8 sm:min-h-[18rem] sm:pb-20 sm:pt-10"
+      >
+        {activeLessonTab === 'lab' ? (
+          showLab ? (
+            <LessonLabBand
+              dayKey={dayKey}
+              title={session.title}
+              intro={session.desc || ''}
+              exampleHref={labExample.href}
+              exampleLabel={labExample.label}
+              exampleDownloadFilename={labExample.downloadFilename}
+              durationLabel={labDurationLabel}
+              collapsible={false}
+              contained
+            >
+              <>
+                <LessonModule steps={session.steps} variant="paper" noRounded dayKey={dayKey} />
+                {isThu && challengesList.length ? (
+                  <div className="mt-12 border-t border-black/15 pt-10">
+                    <LessonChallengesAccordion challenges={challengesList} embedded />
+                  </div>
+                ) : null}
+              </>
+            </LessonLabBand>
+          ) : isThu && challengesList.length ? (
+            <LessonLabBand
+              dayKey={dayKey}
+              title={session.title}
+              intro={session.desc || ''}
+              exampleHref={labExample.href}
+              exampleLabel={labExample.label}
+              exampleDownloadFilename={labExample.downloadFilename}
+              durationLabel={labDurationLabel}
+              collapsible={false}
+              contained
+            >
+              <LessonChallengesAccordion challenges={challengesList} embedded />
+            </LessonLabBand>
+          ) : (
+            <LessonTabEmpty>
+              No guided lab steps or Thursday tiers are listed for this session yet. Check class slides or ask in WhatsApp
+              if you think this is a mistake.
+            </LessonTabEmpty>
+          )
+        ) : null}
+
+        {activeLessonTab === 'homework' ? (
+          session.homework?.tasks?.length ? (
+            <LessonHomework homework={session.homework} embedded />
+          ) : (
+            <LessonTabEmpty>No homework listed for this session.</LessonTabEmpty>
+          )
+        ) : null}
+
+        {activeLessonTab === 'main' ? (
+          mainPoints?.length ? (
+            <LessonMainPoints points={mainPoints} embedded />
+          ) : (
+            <LessonTabEmpty>No main points for this session yet.</LessonTabEmpty>
+          )
+        ) : null}
+
+        {activeLessonTab === 'resources' ? (
+          session.resources?.length ? (
+            <LessonResources resources={session.resources} embedded />
+          ) : (
+            <LessonTabEmpty>
+              No session-specific resource links yet. Browse the Resources page for course-wide links and installs.
+            </LessonTabEmpty>
+          )
+        ) : null}
+      </div>
+    </section>
+  )
+}
+
 function LessonNotFound() {
   return (
     <div className="min-h-full flex-1 bg-paper">
@@ -368,30 +493,25 @@ export default function Lesson() {
           {artifacts.length ? <LessonArtifacts artifacts={artifacts} dayKey={dayKey} /> : null}
           {goal ? <LessonSectionGoal goal={goal} dayMeta={dayHero} /> : null}
 
-          {showLab ? (
-            <LessonLabBand
-              dayKey={dayKey}
-              title={session.title}
-              intro={session.desc || ''}
-              exampleHref={labExample.href}
-              exampleLabel={labExample.label}
-              exampleDownloadFilename={labExample.downloadFilename}
-              durationLabel={labDurationLabel}
-            >
-              <LessonModule steps={session.steps} variant="paper" noRounded dayKey={dayKey} />
-            </LessonLabBand>
-          ) : null}
-          {isThu && challengesList.length ? <LessonChallengesAccordion challenges={challengesList} /> : null}
+          <LessonTabbedBody
+            key={`${weekNum}-${dayKey}`}
+            dayKey={dayKey}
+            session={session}
+            mainPoints={mainPoints}
+            challengesList={challengesList}
+            isThu={isThu}
+            showLab={showLab}
+            labExample={labExample}
+            labDurationLabel={labDurationLabel}
+          />
+
           {session.challenges && isThu && !challengesList.length ? (
             <p className="px-6 py-8 text-center text-ink/60 sm:px-10">Thursday project tiers are not in the data yet.</p>
           ) : null}
 
-          {session.homework ? <LessonHomework homework={session.homework} /> : null}
-          {mainPoints?.length ? <LessonMainPoints points={mainPoints} /> : null}
           {session.postClass ? <LessonPostClass postClass={session.postClass} /> : null}
           {session.mistakes?.length ? <LessonMistakes mistakes={session.mistakes} /> : null}
           {session.vocab?.length ? <LessonVocab vocab={session.vocab} /> : null}
-          {session.resources?.length ? <LessonResources resources={session.resources} /> : null}
           <LessonPrevNext currentDay={dayKey} prev={prev} next={next} />
         </div>
       </PageChrome>

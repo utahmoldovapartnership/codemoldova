@@ -228,6 +228,12 @@
   color: var(--cm-dart) !important;
 }
 
+/* Lesson day page — tab underline (matches Resources `.res-tabline` on `.res-page`) */
+.lesson-tabs .lesson-tabline {
+  background-color: var(--cm-val) !important;
+  height: 3px;
+}
+
 /* Hero outline CTA (home: Join WhatsApp). Outline by default, sun fill on hover (must beat .hm-page background). */
 .hm-hero-join-slack {
   position: relative;
