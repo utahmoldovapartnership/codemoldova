@@ -4,6 +4,7 @@ import heroAccent from '../assets/home-ornaments/2-1.svg'
 import LazyInView from '../components/LazyInView.jsx'
 import PixelIcon from '../components/PixelIcon.jsx'
 import ScrollReveal from '../components/ScrollReveal.jsx'
+import WhatsAppIcon from '../components/WhatsAppIcon.jsx'
 import { whatsappInviteUrl } from '../data/site.js'
 
 /**
@@ -177,8 +178,9 @@ function Hero() {
             href={whatsappInviteUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="hm-hero-join-slack inline-flex min-h-12 items-center border px-7 font-mono text-xs uppercase tracking-[0.25em]"
+            className="hm-hero-join-slack inline-flex min-h-12 items-center gap-3 border px-7 font-mono text-xs uppercase tracking-[0.25em]"
           >
+            <WhatsAppIcon size={15} className="text-current" />
             <span>Join WhatsApp</span>
           </a>
         </div>
@@ -419,6 +421,7 @@ function WhatsAppCTA() {
               rel="noopener noreferrer"
               className="hm-btn-sun inline-flex min-h-14 w-full items-center justify-center gap-3 px-8 font-mono text-xs uppercase tracking-[0.3em] sm:w-auto"
             >
+              <WhatsAppIcon size={16} className="text-current" />
               <span>Join WhatsApp</span>
               <PixelIcon icon="arrow" size={12} className="text-current" />
             </a>

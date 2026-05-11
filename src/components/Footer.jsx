@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import BrandMark from './BrandMark.jsx'
 import PixelIcon from './PixelIcon.jsx'
+import WhatsAppIcon from './WhatsAppIcon.jsx'
 import { whatsappInviteUrl } from '../data/site.js'
 
 const courseLinks = [
@@ -86,12 +87,13 @@ export default function Footer({ homeLight = false }) {
               <li>
                 <a
                   href={whatsappInviteUrl}
-                  className={`${footerLinkBase(homeLight)} ${
+                  className={`${footerLinkBase(homeLight)} items-center gap-2.5 ${
                     homeLight ? 'text-dart hover:text-ink' : 'text-mon hover:text-primary'
                   }`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
+                  <WhatsAppIcon size={14} className="text-current" />
                   Join WhatsApp
                   <span className="sr-only"> (opens in a new tab)</span>
                 </a>
