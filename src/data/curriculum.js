@@ -16,8 +16,7 @@ export const phases = [
           labExampleLabel: "Download starter notebook (.ipynb)",
           slideDeck: {
             label: "Week 1 · Day one slide deck",
-            url: "",
-            hint: "When the slide deck URL is ready, add it in curriculum.js under slideDeck.url. Until then, the link is posted in Slack.",
+            url: "https://docs.google.com/presentation/d/1V419zmDfBw5eXlsjHSJpCbZmjfFVfxQqxZi7dawJvu8/edit?usp=sharing",
           },
           steps: [
             {
