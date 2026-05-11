@@ -187,15 +187,12 @@ export function LessonArtifacts({ artifacts, dayKey = 'wed' }) {
 
 const LAB_DAY = {
   mon: {
-    section: 'bg-ube/[0.08]',
     btnPlaceholder: 'border-dashed border-ube/70 text-ube',
   },
   wed: {
-    section: 'bg-sun/[0.08]',
     btnPlaceholder: 'border-dashed border-sun/70 text-sun',
   },
   thu: {
-    section: 'bg-val/[0.08]',
     btnPlaceholder: 'border-dashed border-val/60 text-val',
   },
 }
@@ -220,8 +217,8 @@ export function LessonLabBand({
   const labExampleHover = lessonDayHoverButtonClass(dayKey)
   const kicker = durationLabel?.trim() ? `Lab · ${durationLabel.trim()}` : 'Lab'
   const bandClass = contained
-    ? `relative w-full max-w-none text-ink ${t.section}`
-    : `relative left-1/2 w-screen max-w-none -translate-x-1/2 text-ink ${t.section}`
+    ? 'relative w-full max-w-none text-ink'
+    : 'relative left-1/2 w-screen max-w-none -translate-x-1/2 text-ink'
   const shellPad = contained ? 'py-8 sm:py-10' : 'py-16 sm:py-20'
 
   const headerBlock = (
