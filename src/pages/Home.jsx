@@ -4,15 +4,15 @@ import heroAccent from '../assets/home-ornaments/2-1.svg'
 import LazyInView from '../components/LazyInView.jsx'
 import PixelIcon from '../components/PixelIcon.jsx'
 import ScrollReveal from '../components/ScrollReveal.jsx'
-import { slackInviteUrl } from '../data/site.js'
+import { whatsappInviteUrl } from '../data/site.js'
 
 /**
  * Home marketing palette (Tailwind: paper, ink, dart, val, sun, ube):
- * - White paper: page bg, type on dart (Slack block, marquee).
+ * - White paper: page bg, type on dart (WhatsApp CTA block, marquee).
  * - Black ink: copy; rules use `border-hairline` (light gray).
- * - Dartmouth dart: marquee band, View roadmap fill, Slack section bg.
+ * - Dartmouth dart: marquee band, View roadmap fill, WhatsApp section bg.
  * - Valentine val: Free Course pill, italics, outcome checks, Thu pillar.
- * - Sunshade sun: marquee hearts, Wed pillar, Slack CTA label accent + Join Slack button.
+ * - Sunshade sun: marquee hearts, Wed pillar, WhatsApp CTA label accent + Join WhatsApp button.
  * - Bright Ube ube: Mon pillar bar + icon only.
  */
 // ─── Home content (data inline; other pages use src/data/*) ────────────────
@@ -174,12 +174,12 @@ function Hero() {
             <PixelIcon icon="arrow" size={12} className="text-current" />
           </Link>
           <a
-            href={slackInviteUrl}
+            href={whatsappInviteUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="hm-hero-join-slack inline-flex min-h-12 items-center border px-7 font-mono text-xs uppercase tracking-[0.25em]"
           >
-            <span>Join Slack</span>
+            <span>Join WhatsApp</span>
           </a>
         </div>
       </ScrollReveal>
@@ -393,7 +393,7 @@ function HowWeLearn() {
   )
 }
 
-function SlackCTA() {
+function WhatsAppCTA() {
   return (
     <section
       id="join"
@@ -408,18 +408,18 @@ function SlackCTA() {
               <em className="hm-slack-accent italic">to code?</em>
             </h2>
             <p className="hm-slack-body mt-8 max-w-xl text-lg leading-relaxed">
-              Join our Slack channel today! Meet other people learning to code, ask questions, share progress, and work
+              Join our WhatsApp group today! Meet other people learning to code, ask questions, share progress, and work
               through problems.
             </p>
           </ScrollReveal>
           <ScrollReveal className="flex items-end lg:col-span-4" delayMs={120} hiddenTranslate="translate-y-6">
             <a
-              href={slackInviteUrl}
+              href={whatsappInviteUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="hm-btn-sun inline-flex min-h-14 w-full items-center justify-center gap-3 px-8 font-mono text-xs uppercase tracking-[0.3em] sm:w-auto"
             >
-              <span>Join Slack</span>
+              <span>Join WhatsApp</span>
               <PixelIcon icon="arrow" size={12} className="text-current" />
             </a>
           </ScrollReveal>
@@ -466,7 +466,7 @@ export default function Home() {
         </LazyInView>
       </div>
       <LazyInView placeholderClassName="min-h-[20rem] lg:min-h-[24rem]">
-        <SlackCTA />
+        <WhatsAppCTA />
       </LazyInView>
     </div>
   )

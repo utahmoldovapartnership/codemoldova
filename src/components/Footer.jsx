@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import BrandMark from './BrandMark.jsx'
 import PixelIcon from './PixelIcon.jsx'
-import { slackInviteUrl } from '../data/site.js'
+import { whatsappInviteUrl } from '../data/site.js'
 
 const courseLinks = [
   { to: '/', label: 'Home', end: true },
@@ -70,7 +70,7 @@ export default function Footer({ homeLight = false }) {
             </p>
           </div>
 
-          {/* External / community. Same list pattern, Slack emphasized in blue */}
+          {/* External / community. Same list pattern, WhatsApp emphasized in blue */}
           <nav aria-labelledby="footer-connect-heading">
             <h3
               id="footer-connect-heading"
@@ -85,14 +85,14 @@ export default function Footer({ homeLight = false }) {
             <ul className="mt-3 list-none space-y-0 p-0">
               <li>
                 <a
-                  href={slackInviteUrl}
+                  href={whatsappInviteUrl}
                   className={`${footerLinkBase(homeLight)} ${
                     homeLight ? 'text-dart hover:text-ink' : 'text-mon hover:text-primary'
                   }`}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Join Slack
+                  Join WhatsApp
                   <span className="sr-only"> (opens in a new tab)</span>
                 </a>
               </li>

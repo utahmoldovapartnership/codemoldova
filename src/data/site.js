@@ -1,5 +1,6 @@
 /**
- * Cohort Slack: paste the “Invite people” shared link from your Slack workspace.
- * (Shown in the footer as “Join Slack”.)
+ * Cohort WhatsApp: paste the group “invite via link” URL from WhatsApp.
+ * (Shown in the footer and home hero as “Join WhatsApp”.)
  */
-export const slackInviteUrl = 'https://join.slack.com'
+export const whatsappInviteUrl =
+  'https://chat.whatsapp.com/BVZQqrMwPEF1qySVBGDzEj?mode=gi_t'

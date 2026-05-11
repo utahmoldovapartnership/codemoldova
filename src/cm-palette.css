@@ -228,7 +228,7 @@
   color: var(--cm-dart) !important;
 }
 
-/* Hero Join Slack: outline by default, sun fill on hover (must beat .hm-page background). */
+/* Hero outline CTA (home: Join WhatsApp). Outline by default, sun fill on hover (must beat .hm-page background). */
 .hm-hero-join-slack {
   position: relative;
   isolation: isolate;

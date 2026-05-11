@@ -107,7 +107,7 @@ export const phases = [
           ],
           homework: {
             title: "More practice in the notebook",
-            desc: "Same ideas as class: input(), print(), f-strings. Add new cells at the bottom of week1_intro.ipynb, or duplicate the file as week1_homework.ipynb. Post blockers in Slack before Wednesday if you get stuck.",
+            desc: "Same ideas as class: input(), print(), f-strings. Add new cells at the bottom of week1_intro.ipynb, or duplicate the file as week1_homework.ipynb. Post blockers in WhatsApp before Wednesday if you get stuck.",
             tasks: [
               "Three input() prompts: name, city, favorite hobby.",
               "Print at least two lines that use f-strings and include those values.",
