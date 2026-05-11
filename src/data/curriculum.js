@@ -18,6 +18,8 @@ export const phases = [
             label: "Week 1 · Day one slide deck",
             url: "https://docs.google.com/presentation/d/1V419zmDfBw5eXlsjHSJpCbZmjfFVfxQqxZi7dawJvu8/edit?usp=sharing",
           },
+          codeFromClassUrl: "https://forms.gle/4RJM6d3UYsPbKzaP8",
+          codeFromClassLabel: "Take Survey",
           steps: [
             {
               title: "Install Cursor",

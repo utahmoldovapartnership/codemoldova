@@ -77,7 +77,7 @@ function buildChallengesAccordionList(c) {
 }
 
 /**
- * @param {object} session
+ * @param {object} session — optional `codeFromClassLabel` overrides the second artifact label (default "Class code").
  * @returns {{ label: string, href: string, ready: boolean, hint?: string }[]}
  */
 function buildArtifacts(session) {
@@ -95,7 +95,11 @@ function buildArtifacts(session) {
   }
   const codeUrl = session.codeFromClassUrl
   if (typeof codeUrl === 'string' && codeUrl.trim()) {
-    out.push({ label: 'Class code', href: codeUrl.trim(), ready: true })
+    const codeLabel =
+      typeof session.codeFromClassLabel === 'string' && session.codeFromClassLabel.trim()
+        ? session.codeFromClassLabel.trim()
+        : 'Class code'
+    out.push({ label: codeLabel, href: codeUrl.trim(), ready: true })
   } else {
     out.push({
       label: 'Class code',
