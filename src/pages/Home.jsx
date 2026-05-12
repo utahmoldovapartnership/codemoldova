@@ -44,7 +44,7 @@ const WHO = [
 ]
 
 const WEEKS = [
-  { n: '01', phase: 'Python Foundations', title: 'Intro, logic, mad libs & guessing', range: 'May 11 – May 14' },
+  { n: '01', phase: 'Python Foundations', title: 'Intro, variables day, mad libs & guessing', range: 'May 11 – May 14' },
   { n: '02', phase: 'Python Foundations', title: 'Data, APIs, live data', range: 'May 18 – May 21' },
   { n: '03', phase: 'Python Foundations', title: 'Functions, debugging, CLI tool', range: 'May 25 – May 28' },
   { n: '04', phase: 'Web Development', title: 'HTML, CSS, layout & Figma', range: 'Jun 01 – Jun 04' },

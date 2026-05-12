@@ -46,24 +46,27 @@ export function LessonMarquee() {
  * @param {import('react').ReactNode} props.breadcrumb
  */
 export function LessonHero({ dayMeta, date, sessionLabel, title, breadcrumb }) {
+  const metaLine = [dayMeta?.label, dayMeta?.type].filter(Boolean).join(' · ')
+  const whenLine = [date?.trim(), sessionLabel?.trim()].filter(Boolean).join(' · ')
+
   return (
     <section className="py-14 sm:py-20">
       <div className="w-full">
         <div className="mb-8">{breadcrumb}</div>
 
-        <div className="flex flex-wrap items-center gap-3">
-          <span
-            className="inline-flex items-center gap-2 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.25em] text-ink"
-            style={{ backgroundColor: dayMeta.swatch }}
-          >
-            <PixelIcon icon={dayMeta.icon} size={12} className="text-ink" />
-            <span>
-              {dayMeta.label} · {dayMeta.type}
+        <div className="flex flex-col gap-2">
+          {metaLine ? (
+            <span
+              className="inline-flex w-fit max-w-full items-center gap-2 px-3 py-1 font-mono text-[11px] font-medium tracking-[0.18em] text-ink"
+              style={{ backgroundColor: dayMeta.swatch }}
+            >
+              <PixelIcon icon={dayMeta.icon} size={12} className="text-ink" />
+              <span className="normal-case">{metaLine}</span>
             </span>
-          </span>
-          {date ? <span className="font-mono text-sm text-ink/55">{date}</span> : null}
-          {date && sessionLabel ? <span className="font-mono text-sm text-ink/35">·</span> : null}
-          {sessionLabel ? <span className="font-mono text-sm text-ink/55">{sessionLabel}</span> : null}
+          ) : null}
+          {whenLine ? (
+            <p className="m-0 font-mono text-sm leading-relaxed tracking-[0.12em] text-ink/55">{whenLine}</p>
+          ) : null}
         </div>
 
         <h1 className="mt-6 font-serif text-[clamp(2.25rem,5.5vw,4rem)] font-medium leading-[1.02] tracking-tight text-ink">
@@ -81,7 +84,7 @@ export function LessonSectionGoal({ goal, dayMeta }) {
       <div className="w-full">
         <SectionKicker kicker="Today's goal" />
         <p
-          className="mt-4 max-w-prose border-l-4 pl-6 font-serif text-2xl font-medium leading-[1.25] tracking-tight text-ink sm:text-3xl"
+          className="mt-4 max-w-prose border-l-4 pl-6 text-lg font-normal leading-relaxed text-ink sm:text-xl"
           style={{ borderColor: dayMeta.swatch }}
         >
           {goal}

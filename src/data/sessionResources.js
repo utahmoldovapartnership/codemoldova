@@ -55,16 +55,16 @@ const BY_KEY = {
       group: 'Read',
       items: [
         {
-          label: 'Python — if, for, while',
-          href: 'https://docs.python.org/3/tutorial/controlflow.html',
+          label: 'Python tutorial — variables & types',
+          href: 'https://docs.python.org/3/tutorial/introduction.html#using-python-as-a-calculator',
           source: 'python.org',
-          note: 'Official reference for everything in today’s workshop.',
+          note: 'Numbers, strings, and assigning names.',
         },
         {
-          label: 'Comparisons and booleans',
-          href: 'https://docs.python.org/3/reference/expressions.html#comparisons',
+          label: 'Defining functions',
+          href: 'https://docs.python.org/3/tutorial/controlflow.html#defining-functions',
           source: 'python.org',
-          note: 'How ==, <, and, or behave.',
+          note: 'Matches the end of today’s deck.',
         },
       ],
     },
@@ -72,10 +72,10 @@ const BY_KEY = {
       group: 'Watch',
       items: [
         {
-          label: 'Python if __name__ == "__main__" (Real Python)',
-          href: 'https://realpython.com/if-name-main-python/',
-          source: 'realpython.com',
-          note: 'Useful when you move from notebooks to .py files.',
+          label: 'Python for beginners — variables (CS Dojo)',
+          href: 'https://www.youtube.com/watch?v=Z1Yd7upQsXY',
+          source: 'YouTube',
+          note: 'Pairs with the “review” slide.',
         },
       ],
     },
@@ -83,10 +83,10 @@ const BY_KEY = {
       group: 'Try',
       items: [
         {
-          label: 'Python Tutor (visualize execution)',
+          label: 'Python Tutor (visualize a small program)',
           href: 'https://pythontutor.com/visualize.html#mode=edit',
           source: 'pythontutor.com',
-          note: 'Step through small loops and see the stack.',
+          note: 'Paste a short if/while snippet after class.',
         },
       ],
     },

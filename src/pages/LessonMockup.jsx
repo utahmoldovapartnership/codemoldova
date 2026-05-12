@@ -165,7 +165,6 @@ export default function LessonMockup() {
       <PreviewBar dayKey={dayKey} setDayKey={setDayKey} />
       <div className="layout-shell">
         <LessonHero
-          dayKey={dayKey}
           dayMeta={meta}
           date={SAMPLE.date}
           sessionLabel={SAMPLE.sessionLabel}
