@@ -1,3 +1,5 @@
+import { sessionResourcesFor } from './sessionResources.js'
+
 export const phases = [
   {
     id: 1,
@@ -1314,7 +1316,12 @@ export function getSessionByWeekAndDay(weekNum, dayKey) {
   for (const phase of phases) {
     for (const week of phase.weeks) {
       if (week.num === w && week[key]) {
-        return week[key]
+        const session = week[key]
+        const extra = sessionResourcesFor(w, key)
+        if (extra && !session.resources?.length) {
+          return { ...session, resources: extra }
+        }
+        return session
       }
     }
   }
