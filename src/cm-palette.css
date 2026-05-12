@@ -228,8 +228,16 @@
   color: var(--cm-dart) !important;
 }
 
-/* Lesson day page — tab underline (matches Resources `.res-tabline` on `.res-page`) */
-.lesson-tabs .lesson-tabline {
+/* Lesson day page — tab underline color follows session day (mon → ube, wed → sun, thu → val). */
+.lesson-tabs--mon .lesson-tabline {
+  background-color: var(--cm-ube) !important;
+  height: 3px;
+}
+.lesson-tabs--wed .lesson-tabline {
+  background-color: var(--cm-sun) !important;
+  height: 3px;
+}
+.lesson-tabs--thu .lesson-tabline {
   background-color: var(--cm-val) !important;
   height: 3px;
 }

@@ -9,6 +9,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
  * @param {string} props.panelId — id of the controlled tabpanel
  * @param {string} props.tablistAriaLabel
  * @param {string} [props.tabLineClassName] — underline span classes (include layout + transition)
+ * @param {string} [props.tabButtonFocusClass] — Tailwind focus ring on tab buttons (lesson: match day accent).
  */
 export default function TopicTabBar({
   baseId,
@@ -18,6 +19,7 @@ export default function TopicTabBar({
   panelId,
   tablistAriaLabel,
   tabLineClassName = 'res-tabline pointer-events-none absolute bottom-0 left-0 z-0 transition-[left,width] duration-300 ease-out',
+  tabButtonFocusClass = 'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-val',
 }) {
   const scrollRef = useRef(null)
   const innerRef = useRef(null)
@@ -80,7 +82,7 @@ export default function TopicTabBar({
               id={`${baseId}-tab-${tab.id}`}
               aria-controls={panelId}
               onClick={() => onChange(tab.id)}
-              className={`relative z-10 shrink-0 px-3 py-3.5 font-mono text-[11px] uppercase tracking-[0.28em] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-val ${
+              className={`relative z-10 shrink-0 px-3 py-3.5 font-mono text-[11px] uppercase tracking-[0.28em] ${tabButtonFocusClass} ${
                 selected ? 'text-ink' : 'text-ink/50 hover:text-ink/90'
               }`}
             >

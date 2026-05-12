@@ -292,8 +292,15 @@ function LessonTabbedBody({
   const [activeLessonTab, setActiveLessonTab] = useState('lab')
   const lessonPanelId = `${baseId}-lesson-tabs-panel`
 
+  const tabFocusByDay = {
+    mon: 'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ube',
+    wed: 'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sun',
+    thu: 'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-val',
+  }
+  const tabButtonFocusClass = tabFocusByDay[dayKey] ?? tabFocusByDay.thu
+
   return (
-    <section className="lesson-tabs border-t border-hairline">
+    <section className={`lesson-tabs lesson-tabs--${dayKey} border-t border-hairline`}>
       <div className="flex flex-col gap-2 border-b border-hairline pb-6 pt-8 sm:flex-row sm:items-end sm:justify-between sm:pt-10">
         <h2 className="font-serif text-2xl font-medium tracking-tight text-ink sm:text-3xl">Lesson content</h2>
         <p className="shrink-0 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/50">Pick a tab</p>
@@ -311,6 +318,7 @@ function LessonTabbedBody({
           ]}
           panelId={lessonPanelId}
           tablistAriaLabel="Lesson sections"
+          tabButtonFocusClass={tabButtonFocusClass}
           tabLineClassName="lesson-tabline pointer-events-none absolute bottom-0 left-0 z-0 transition-[left,width] duration-300 ease-out"
         />
       </div>
