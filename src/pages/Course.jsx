@@ -153,7 +153,7 @@ function ThisWeekHero({ status, currentWeek }) {
       {status === 'complete' ? (
         <ScrollReveal className="py-16 sm:py-20" delayMs={80} rootMargin="0px 0px 10% 0px">
           <p className="max-w-2xl text-lg leading-relaxed text-ink/80">
-            The 2026 cohort wrapped on July 1. Browse the full roadmap below, or check out what students built on Demo Day.
+            The 2026 cohort wrapped on July 1. Browse the full course below, or check out what students built on Demo Day.
           </p>
         </ScrollReveal>
       ) : (
@@ -248,7 +248,7 @@ function WeekRow({ weekNum, isCurrent, isOpen, onToggle, revealDelay = 0 }) {
   )
 }
 
-function CompleteRoadmap({ currentWeek }) {
+function FullCourse({ currentWeek }) {
   const [openWeeks, setOpenWeeks] = useState(() => new Set(currentWeek != null ? [currentWeek] : []))
   const toggle = (n) =>
     setOpenWeeks((prev) => {
@@ -257,18 +257,18 @@ function CompleteRoadmap({ currentWeek }) {
       return next
     })
 
-  let weekRevealIndex = 0
-
   return (
-    <section id="full-roadmap" className="border-b border-hairline py-20 lg:py-28">
+    <section id="full-course" className="border-b border-hairline py-20 lg:py-28">
       <ScrollReveal className="mb-10 flex items-end justify-between gap-6 border-b border-hairline pb-8">
         <div>
-          <h2 className="font-serif text-5xl font-medium tracking-tight text-ink sm:text-6xl">The Roadmap</h2>
+          <h2 className="font-serif text-5xl font-medium tracking-tight text-ink sm:text-6xl">Full course</h2>
         </div>
         <p className="hidden font-mono text-xs uppercase tracking-[0.25em] text-ink/60 sm:block">May 11 — Jul 01</p>
       </ScrollReveal>
 
-      {phases.map((phase, phaseIdx) => (
+      {phases.map((phase, phaseIdx) => {
+        const weeksBefore = phases.slice(0, phaseIdx).reduce((n, p) => n + p.weeks.length, 0)
+        return (
         <div key={phase.id ?? phaseIdx} className="mt-14 first:mt-0">
           <ScrollReveal
             className="mb-3 flex flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-hairline pt-6"
@@ -280,9 +280,8 @@ function CompleteRoadmap({ currentWeek }) {
           </ScrollReveal>
 
           <ul className="border-t border-hairline">
-            {phase.weeks.map((week) => {
-              const revealDelay = 40 + weekRevealIndex * 50
-              weekRevealIndex += 1
+            {phase.weeks.map((week, weekIdx) => {
+              const revealDelay = 40 + (weeksBefore + weekIdx) * 50
               return (
                 <WeekRow
                   key={week.num}
@@ -296,19 +295,20 @@ function CompleteRoadmap({ currentWeek }) {
             })}
           </ul>
         </div>
-      ))}
+        )
+      })}
     </section>
   )
 }
 
-export default function Roadmap() {
+export default function Course() {
   const { status, currentWeek } = getCohortStatus()
   return (
     <div className="hm-page min-h-full flex-1 font-body antialiased">
       <div className="layout-shell max-w-6xl">
         <ThisWeekHero status={status} currentWeek={currentWeek} />
         <LazyInView placeholderClassName="min-h-[36rem] lg:min-h-[42rem]">
-          <CompleteRoadmap currentWeek={status === 'live' ? currentWeek : null} />
+          <FullCourse currentWeek={status === 'live' ? currentWeek : null} />
         </LazyInView>
       </div>
     </div>

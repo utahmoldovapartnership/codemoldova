@@ -33,7 +33,7 @@
     @apply mx-auto w-full max-w-6xl px-5 sm:px-6;
   }
 
-  /** Full route pages: Resources, Roadmap */
+  /** Full route pages: Resources, Course */
   .layout-page {
     @apply mx-auto w-full max-w-6xl px-5 sm:px-6 py-14 sm:py-20;
   }
@@ -56,7 +56,7 @@
     @apply mx-auto w-full max-w-6xl px-5 sm:px-6 py-16 sm:py-24;
   }
 
-  /** Lesson page: same content width as Roadmap, Resources */
+  /** Lesson page: same content width as Course, Resources */
   .layout-article {
     @apply mx-auto w-full max-w-6xl px-5 py-12 pb-16 sm:px-6 sm:py-16 sm:pb-20;
   }

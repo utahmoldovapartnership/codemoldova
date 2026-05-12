@@ -180,8 +180,8 @@ export default function LessonMockup() {
                 </li>
                 <li aria-hidden>/</li>
                 <li>
-                  <Link to="/roadmap" className="hover:text-ink hover:underline hover:underline-offset-4">
-                    Roadmap
+                  <Link to="/course" className="hover:text-ink hover:underline hover:underline-offset-4">
+                    Course
                   </Link>
                 </li>
               </ol>

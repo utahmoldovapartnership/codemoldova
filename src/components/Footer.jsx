@@ -6,7 +6,7 @@ import { whatsappInviteUrl } from '../data/site.js'
 
 const courseLinks = [
   { to: '/', label: 'Home', end: true },
-  { to: '/roadmap', label: 'Roadmap' },
+  { to: '/course', label: 'Course' },
   { to: '/resources', label: 'Resources' },
 ]
 
@@ -15,7 +15,7 @@ const focusRing = (homeLight) =>
     ? 'focus-visible:rounded-elem focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-dart'
     : 'focus-visible:rounded-elem focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-mon'
 
-/** Shared typography for Course + Connect links (matches Nav route links). */
+/** Shared typography for Site + Connect links (matches Nav route links). */
 function footerLinkBase(homeLight) {
   return `cm-link-sweep inline-flex rounded-elem px-3 py-2 font-mono text-[11px] uppercase tracking-[0.3em] transition-colors ${focusRing(homeLight)}`
 }
@@ -115,16 +115,16 @@ export default function Footer({ homeLight = false }) {
           </nav>
 
           {/* Site pages: grouped list, not buttons (common on .edu / bootcamp footers) */}
-          <nav aria-labelledby="footer-course-heading">
+          <nav aria-labelledby="footer-site-heading">
             <h3
-              id="footer-course-heading"
+              id="footer-site-heading"
               className={
                 homeLight
                   ? 'font-mono text-[11px] font-bold uppercase tracking-[0.3em] text-ink/60'
                   : 'font-mono text-[11px] font-bold uppercase tracking-[0.3em] text-muted'
               }
             >
-              Course
+              Site
             </h3>
             <ul className="mt-3 list-none space-y-0 p-0">
               {courseLinks.map(({ to, label, end }) => (

@@ -11,7 +11,7 @@ import { whatsappInviteUrl } from '../data/site.js'
  * Home marketing palette (Tailwind: paper, ink, dart, val, sun, ube):
  * - White paper: page bg, type on dart (WhatsApp CTA block, marquee).
  * - Black ink: copy; rules use `border-hairline` (light gray).
- * - Dartmouth dart: marquee band, View roadmap fill, WhatsApp section bg.
+ * - Dartmouth dart: marquee band, View course CTA fill, WhatsApp section bg.
  * - Valentine val: Free Course pill, italics, outcome checks, Thu pillar.
  * - Sunshade sun: marquee hearts, Wed pillar, WhatsApp CTA label accent + Join WhatsApp button.
  * - Bright Ube ube: Mon pillar bar + icon only.
@@ -168,10 +168,10 @@ function Hero() {
       <ScrollReveal className="mt-10" delayMs={260} rootMargin="0px 0px 12% 0px">
         <div className="flex flex-wrap gap-3">
           <Link
-            to="/roadmap"
+            to="/course"
             className="hm-btn-dart inline-flex min-h-12 items-center gap-3 px-7 font-mono text-xs uppercase tracking-[0.25em]"
           >
-            <span>View roadmap</span>
+            <span>View course</span>
             <PixelIcon icon="arrow" size={12} className="text-current" />
           </Link>
           <a
@@ -293,7 +293,7 @@ function Weeks() {
     <section id="weeks" className="scroll-mt-28 border-b border-hairline py-20 lg:py-28">
       <ScrollReveal className="flex items-end justify-between gap-6 border-b border-hairline pb-8">
         <div>
-          <h2 className="font-serif text-5xl font-medium tracking-tight text-ink sm:text-6xl">The Roadmap</h2>
+          <h2 className="font-serif text-5xl font-medium tracking-tight text-ink sm:text-6xl">The course</h2>
         </div>
         <p className="hidden font-mono text-xs uppercase tracking-[0.25em] text-ink/60 sm:block">May 11 — Jul 01</p>
       </ScrollReveal>

@@ -1,10 +1,10 @@
-// Editorial Roadmap mockup for CodeMoldova.
-// Self-contained, viewable at /roadmap-mockup. Delete this file + the route line in App.jsx to remove.
+// Editorial Course page mockup for CodeMoldova.
+// Self-contained, viewable at /course-mockup. Delete this file + the route line in App.jsx to remove.
 //
 // Two parts:
 //   1. THIS WEEK — auto-resolves the current/upcoming week from schedule.js
 //      and shows the 3 day cards (Mon/Wed/Thu) as bold colorblocks at the top.
-//   2. COMPLETE ROADMAP — all 4 phases / 8 weeks below, in the editorial
+//   2. FULL COURSE — all 4 phases / 8 weeks below, in the editorial
 //      hover-invert list style. Each week expands to reveal its 3 day cards.
 
 import { useMemo, useState } from 'react'
@@ -144,7 +144,7 @@ function ThisWeekHero({ status, currentWeek }) {
       {status === 'complete' ? (
         <div className="px-6 py-16 sm:px-10 sm:py-20">
           <p className="max-w-2xl font-body text-lg leading-relaxed text-ink/80">
-            The 2026 cohort wrapped on July 1. Browse the full roadmap below, or check out what students built on Demo Day.
+            The 2026 cohort wrapped on July 1. Browse the full course below, or check out what students built on Demo Day.
           </p>
         </div>
       ) : (
@@ -158,7 +158,7 @@ function ThisWeekHero({ status, currentWeek }) {
   )
 }
 
-// ─── Complete roadmap ───────────────────────────────────────────────────────
+// ─── Full course (all weeks) ───────────────────────────────────────────────
 
 function WeekRow({ weekNum, isCurrent, isOpen, onToggle }) {
   const weekSessions = getSessionsForWeek(weekNum)
@@ -225,7 +225,7 @@ function WeekRow({ weekNum, isCurrent, isOpen, onToggle }) {
   )
 }
 
-function CompleteRoadmap({ currentWeek }) {
+function FullCourse({ currentWeek }) {
   const [openWeeks, setOpenWeeks] = useState(() => new Set(currentWeek != null ? [currentWeek] : []))
   const toggle = (n) =>
     setOpenWeeks((prev) => {
@@ -235,10 +235,10 @@ function CompleteRoadmap({ currentWeek }) {
     })
 
   return (
-    <section id="full-roadmap" className="border-b border-hairline px-6 py-20 sm:px-10 lg:py-28">
+    <section id="full-course" className="border-b border-hairline px-6 py-20 sm:px-10 lg:py-28">
       <div className="mb-10 flex items-end justify-between gap-6 border-b border-hairline pb-8">
         <div>
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">№ Full roadmap</p>
+          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">№ Full course</p>
           <h2 className="mt-3 font-serif text-5xl font-medium tracking-tight text-ink sm:text-6xl">Eight weeks. Four phases.</h2>
         </div>
         <p className="hidden font-mono text-xs uppercase tracking-[0.25em] text-ink/60 sm:block">May 11 — Jul 01</p>
@@ -275,7 +275,7 @@ function CompleteRoadmap({ currentWeek }) {
 // ─── Page ───────────────────────────────────────────────────────────────────
 
 function Marquee() {
-  const items = ['ROADMAP', '8 WEEKS', '23 SESSIONS', 'PYTHON · WEB · AI', 'DEMO DAY JUL 01']
+  const items = ['COURSE', '8 WEEKS', '23 SESSIONS', 'PYTHON · WEB · AI', 'DEMO DAY JUL 01']
   const loop = [...items, ...items, ...items, ...items]
   return (
     <div className="overflow-hidden border-y border-paper/20 bg-dart text-paper">
@@ -296,21 +296,21 @@ function PreviewBar() {
   return (
     <div className="border-b border-hairline bg-paper px-6 py-3 font-mono text-[11px] uppercase tracking-[0.25em] text-ink/60 sm:px-10">
       <div className="flex items-center justify-between gap-6">
-        <span>Roadmap preview · /roadmap-mockup</span>
+        <span>Course page preview · /course-mockup</span>
         <Link to="/" className="text-ink/50 underline-offset-4 hover:text-ink hover:underline">← exit preview</Link>
       </div>
     </div>
   )
 }
 
-export default function RoadmapMockup() {
+export default function CourseMockup() {
   const { status, currentWeek } = getCohortStatus()
   return (
     <div className="bg-paper font-body text-ink antialiased">
       <Marquee />
       <PreviewBar />
       <ThisWeekHero status={status} currentWeek={currentWeek} />
-      <CompleteRoadmap currentWeek={status === 'live' ? currentWeek : null} />
+      <FullCourse currentWeek={status === 'live' ? currentWeek : null} />
     </div>
   )
 }

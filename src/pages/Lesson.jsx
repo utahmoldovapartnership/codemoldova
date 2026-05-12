@@ -22,7 +22,7 @@ import {
 
 const VALID_DAYS = ['mon', 'wed', 'thu']
 
-/** swatch + type + icon — aligned with Roadmap / Lesson mockup. */
+/** swatch + type + icon — aligned with Course / Lesson mockup. */
 const DAY_HERO = {
   mon: { label: 'Monday', type: 'Workshop', swatch: '#DD8CF1', icon: 'terminal' },
   wed: { label: 'Wednesday', type: 'AI Exploration', swatch: '#F69C40', icon: 'sparkle' },
@@ -196,8 +196,8 @@ function BreadcrumbWithJumps({ weekNum, dayKey, weekOptions, dayOptions, onWeekS
           /
         </li>
         <li>
-          <Link to="/roadmap" className="hover:text-ink hover:underline hover:underline-offset-4">
-            Roadmap
+          <Link to="/course" className="hover:text-ink hover:underline hover:underline-offset-4">
+            Course
           </Link>
         </li>
         <li aria-hidden className="text-ink/45">
@@ -419,10 +419,10 @@ function LessonNotFound() {
             </p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link
-                to="/roadmap"
+                to="/course"
                 className="inline-flex min-h-11 items-center justify-center border border-dart/85 bg-dart/10 px-5 font-mono text-sm text-ink transition-colors hover:bg-dart hover:text-paper"
               >
-                Open roadmap
+                Open course
               </Link>
               <Link
                 to="/"

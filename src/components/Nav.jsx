@@ -6,7 +6,7 @@ import PixelIcon from './PixelIcon.jsx'
 
 const links = [
   { to: '/', label: 'Home' },
-  { to: '/roadmap', label: 'Roadmap' },
+  { to: '/course', label: 'Course' },
   { to: '/resources', label: 'Resources' },
 ]
 

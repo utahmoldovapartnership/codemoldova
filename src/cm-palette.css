@@ -14,7 +14,7 @@
   /* Same as Tailwind `wed` / `thu` (schedule days); used for Resources tag chips. */
   --cm-wed: #2ec27e;
   --cm-thu: #f0a500;
-  /** Home roadmap rows + Roadmap week buttons: shared neutral hover on paper. */
+  /** Home course week rows + Course page week buttons: shared neutral hover on paper. */
   --cm-row-hover: rgba(0, 0, 0, 0.055);
 }
 
@@ -360,7 +360,7 @@
   }
 }
 
-/* Roadmap page: week row button hover (same wash as `.hm-week-row` on Home). */
+/* Course page: week row button hover (same wash as `.hm-week-row` on Home). */
 .rm-week-row-btn:hover {
   background-color: var(--cm-row-hover) !important;
 }

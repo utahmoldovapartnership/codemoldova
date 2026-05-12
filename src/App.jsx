@@ -3,11 +3,11 @@ import Nav from './components/Nav'
 import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop.jsx'
 import Home from './pages/Home'
-import Roadmap from './pages/Roadmap'
+import Course from './pages/Course'
 import Resources from './pages/Resources'
 import Lesson from './pages/Lesson'
 import LessonMockup from './pages/LessonMockup'
-import RoadmapMockup from './pages/RoadmapMockup'
+import CourseMockup from './pages/CourseMockup'
 import ResourcesMockup from './pages/ResourcesMockup'
 
 function AppShell() {
@@ -33,13 +33,15 @@ function AppShell() {
           <div className="flex min-h-full min-h-0 flex-1 flex-col">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/roadmap" element={<Roadmap />} />
-              <Route path="/calendar" element={<Navigate to="/roadmap" replace />} />
+              <Route path="/course" element={<Course />} />
+              <Route path="/roadmap" element={<Navigate to="/course" replace />} />
+              <Route path="/calendar" element={<Navigate to="/course" replace />} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/about" element={<Navigate to="/" replace />} />
               <Route path="/lesson/:week/:day" element={<Lesson />} />
               <Route path="/lesson-mockup" element={<LessonMockup />} />
-              <Route path="/roadmap-mockup" element={<RoadmapMockup />} />
+              <Route path="/course-mockup" element={<CourseMockup />} />
+              <Route path="/roadmap-mockup" element={<Navigate to="/course-mockup" replace />} />
               <Route path="/resources-mockup" element={<ResourcesMockup />} />
             </Routes>
           </div>
