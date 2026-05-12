@@ -3,6 +3,8 @@ import { createPortal } from 'react-dom'
 import { NavLink } from 'react-router-dom'
 import BrandMark from './BrandMark.jsx'
 import PixelIcon from './PixelIcon.jsx'
+import WhatsAppIcon from './WhatsAppIcon.jsx'
+import { whatsappInviteUrl } from '../data/site.js'
 
 const links = [
   { to: '/', label: 'Home' },
@@ -102,12 +104,27 @@ export default function Nav({ homeLight = false }) {
           <BrandMark variant="nav" homeLight={homeLight} aria-hidden />
         </NavLink>
 
-        <div className="hidden gap-1 sm:flex">
-          {links.map(({ to, label }) => (
-            <NavLink key={to} to={to} end={to === '/'} className={linkClass(homeLight)}>
-              {label}
-            </NavLink>
-          ))}
+        <div className="hidden items-center gap-3 sm:flex">
+          <div className="flex items-center gap-1">
+            {links.map(({ to, label }) => (
+              <NavLink key={to} to={to} end={to === '/'} className={linkClass(homeLight)}>
+                {label}
+              </NavLink>
+            ))}
+          </div>
+          <a
+            href={whatsappInviteUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`cm-link-sweep cm-link-sweep--wed inline-flex items-center gap-2 rounded-elem px-3 py-2 font-mono text-[11px] uppercase tracking-[0.3em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
+              homeLight
+                ? 'focus-visible:outline-dart text-ink/60 hover:text-ink'
+                : 'focus-visible:outline-mon text-muted hover:text-primary'
+            }`}
+          >
+            <WhatsAppIcon size={14} className="text-current opacity-90" />
+            <span>Join WhatsApp</span>
+          </a>
         </div>
 
         <button
@@ -165,6 +182,20 @@ export default function Nav({ homeLight = false }) {
                   {label}
                 </NavLink>
               ))}
+              <a
+                href={whatsappInviteUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+                className={`flex min-h-12 items-center gap-2 rounded-elem px-3 font-mono text-[11px] uppercase tracking-[0.3em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${
+                  homeLight
+                    ? 'focus-visible:outline-dart bg-paper text-ink/60 hover:bg-ink/[0.06] active:bg-ink/10'
+                    : 'focus-visible:outline-mon bg-surface text-muted hover:bg-white/[0.06] active:bg-white/10'
+                }`}
+              >
+                <WhatsAppIcon size={15} className="text-current opacity-90" />
+                <span>Join WhatsApp</span>
+              </a>
             </div>,
             document.body
           )

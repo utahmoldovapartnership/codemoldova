@@ -357,6 +357,11 @@
   transform: translate3d(0, 0, 0) scaleX(1);
 }
 
+/* Nav: WhatsApp link — same wipe motion, green wash (schedule “Wed” token). */
+.cm-link-sweep--wed::before {
+  background-color: var(--cm-wed) !important;
+}
+
 /* Footer partnership on dark shell: keep label readable (highlight only). */
 .cm-link-sweep--dark {
   color: var(--cm-paper) !important;

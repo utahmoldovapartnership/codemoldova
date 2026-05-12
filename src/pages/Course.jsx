@@ -11,26 +11,26 @@ const DAY_META = {
   mon: {
     label: 'Monday',
     short: 'Mon',
-    type: 'Workshop',
+    type: 'Workshop 1',
     swatch: '#DD8CF1',
     icon: 'terminal',
-    substatement: 'New concepts, live demos, and the core lesson for the week.',
+    substatement: 'First weekly workshop: new concepts, live demos, and guided practice in Cursor.',
   },
   wed: {
     label: 'Wednesday',
     short: 'Wed',
-    type: 'AI Day',
+    type: 'Workshop 2',
     swatch: '#F69C40',
     icon: 'sparkle',
-    substatement: 'Hands-on with AI tools: prompt, test, and verify outputs together.',
+    substatement: 'Midweek workshop with its own lesson plan—new concepts, demos, and practice like Monday, different topics on the syllabus.',
   },
   thu: {
     label: 'Thursday',
     short: 'Thu',
-    type: 'Build',
+    type: 'Build Day',
     swatch: '#EF453F',
     icon: 'rocket',
-    substatement: 'Project day: ship a small working build and level it up.',
+    substatement: 'Build day: ship a small working project and stretch with tiered challenges.',
   },
 }
 

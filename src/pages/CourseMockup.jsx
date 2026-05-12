@@ -16,12 +16,12 @@ import { formatWeekRangeString } from '../lib/formatWeekDateRange.js'
 
 // ─── Day metadata ───────────────────────────────────────────────────────────
 const DAY_META = {
-  mon: { label: 'Monday',    short: 'Mon', type: 'Workshop', swatch: '#DD8CF1', icon: 'terminal' },
-  wed: { label: 'Wednesday', short: 'Wed', type: 'AI Day',  swatch: '#F69C40', icon: 'sparkle'  },
-  thu: { label: 'Thursday',  short: 'Thu', type: 'Build',   swatch: '#EF453F', icon: 'rocket'   },
+  mon: { label: 'Monday',    short: 'Mon', type: 'Workshop 1', swatch: '#DD8CF1', icon: 'terminal' },
+  wed: { label: 'Wednesday', short: 'Wed', type: 'Workshop 2', swatch: '#F69C40', icon: 'sparkle'  },
+  thu: { label: 'Thursday',  short: 'Thu', type: 'Build Day',  swatch: '#EF453F', icon: 'rocket'   },
 }
 
-const PHASE_NAMES = ['Foundations', 'Python Projects', 'Web Development', 'Final Project']
+const PHASE_NAMES = ['Python Foundations', 'Web Development', 'Backend + Shipping', 'Final Project']
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -275,7 +275,7 @@ function FullCourse({ currentWeek }) {
 // ─── Page ───────────────────────────────────────────────────────────────────
 
 function Marquee() {
-  const items = ['COURSE', '8 WEEKS', '23 SESSIONS', 'PYTHON · WEB · AI', 'DEMO DAY JUL 01']
+  const items = ['COURSE', '8 WEEKS', '23 SESSIONS', 'PYTHON · WEB · DATA', 'DEMO DAY JUL 01']
   const loop = [...items, ...items, ...items, ...items]
   return (
     <div className="overflow-hidden border-y border-paper/20 bg-dart text-paper">

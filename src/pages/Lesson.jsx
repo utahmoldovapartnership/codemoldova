@@ -24,8 +24,8 @@ const VALID_DAYS = ['mon', 'wed', 'thu']
 
 /** swatch + type + icon — aligned with Course / Lesson mockup. */
 const DAY_HERO = {
-  mon: { label: 'Monday', type: 'Workshop', swatch: '#DD8CF1', icon: 'terminal' },
-  wed: { label: 'Wednesday', type: 'AI Exploration', swatch: '#F69C40', icon: 'sparkle' },
+  mon: { label: 'Monday', type: 'Workshop 1', swatch: '#DD8CF1', icon: 'terminal' },
+  wed: { label: 'Wednesday', type: 'Workshop 2', swatch: '#F69C40', icon: 'sparkle' },
   thu: { label: 'Thursday', type: 'Build Day', swatch: '#EF453F', icon: 'rocket' },
 }
 

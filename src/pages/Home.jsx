@@ -20,7 +20,7 @@ import { whatsappInviteUrl } from '../data/site.js'
 
 const HERO_PILLS = ['Free Course!', '8 weeks', 'Mon · Wed · Thu', '1 hour sessions']
 
-const MARQUEE_ITEMS = ['FREE', 'CHIȘINĂU', 'MAY — JUL 2026', 'PYTHON · WEB · AI', 'TAUGHT IN PERSON', 'ALL LEVELS WELCOME']
+const MARQUEE_ITEMS = ['FREE', 'CHIȘINĂU', 'MAY — JUL 2026', 'PYTHON · WEB · DATA', 'TAUGHT IN PERSON', 'ALL LEVELS WELCOME']
 
 const WHO = [
   {
@@ -44,28 +44,28 @@ const WHO = [
 ]
 
 const WEEKS = [
-  { n: '01', phase: 'Foundations', title: 'Terminal & first lines of Python', range: 'May 11 – May 14' },
-  { n: '02', phase: 'Foundations', title: 'Variables, loops, functions', range: 'May 18 – May 21' },
-  { n: '03', phase: 'Python Projects', title: 'Data structures', range: 'May 25 – May 28' },
-  { n: '04', phase: 'Python Projects', title: 'APIs & AI-powered scripts', range: 'Jun 01 – Jun 04' },
-  { n: '05', phase: 'Web Development', title: 'HTML, CSS, the browser', range: 'Jun 08 – Jun 11' },
-  { n: '06', phase: 'Web Development', title: 'JavaScript, GitHub, Vercel', range: 'Jun 15 – Jun 18' },
-  { n: '07', phase: 'Final Project', title: 'Build your own thing', range: 'Jun 22 – Jun 25' },
-  { n: '08', phase: 'Final Project', title: 'Demo Day — Jul 01', range: 'Jun 29 – Jul 01' },
+  { n: '01', phase: 'Python Foundations', title: 'Intro, logic, mad libs & guessing', range: 'May 11 – May 14' },
+  { n: '02', phase: 'Python Foundations', title: 'Data, APIs, live data', range: 'May 18 – May 21' },
+  { n: '03', phase: 'Python Foundations', title: 'Functions, debugging, CLI tool', range: 'May 25 – May 28' },
+  { n: '04', phase: 'Web Development', title: 'HTML, CSS, layout & Figma', range: 'Jun 01 – Jun 04' },
+  { n: '05', phase: 'Web Development', title: 'JavaScript & interactive UI', range: 'Jun 08 – Jun 11' },
+  { n: '06', phase: 'Backend + Shipping', title: 'Git, deploy, ship with Git', range: 'Jun 15 – Jun 18' },
+  { n: '07', phase: 'Backend + Shipping', title: 'Database, connect frontend, project start', range: 'Jun 22 – Jun 25' },
+  { n: '08', phase: 'Final Project', title: 'Polish, README & Demo Day', range: 'Jun 29 – Jul 01' },
 ]
 
 /** Pillar top bar + icon (Bright Ube = Mon bar only; Sunshade = Wed; Valentine = Thu). */
 const PILLARS = [
   {
     kicker: 'Mon',
-    label: 'Workshop',
+    label: 'Workshop 1',
     body: 'New concepts, live demos, and concise explanations. Then you practice on your laptop with support in the room.',
     icon: 'terminal',
   },
   {
     kicker: 'Wed',
-    label: 'AI',
-    body: "Hands-on time with tools like ChatGPT and Claude: what they're good at, where they fail, and how to use them responsibly in real workflows.",
+    label: 'Workshop 2',
+    body: 'Midweek workshop with its own topics: new concepts, live demos, and hands-on time in Cursor—the same rhythm as Monday, not a recap-only day.',
     icon: 'sparkle',
   },
   {
@@ -79,15 +79,15 @@ const PILLARS = [
 const OUTCOMES = [
   { title: 'Python you can run', body: 'Variables, logic, functions, and small scripts on your own machine. You write and run code, not only read about it.' },
   { title: 'A simple website', body: 'Enough HTML, CSS, and JavaScript to publish a personal site or a small interactive page and share it online.' },
-  { title: 'AI tools, used carefully', body: 'How to prompt well, verify outputs, and know when to ignore the model and write your own code. We practice this every Wednesday.' },
-  { title: 'Git and deploy', body: 'A practical Git and GitHub workflow to save your work, plus deploying a project with a host such as Vercel.' },
+  { title: 'Data on the web', body: 'What a database stores, how a simple API works, and how to connect a frontend to read-only data safely (for example with Supabase).' },
+  { title: 'GitHub + deploy', body: 'A practical Git and GitHub workflow in Cursor, plus shipping a static or simple app to a host such as Vercel or GitHub Pages.' },
   { title: 'A final project you choose', body: 'Something you scope to finish: a site, a tool, or a small app you can present on Demo Day.' },
   { title: 'Present your work', body: 'On Demo Day you explain what you built, what broke along the way, and what you would improve next.' },
 ]
 
 const VALUES = [
   { title: 'Pair up, level up', body: 'We learn in pairs and small groups so beginners and more experienced students both gain depth. Teaching someone else is one of the fastest ways to learn.' },
-  { title: 'Use AI at full strength', body: 'You learn where AI genuinely speeds you up (clear prompts, drafts, and repetitive work) and where you still need to verify, steer, and write code yourself.' },
+  { title: 'Read errors like a developer', body: 'Stack traces, docs, and search become normal tools. You learn to slow down, reproduce the bug, and fix one thing at a time instead of guessing randomly.' },
   { title: 'Finish something that runs', body: 'A modest project that compiles and ships teaches more than an ambitious idea stuck in the editor. We help you scope small, reach "it works," then iterate.' },
 ]
 
@@ -159,8 +159,7 @@ function Hero() {
 
       <ScrollReveal className="mt-12" delayMs={180} rootMargin="0px 0px 12% 0px">
         <p className="max-w-3xl text-lg leading-relaxed text-ink/80">
-          CodeMoldova is a free coding course in Chișinău, Moldova! May through July 2026. Learn Python, web development, and how to
-          use AI alongside mentors and classmates. All experience levels are welcome. Curiosity and desire to learn matter
+          CodeMoldova is a free coding course in Chișinău, Moldova! May through July 2026. Learn Python in Cursor (including notebooks), the web stack, GitHub, deployment, and a first look at databases and backends. All experience levels are welcome. Curiosity and desire to learn matter
           most!
         </p>
       </ScrollReveal>
@@ -197,8 +196,7 @@ function About() {
       </ScrollReveal>
       <ScrollReveal className="space-y-6 lg:col-span-7" delayMs={100}>
         <p className="text-lg leading-relaxed text-ink/85">
-          Eight weeks, three sessions a week, one hour each, from May through July. The path moves from Python and the
-          terminal into small projects, then the web stack and deployment, and closes with a project you choose yourself.
+          Eight weeks, three sessions a week, one hour each, from May through July. Mondays and Wednesdays are both workshop days in Cursor—each session introduces new topics on the syllabus; Thursdays are build days. The path moves from Python foundations into the web, then shipping with Git and a database-backed slice, and closes with a project you choose yourself.
         </p>
         <p className="text-lg leading-relaxed text-ink/85">
           The course is <strong className="hm-val font-bold">free</strong> and open to anyone motivated enough to join. We

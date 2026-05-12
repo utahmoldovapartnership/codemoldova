@@ -1,34 +1,34 @@
 export const sessions = [
   { week: 1, day: "mon", date: "2026-05-11", label: "Intro & How computers think" },
-  { week: 1, day: "wed", date: "2026-05-13", label: "What can AI actually do?" },
-  { week: 1, day: "thu", date: "2026-05-14", label: "Mad libs generator" },
+  { week: 1, day: "wed", date: "2026-05-13", label: "Logic + loops" },
+  { week: 1, day: "thu", date: "2026-05-14", label: "Mad Libs + number guessing" },
 
-  { week: 2, day: "mon", date: "2026-05-18", label: "Logic + loops" },
-  { week: 2, day: "wed", date: "2026-05-20", label: "AI as your coding assistant" },
-  { week: 2, day: "thu", date: "2026-05-21", label: "Number guessing game" },
+  { week: 2, day: "mon", date: "2026-05-18", label: "Data structures" },
+  { week: 2, day: "wed", date: "2026-05-20", label: "APIs & the internet" },
+  { week: 2, day: "thu", date: "2026-05-21", label: "Fetch real data, store + display" },
 
-  { week: 3, day: "mon", date: "2026-05-25", label: "Data structures" },
-  { week: 3, day: "wed", date: "2026-05-27", label: "AI + real data" },
-  { week: 3, day: "thu", date: "2026-05-28", label: "Personal expense tracker" },
+  { week: 3, day: "mon", date: "2026-05-25", label: "Functions" },
+  { week: 3, day: "wed", date: "2026-05-27", label: "Error handling + debugging" },
+  { week: 3, day: "thu", date: "2026-05-28", label: "Reusable CLI tool" },
 
-  { week: 4, day: "mon", date: "2026-06-01", label: "APIs & the internet" },
-  { week: 4, day: "wed", date: "2026-06-03", label: "Build an AI-powered script" },
-  { week: 4, day: "thu", date: "2026-06-04", label: "Mini project sprint" },
+  { week: 4, day: "mon", date: "2026-06-01", label: "HTML & CSS" },
+  { week: 4, day: "wed", date: "2026-06-03", label: "Layouts, styling + Figma" },
+  { week: 4, day: "thu", date: "2026-06-04", label: "Personal webpage goes live" },
 
-  { week: 5, day: "mon", date: "2026-06-08", label: "HTML & CSS" },
-  { week: 5, day: "wed", date: "2026-06-10", label: "Design with AI" },
-  { week: 5, day: "thu", date: "2026-06-11", label: "Personal website goes live" },
+  { week: 5, day: "mon", date: "2026-06-08", label: "JavaScript basics" },
+  { week: 5, day: "wed", date: "2026-06-10", label: "DOM manipulation + events" },
+  { week: 5, day: "thu", date: "2026-06-11", label: "Interactive web app" },
 
-  { week: 6, day: "mon", date: "2026-06-15", label: "JavaScript" },
-  { week: 6, day: "wed", date: "2026-06-17", label: "Vibe coding session" },
-  { week: 6, day: "thu", date: "2026-06-18", label: "Interactive web app" },
+  { week: 6, day: "mon", date: "2026-06-15", label: "Git & GitHub" },
+  { week: 6, day: "wed", date: "2026-06-17", label: "Deployment + hosting" },
+  { week: 6, day: "thu", date: "2026-06-18", label: "Push a project live with Git" },
 
   { week: 7, day: "mon", date: "2026-06-22", label: "Databases + backend basics" },
-  { week: 7, day: "wed", date: "2026-06-24", label: "Final project brainstorm" },
+  { week: 7, day: "wed", date: "2026-06-24", label: "Connecting frontend to backend" },
   { week: 7, day: "thu", date: "2026-06-25", label: "Final project day 1" },
 
-  { week: 8, day: "mon", date: "2026-06-29", label: "Git, deployment & portfolios" },
-  { week: 8, day: "wed", date: "2026-07-01", label: "Demo Day" },
+  { week: 8, day: "mon", date: "2026-06-29", label: "Final project polish + README" },
+  { week: 8, day: "wed", date: "2026-07-01", label: "Demo Day 🎉" },
 ]
 
 /** Previous / next session in the course for lesson page navigation. */

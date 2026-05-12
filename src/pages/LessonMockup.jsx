@@ -90,7 +90,7 @@ Maria is 19 years old`,
 
 const DAY_META = {
   mon: { label: 'Monday', type: 'Workshop', swatch: '#DD8CF1', icon: 'terminal' },
-  wed: { label: 'Wednesday', type: 'AI Exploration', swatch: '#F69C40', icon: 'sparkle' },
+  wed: { label: 'Wednesday', type: 'Workshop 2', swatch: '#F69C40', icon: 'sparkle' },
   thu: { label: 'Thursday', type: 'Build Day', swatch: '#EF453F', icon: 'rocket' },
 }
 

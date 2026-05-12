@@ -19,7 +19,7 @@ const TABS = [
   {
     id: 'ai',
     label: 'AI tools',
-    description: 'Chat bots and APIs for Wednesday class and for small scripts with AI.',
+    description: 'Assistants and APIs for side experiments—useful, but Wednesday class is a normal workshop, not an “AI-only” day.',
   },
   {
     id: 'terminal',

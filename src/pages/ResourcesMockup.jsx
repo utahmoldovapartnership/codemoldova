@@ -20,7 +20,7 @@ import PixelIcon from '../components/PixelIcon'
 const CATEGORIES = [
   { id: 'python',   num: '02', label: 'Python',          blurb: 'Reference docs, second explanations, and one-page cheat sheets for the language we start the course with.' },
   { id: 'web',      num: '03', label: 'Web Development', blurb: 'HTML, CSS, JavaScript. Reach for these when something looks weird in the browser.' },
-  { id: 'ai',       num: '04', label: 'AI Tools',        blurb: 'The tools we use on Wednesdays — and the writing on prompts, limits, and verifying outputs.' },
+  { id: 'ai',       num: '04', label: 'AI Tools',        blurb: 'Optional assistants when you want them—prompts, limits, and verifying outputs. Wednesdays are normal workshops too.' },
   { id: 'terminal', num: '05', label: 'Terminal',        blurb: 'When the command line feels foreign — short, friendly explainers and one cheat sheet to keep open.' },
   { id: 'extras',   num: '06', label: 'Extras',          blurb: 'Things that do not fit the other buckets but are worth your time.' },
 ]
@@ -96,7 +96,7 @@ function ResourceRow({ item }) {
 // ─── Sections ───────────────────────────────────────────────────────────────
 
 function Marquee() {
-  const items = ['RESOURCES', 'INSTALL FIRST', 'BOOKMARK THIS PAGE', 'STUCK? START HERE', 'PYTHON · WEB · AI']
+  const items = ['RESOURCES', 'INSTALL FIRST', 'BOOKMARK THIS PAGE', 'STUCK? START HERE', 'PYTHON · WEB · DATA']
   const loop = [...items, ...items, ...items, ...items]
   return (
     <div className="overflow-hidden border-y border-paper/20 bg-dart text-paper">
