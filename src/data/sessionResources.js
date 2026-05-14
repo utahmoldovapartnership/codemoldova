@@ -97,16 +97,22 @@ const BY_KEY = {
       group: 'Read',
       items: [
         {
-          label: 'input() and strings',
-          href: 'https://docs.python.org/3/library/functions.html#input',
+          label: 'while loops',
+          href: 'https://docs.python.org/3/tutorial/controlflow.html#while-statements',
           source: 'python.org',
-          note: 'Mad libs live here.',
+          note: 'Keep asking until a condition changes.',
         },
         {
-          label: 'random — pseudo-random numbers',
-          href: 'https://docs.python.org/3/library/random.html',
+          label: 'Defining functions',
+          href: 'https://docs.python.org/3/tutorial/controlflow.html#defining-functions',
           source: 'python.org',
-          note: 'randint and friends for the guessing game.',
+          note: 'def check_guess(...): pattern.',
+        },
+        {
+          label: 'random.randint',
+          href: 'https://docs.python.org/3/library/random.html#random.randint',
+          source: 'python.org',
+          note: 'Advanced track: pick a secret in a range.',
         },
       ],
     },

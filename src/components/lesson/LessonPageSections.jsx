@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import CodeBlock from '../CodeBlock.jsx'
 import PixelIcon from '../PixelIcon.jsx'
 
 export function SectionKicker({ kicker, className = '' }) {
@@ -297,6 +298,158 @@ export function LessonLabBand({
         </div>
       </div>
     </section>
+  )
+}
+
+/**
+ * @param {{ track: Record<string, unknown> | null | undefined, dayKey?: 'mon' | 'wed' | 'thu' }} props
+ */
+export function LessonStarterNotebookDownload({ track, dayKey = 'thu' }) {
+  if (!track) return null
+  const href = typeof track.downloadHref === 'string' ? track.downloadHref.trim() : ''
+  if (!href) return null
+  const downloadFilename =
+    typeof track.downloadFilename === 'string' && track.downloadFilename.trim()
+      ? track.downloadFilename.trim()
+      : null
+  const downloadLabel =
+    typeof track.downloadLabel === 'string' && track.downloadLabel.trim()
+      ? track.downloadLabel.trim()
+      : 'Download starter (.ipynb)'
+  const labHover = lessonDayHoverButtonClass(dayKey)
+  return (
+    <div className="mb-8">
+      <a
+        href={href}
+        {...(downloadFilename
+          ? { download: downloadFilename }
+          : { target: '_blank', rel: 'noopener noreferrer' })}
+        className={`hm-hero-join-slack ${labHover} inline-flex h-12 items-center border px-5 font-mono text-xs uppercase tracking-[0.25em]`}
+      >
+        <span>{downloadLabel}</span>
+        <span className="sr-only">{downloadFilename ? ' (downloads a file)' : ' (opens in a new tab)'}</span>
+      </a>
+      <p className="mt-3 max-w-prose text-sm leading-relaxed text-ink/60">
+        Save the file in your week folder, open it in Cursor, and run cells.
+      </p>
+    </div>
+  )
+}
+
+/**
+ * @param {{ track: Record<string, unknown> | null | undefined, dayKey?: 'mon' | 'wed' | 'thu', omitDownload?: boolean }} props
+ */
+export function LessonBuildTrackPanel({ track, dayKey = 'thu', omitDownload = false }) {
+  if (!track) return null
+  const href = typeof track.downloadHref === 'string' ? track.downloadHref.trim() : ''
+  const downloadFilename =
+    typeof track.downloadFilename === 'string' && track.downloadFilename.trim()
+      ? track.downloadFilename.trim()
+      : null
+  const downloadLabel =
+    typeof track.downloadLabel === 'string' && track.downloadLabel.trim()
+      ? track.downloadLabel.trim()
+      : 'Download starter (.ipynb)'
+  const task = typeof track.task === 'string' ? track.task.trim() : ''
+  const taskBoldLead =
+    typeof track.taskBoldLead === 'string' && track.taskBoldLead.trim() ? track.taskBoldLead.trim() : ''
+  const pseudocode = typeof track.pseudocode === 'string' ? track.pseudocode.trim() : ''
+  const hints = Array.isArray(track.hints) ? track.hints.filter((h) => typeof h === 'string' && h.trim()) : []
+  const goBeyond = Array.isArray(track.goBeyond) ? track.goBeyond.filter((h) => typeof h === 'string' && h.trim()) : []
+  const focus = Array.isArray(track.focus) ? track.focus.filter((h) => typeof h === 'string' && h.trim()) : []
+  const labHover = lessonDayHoverButtonClass(dayKey)
+  const showDownload = !omitDownload && href
+
+  return (
+    <div className="space-y-10">
+      {showDownload ? (
+        <div>
+          <a
+            href={href}
+            {...(downloadFilename
+              ? { download: downloadFilename }
+              : { target: '_blank', rel: 'noopener noreferrer' })}
+            className={`hm-hero-join-slack ${labHover} inline-flex h-12 items-center border px-5 font-mono text-xs uppercase tracking-[0.25em]`}
+          >
+            <span>{downloadLabel}</span>
+            <span className="sr-only">{downloadFilename ? ' (downloads a file)' : ' (opens in a new tab)'}</span>
+          </a>
+        </div>
+      ) : null}
+
+      {task ? (
+        <div className={showDownload ? 'border-t border-hairline pt-8' : ''}>
+          <SectionKicker kicker="Your task" />
+          <p className="mt-3 max-w-prose whitespace-pre-line text-pretty text-base leading-relaxed text-ink/85 sm:text-[17px]">
+            {taskBoldLead ? (
+              <>
+                <strong className="font-semibold text-ink">{taskBoldLead}</strong>{' '}
+              </>
+            ) : null}
+            {task}
+          </p>
+        </div>
+      ) : null}
+
+      {pseudocode ? (
+        <div>
+          <SectionKicker kicker="Pseudocode" />
+          <p className="mt-3 max-w-prose text-sm leading-relaxed text-ink/65">
+            Flow only—not runnable Python. Variable names and messages are yours; behavior should match the task.
+          </p>
+          <div className="mt-4">
+            <CodeBlock
+              lang={typeof track.pseudocodeLang === 'string' && track.pseudocodeLang.trim() ? track.pseudocodeLang.trim() : 'text'}
+              snippet={pseudocode}
+            />
+          </div>
+        </div>
+      ) : null}
+
+      {focus.length ? (
+        <div className="rounded-elem border border-hairline/80 bg-ink/[0.02] px-5 py-5 sm:px-6">
+          <SectionKicker kicker="What to focus on" />
+          <ul className="mt-4 list-none space-y-2">
+            {focus.map((line) => (
+              <li key={line} className="flex items-start gap-3 font-body text-base leading-relaxed text-ink/85">
+                <PixelIcon icon="check" size={14} className="mt-1 shrink-0 text-val" />
+                <span>{line}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
+      {hints.length ? (
+        <div>
+          <SectionKicker kicker="If you get stuck" />
+          <ul className="mt-4 space-y-3 border-l-4 border-val bg-val/[0.06] py-4 pl-5 pr-4">
+            {hints.map((h) => (
+              <li key={h} className="font-body text-base leading-relaxed text-ink/90">
+                {h}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+
+      {goBeyond.length ? (
+        <div className="border-t border-hairline pt-8">
+          <SectionKicker kicker="Go beyond" />
+          <p className="mt-3 max-w-prose text-sm leading-relaxed text-ink/65">
+            If the core game works early, pick one of these—ship one small upgrade before you chase everything at once.
+          </p>
+          <ul className="mt-4 list-none space-y-2">
+            {goBeyond.map((line) => (
+              <li key={line} className="flex items-start gap-3 font-body text-base leading-relaxed text-ink/85">
+                <PixelIcon icon="sparkle" size={14} className="mt-1 shrink-0 text-sun" />
+                <span>{line}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
+    </div>
   )
 }
 

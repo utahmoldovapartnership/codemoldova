@@ -10,6 +10,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
  * @param {string} props.tablistAriaLabel
  * @param {string} [props.tabLineClassName] — underline span classes (include layout + transition)
  * @param {string} [props.tabButtonFocusClass] — Tailwind focus ring on tab buttons (lesson: match day accent).
+ * @param {string} [props.tablistClassName] — classes for the tablist row (default includes border-b).
  */
 export default function TopicTabBar({
   baseId,
@@ -20,6 +21,7 @@ export default function TopicTabBar({
   tablistAriaLabel,
   tabLineClassName = 'res-tabline pointer-events-none absolute bottom-0 left-0 z-0 transition-[left,width] duration-300 ease-out',
   tabButtonFocusClass = 'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-val',
+  tablistClassName,
 }) {
   const scrollRef = useRef(null)
   const innerRef = useRef(null)
@@ -64,7 +66,7 @@ export default function TopicTabBar({
     >
       <div
         ref={innerRef}
-        className="relative flex w-max min-w-0 border-b border-hairline"
+        className={tablistClassName ?? 'relative flex w-max min-w-0 border-b border-hairline'}
         role="tablist"
         aria-label={tablistAriaLabel}
       >

@@ -7,6 +7,7 @@ import { getSessionByWeekAndDay } from '../data/curriculum'
 import { getAdjacentSessions, sessions } from '../data/schedule'
 import {
   LessonArtifacts,
+  LessonBuildTrackPanel,
   LessonChallengesAccordion,
   LessonHero,
   LessonHomework,
@@ -17,6 +18,7 @@ import {
   LessonPrevNext,
   LessonResources,
   LessonSectionGoal,
+  LessonStarterNotebookDownload,
   LessonVocab,
 } from '../components/lesson/LessonPageSections.jsx'
 
@@ -289,7 +291,9 @@ function LessonTabbedBody({
   labDurationLabel,
 }) {
   const baseId = useId()
-  const [activeLessonTab, setActiveLessonTab] = useState('lab')
+  const buildTracks = session.buildTracks
+  const isBuildTrackMode = Boolean(buildTracks)
+  const [activeLessonTab, setActiveLessonTab] = useState(() => (isBuildTrackMode ? 'beginner' : 'lab'))
   const lessonPanelId = `${baseId}-lesson-tabs-panel`
 
   const tabFocusByDay = {
@@ -298,6 +302,21 @@ function LessonTabbedBody({
     thu: 'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-val',
   }
   const tabButtonFocusClass = tabFocusByDay[dayKey] ?? tabFocusByDay.thu
+
+  const lessonTabs = isBuildTrackMode
+    ? [
+        { id: 'beginner', label: 'Beginner' },
+        { id: 'advanced', label: 'Advanced' },
+        { id: 'resources', label: 'Resources' },
+      ]
+    : [
+        { id: 'lab', label: 'Lab' },
+        { id: 'homework', label: 'Homework' },
+        { id: 'main', label: 'Main points' },
+        { id: 'resources', label: 'Resources' },
+      ]
+
+  const buildIntro = typeof session.desc === 'string' ? session.desc.trim() : ''
 
   return (
     <section className={`lesson-tabs lesson-tabs--${dayKey} border-t border-hairline`}>
@@ -310,12 +329,7 @@ function LessonTabbedBody({
           baseId={baseId}
           active={activeLessonTab}
           onChange={setActiveLessonTab}
-          tabs={[
-            { id: 'lab', label: 'Lab' },
-            { id: 'homework', label: 'Homework' },
-            { id: 'main', label: 'Main points' },
-            { id: 'resources', label: 'Resources' },
-          ]}
+          tabs={lessonTabs}
           panelId={lessonPanelId}
           tablistAriaLabel="Lesson sections"
           tabButtonFocusClass={tabButtonFocusClass}
@@ -326,90 +340,137 @@ function LessonTabbedBody({
         role="tabpanel"
         id={lessonPanelId}
         aria-labelledby={`${baseId}-tab-${activeLessonTab}`}
-        className="min-h-[16rem] border-t border-hairline pb-16 pt-8 sm:min-h-[18rem] sm:pb-20 sm:pt-10"
+        className="min-h-[16rem] pb-16 pt-8 sm:min-h-[18rem] sm:pb-20 sm:pt-10"
       >
-        {activeLessonTab === 'lab' ? (
-          showLab ? (
-            <LessonLabBand
-              dayKey={dayKey}
-              title={session.title}
-              intro={session.desc || ''}
-              exampleHref={labExample.href}
-              exampleLabel={labExample.label}
-              exampleDownloadFilename={labExample.downloadFilename}
-              durationLabel={labDurationLabel}
-              collapsible={false}
-              contained
-            >
+        {isBuildTrackMode ? (
+          <>
+            {activeLessonTab === 'beginner' ? (
               <>
-                <LessonModule steps={session.steps} variant="paper" noRounded dayKey={dayKey} />
-                {isThu && challengesList.length ? (
-                  <div className="mt-12 border-t border-black/15 pt-10">
-                    <LessonChallengesAccordion challenges={challengesList} embedded />
+                <LessonStarterNotebookDownload track={buildTracks.beginner} dayKey={dayKey} />
+                {buildIntro ? (
+                  <p className="mb-8 max-w-prose text-base leading-relaxed text-ink/80 sm:text-[17px]">{buildIntro}</p>
+                ) : null}
+                <LessonBuildTrackPanel track={buildTracks.beginner} dayKey={dayKey} omitDownload />
+              </>
+            ) : null}
+            {activeLessonTab === 'advanced' ? (
+              <>
+                <LessonStarterNotebookDownload track={buildTracks.advanced} dayKey={dayKey} />
+                {buildIntro ? (
+                  <p className="mb-8 max-w-prose text-base leading-relaxed text-ink/80 sm:text-[17px]">{buildIntro}</p>
+                ) : null}
+                <LessonBuildTrackPanel track={buildTracks.advanced} dayKey={dayKey} omitDownload />
+              </>
+            ) : null}
+            {activeLessonTab === 'resources' ? (
+              <>
+                {session.resources?.length ? (
+                  <LessonResources resources={session.resources} embedded />
+                ) : null}
+                {session.postClass?.links?.length ? (
+                  <div className={session.resources?.length ? 'mt-12 border-t border-hairline pt-10' : ''}>
+                    <LessonPostClass
+                      postClass={session.postClass}
+                      embedded
+                      titleId={`${baseId}-optional-deep-dives`}
+                    />
                   </div>
                 ) : null}
+                {!session.resources?.length && !session.postClass?.links?.length ? (
+                  <LessonTabEmpty>
+                    No session-specific links yet. Optional deep-dives and curated resources will show here when they are
+                    in the lesson data. You can still use the Resources page for course-wide links and installs.
+                  </LessonTabEmpty>
+                ) : null}
               </>
-            </LessonLabBand>
-          ) : isThu && challengesList.length ? (
-            <LessonLabBand
-              dayKey={dayKey}
-              title={session.title}
-              intro={session.desc || ''}
-              exampleHref={labExample.href}
-              exampleLabel={labExample.label}
-              exampleDownloadFilename={labExample.downloadFilename}
-              durationLabel={labDurationLabel}
-              collapsible={false}
-              contained
-            >
-              <LessonChallengesAccordion challenges={challengesList} embedded />
-            </LessonLabBand>
-          ) : (
-            <LessonTabEmpty>
-              No guided lab steps or Thursday tiers are listed for this session yet. Check class slides or ask in WhatsApp
-              if you think this is a mistake.
-            </LessonTabEmpty>
-          )
-        ) : null}
-
-        {activeLessonTab === 'homework' ? (
-          session.homework?.tasks?.length ? (
-            <LessonHomework homework={session.homework} embedded />
-          ) : (
-            <LessonTabEmpty>No homework listed for this session.</LessonTabEmpty>
-          )
-        ) : null}
-
-        {activeLessonTab === 'main' ? (
-          mainPoints?.length ? (
-            <LessonMainPoints points={mainPoints} embedded />
-          ) : (
-            <LessonTabEmpty>No main points for this session yet.</LessonTabEmpty>
-          )
-        ) : null}
-
-        {activeLessonTab === 'resources' ? (
-          <>
-            {session.resources?.length ? (
-              <LessonResources resources={session.resources} embedded />
-            ) : null}
-            {session.postClass?.links?.length ? (
-              <div className={session.resources?.length ? 'mt-12 border-t border-hairline pt-10' : ''}>
-                <LessonPostClass
-                  postClass={session.postClass}
-                  embedded
-                  titleId={`${baseId}-optional-deep-dives`}
-                />
-              </div>
-            ) : null}
-            {!session.resources?.length && !session.postClass?.links?.length ? (
-              <LessonTabEmpty>
-                No session-specific links yet. Optional deep-dives and curated resources will show here when they are
-                in the lesson data. You can still use the Resources page for course-wide links and installs.
-              </LessonTabEmpty>
             ) : null}
           </>
-        ) : null}
+        ) : (
+          <>
+            {activeLessonTab === 'lab' ? (
+              showLab ? (
+                <LessonLabBand
+                  dayKey={dayKey}
+                  title={session.title}
+                  intro={session.desc || ''}
+                  exampleHref={labExample.href}
+                  exampleLabel={labExample.label}
+                  exampleDownloadFilename={labExample.downloadFilename}
+                  durationLabel={labDurationLabel}
+                  collapsible={false}
+                  contained
+                >
+                  <>
+                    <LessonModule steps={session.steps} variant="paper" noRounded dayKey={dayKey} />
+                    {isThu && challengesList.length ? (
+                      <div className="mt-12 border-t border-black/15 pt-10">
+                        <LessonChallengesAccordion challenges={challengesList} embedded />
+                      </div>
+                    ) : null}
+                  </>
+                </LessonLabBand>
+              ) : isThu && challengesList.length ? (
+                <LessonLabBand
+                  dayKey={dayKey}
+                  title={session.title}
+                  intro={session.desc || ''}
+                  exampleHref={labExample.href}
+                  exampleLabel={labExample.label}
+                  exampleDownloadFilename={labExample.downloadFilename}
+                  durationLabel={labDurationLabel}
+                  collapsible={false}
+                  contained
+                >
+                  <LessonChallengesAccordion challenges={challengesList} embedded />
+                </LessonLabBand>
+              ) : (
+                <LessonTabEmpty>
+                  No guided lab steps or Thursday tiers are listed for this session yet. Check class slides or ask in WhatsApp
+                  if you think this is a mistake.
+                </LessonTabEmpty>
+              )
+            ) : null}
+
+            {activeLessonTab === 'homework' ? (
+              session.homework?.tasks?.length ? (
+                <LessonHomework homework={session.homework} embedded />
+              ) : (
+                <LessonTabEmpty>No homework listed for this session.</LessonTabEmpty>
+              )
+            ) : null}
+
+            {activeLessonTab === 'main' ? (
+              mainPoints?.length ? (
+                <LessonMainPoints points={mainPoints} embedded />
+              ) : (
+                <LessonTabEmpty>No main points for this session yet.</LessonTabEmpty>
+              )
+            ) : null}
+
+            {activeLessonTab === 'resources' ? (
+              <>
+                {session.resources?.length ? (
+                  <LessonResources resources={session.resources} embedded />
+                ) : null}
+                {session.postClass?.links?.length ? (
+                  <div className={session.resources?.length ? 'mt-12 border-t border-hairline pt-10' : ''}>
+                    <LessonPostClass
+                      postClass={session.postClass}
+                      embedded
+                      titleId={`${baseId}-optional-deep-dives`}
+                    />
+                  </div>
+                ) : null}
+                {!session.resources?.length && !session.postClass?.links?.length ? (
+                  <LessonTabEmpty>
+                    No session-specific links yet. Optional deep-dives and curated resources will show here when they are
+                    in the lesson data. You can still use the Resources page for course-wide links and installs.
+                  </LessonTabEmpty>
+                ) : null}
+              </>
+            ) : null}
+          </>
+        )}
       </div>
     </section>
   )
@@ -484,6 +545,7 @@ export default function Lesson() {
   const goal = session.goal || session.preview || ''
   const mainPoints = buildMainPoints(session)
   const artifacts = buildArtifacts(session)
+  const showArtifacts = artifacts.length > 0 && session.hideLessonArtifacts !== true
   const challengesList = isThu ? buildChallengesAccordionList(session.challenges) : []
   const labExample = resolveLabExample(session)
   const labDurationLabel = estimateLabDurationLabel(session)
@@ -510,7 +572,7 @@ export default function Lesson() {
               />
             }
           />
-          {artifacts.length ? <LessonArtifacts artifacts={artifacts} dayKey={dayKey} /> : null}
+          {showArtifacts ? <LessonArtifacts artifacts={artifacts} dayKey={dayKey} /> : null}
           {goal ? <LessonSectionGoal goal={goal} dayMeta={dayHero} /> : null}
 
           <LessonTabbedBody

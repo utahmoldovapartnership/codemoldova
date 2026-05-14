@@ -1,7 +1,7 @@
 export const sessions = [
   { week: 1, day: "mon", date: "2026-05-11", label: "Intro & How computers think" },
   { week: 1, day: "wed", date: "2026-05-13", label: "Variables, types & inputs" },
-  { week: 1, day: "thu", date: "2026-05-14", label: "Mad Libs + number guessing" },
+  { week: 1, day: "thu", date: "2026-05-14", label: "Number guessing game" },
 
   { week: 2, day: "mon", date: "2026-05-18", label: "Data structures" },
   { week: 2, day: "wed", date: "2026-05-20", label: "APIs & the internet" },

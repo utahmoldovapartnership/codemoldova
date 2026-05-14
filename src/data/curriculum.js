@@ -218,72 +218,103 @@ export const phases = [
           },
         },
         thu: {
-          title: "Mad Libs + number guessing",
+          title: "Number guessing game",
           date: "May 14",
-          desc: "Build day: two small Python programs that use input(), print(), conditionals, and loops. Ship both\u2014rough edges are fine if they run end-to-end.",
-          preview: "Story generator with blanks, then a looped guessing game with hints.",
-          steps: [
-            {
-              title: "Plan both mini-builds",
-              content: "Mad libs: list every blank before you code. Guessing game: pick bounds (1–20 is friendly) and decide hot/cold hints or simple “higher/lower”.",
-              task: "Sketch both flows on paper in under five minutes.",
-            },
-            {
-              title: "Mad lib: collect words",
-              content: "Use clear prompts and variable names. Keep the story in one f-string or build it in parts.",
-              task: "Implement the mad lib with at least five inputs and one printed story.",
-              code: { lang: "python", snippet: "adj = input(\"Adjective: \")\nplace = input(\"Place: \")\nprint(f\"The {adj} bus stopped in {place}.\")" },
-            },
-            {
-              title: "Number guessing core",
-              content: "Use random.randint. Loop until correct. Convert input with int() and guard bad input with try/except if you have time.",
-              task: "Working game: secret number, repeated guesses, prints “too high” / “too low” / “you win”.",
-              code: { lang: "python", snippet: "import random\nn = random.randint(1, 20)\n# loop: guess = int(input(...)) compare to n" },
-            },
-            {
-              title: "Polish + demo",
-              content: "Add a friendly intro line, limit guess count, or a play-again loop on the game. Run both scripts from Cursor’s terminal: python3 madlib.py.",
-              task: "Run each program twice with different inputs; fix anything that crashes.",
-            },
-          ],
-          homework: {
-            title: "Ship both builds",
-            desc: "Save files in your week1 folder and zip or push later when we learn Git.",
-            tasks: [
-              "Mad lib prints a multi-sentence story.",
-              "Guessing game uses a loop and ends on the correct answer.",
-              "Optional: combine into one menu script that asks which game to play.",
+          hideLessonArtifacts: true,
+          goal:
+            "Ship a playable number guessing game: the computer holds a secret number, the player keeps guessing in a loop, and you print clear too high / too low hints until they win. You must use a variable for the secret, a while loop, if/elif/else for feedback, a function that checks each guess, and input() every round.",
+          preview: "Loop, compare, hint, win—then stretch with random, attempts, or play again.",
+          postClass: {
+            title: "Answer keys (spoilers)",
+            desc:
+              "Runnable Python for the core game and for go-beyond ideas (welcome line, play again, guess limits, random secret, attempts, score lines, difficulty presets, Easy/Medium/Hard menu). For students: only after you have tried, or to get unstuck. For mentors: quick demos at the desk.",
+            links: [
+              { label: "Beginner answer key (.ipynb)", href: "/lesson/week1_thu_guessing_beginner_key.ipynb" },
+              { label: "Advanced answer key (.ipynb)", href: "/lesson/week1_thu_guessing_advanced_key.ipynb" },
             ],
           },
-          challenges: {
-            base: {
-              title: "Mad lib + guessing baseline",
-              desc: "Two working scripts or two sections in one file.",
-              steps: [
-                "Five inputs minimum for the mad lib",
-                "Guessing game with random number and high/low feedback",
-                "Both runnable with python3 filename.py",
+          buildTracks: {
+            beginner: {
+              pseudocodeLang: "text",
+              downloadHref: "/lesson/week1_thu_guessing_beginner.ipynb",
+              downloadFilename: "week1_thu_guessing_beginner.ipynb",
+              downloadLabel: "Download beginner starter (.ipynb)",
+              taskBoldLead: "Number guessing game:",
+              task:
+                "store a fixed secret number in a variable, keep asking for guesses with a while loop until the guess matches, and use a function check_guess(secret, guess) that prints Too low, Too high, or a win line. Use int(input(...)) for each guess. Range can stay small (for example 1–10) so testing is quick.",
+              pseudocode: `START
+  pick a SECRET number (fixed integer in your range)
+  set GUESS to a value that is NOT the secret (so the loop can start)
+
+  WHILE guess is not equal to secret:
+      read a new guess from the player (whole number)
+      call check_guess(secret, guess)
+
+  print a short line after the game ends (for example "Game over")
+
+check_guess(secret, guess):
+  IF guess is below secret → print "too low" style hint
+  ELSE IF guess is above secret → print "too high" style hint
+  ELSE → print "you got it" style message
+END`,
+              focus: [
+                "Why the while loop keeps running until guess equals the secret.",
+                "How check_guess runs once every time through the loop.",
+                "Changing the secret number and the prompt text to make it yours.",
+              ],
+              hints: [
+                "If the loop never stops, print secret and guess once inside the loop to see what Python is comparing.",
+                "int(input(...)) crashes if the player types letters—keep digits only for the beginner track, or ask a mentor for try/except when you are ready.",
+                "Indentation: everything inside while and inside def must line up—Cursor usually indents for you after a colon.",
+                "Stretch ideas and full worked code (including go-beyond): use the Resources tab, answer key links at the bottom.",
+              ],
+              goBeyond: [
+                "Print one friendly welcome line before the loop.",
+                "After a win, ask if they want another round and wrap the whole game in a second outer loop (play again).",
+                "Cap guesses at seven and print a short loss message if they run out.",
+                "Difficulty stretch: at the start, let the player choose Easy (1–10), Medium (1–50), or Hard (1–100), then use that range for the secret (fixed number you pick in-range, or random.randint once you are comfortable with import random).",
               ],
             },
-            medium: {
-              title: "Loops and replay",
-              desc: "Let the player go again without restarting the interpreter.",
-              steps: [
-                "After each mad lib story, ask \"Another story? (y/n)\"",
-                "Limit guesses to seven; print a loss message if they run out",
-                "Track number of guesses and print it on win",
+            advanced: {
+              pseudocodeLang: "text",
+              downloadHref: "/lesson/week1_thu_guessing_advanced.ipynb",
+              downloadFilename: "week1_thu_guessing_advanced.ipynb",
+              downloadLabel: "Download advanced starter (.ipynb)",
+              task:
+                "Same core rules as beginner, but stretch: use import random and random.randint so the secret is different each run, count attempts and show them on the win line, add a short score or praise block at the end (for example great if attempts is small), and optionally restart the whole game without quitting the program.",
+              pseudocode: `START
+  pick SECRET using random in a range (for example 1–100)
+  set guess to a value that is not the secret
+  set attempts counter to zero
+
+  print welcome lines so the player knows the range
+
+  WHILE guess is not equal to secret:
+      read guess from the player (whole number)
+      add one to attempts
+      call check_guess(secret, guess, attempts)  OR compare in the loop—your choice, but stay consistent
+
+  print final score (attempt count)
+  IF attempts is small → praise line
+  ELSE IF attempts is medium → neutral line
+  ELSE → encouraging line
+
+check_guess(...):
+  same three branches as beginner: too low, too high, win (win can mention attempt count)
+END`,
+              hints: [
+                "If the win message shows the wrong attempt count, count once per guess and keep that rule the same every round.",
+                "random.randint(a, b) includes both ends—check the Python docs if your range feels off by one.",
+                "For play again, use an outer loop: new secret, reset guess and attempts, repeat until the player quits.",
+                "Optional: wrap int(input(...)) in try/except ValueError so stray text does not crash the game.",
+                "Stretch ideas and full worked code (including go-beyond): use the Resources tab, answer key links at the bottom.",
+              ],
+              goBeyond: [
+                "Outer play_again loop so a fresh random secret starts each round.",
+                "Difficulty presets: let the player pick a smaller or larger range (for example 1–10 vs 1–100) before you call random.randint.",
+                "Full menu: Easy (1–10), Medium (1–50), Hard (1–100)—ask once at the start, set low and high, then secret = random.randint(low, high).",
               ],
             },
-            hard: {
-              title: "Tighter UX",
-              desc: "Handle bad input and add difficulty levels.",
-              steps: [
-                "try/except around int(input()) so letters do not crash the game",
-                "Let the player pick easy (1–10) or hard (1–100) ranges before play",
-                "Optional: timed rounds with input still blocking (stretch)",
-              ],
-            },
-            bonus: "Add simple scorekeeping across multiple rounds in a list, then print average guesses at the end.",
           },
         },
       },
