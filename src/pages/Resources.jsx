@@ -44,7 +44,7 @@ const TAG_RES = {
   setup: 'res-tag res-tag--setup',
 }
 
-const START_TILE_ACCENT = ['res-tile-dart', 'res-tile-sun', 'res-tile-ube']
+const START_TILE_ACCENT = ['res-tile-dart', 'res-tile-sun']
 
 function ResourceLink({ item }) {
   const tagRes = TAG_RES[item.tag] ?? TAG_RES.article
@@ -143,12 +143,12 @@ export default function Resources() {
               id="start-heading"
               className="font-serif text-4xl font-medium tracking-tight text-ink sm:text-5xl"
             >
-              Before week 1: install these
+              New here?
             </h2>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink/80">
-              Install each tool one time. You will use them all course long. Plan about 20 to 30 minutes in total.
+              Two steps: install Cursor, then set up GitHub. You will use both all course long—plan about 15 minutes total.
             </p>
-            <div className="mt-12 grid grid-cols-1 border-t border-hairline sm:grid-cols-3">
+            <div className="mt-12 grid grid-cols-1 border-t border-hairline sm:grid-cols-2">
               {startHere.map((item, i) => (
                 <ScrollReveal
                   key={item.title}

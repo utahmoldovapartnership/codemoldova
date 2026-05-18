@@ -1,0 +1,8 @@
+name,habitat,diet,weight_kg,favorite_food,is_nocturnal
+Panda,forest,plants,95,bamboo,true
+Dolphin,ocean,fish,150,sardines,false
+Owl,forest,meat,1,mice,true
+Cat,home,mixed,5,tuna,false
+Dog,home,mixed,25,peanut butter,false
+Fox,forest,mixed,8,berries,true
+Elephant,grassland,plants,6000,leaves,false

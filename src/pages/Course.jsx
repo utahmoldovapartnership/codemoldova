@@ -1,11 +1,12 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { phases } from '../data/curriculum'
+import { getSessionByWeekAndDay, phases } from '../data/curriculum'
 import { sessions } from '../data/schedule'
 import LazyInView from '../components/LazyInView.jsx'
 import PixelIcon from '../components/PixelIcon.jsx'
 import ScrollReveal from '../components/ScrollReveal.jsx'
-import { formatWeekRangeString } from '../lib/formatWeekDateRange.js'
+import { sessionTimeLabel } from '../data/site.js'
+import { formatShortSessionWhen, formatWeekRangeString } from '../lib/formatWeekDateRange.js'
 
 const DAY_META = {
   mon: {
@@ -14,7 +15,6 @@ const DAY_META = {
     type: 'Workshop 1',
     swatch: '#DD8CF1',
     icon: 'terminal',
-    substatement: 'First weekly workshop: new concepts, live demos, and guided practice in Cursor.',
   },
   wed: {
     label: 'Wednesday',
@@ -22,7 +22,6 @@ const DAY_META = {
     type: 'Workshop 2',
     swatch: '#F69C40',
     icon: 'sparkle',
-    substatement: 'Midweek workshop with its own lesson plan—new concepts, demos, and practice like Monday, different topics on the syllabus.',
   },
   thu: {
     label: 'Thursday',
@@ -30,7 +29,6 @@ const DAY_META = {
     type: 'Build Day',
     swatch: '#EF453F',
     icon: 'rocket',
-    substatement: 'Build day: ship a small working project and stretch with tiered challenges.',
   },
 }
 
@@ -41,12 +39,6 @@ function parseISO(iso) {
   return new Date(y, m - 1, d)
 }
 
-function formatShortDate(iso) {
-  const d = parseISO(iso)
-  if (!d) return '?'
-  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })
-}
-
 function getSessionsForWeek(weekNum) {
   return ['mon', 'wed', 'thu'].reduce((acc, day) => {
     const s = sessions.find((x) => x.week === weekNum && x.day === day)
@@ -55,7 +47,7 @@ function getSessionsForWeek(weekNum) {
   }, {})
 }
 
-function getCohortStatus() {
+function getCourseStatus() {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
   const sortedDates = sessions.map((s) => parseISO(s.date)).filter(Boolean).sort((a, b) => a - b)
@@ -74,6 +66,11 @@ function getCohortStatus() {
 function DayCardLarge({ week, day, session }) {
   const meta = DAY_META[day]
   if (!session) return null
+  const curriculum = getSessionByWeekAndDay(week, day)
+  const daySummary =
+    curriculum?.preview?.trim() ||
+    curriculum?.desc?.trim() ||
+    'Open the lesson for what we cover today.'
   return (
     <Link
       to={`/lesson/${week}/${day}`}
@@ -88,13 +85,13 @@ function DayCardLarge({ week, day, session }) {
               {meta.short} · {meta.type}
             </span>
           </p>
-          <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-ink">{formatShortDate(session.date)}</p>
+          <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-ink">{formatShortSessionWhen(session.date)}</p>
         </div>
         <PixelIcon icon="arrow" size={16} className="text-ink/50 transition-opacity group-hover:text-ink" />
       </div>
       <div>
         <h3 className="font-serif text-3xl font-medium leading-[1.05] tracking-tight sm:text-4xl">{session.label}</h3>
-        <p className="mt-4 max-w-[34ch] text-sm leading-relaxed text-ink/75">{meta.substatement}</p>
+        <p className="mt-4 max-w-[34ch] text-sm leading-relaxed text-ink/75">{daySummary}</p>
         <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.3em] text-ink/60 opacity-0 transition-opacity group-hover:opacity-100">
           Go to lesson →
         </p>
@@ -105,7 +102,7 @@ function DayCardLarge({ week, day, session }) {
 
 function ThisWeekHero({ status, currentWeek }) {
   const weekSessions = useMemo(() => getSessionsForWeek(currentWeek), [currentWeek])
-  const heroRangeStr = useMemo(() => formatWeekRangeString(weekSessions), [weekSessions])
+  const heroRangeStr = useMemo(() => formatWeekRangeString(weekSessions, { includeTime: true }), [weekSessions])
 
   const eyebrow = {
     upcoming: "Let's get started!",
@@ -127,7 +124,7 @@ function ThisWeekHero({ status, currentWeek }) {
     ),
     complete: (
       <>
-        Demo Day shipped. <em className="hm-val italic">Cohort 2026.</em>
+        Demo Day shipped. <em className="hm-val italic">CodeMoldova 2026.</em>
       </>
     ),
   }[status]
@@ -153,7 +150,7 @@ function ThisWeekHero({ status, currentWeek }) {
       {status === 'complete' ? (
         <ScrollReveal className="py-16 sm:py-20" delayMs={80} rootMargin="0px 0px 10% 0px">
           <p className="max-w-2xl text-lg leading-relaxed text-ink/80">
-            The 2026 cohort wrapped on July 1. Browse the full course below, or check out what students built on Demo Day.
+            The 2026 course wrapped on July 1. Browse the full course below, or check out what students built on Demo Day.
           </p>
         </ScrollReveal>
       ) : (
@@ -231,7 +228,7 @@ function WeekRow({ weekNum, isCurrent, isOpen, onToggle, revealDelay = 0 }) {
                         {meta.label} · {meta.type}
                       </span>
                     </p>
-                    <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-ink">{formatShortDate(s.date)}</p>
+                    <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-ink">{formatShortSessionWhen(s.date)}</p>
                     <h4 className="mt-4 font-serif text-xl font-medium leading-tight tracking-tight">{s.label}</h4>
                   </div>
                   <p className="mt-6 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-ink/50 transition-colors group-hover:text-ink/80">
@@ -263,7 +260,9 @@ function FullCourse({ currentWeek }) {
         <div>
           <h2 className="font-serif text-5xl font-medium tracking-tight text-ink sm:text-6xl">Full course</h2>
         </div>
-        <p className="hidden font-mono text-xs uppercase tracking-[0.25em] text-ink/60 sm:block">May 11 — Jul 01</p>
+        <p className="hidden font-mono text-xs uppercase tracking-[0.25em] text-ink/60 sm:block">
+          May 11 — Jul 01 · {sessionTimeLabel}
+        </p>
       </ScrollReveal>
 
       {phases.map((phase, phaseIdx) => {
@@ -302,7 +301,7 @@ function FullCourse({ currentWeek }) {
 }
 
 export default function Course() {
-  const { status, currentWeek } = getCohortStatus()
+  const { status, currentWeek } = getCourseStatus()
   return (
     <div className="hm-page min-h-full flex-1 font-body antialiased">
       <div className="layout-shell max-w-6xl">

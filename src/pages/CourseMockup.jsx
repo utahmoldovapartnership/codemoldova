@@ -47,12 +47,12 @@ function getSessionsForWeek(weekNum) {
 }
 
 /**
- * Status of the cohort relative to today:
+ * Status of the course relative to today:
  *   - 'upcoming' — before the first session
  *   - 'live'     — between first and last session
  *   - 'complete' — after the last session
  */
-function getCohortStatus() {
+function getCourseStatus() {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
   const sortedDates = sessions.map((s) => parseISO(s.date)).filter(Boolean).sort((a, b) => a - b)
@@ -105,7 +105,7 @@ function ThisWeekHero({ status, currentWeek }) {
   const heroRangeStr = useMemo(() => formatWeekRangeString(weekSessions), [weekSessions])
 
   const eyebrow = {
-    upcoming: 'Cohort begins May 11',
+    upcoming: 'Course begins May 11',
     live: `This week — Week ${String(currentWeek).padStart(2, '0')}`,
     complete: 'Course complete',
   }[status]
@@ -118,7 +118,7 @@ function ThisWeekHero({ status, currentWeek }) {
       </span>
     ),
     live: <>What you&apos;re doing <em className="italic text-val">this week.</em></>,
-    complete: <>Demo Day shipped. <em className="italic text-val">Cohort 2026.</em></>,
+    complete: <>Demo Day shipped. <em className="italic text-val">CodeMoldova 2026.</em></>,
   }[status]
 
   return (
@@ -144,7 +144,7 @@ function ThisWeekHero({ status, currentWeek }) {
       {status === 'complete' ? (
         <div className="px-6 py-16 sm:px-10 sm:py-20">
           <p className="max-w-2xl font-body text-lg leading-relaxed text-ink/80">
-            The 2026 cohort wrapped on July 1. Browse the full course below, or check out what students built on Demo Day.
+            The 2026 course wrapped on July 1. Browse the full course below, or check out what students built on Demo Day.
           </p>
         </div>
       ) : (
@@ -304,7 +304,7 @@ function PreviewBar() {
 }
 
 export default function CourseMockup() {
-  const { status, currentWeek } = getCohortStatus()
+  const { status, currentWeek } = getCourseStatus()
   return (
     <div className="bg-paper font-body text-ink antialiased">
       <Marquee />

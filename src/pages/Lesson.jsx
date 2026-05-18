@@ -5,6 +5,7 @@ import TopicTabBar from '../components/TopicTabBar.jsx'
 import LessonModule from '../components/LessonModule'
 import { getSessionByWeekAndDay } from '../data/curriculum'
 import { getAdjacentSessions, sessions } from '../data/schedule'
+import { formatSessionDateLine } from '../lib/formatWeekDateRange.js'
 import {
   LessonArtifacts,
   LessonBuildTrackPanel,
@@ -12,6 +13,8 @@ import {
   LessonHero,
   LessonHomework,
   LessonLabBand,
+  LessonLabChallenge,
+  LessonLabCheatsheet,
   LessonMainPoints,
   LessonMistakes,
   LessonPostClass,
@@ -103,13 +106,6 @@ function buildArtifacts(session) {
         ? session.codeFromClassLabel.trim()
         : 'Class code'
     out.push({ label: codeLabel, href: codeUrl.trim(), ready: true })
-  } else {
-    out.push({
-      label: 'Class code',
-      href: '',
-      ready: false,
-      hint: 'Shared in class or add codeFromClassUrl in curriculum',
-    })
   }
   return out
 }
@@ -159,6 +155,28 @@ function resolveLabExample(session) {
     }
   }
   return { href: '', label: 'Lab example', downloadFilename: null }
+}
+
+/** @returns {{ href: string, label: string, downloadFilename: string | null }[]} */
+function resolveLabDownloads(session) {
+  const out = []
+  const push = (url, label, download) => {
+    if (typeof url !== 'string' || !url.trim()) return
+    const downloadFilename =
+      typeof download === 'string' && download.trim()
+        ? download.trim()
+        : download === true
+          ? (url.split('/').pop() || '').split('?')[0] || null
+          : null
+    out.push({
+      href: url.trim(),
+      label: typeof label === 'string' && label.trim() ? label.trim() : 'Download',
+      downloadFilename,
+    })
+  }
+  push(session.labExampleUrl, session.labExampleLabel || 'Download notebook (.ipynb)', session.labExampleDownload)
+  push(session.labDataUrl, session.labDataLabel || 'Download sample data (.csv)', session.labDataDownload)
+  return out
 }
 
 function estimateLabDurationLabel(session) {
@@ -288,6 +306,7 @@ function LessonTabbedBody({
   isThu,
   showLab,
   labExample,
+  labDownloads,
   labDurationLabel,
 }) {
   const baseId = useId()
@@ -396,12 +415,23 @@ function LessonTabbedBody({
                   exampleHref={labExample.href}
                   exampleLabel={labExample.label}
                   exampleDownloadFilename={labExample.downloadFilename}
+                  labDownloads={labDownloads}
                   durationLabel={labDurationLabel}
                   collapsible={false}
                   contained
                 >
                   <>
                     <LessonModule steps={session.steps} variant="paper" noRounded dayKey={dayKey} />
+                    {session.labCheatsheet ? (
+                      <div className="mt-12 border-t border-black/15 pt-10">
+                        <LessonLabCheatsheet cheatsheet={session.labCheatsheet} embedded />
+                      </div>
+                    ) : null}
+                    {session.labChallenge ? (
+                      <div className="mt-12 border-t border-black/15 pt-10">
+                        <LessonLabChallenge challenge={session.labChallenge} dayKey={dayKey} embedded />
+                      </div>
+                    ) : null}
                     {isThu && challengesList.length ? (
                       <div className="mt-12 border-t border-black/15 pt-10">
                         <LessonChallengesAccordion challenges={challengesList} embedded />
@@ -417,6 +447,7 @@ function LessonTabbedBody({
                   exampleHref={labExample.href}
                   exampleLabel={labExample.label}
                   exampleDownloadFilename={labExample.downloadFilename}
+                  labDownloads={labDownloads}
                   durationLabel={labDurationLabel}
                   collapsible={false}
                   contained
@@ -548,6 +579,7 @@ export default function Lesson() {
   const showArtifacts = artifacts.length > 0 && session.hideLessonArtifacts !== true
   const challengesList = isThu ? buildChallengesAccordionList(session.challenges) : []
   const labExample = resolveLabExample(session)
+  const labDownloads = resolveLabDownloads(session)
   const labDurationLabel = estimateLabDurationLabel(session)
   const showLab = Boolean(session.steps?.length)
 
@@ -557,7 +589,7 @@ export default function Lesson() {
         <div className="layout-shell max-w-6xl min-h-0 min-w-0 flex-1">
           <LessonHero
             dayMeta={dayHero}
-            date={session.date}
+            date={formatSessionDateLine(session.date)}
             sessionLabel={sessionCodeLabel(weekNum, dayKey)}
             title={session.title}
             breadcrumb={
@@ -584,6 +616,7 @@ export default function Lesson() {
             isThu={isThu}
             showLab={showLab}
             labExample={labExample}
+            labDownloads={labDownloads}
             labDurationLabel={labDurationLabel}
           />
 

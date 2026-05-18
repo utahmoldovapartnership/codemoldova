@@ -147,7 +147,7 @@ export const phases = [
           steps: [
             {
               title: "Get to know you survey",
-              content: "If you have not submitted the cohort survey yet, do it now so mentors can see who is in the room.",
+              content: "If you have not submitted the class survey yet, do it now so mentors can see who is in the room.",
               task: "Open the survey link from the lesson artifacts (or notebook §0), submit once, then return here.",
               links: [{ label: "Day 2 survey (Google Form)", href: "https://forms.gle/g4t91p4uhowXa1CD6" }],
             },
@@ -323,45 +323,171 @@ END`,
         mon: {
           title: "Data structures",
           date: "May 18",
-          desc: "Lists, tuples, and dictionaries are how programs hold real-world information. Workshop 1 focuses on choosing the right shape, mutating safely, and iterating cleanly in Cursor.",
-          preview: "Practice indexing, slicing, dict keys, and short data transforms without classes yet.",
+          desc: "Built-in containers (lists, tuples, dicts), then pandas DataFrames loaded from CSV. Download the notebook and animal sample CSV into the same folder and work through each section in Cursor.",
+          preview: "libraries, lists, tuples, dicts, read_csv, filter/sort/group, plus a runnable DataFrame cheatsheet.",
+          goal: "Leave class able to import common libraries, shape data with Python’s built-in structures, load a CSV into a DataFrame, and run the adjust-and-summarize operations you will reuse all course.",
+          labDurationLabel: "50 min",
+          labExampleUrl: "/lesson/week2_day1.ipynb",
+          labExampleDownload: "week2_day1.ipynb",
+          labExampleLabel: "Download lab notebook (.ipynb)",
+          labDataUrl: "/lesson/week2_animals.csv",
+          labDataDownload: "week2_animals.csv",
+          labDataLabel: "Download animal data (.csv)",
           steps: [
             {
-              title: "Lists: order matters",
-              content: "Lists are mutable sequences—append, pop, insert, sort. Negative indexes count from the end.",
-              task: "Build a list of five classmates’ first names (fictional is fine). Print the first, last, and a slice of the middle three.",
-              code: { lang: "python", snippet: "nums = [3, 1, 4]\nnums.append(1)\nprint(nums[-1])" },
+              title: "Imports & important libraries",
+              timing: "Lab",
+              content:
+                "The standard library ships with Python (random, datetime, json, pathlib). Common add-ons you will meet in this course: pandas (tables), requests (APIs), matplotlib (charts). Install once: python3 -m pip install pandas requests matplotlib. The notebook demos each library with a one-line note about what it is for.",
+              links: [
+                { label: "Python module index (stdlib)", href: "https://docs.python.org/3/py-modindex.html" },
+                { label: "pandas — Getting started", href: "https://pandas.pydata.org/docs/getting_started/index.html" },
+              ],
+              code: {
+                lang: "python",
+                snippet:
+                  "import random\nfrom datetime import datetime\nimport pandas as pd\nimport requests\n\nprint('pandas', pd.__version__)\nprint('dice roll:', random.randint(1, 6))\nprint('year:', datetime.now().year)",
+              },
+              task: "Run the demo cell, then in the practice cell import three libraries from the demo (at least one that is not built-in). Print each version, or run one tiny line that shows what it does (e.g. random.choice on animal names).",
             },
             {
-              title: "Tuples for fixed bundles",
-              content: "Tuples are lightweight records—use when length and meaning are stable (x, y) or (name, score).",
-              task: "Create three coordinate tuples and print their sum of y values.",
+              title: "Lists",
+              timing: "Lab",
+              content:
+                "Lists are ordered and mutable — append, pop, insert, sort. Index from 0; negative indexes count from the end. Slices like animals[1:4] return a segment.",
+              code: {
+                lang: "python",
+                snippet:
+                  'animals = ["panda", "fox", "owl"]\nanimals.append("dolphin")\nprint(animals[0], animals[-1])\nprint(animals[1:3])',
+              },
+              task: "Make a list of five animals you like. Print the first, last, and a slice of the middle three.",
             },
             {
-              title: "Dictionaries map keys to values",
-              content: "Dicts answer “look up by name”. Keys are usually strings; values can be anything including lists.",
-              task: "Model one student as a dict with keys name, city, hobbies (list). Print a sentence using .get for optional keys.",
-              code: { lang: "python", snippet: "student = {\"name\": \"Alex\", \"hobbies\": [\"music\", \"code\"]}\nprint(student[\"name\"])" },
+              title: "Tuples",
+              timing: "Lab",
+              content:
+                "Tuples are fixed bundles — (snack, rating) or (pet name, species) pairs you will not change. Unpack with snack, rating = pair or read pair[0].",
+              code: {
+                lang: "python",
+                snippet: 'snack_rating = ("pretzel", 8)\nprint(snack_rating[0], "scores", snack_rating[1], "/ 10")',
+              },
+              task: "Create three (snack, rating) tuples (rating 1–10). Print the average rating using a for loop.",
             },
             {
-              title: "Nesting and CSV-shaped data",
-              content: "A list of dicts is your first table. Practice looping rows and summing one numeric field.",
-              task: "Given a list of dicts with keys item and price (float), compute total price with a for loop.",
+              title: "Dictionaries",
+              timing: "Lab",
+              content:
+                "Dicts map keys to values — look up by name, not position. Values can be lists (sounds, treats). Use .get(key, default) when a key might be missing.",
+              code: {
+                lang: "python",
+                snippet:
+                  'pet = {"name": "Mochi", "species": "cat", "treats": ["tuna", "catnip"]}\nprint(pet["name"], "is a", pet["species"])\nprint(pet.get("nickname", "none yet"))',
+              },
+              task: "Build a dict for a pet or wild animal with name, species, and sounds (list). Print one f-string sentence; use .get for an optional key like age.",
             },
             {
-              title: "Comprehensions (preview)",
-              content: "List comprehensions keep transforms readable when they stay short.",
-              task: "Rewrite one of your loops as a comprehension that builds a new list of uppercase names.",
-              code: { lang: "python", snippet: "names = [\"ana\", \"ion\"]\nupper = [n.upper() for n in names]\nprint(upper)" },
+              title: "Load CSV into a DataFrame",
+              timing: "Lab",
+              content:
+                "A DataFrame is a table: rows and named columns. pd.read_csv(path) reads a file from disk. Put week2_animals.csv in the same folder as your notebook, then inspect with .head(), .shape, and .columns.",
+              code: {
+                lang: "python",
+                snippet:
+                  'from pathlib import Path\nimport pandas as pd\n\ndf = pd.read_csv("week2_animals.csv")\nprint(df.shape)\nprint(df.columns.tolist())\ndf.head()',
+              },
+              task: "Load week2_animals.csv. Print shape, column names, and the full row where name is Panda.",
+            },
+            {
+              title: "Manipulate DataFrames",
+              timing: "Lab",
+              content:
+                "Select columns with df[[\"a\", \"b\"]]. Filter rows with df[df[\"col\"] == value]. Add columns with assignment. Sort with sort_values. Summarize with groupby and mean, sum, or value_counts.",
+              code: {
+                lang: "python",
+                snippet:
+                  'df = pd.read_csv("week2_animals.csv")\nforest = df[df["habitat"] == "forest"]\ndf = df.copy()\ndf["heavy"] = df["weight_kg"] >= 50\nby_weight = df.sort_values("weight_kg", ascending=False)\nprint(forest[["name", "habitat"]])\nprint(df.groupby("diet")["weight_kg"].mean().round(1))',
+              },
+              task: "On the animal table: (1) keep only nocturnal animals, (2) add food_len = length of favorite_food, (3) sort by food_len and print the top 3 names.",
             },
           ],
+          labCheatsheet: {
+            title: "DataFrame quick reference",
+            content: "Bookmark this while you practice — these are the methods you will reach for most often in the next few weeks.",
+            sections: [
+              {
+                title: "Load & inspect",
+                methods: [
+                  { name: "pd.read_csv(path)", desc: "Read a CSV file into a DataFrame" },
+                  { name: "df.head(n)", desc: "First n rows (default 5)" },
+                  { name: "df.shape", desc: "(rows, columns)" },
+                  { name: "df.columns", desc: "Column names" },
+                  { name: "df.info()", desc: "Types and non-null counts" },
+                  { name: "df.describe()", desc: "Quick stats for numeric columns" },
+                ],
+              },
+              {
+                title: "Select rows & columns",
+                methods: [
+                  { name: "df['col']", desc: "One column as a Series" },
+                  { name: "df[['a','b']]", desc: "Multiple columns" },
+                  { name: "df.loc[i, 'col']", desc: "One value by label" },
+                  { name: "df.iloc[0, 1]", desc: "One value by position" },
+                ],
+              },
+              {
+                title: "Filter & sort",
+                methods: [
+                  { name: "df[df['x'] > 5]", desc: "Rows matching a condition" },
+                  { name: "df.query('x > 5')", desc: "Same idea, string expression" },
+                  { name: "df.sort_values('col')", desc: "Sort rows by a column" },
+                  { name: "df.isin([...])", desc: "Rows where a column is in a list" },
+                ],
+              },
+              {
+                title: "Add, change, drop",
+                methods: [
+                  { name: "df['new'] = ...", desc: "New column from values or computation" },
+                  { name: "df.assign(x=...)", desc: "Returns copy with new columns" },
+                  { name: "df.drop(columns=[...])", desc: "Remove columns" },
+                  { name: "df.rename(columns={...})", desc: "Rename columns" },
+                ],
+              },
+              {
+                title: "Aggregate & count",
+                methods: [
+                  { name: "df.groupby('col')['x'].mean()", desc: "Average per group" },
+                  { name: "df['col'].sum()", desc: "Total of a column" },
+                  { name: "df['col'].value_counts()", desc: "How often each value appears" },
+                  { name: "df.fillna(0)", desc: "Replace missing values" },
+                ],
+              },
+            ],
+          },
+          labChallenge: {
+            title: "Animal data challenge",
+            content: "Use only pandas on week2_animals.csv — no re-typing the table by hand.",
+            task:
+              "(1) Average weight_kg per diet. (2) Print names in forest habitat that are nocturnal. (3) Add size: 'big' if weight_kg >= 50 else 'small'. (4) Print the favorite_food that appears most often.",
+            hints: [
+              "groupby('diet')['weight_kg'].mean() handles (1).",
+              "Combine: (df['habitat'] == 'forest') & (df['is_nocturnal'] == True).",
+              "value_counts() on favorite_food answers (4).",
+            ],
+          },
           homework: {
-            title: "Structure drills",
-            desc: "Notebook or .py in Cursor; commit optional until Git week.",
+            title: "Structures + tables",
+            desc: "In your week 2 folder notebook or a new .py file. Reuse week2_animals.csv or make a tiny CSV of your own (pets, snacks, games — 3+ rows).",
             tasks: [
-              "From a list of numbers, build a new list of only numbers greater than zero.",
-              "Count how many times a given letter appears in a string using a dict tally.",
-              "Optional: sort a list of dicts by a numeric field using sorted(..., key=lambda r: r['score']).",
+              "Without pandas: from a list of dicts, compute the average of a numeric field using a loop.",
+              "With pandas: load your CSV, filter one column, add a derived column, and save a new CSV with to_csv.",
+              "Optional: read the pandas cheat sheet PDF from the Resources tab and try one method you have not used yet.",
+            ],
+          },
+          postClass: {
+            title: "Answer key (spoilers)",
+            desc: "Worked solutions for every practice cell, the runnable cheatsheet ideas, and the section 8 challenge. Try the lab first — use this to check your work or get unstuck.",
+            links: [
+              { label: "Download answer key notebook (.ipynb)", href: "/lesson/week2_day1_key.ipynb" },
             ],
           },
         },

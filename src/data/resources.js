@@ -1,20 +1,14 @@
-/** Short list for the top of the Resources page (install and accounts before Week 1). */
+/** Short list for the top of the Resources page (before Week 1). */
 export const startHere = [
   {
-    title: 'Install Python 3.12+',
-    desc: 'Download for Windows or macOS. We use Python from day one.',
-    url: 'https://www.python.org/downloads/',
+    title: 'Install Cursor',
+    desc: 'Our editor for the whole course—notebooks, Python, and the web stack. Install it first; if Cursor asks for Python, follow its prompt.',
+    url: 'https://cursor.com/download',
     tag: 'setup',
   },
   {
-    title: 'Install VS Code',
-    desc: 'Free editor that works well with Python and web projects.',
-    url: 'https://code.visualstudio.com/',
-    tag: 'setup',
-  },
-  {
-    title: 'Create a GitHub account',
-    desc: 'For saving code, Git basics, and deploying to Vercel later.',
+    title: 'Set up GitHub',
+    desc: 'Create an account so you can save code, use Git in class, and deploy projects later.',
     url: 'https://github.com/join',
     tag: 'setup',
   },

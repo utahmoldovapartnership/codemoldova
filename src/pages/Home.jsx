@@ -5,22 +5,36 @@ import LazyInView from '../components/LazyInView.jsx'
 import PixelIcon from '../components/PixelIcon.jsx'
 import ScrollReveal from '../components/ScrollReveal.jsx'
 import WhatsAppIcon from '../components/WhatsAppIcon.jsx'
-import { whatsappInviteUrl } from '../data/site.js'
+import {
+  sessionDaysLabel,
+  sessionDurationLabel,
+  sessionRhythmLabel,
+  sessionTimeLabel,
+  whatsappInviteUrl,
+} from '../data/site.js'
 
 /**
  * Home marketing palette (Tailwind: paper, ink, dart, val, sun, ube):
  * - White paper: page bg, type on dart (WhatsApp CTA block, marquee).
  * - Black ink: copy; rules use `border-hairline` (light gray).
  * - Dartmouth dart: marquee band, View course CTA fill, WhatsApp section bg.
- * - Valentine val: Free Course pill, italics, outcome checks, Thu pillar.
+ * - Valentine val: accent hero pill, italics, outcome checks, Thu pillar.
  * - Sunshade sun: marquee hearts, Wed pillar, WhatsApp CTA label accent + Join WhatsApp button.
  * - Bright Ube ube: Mon pillar bar + icon only.
  */
 // ─── Home content (data inline; other pages use src/data/*) ────────────────
 
-const HERO_PILLS = ['Free Course!', '8 weeks', 'Mon · Wed · Thu', '1 hour sessions']
+const HERO_PILLS = ['Chișinău 2026', '8 weeks', sessionRhythmLabel, `${sessionDurationLabel} sessions`]
 
-const MARQUEE_ITEMS = ['FREE', 'CHIȘINĂU', 'MAY — JUL 2026', 'PYTHON · WEB · DATA', 'TAUGHT IN PERSON', 'ALL LEVELS WELCOME']
+const MARQUEE_ITEMS = [
+  'CODEMOLDOVA',
+  'CHIȘINĂU',
+  sessionTimeLabel,
+  'MAY — JUL 2026',
+  'PYTHON · WEB · DATA',
+  'TAUGHT IN PERSON',
+  'ALL LEVELS WELCOME',
+]
 
 const WHO = [
   {
@@ -159,7 +173,7 @@ function Hero() {
 
       <ScrollReveal className="mt-12" delayMs={180} rootMargin="0px 0px 12% 0px">
         <p className="max-w-3xl text-lg leading-relaxed text-ink/80">
-          CodeMoldova is a free coding course in Chișinău, Moldova! May through July 2026. Learn Python in Cursor (including notebooks), the web stack, GitHub, deployment, and a first look at databases and backends. All experience levels are welcome. Curiosity and desire to learn matter
+          CodeMoldova is an in-person coding course in Chișinău, Moldova! May through July 2026 — {sessionDaysLabel} at {sessionTimeLabel}. Learn Python in Cursor (including notebooks), the web stack, GitHub, deployment, and a first look at databases and backends. All experience levels are welcome. Curiosity and desire to learn matter
           most!
         </p>
       </ScrollReveal>
@@ -196,12 +210,11 @@ function About() {
       </ScrollReveal>
       <ScrollReveal className="space-y-6 lg:col-span-7" delayMs={100}>
         <p className="text-lg leading-relaxed text-ink/85">
-          Eight weeks, three sessions a week, one hour each, from May through July. Mondays and Wednesdays are both workshop days in Cursor—each session introduces new topics on the syllabus; Thursdays are build days. The path moves from Python foundations into the web, then shipping with Git and a database-backed slice, and closes with a project you choose yourself.
+          Eight weeks, three sessions a week ({sessionDaysLabel}), one hour each at {sessionTimeLabel}, from May through July. Mondays and Wednesdays are both workshop days in Cursor—each session introduces new topics on the syllabus; Thursdays are build days. The path moves from Python foundations into the web, then shipping with Git and a database-backed slice, and closes with a project you choose yourself.
         </p>
         <p className="text-lg leading-relaxed text-ink/85">
-          The course is <strong className="hm-val font-bold">free</strong> and open to anyone motivated enough to join. We
-          deliberately mix people who have never coded with people who already know a language. Pairing and group work help
-          everyone move faster.
+          The course is open to anyone motivated enough to join. We deliberately mix people who have never coded with
+          people who already know a language. Pairing and group work help everyone move faster.
         </p>
       </ScrollReveal>
     </section>

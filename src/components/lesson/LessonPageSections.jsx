@@ -202,6 +202,7 @@ const LAB_DAY = {
 }
 
 /**
+ * @param {{ href: string, label: string, downloadFilename?: string | null }[]} [props.labDownloads]
  * @param {{ title: string, intro?: string, exampleHref?: string, exampleLabel?: string, exampleDownloadFilename?: string | null, durationLabel?: string, dayKey?: 'mon' | 'wed' | 'thu', children: import('react').ReactNode, collapsible?: boolean, contained?: boolean }} props
  */
 export function LessonLabBand({
@@ -210,6 +211,7 @@ export function LessonLabBand({
   exampleHref,
   exampleLabel = 'Example',
   exampleDownloadFilename,
+  labDownloads,
   durationLabel = '',
   dayKey = 'wed',
   children,
@@ -233,27 +235,34 @@ export function LessonLabBand({
     </div>
   )
 
+  const downloadItems =
+    labDownloads?.filter((d) => d?.href?.trim()) ??
+    (exampleHref
+      ? [{ href: exampleHref, label: exampleLabel, downloadFilename: exampleDownloadFilename }]
+      : [])
+
   const bodyBlock = (
     <>
-      <div className="mt-6">
-        {exampleHref ? (
-          <a
-            href={exampleHref}
-            {...(exampleDownloadFilename
-              ? { download: exampleDownloadFilename }
-              : { target: '_blank', rel: 'noopener noreferrer' })}
-            className={`hm-hero-join-slack ${labExampleHover} inline-flex h-12 items-center border px-5 font-mono text-xs uppercase tracking-[0.25em]`}
-          >
-            <span>{exampleLabel}</span>
-            <span className="sr-only">
-              {exampleDownloadFilename ? ' (downloads a file)' : ' (opens in a new tab)'}
-            </span>
-          </a>
+      <div className="mt-6 flex flex-wrap gap-3">
+        {downloadItems.length ? (
+          downloadItems.map((d) => (
+            <a
+              key={`${d.href}-${d.label}`}
+              href={d.href}
+              {...(d.downloadFilename
+                ? { download: d.downloadFilename }
+                : { target: '_blank', rel: 'noopener noreferrer' })}
+              className={`hm-hero-join-slack ${labExampleHover} inline-flex h-12 items-center border px-5 font-mono text-xs uppercase tracking-[0.25em]`}
+            >
+              <span>{d.label}</span>
+              <span className="sr-only">{d.downloadFilename ? ' (downloads a file)' : ' (opens in a new tab)'}</span>
+            </a>
+          ))
         ) : (
           <span
             className={`inline-flex min-h-11 items-center border px-4 font-mono text-xs uppercase tracking-[0.22em] ${t.btnPlaceholder}`}
           >
-            {exampleLabel} link coming soon
+            Lab downloads coming soon
           </span>
         )}
       </div>
@@ -450,6 +459,97 @@ export function LessonBuildTrackPanel({ track, dayKey = 'thu', omitDownload = fa
         </div>
       ) : null}
     </div>
+  )
+}
+
+const LAB_CHALLENGE_TRY_DAY = {
+  mon: 'mt-7 border-l-4 border-ube bg-ube/[0.08] px-5 py-4',
+  wed: 'mt-7 border-l-4 border-sun bg-sun/[0.08] px-5 py-4',
+  thu: 'mt-7 border-l-4 border-val bg-val/[0.08] px-5 py-4',
+}
+
+/**
+ * @param {{ challenge: { title?: string, content?: string, task: string, code?: { lang: string, snippet: string }, hints?: string[] }, dayKey?: 'mon'|'wed'|'thu', embedded?: boolean }} props
+ */
+export function LessonLabChallenge({ challenge, dayKey = 'wed', embedded = false }) {
+  const task = typeof challenge?.task === 'string' ? challenge.task.trim() : ''
+  if (!task) return null
+
+  const titleText = (challenge.title || 'Challenge problem').trim()
+  const h2 = titleText.endsWith('.') ? titleText : `${titleText}.`
+  const tryBox = dayKey in LAB_CHALLENGE_TRY_DAY ? LAB_CHALLENGE_TRY_DAY[dayKey] : LAB_CHALLENGE_TRY_DAY.wed
+  const El = embedded ? 'div' : 'section'
+  const wrapClass = embedded ? 'w-full' : 'border-b border-hairline py-14 sm:py-16'
+
+  return (
+    <El className={wrapClass}>
+      <div className="w-full">
+        <SectionKicker kicker="Challenge problem" />
+        <h2 className="mt-2 font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">{h2}</h2>
+        {challenge.content ? (
+          <p className="mt-4 max-w-prose text-base leading-relaxed text-ink/75 sm:text-[17px]">{challenge.content}</p>
+        ) : null}
+        {challenge.code?.snippet ? (
+          <div className="mt-6">
+            <CodeBlock lang={challenge.code.lang || 'python'} snippet={challenge.code.snippet} tone="light" />
+          </div>
+        ) : null}
+        <div className={tryBox}>
+          <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink/50">Your task</p>
+          <p className="mt-3 text-base leading-relaxed text-ink/85">{task}</p>
+        </div>
+        {challenge.hints?.length ? (
+          <div className="mt-6 border border-hairline/50 bg-paper px-5 py-4">
+            <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink/50">Hints</p>
+            <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-ink/80">
+              {challenge.hints.map((hint, i) => (
+                <li key={i}>{hint}</li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+      </div>
+    </El>
+  )
+}
+
+/**
+ * @param {{ cheatsheet: { title?: string, content?: string, sections: { title: string, methods: { name: string, desc: string }[] }[] }, embedded?: boolean }} props
+ */
+export function LessonLabCheatsheet({ cheatsheet, embedded = false }) {
+  const sections = cheatsheet?.sections?.filter((s) => s?.methods?.length) ?? []
+  if (!sections.length) return null
+
+  const titleText = (cheatsheet.title || 'Quick reference').trim()
+  const h2 = titleText.endsWith('.') ? titleText : `${titleText}.`
+  const El = embedded ? 'div' : 'section'
+  const wrapClass = embedded ? 'w-full' : 'border-b border-hairline py-14 sm:py-16'
+
+  return (
+    <El className={wrapClass}>
+      <div className="w-full">
+        <SectionKicker kicker="Cheatsheet" />
+        <h2 className="mt-2 font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">{h2}</h2>
+        {cheatsheet.content ? (
+          <p className="mt-4 max-w-prose text-base leading-relaxed text-ink/75 sm:text-[17px]">{cheatsheet.content}</p>
+        ) : null}
+        <div className="mt-8 space-y-8">
+          {sections.map((section) => (
+            <div key={section.title} className="border border-hairline/50 bg-paper p-5 sm:p-6">
+              <h3 className="font-serif text-xl font-medium tracking-tight text-ink sm:text-2xl">{section.title}</h3>
+              <dl className="mt-4 space-y-3">
+                {section.methods.map((m) => (
+                  <div key={m.name} className="grid gap-1 border-b border-hairline/40 pb-3 last:border-0 last:pb-0 sm:grid-cols-[minmax(0,11rem)_1fr] sm:gap-4">
+                    <dt className="font-mono text-sm text-mon">{m.name}</dt>
+                    <dd className="text-sm leading-relaxed text-ink/80">{m.desc}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          ))}
+        </div>
+      </div>
+    </El>
   )
 }
 

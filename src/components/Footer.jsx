@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom'
 import BrandMark from './BrandMark.jsx'
 import PixelIcon from './PixelIcon.jsx'
 import WhatsAppIcon from './WhatsAppIcon.jsx'
-import { whatsappInviteUrl } from '../data/site.js'
+import { sessionDaysLabel, sessionTimeLabel, whatsappInviteUrl } from '../data/site.js'
 
 const courseLinks = [
   { to: '/', label: 'Home', end: true },
@@ -67,7 +67,7 @@ export default function Footer({ homeLight = false }) {
               <BrandMark variant="footer" homeLight={homeLight} aria-hidden />
             </NavLink>
             <p className={`mt-3 font-mono text-[11px] uppercase tracking-[0.3em] ${homeLight ? 'text-ink/60' : 'text-muted'}`}>
-              May to July 2026
+              May to July 2026 · {sessionDaysLabel} · {sessionTimeLabel}
             </p>
           </div>
 
