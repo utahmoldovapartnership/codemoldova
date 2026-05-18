@@ -469,9 +469,9 @@ const LAB_CHALLENGE_TRY_DAY = {
 }
 
 /**
- * @param {{ challenge: { title?: string, content?: string, task: string, code?: { lang: string, snippet: string }, hints?: string[] }, dayKey?: 'mon'|'wed'|'thu', embedded?: boolean }} props
+ * @param {{ challenge: { title?: string, content?: string, task: string, code?: { lang: string, snippet: string }, hints?: string[] }, dayKey?: 'mon'|'wed'|'thu', embedded?: boolean, kicker?: string }} props
  */
-export function LessonLabChallenge({ challenge, dayKey = 'wed', embedded = false }) {
+export function LessonLabChallenge({ challenge, dayKey = 'wed', embedded = false, kicker = 'Challenge problem' }) {
   const task = typeof challenge?.task === 'string' ? challenge.task.trim() : ''
   if (!task) return null
 
@@ -484,7 +484,7 @@ export function LessonLabChallenge({ challenge, dayKey = 'wed', embedded = false
   return (
     <El className={wrapClass}>
       <div className="w-full">
-        <SectionKicker kicker="Challenge problem" />
+        <SectionKicker kicker={kicker} />
         <h2 className="mt-2 font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">{h2}</h2>
         {challenge.content ? (
           <p className="mt-4 max-w-prose text-base leading-relaxed text-ink/75 sm:text-[17px]">{challenge.content}</p>

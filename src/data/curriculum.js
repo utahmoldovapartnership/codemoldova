@@ -323,9 +323,13 @@ END`,
         mon: {
           title: "Data structures",
           date: "May 18",
-          desc: "Built-in containers (lists, tuples, dicts), then pandas DataFrames loaded from CSV. Download the notebook and animal sample CSV into the same folder and work through each section in Cursor.",
-          preview: "libraries, lists, tuples, dicts, read_csv, filter/sort/group, plus a runnable DataFrame cheatsheet.",
+          desc: "Follow the slide deck in class, then work through the notebook: built-in containers (lists, tuples, dicts), pandas DataFrames from CSV, a bar chart, and a short challenge. Download the notebook and animal sample CSV into the same folder in Cursor.",
+          preview: "Slides + lab: libraries, lists, tuples, dicts, read_csv, filter/sort/group, bar chart, cheatsheet.",
           goal: "Leave class able to import common libraries, shape data with Python’s built-in structures, load a CSV into a DataFrame, and run the adjust-and-summarize operations you will reuse all course.",
+          slideDeck: {
+            label: "Week 2 · Monday slide deck",
+            url: "https://docs.google.com/presentation/d/19IkHBoEcmGDiDzGJXa3jgobDqHy0HBd6gG_1HtbCZ34/edit?usp=sharing",
+          },
           labDurationLabel: "50 min",
           labExampleUrl: "/lesson/week2_day1.ipynb",
           labExampleDownload: "week2_day1.ipynb",
@@ -348,7 +352,7 @@ END`,
                 snippet:
                   "import random\nfrom datetime import datetime\nimport pandas as pd\nimport requests\n\nprint('pandas', pd.__version__)\nprint('dice roll:', random.randint(1, 6))\nprint('year:', datetime.now().year)",
               },
-              task: "Run the demo cell, then in the practice cell import three libraries from the demo (at least one that is not built-in). Print each version, or run one tiny line that shows what it does (e.g. random.choice on animal names).",
+              task: "Run the demo cell top to bottom and read what each library is for.",
             },
             {
               title: "Lists",
@@ -377,13 +381,13 @@ END`,
               title: "Dictionaries",
               timing: "Lab",
               content:
-                "Dicts map keys to values — look up by name, not position. Values can be lists (sounds, treats). Use .get(key, default) when a key might be missing.",
+                "Dicts map keys to values — look up by name, not position. Values can be lists (sounds, treats). Use square brackets for keys you know exist: pet[\"name\"].",
               code: {
                 lang: "python",
                 snippet:
-                  'pet = {"name": "Mochi", "species": "cat", "treats": ["tuna", "catnip"]}\nprint(pet["name"], "is a", pet["species"])\nprint(pet.get("nickname", "none yet"))',
+                  'pet = {"name": "Mochi", "species": "cat", "treats": ["tuna", "catnip"]}\nprint(pet["name"], "is a", pet["species"])\nprint("favorite treat:", pet["treats"][0])',
               },
-              task: "Build a dict for a pet or wild animal with name, species, and sounds (list). Print one f-string sentence; use .get for an optional key like age.",
+              task: "Build a dict for a pet or wild animal with name, species, and sounds (list). Print one f-string sentence using bracket lookup.",
             },
             {
               title: "Load CSV into a DataFrame",
@@ -463,6 +467,22 @@ END`,
               },
             ],
           },
+          labBarChart: {
+            title: "Bar chart from the animal table",
+            content:
+              "matplotlib draws charts from data you already summarized in pandas. groupby + mean gives one number per category — perfect for a bar chart.",
+            code: {
+              lang: "python",
+              snippet:
+                'import matplotlib.pyplot as plt\nimport pandas as pd\n\ndf = pd.read_csv("week2_animals.csv")\navg_by_habitat = df.groupby("habitat")["weight_kg"].mean()\navg_by_habitat.plot(kind="bar", title="Average weight by habitat", ylabel="kg")\nplt.xticks(rotation=45, ha="right")\nplt.tight_layout()\nplt.show()',
+            },
+            task: "Run the demo, then make a **different** bar chart from the same CSV — for example average weight by diet, or count of animals per habitat (use value_counts and plot).",
+            hints: [
+              "df.groupby('diet')['weight_kg'].mean().plot(kind='bar') is one option.",
+              "For counts: df['habitat'].value_counts().plot(kind='bar').",
+              "If labels overlap, use plt.xticks(rotation=45, ha='right') and plt.tight_layout().",
+            ],
+          },
           labChallenge: {
             title: "Animal data challenge",
             content: "Use only pandas on week2_animals.csv — no re-typing the table by hand.",
@@ -485,7 +505,7 @@ END`,
           },
           postClass: {
             title: "Answer key (spoilers)",
-            desc: "Worked solutions for every practice cell, the runnable cheatsheet ideas, and the section 8 challenge. Try the lab first — use this to check your work or get unstuck.",
+            desc: "Worked solutions for practice cells, the bar chart, and the challenge. Try the lab first — use this to check your work or get unstuck.",
             links: [
               { label: "Download answer key notebook (.ipynb)", href: "/lesson/week2_day1_key.ipynb" },
             ],

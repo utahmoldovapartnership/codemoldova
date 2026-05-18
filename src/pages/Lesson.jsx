@@ -427,6 +427,16 @@ function LessonTabbedBody({
                         <LessonLabCheatsheet cheatsheet={session.labCheatsheet} embedded />
                       </div>
                     ) : null}
+                    {session.labBarChart ? (
+                      <div className="mt-12 border-t border-black/15 pt-10">
+                        <LessonLabChallenge
+                          challenge={session.labBarChart}
+                          dayKey={dayKey}
+                          embedded
+                          kicker="Visualization"
+                        />
+                      </div>
+                    ) : null}
                     {session.labChallenge ? (
                       <div className="mt-12 border-t border-black/15 pt-10">
                         <LessonLabChallenge challenge={session.labChallenge} dayKey={dayKey} embedded />

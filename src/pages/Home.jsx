@@ -8,6 +8,9 @@ import WhatsAppIcon from '../components/WhatsAppIcon.jsx'
 import {
   sessionDaysLabel,
   sessionDurationLabel,
+  coursePriceAmount,
+  coursePriceLabel,
+  coursePriceNote,
   sessionRhythmLabel,
   sessionTimeLabel,
   whatsappInviteUrl,
@@ -24,7 +27,7 @@ import {
  */
 // ─── Home content (data inline; other pages use src/data/*) ────────────────
 
-const HERO_PILLS = ['Chișinău 2026', '8 weeks', sessionRhythmLabel, `${sessionDurationLabel} sessions`]
+const HERO_PILLS = [coursePriceLabel, 'Chișinău 2026', '8 weeks', sessionRhythmLabel, `${sessionDurationLabel} sessions`]
 
 const MARQUEE_ITEMS = [
   'CODEMOLDOVA',
@@ -173,8 +176,7 @@ function Hero() {
 
       <ScrollReveal className="mt-12" delayMs={180} rootMargin="0px 0px 12% 0px">
         <p className="max-w-3xl text-lg leading-relaxed text-ink/80">
-          CodeMoldova is an in-person coding course in Chișinău, Moldova! May through July 2026 — {sessionDaysLabel} at {sessionTimeLabel}. Learn Python in Cursor (including notebooks), the web stack, GitHub, deployment, and a first look at databases and backends. All experience levels are welcome. Curiosity and desire to learn matter
-          most!
+          CodeMoldova is an in-person coding course in Chișinău, Moldova! May through July 2026 — {sessionDaysLabel} at {sessionTimeLabel}. Tuition is a {coursePriceNote.toLowerCase()} of {coursePriceAmount}. Learn Python in Cursor (including notebooks), the web stack, GitHub, deployment, and a first look at databases and backends. All experience levels are welcome. Curiosity and desire to learn matter most!
         </p>
       </ScrollReveal>
 
@@ -210,7 +212,7 @@ function About() {
       </ScrollReveal>
       <ScrollReveal className="space-y-6 lg:col-span-7" delayMs={100}>
         <p className="text-lg leading-relaxed text-ink/85">
-          Eight weeks, three sessions a week ({sessionDaysLabel}), one hour each at {sessionTimeLabel}, from May through July. Mondays and Wednesdays are both workshop days in Cursor—each session introduces new topics on the syllabus; Thursdays are build days. The path moves from Python foundations into the web, then shipping with Git and a database-backed slice, and closes with a project you choose yourself.
+          Eight weeks, three sessions a week ({sessionDaysLabel}), one hour each at {sessionTimeLabel}, from May through July — {coursePriceNote.toLowerCase()} of {coursePriceAmount}. Mondays and Wednesdays are both workshop days in Cursor—each session introduces new topics on the syllabus; Thursdays are build days. The path moves from Python foundations into the web, then shipping with Git and a database-backed slice, and closes with a project you choose yourself.
         </p>
         <p className="text-lg leading-relaxed text-ink/85">
           The course is open to anyone motivated enough to join. We deliberately mix people who have never coded with
