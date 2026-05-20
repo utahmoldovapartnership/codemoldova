@@ -193,10 +193,16 @@ const BY_KEY = {
       group: 'Read',
       items: [
         {
-          label: 'REST Countries — documentation',
-          href: 'https://restcountries.com/',
-          source: 'restcountries.com',
-          note: 'Free country data, no API key. Try endpoints in the browser.',
+          label: 'Free Movie DB API — docs',
+          href: 'https://imdb.iamidiotareyoutoo.com/docs/index.html',
+          source: 'imdb.iamidiotareyoutoo.com',
+          note: 'Search any movie by title. No API key.',
+        },
+        {
+          label: 'Studio Ghibli API',
+          href: 'https://ghibliapi.vercel.app/',
+          source: 'ghibliapi.vercel.app',
+          note: 'Full film catalog for loops and ratings practice.',
         },
         {
           label: 'An overview of HTTP (MDN)',
@@ -227,10 +233,16 @@ const BY_KEY = {
       group: 'Try',
       items: [
         {
-          label: 'Browse Moldova in the API',
-          href: 'https://restcountries.com/v3.1/name/moldova?fields=name,capital,population,borders,languages,flags',
-          source: 'restcountries.com',
-          note: 'See the JSON shape before you code.',
+          label: 'Search Inception in the browser',
+          href: 'https://imdb.iamidiotareyoutoo.com/search?q=inception',
+          source: 'imdb.iamidiotareyoutoo.com',
+          note: 'See description, #TITLE, and #YEAR before you code.',
+        },
+        {
+          label: 'Browse all Ghibli films',
+          href: 'https://ghibliapi.vercel.app/films',
+          source: 'ghibliapi.vercel.app',
+          note: 'One big JSON list — great for for-loops.',
         },
       ],
     },

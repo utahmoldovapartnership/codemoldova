@@ -514,9 +514,9 @@ END`,
         wed: {
           title: "APIs & the internet",
           date: "May 20",
-          desc: "Workshop 2: use the free REST Countries API to explore Moldova and its neighbors—capital, population, languages, borders, flags—no API key. Download the notebook, work top to bottom, then open the Challenge tab for your passport project.",
-          preview: "HTTP, JSON, status codes, fetch countries, loop neighbors, save a snapshot.",
-          goal: "Leave class able to call a public API, read nested JSON about real countries, loop over border codes, handle 404 gracefully, and print a readable country card.",
+          desc: "Workshop 2: search real movies with a free IMDb API and browse the Studio Ghibli film catalog—no API key. Download the notebook, work top to bottom, then open the Challenge tab to build your movie night planner.",
+          preview: "HTTP, JSON, status codes, search movies, loop a film list, compare ratings, save a watchlist.",
+          goal: "Leave class able to call a public API, read JSON about movies, loop over lists of results, handle empty or failed responses, and print a readable movie card.",
           labDurationLabel: "50 min",
           labExampleUrl: "/lesson/week2_day2.ipynb",
           labExampleDownload: "week2_day2.ipynb",
@@ -526,24 +526,24 @@ END`,
               title: "How a request works",
               timing: "Lab",
               content:
-                "When you open a link or run requests.get(url), your machine asks a server for a resource. The server answers with a status code (200 = OK, 404 = not found) and a body—often JSON. Today’s API is REST Countries—free, no signup.",
+                "When you open a link or run requests.get(url), your machine asks a server for a resource. The server answers with a status code (200 = OK, 404 = not found) and a body—often JSON. Today you work with movie APIs—free, no signup.",
               links: [
                 { label: "MDN — An overview of HTTP", href: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview" },
-                { label: "REST Countries API", href: "https://restcountries.com/" },
+                { label: "Free Movie DB API docs", href: "https://imdb.iamidiotareyoutoo.com/docs/index.html" },
               ],
-              task: "Open https://restcountries.com/v3.1/name/moldova?fields=name,capital,population,borders in your browser. Find capital, population, and the borders list.",
+              task: "Open https://imdb.iamidiotareyoutoo.com/search?q=inception in your browser. Find ok, and the description list with #TITLE and #YEAR on each movie.",
             },
             {
               title: "JSON = Python-friendly data",
               timing: "Lab",
               content:
-                "Country data is nested JSON: name.common, capital as a list, borders as country codes. response.json() turns it into dicts and lists you already know from Monday.",
+                "Movie search results are a list of dicts inside description. Real APIs sometimes use odd key names like #TITLE—Python still reads them with brackets. response.json() gives you dicts and lists you already know from Monday.",
               code: {
                 lang: "python",
                 snippet:
-                  'mini = {"name": {"common": "Moldova"}, "capital": ["Chișinău"], "population": 2_749_076, "borders": ["ROU", "UKR"]}\nprint(mini["name"]["common"])\nprint(mini["capital"][0])\nprint(mini["borders"])',
+                  'mini = {"#TITLE": "Inception", "#YEAR": 2010, "#ACTORS": "Leonardo DiCaprio, Joseph Gordon-Levitt", "#RANK": 148}\nprint(mini["#TITLE"])\nprint(mini["#YEAR"])\nprint(mini["#ACTORS"])',
               },
-              task: "Run the sample. Add a key languages with one language string and print it.",
+              task: "Run the sample. Add a key #IMG_POSTER with a fake URL string and print it.",
             },
             {
               title: "Install requests",
@@ -556,84 +556,84 @@ END`,
               title: "HTTP status codes cheatsheet",
               timing: "Lab",
               content:
-                "Every response has a status code — check r.status_code before you parse JSON.\n\n200 OK — request worked; data is in the body\n201 Created — something new was made (often after POST)\n204 No content — success, but no body to read\n400 Bad request — wrong URL or parameters\n401 Unauthorized — API needs a key or login\n403 Forbidden — you are not allowed to access this\n404 Not found — country or page does not exist\n429 Too many requests — rate limit; slow down and try later\n500 Server error — their server broke, not your fault\n503 Unavailable — server down or overloaded\n\nRule of thumb: 2xx = success · 4xx = your side (client) · 5xx = their side (server)\n\nA made-up country name usually returns 404. Moldova returns 200.",
+                "Every response has a status code — check r.status_code before you parse JSON.\n\n200 OK — request worked; data is in the body\n201 Created — something new was made (often after POST)\n204 No content — success, but no body to read\n400 Bad request — wrong URL or parameters\n401 Unauthorized — API needs a key or login\n403 Forbidden — you are not allowed to access this\n404 Not found — movie or page does not exist\n429 Too many requests — rate limit; slow down and try later\n500 Server error — their server broke, not your fault\n503 Unavailable — server down or overloaded\n\nRule of thumb: 2xx = success · 4xx = your side (client) · 5xx = their side (server)\n\nA broken URL or empty search may return 500 or ok: false—always check status and ok before you loop results.",
               task: "Read the list once. The notebook has the full table in section 4—keep it open for the next steps.",
             },
             {
-              title: "Fetch Moldova’s passport",
+              title: "Search your first movie",
               timing: "Lab",
               content:
-                "GET reads data. REST Countries returns a list—we take the first match. Use ?fields= to keep the response small. Always set timeout=.",
+                "GET reads data. The IMDb search API returns a description list—loop the first few hits. Always set timeout=. Lower #RANK means higher on IMDb’s chart (1 is best).",
               code: {
                 lang: "python",
                 snippet:
-                  'import requests\n\nFIELDS = "name,capital,population,languages,borders,flags"\nurl = f"https://restcountries.com/v3.1/name/moldova?fields={FIELDS}"\nr = requests.get(url, timeout=10)\nprint("status:", r.status_code)\nmoldova = r.json()[0]\nprint(moldova["name"]["common"])\nprint("capital:", moldova["capital"][0])\nprint("population:", f\'{moldova["population"]:,}\')\nprint("languages:", list(moldova["languages"].values()))\nprint("borders:", moldova["borders"])',
+                  'import requests\n\nquery = "inception"\nurl = f"https://imdb.iamidiotareyoutoo.com/search?q={query}"\nr = requests.get(url, timeout=10)\nprint("status:", r.status_code)\ndata = r.json()\nprint("ok:", data.get("ok"))\nfor movie in data.get("description", [])[:3]:\n    print(movie["#TITLE"], movie["#YEAR"], "rank", movie["#RANK"])\n    print("  cast:", movie["#ACTORS"])',
               },
-              task: "Run the demo. Then change the URL to a country you are curious about (romania, ukraine, italy) and print the same four facts.",
+              task: "Run the demo. Change query to a movie you love (matrix, spirited, dune) and print the top 3 results.",
             },
             {
-              title: "Loop over neighbors",
+              title: "Browse a full film catalog",
               timing: "Lab",
               content:
-                "Moldova’s borders field is a list of codes (ROU = Romania, UKR = Ukraine). Loop each code and call the alpha endpoint to get the neighbor’s name and population.",
+                "Studio Ghibli API returns every film in one list—great for loops. Each film has title, director, running_time (minutes), and rt_score (Rotten Tomatoes-style score as a string).",
               code: {
                 lang: "python",
                 snippet:
-                  'import requests\n\nFIELDS = "name,population,capital"\nfor code in ["ROU", "UKR"]:\n    r = requests.get(f"https://restcountries.com/v3.1/alpha/{code}?fields={FIELDS}", timeout=10)\n    if r.status_code == 200:\n        c = r.json()\n        print(c["name"]["common"], "—", f\'{c["population"]:,}\', "people, capital", c["capital"][0])\n',
+                  'import requests\n\nr = requests.get("https://ghibliapi.vercel.app/films", timeout=10)\nprint("status:", r.status_code)\nfilms = r.json()\nprint(f"{len(films)} films in the catalog")\nfor film in films[:5]:\n    print(film["title"], "—", film["director"], f\'{film["running_time"]} min, score {film["rt_score"]}\')',
               },
-              task: "Using Moldova’s borders from the previous step, loop each border code and print neighbor name + population.",
+              task: "Print the 5 films with the highest rt_score (hint: int(film[\"rt_score\"])).",
             },
             {
-              title: "Compare three countries",
+              title: "Compare three searches",
               timing: "Lab",
-              content: "Same endpoint, different names—build a list, loop, and compare one number (population) side by side.",
+              content: "Same search endpoint, different queries—build a list of movie titles you want to compare and loop.",
               code: {
                 lang: "python",
                 snippet:
-                  'import requests\n\nnames = ["moldova", "romania", "ukraine"]\nfor country in names:\n    r = requests.get(f"https://restcountries.com/v3.1/name/{country}?fields=name,population", timeout=10)\n    if r.status_code == 200:\n        d = r.json()[0]\n        print(f"{d[\'name\'][\'common\']}: {d[\'population\']:,}")\n',
+                  'import requests\n\nsearches = ["inception", "matrix", "spirited away"]\nfor title in searches:\n    r = requests.get(f"https://imdb.iamidiotareyoutoo.com/search?q={title}", timeout=10)\n    if r.status_code == 200 and r.json().get("ok"):\n        top = r.json()["description"][0]\n        print(f"{title!r} → {top[\'#TITLE\']} ({top[\'#YEAR\']}) rank {top[\'#RANK\']}")\n',
               },
-              task: "Pick any three countries (include Moldova). Print name and population for each in a loop.",
+              task: "Pick any three movies you would actually watch. Print the top search result for each.",
             },
             {
               title: "When the API says no",
               timing: "Lab",
               content:
-                "A misspelled or fictional country should return 404—not a crash. Wrap the request in try/except for network issues.",
+                "Networks fail and APIs return ok: false. Wrap requests in try/except and return None instead of crashing.",
               code: {
                 lang: "python",
                 snippet:
-                  'import requests\n\ndef fetch_country(name):\n    url = f"https://restcountries.com/v3.1/name/{name}?fields=name,population"\n    try:\n        r = requests.get(url, timeout=10)\n    except requests.RequestException as e:\n        print("Network error:", e)\n        return None\n    if r.status_code != 200:\n        print(f"{name}: status {r.status_code}")\n        return None\n    return r.json()[0]\n\nprint(fetch_country("moldova")["name"]["common"])\nprint(fetch_country("atlantis"))',
+                  'import requests\n\ndef search_movies(query):\n    url = f"https://imdb.iamidiotareyoutoo.com/search?q={query}"\n    try:\n        r = requests.get(url, timeout=10)\n    except requests.RequestException as e:\n        print("Network error:", e)\n        return []\n    if r.status_code != 200:\n        print(f"{query}: status {r.status_code}")\n        return []\n    data = r.json()\n    if not data.get("ok"):\n        print(f"{query}: API error")\n        return []\n    return data.get("description", [])\n\nhits = search_movies("inception")\nprint(hits[0]["#TITLE"] if hits else "no results")\nprint(search_movies(""))',
               },
-              task: "Run fetch_country for moldova and for atlantis (fake). Confirm atlantis prints a message and returns None.",
+              task: "Run search_movies for a real title and for an empty string. Confirm the empty search fails gracefully.",
             },
             {
-              title: "Save a country snapshot",
+              title: "Save a movie snapshot",
               timing: "Lab",
-              content: "Thursday you will save API data to use in a script. Today: write Moldova’s JSON to data/moldova.json.",
+              content: "Thursday you will save API data to use in a script. Today: save your favorite search result or Ghibli film to data/ as JSON.",
               code: {
                 lang: "python",
                 snippet:
-                  'from pathlib import Path\nimport json\nimport requests\n\nPath("data").mkdir(exist_ok=True)\nr = requests.get("https://restcountries.com/v3.1/name/moldova?fields=name,capital,population,borders,languages", timeout=10)\nif r.status_code == 200:\n    Path("data/moldova.json").write_text(json.dumps(r.json()[0], indent=2))\n    print("saved data/moldova.json")',
+                  'from pathlib import Path\nimport json\nimport requests\n\nPath("data").mkdir(exist_ok=True)\nr = requests.get("https://imdb.iamidiotareyoutoo.com/search?q=inception", timeout=10)\ndata = r.json()\nif data.get("ok") and data.get("description"):\n    Path("data/inception.json").write_text(json.dumps(data["description"][0], indent=2))\n    print("saved data/inception.json")',
               },
-              task: "Save your favorite country from today’s lab into data/ as pretty-printed JSON.",
+              task: "Save your favorite movie from today’s lab into data/ as pretty-printed JSON.",
             },
           ],
           challengeTab: {
-            title: "Country passport & border report",
+            title: "Movie night planner",
             content:
-              "You are building a tiny travel research tool. Moldova is home base—you fetch any country by name, print a readable passport card, list who borders Moldova with populations, and save the JSON. Same skills as Thursday’s build: GET, check status, parse JSON, show results.",
+              "You are building a tiny app for picking what to watch. Search movies by title, print a readable card, build a watchlist from three searches, and save it. Same skills as Thursday’s build: GET, check status, parse JSON, show results.",
             task:
-              "1) Write fetch_country(name) → first country dict or None (reuse your lab version). 2) Write print_passport(country) that shows common name, capital, population (with commas), languages, and flag PNG URL. 3) Call both for Moldova, then for a fake country. 4) Loop Moldova’s border codes and print each neighbor’s name and population. 5) Save Moldova’s full JSON to data/moldova_passport.json.",
+              "1) Write search_movies(query) → list of movie dicts (reuse your lab version). 2) Write print_movie_card(movie) showing #TITLE, #YEAR, #ACTORS, and #RANK. 3) Search three movies you would watch with friends and print the top hit for each. 4) Build a watchlist list of those three dicts and print a numbered list. 5) Save the watchlist to data/watchlist.json.",
             code: {
               lang: "python",
               snippet:
-                'import requests\nfrom pathlib import Path\nimport json\n\nFIELDS = "name,capital,population,languages,borders,flags"\n\n\ndef fetch_country(name):\n    pass\n\n\ndef print_passport(country):\n    pass\n\n\n# Moldova card + neighbors + save JSON',
+                'import requests\nfrom pathlib import Path\nimport json\n\n\ndef search_movies(query):\n    pass\n\n\ndef print_movie_card(movie):\n    pass\n\n\n# three searches + watchlist + save JSON',
             },
             hints: [
-              "Name search returns a list — use return r.json()[0] on success.",
-              "URL: https://restcountries.com/v3.1/name/{name}?fields=...",
-              "Neighbors: moldova[\"borders\"] then alpha/{code} for each.",
-              "Optional: .get on name.official if you want a second line on the card.",
+              "Top result is description[0] after you confirm ok is true.",
+              "URL: https://imdb.iamidiotareyoutoo.com/search?q={query}",
+              "Keys use # — access with movie[\"#TITLE\"], not movie.TITLE.",
+              "Optional: fetch one Ghibli film from https://ghibliapi.vercel.app/films/{id} and add it to the watchlist.",
             ],
           },
           postClass: {
