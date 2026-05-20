@@ -521,6 +521,10 @@ END`,
           labExampleUrl: "/lesson/week2_day2.ipynb",
           labExampleDownload: "week2_day2.ipynb",
           labExampleLabel: "Download lab notebook (.ipynb)",
+          slideDeck: {
+            label: "Week 2 · Wednesday slide deck (Day 5)",
+            url: "https://docs.google.com/presentation/d/18PTPCEFhMq_xJ9R2LSr91CPS3tFr6oGGNMCBq9BOwq0/edit?usp=sharing",
+          },
           steps: [
             {
               title: "How a request works",
