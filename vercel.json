@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/((?!lesson/[^/]+\\.(ipynb|csv|svg)$).*)",
+      "source": "/(.*)",
       "destination": "/"
     }
   ]
