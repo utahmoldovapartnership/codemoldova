@@ -86,18 +86,21 @@ function buildChallengesAccordionList(c) {
  * @param {object} session — optional `codeFromClassLabel` overrides the second artifact label (default "Class code").
  * @returns {{ label: string, href: string, ready: boolean, hint?: string }[]}
  */
-function buildArtifacts(session) {
+function buildArtifacts(session, dayKey) {
   const out = []
-  if (session.slideDeck?.label) {
-    const url = typeof session.slideDeck.url === 'string' ? session.slideDeck.url.trim() : ''
-    out.push({
-      label: 'Class slides',
-      href: url || '#',
-      ready: Boolean(url),
-      hint: session.slideDeck.hint || 'Link coming soon',
-    })
-  } else {
-    out.push({ label: 'Class slides', href: '', ready: false, hint: 'Announced in class' })
+  const showSlides = dayKey !== 'thu'
+  if (showSlides) {
+    if (session.slideDeck?.label) {
+      const url = typeof session.slideDeck.url === 'string' ? session.slideDeck.url.trim() : ''
+      out.push({
+        label: 'Class slides',
+        href: url || '#',
+        ready: Boolean(url),
+        hint: session.slideDeck.hint || 'Link coming soon',
+      })
+    } else {
+      out.push({ label: 'Class slides', href: '', ready: false, hint: 'Announced in class' })
+    }
   }
   const codeUrl = session.codeFromClassUrl
   if (typeof codeUrl === 'string' && codeUrl.trim()) {
@@ -477,7 +480,7 @@ function LessonTabbedBody({
                 </LessonLabBand>
               ) : (
                 <LessonTabEmpty>
-                  No guided lab steps or Thursday tiers are listed for this session yet. Check class slides or ask in WhatsApp
+                  No guided lab steps or Thursday tiers are listed for this session yet. Ask in WhatsApp
                   if you think this is a mistake.
                 </LessonTabEmpty>
               )
@@ -598,7 +601,7 @@ export default function Lesson() {
 
   const goal = session.goal || session.preview || ''
   const mainPoints = buildMainPoints(session)
-  const artifacts = buildArtifacts(session)
+  const artifacts = buildArtifacts(session, dayKey)
   const showArtifacts = artifacts.length > 0 && session.hideLessonArtifacts !== true
   const challengesList = isThu ? buildChallengesAccordionList(session.challenges) : []
   const labExample = resolveLabExample(session)
