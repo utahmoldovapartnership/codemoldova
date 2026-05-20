@@ -705,12 +705,6 @@ END`,
               task: "If you finish early, save at least four messages from your session to data/chat_log.json.",
             },
           ],
-          resources: [
-            { label: "Google AI Studio", href: "https://aistudio.google.com/" },
-            { label: "API keys", href: "https://aistudio.google.com/apikey" },
-            { label: "Gemini API docs", href: "https://ai.google.dev/gemini-api/docs" },
-            { label: "google-genai on PyPI", href: "https://pypi.org/project/google-genai/" },
-          ],
           postClass: {
             title: "Answer key (spoilers)",
             desc: "Worked cells for setup, first API call, system prompt, chat loop, and saving a log. Try the lab notebook first\u2014use this to check your work or get unstuck.",

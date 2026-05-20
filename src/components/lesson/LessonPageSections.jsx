@@ -657,8 +657,29 @@ export function LessonVocab({ vocab }) {
   )
 }
 
+/** Accept grouped session resources or a flat list of { label, href }. */
+function normalizeLessonResources(resources) {
+  if (!resources?.length) return []
+  if (Array.isArray(resources[0]?.items)) return resources
+  if (typeof resources[0]?.href === 'string') {
+    return [
+      {
+        group: 'Links',
+        items: resources.map(({ label, href, note, source }) => ({
+          label: label || 'Link',
+          href,
+          note,
+          source,
+        })),
+      },
+    ]
+  }
+  return resources
+}
+
 export function LessonResources({ resources, embedded = false }) {
-  if (!resources?.length) return null
+  const groups = normalizeLessonResources(resources)
+  if (!groups.length) return null
   const El = embedded ? 'div' : 'section'
   const outer = embedded ? 'w-full py-2 sm:py-4' : 'border-b border-hairline py-14 sm:py-16'
   return (
@@ -666,11 +687,11 @@ export function LessonResources({ resources, embedded = false }) {
       <div className="w-full">
         <SectionHead kicker="Helpful resources" title="Read · Watch · Try." />
         <div className="space-y-10">
-          {resources.map((g) => (
+          {groups.map((g) => (
             <div key={g.group}>
               <h3 className="mb-4 border-b border-hairline pb-2 font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">{g.group}</h3>
               <ul>
-                {g.items.map((it) => (
+                {(g.items || []).map((it) => (
                   <li key={it.href}>
                     <a
                       href={it.href}
