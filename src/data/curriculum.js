@@ -514,46 +514,137 @@ END`,
         wed: {
           title: "APIs & the internet",
           date: "May 20",
-          desc: "Workshop 2: what happens when you call a URL, what JSON looks like, and how to fetch live data from Python with the requests library in a controlled notebook cell.",
-          preview: "HTTP verbs at a glance, status codes, reading JSON, and your first GET request.",
+          desc: "Workshop 2: use the free REST Countries API to explore Moldova and its neighbors—capital, population, languages, borders, flags—no API key. Download the notebook, work top to bottom, then open the Challenge tab for your passport project.",
+          preview: "HTTP, JSON, status codes, fetch countries, loop neighbors, save a snapshot.",
+          goal: "Leave class able to call a public API, read nested JSON about real countries, loop over border codes, handle 404 gracefully, and print a readable country card.",
+          labDurationLabel: "50 min",
+          labExampleUrl: "/lesson/week2_day2.ipynb",
+          labExampleDownload: "week2_day2.ipynb",
+          labExampleLabel: "Download lab notebook (.ipynb)",
           steps: [
             {
-              title: "URLs, servers, responses",
-              content: "Browser and code both ask a server for a resource. Status 200 means OK; 404 means missing. JSON is text shaped like JavaScript objects—Python loads it with response.json().",
-              task: "Open a public JSON API in the browser (pretty-print if your browser supports it). Identify top-level keys.",
+              title: "How a request works",
+              timing: "Lab",
+              content:
+                "When you open a link or run requests.get(url), your machine asks a server for a resource. The server answers with a status code (200 = OK, 404 = not found) and a body—often JSON. Today’s API is REST Countries—free, no signup.",
               links: [
-                { label: "MDN \u2014 An overview of HTTP", href: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview" },
+                { label: "MDN — An overview of HTTP", href: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview" },
+                { label: "REST Countries API", href: "https://restcountries.com/" },
               ],
+              task: "Open https://restcountries.com/v3.1/name/moldova?fields=name,capital,population,borders in your browser. Find capital, population, and the borders list.",
             },
             {
-              title: "Install requests in your environment",
-              content: "In Cursor terminal: python3 -m pip install requests (or use the same environment your notebook kernel uses).",
-              task: "Verify import requests runs without error in a notebook cell.",
+              title: "JSON = Python-friendly data",
+              timing: "Lab",
+              content:
+                "Country data is nested JSON: name.common, capital as a list, borders as country codes. response.json() turns it into dicts and lists you already know from Monday.",
+              code: {
+                lang: "python",
+                snippet:
+                  'mini = {"name": {"common": "Moldova"}, "capital": ["Chișinău"], "population": 2_749_076, "borders": ["ROU", "UKR"]}\nprint(mini["name"]["common"])\nprint(mini["capital"][0])\nprint(mini["borders"])',
+              },
+              task: "Run the sample. Add a key languages with one language string and print it.",
             },
             {
-              title: "GET a public dataset",
-              content: "Pick a simple no-key API such as https://api.github.com/users/octocat or a small open JSON feed your mentor approves.",
-              task: "Print the status code, content-type header, and one field from the parsed JSON.",
-              code: { lang: "python", snippet: "import requests\nr = requests.get(\"https://api.github.com/users/octocat\", timeout=10)\nprint(r.status_code)\nprint(r.json().get(\"login\"))" },
+              title: "Install requests",
+              timing: "Lab",
+              content: "requests is how Python talks to the internet. Install once in your notebook environment.",
+              code: { lang: "python", snippet: "# Run once if needed:\n# !python3 -m pip install requests" },
+              task: "Run import requests with no errors.",
             },
             {
-              title: "Parameters and safety",
-              content: "Query strings carry filters. Always set a timeout= on requests. Never paste private tokens into class demos.",
-              task: "Call the same API with two different usernames in a loop; collect logins in a list.",
+              title: "HTTP status codes cheatsheet",
+              timing: "Lab",
+              content:
+                "Every response has a status code — check r.status_code before you parse JSON.\n\n200 OK — request worked; data is in the body\n201 Created — something new was made (often after POST)\n204 No content — success, but no body to read\n400 Bad request — wrong URL or parameters\n401 Unauthorized — API needs a key or login\n403 Forbidden — you are not allowed to access this\n404 Not found — country or page does not exist\n429 Too many requests — rate limit; slow down and try later\n500 Server error — their server broke, not your fault\n503 Unavailable — server down or overloaded\n\nRule of thumb: 2xx = success · 4xx = your side (client) · 5xx = their side (server)\n\nA made-up country name usually returns 404. Moldova returns 200.",
+              task: "Read the list once. The notebook has the full table in section 4—keep it open for the next steps.",
             },
             {
-              title: "When APIs fail",
-              content: "Network blips and rate limits happen. Check status_code before parsing; wrap calls in try/except for robust scripts.",
-              task: "Force a bad URL and print a clean error message instead of a traceback.",
+              title: "Fetch Moldova’s passport",
+              timing: "Lab",
+              content:
+                "GET reads data. REST Countries returns a list—we take the first match. Use ?fields= to keep the response small. Always set timeout=.",
+              code: {
+                lang: "python",
+                snippet:
+                  'import requests\n\nFIELDS = "name,capital,population,languages,borders,flags"\nurl = f"https://restcountries.com/v3.1/name/moldova?fields={FIELDS}"\nr = requests.get(url, timeout=10)\nprint("status:", r.status_code)\nmoldova = r.json()[0]\nprint(moldova["name"]["common"])\nprint("capital:", moldova["capital"][0])\nprint("population:", f\'{moldova["population"]:,}\')\nprint("languages:", list(moldova["languages"].values()))\nprint("borders:", moldova["borders"])',
+              },
+              task: "Run the demo. Then change the URL to a country you are curious about (romania, ukraine, italy) and print the same four facts.",
+            },
+            {
+              title: "Loop over neighbors",
+              timing: "Lab",
+              content:
+                "Moldova’s borders field is a list of codes (ROU = Romania, UKR = Ukraine). Loop each code and call the alpha endpoint to get the neighbor’s name and population.",
+              code: {
+                lang: "python",
+                snippet:
+                  'import requests\n\nFIELDS = "name,population,capital"\nfor code in ["ROU", "UKR"]:\n    r = requests.get(f"https://restcountries.com/v3.1/alpha/{code}?fields={FIELDS}", timeout=10)\n    if r.status_code == 200:\n        c = r.json()\n        print(c["name"]["common"], "—", f\'{c["population"]:,}\', "people, capital", c["capital"][0])\n',
+              },
+              task: "Using Moldova’s borders from the previous step, loop each border code and print neighbor name + population.",
+            },
+            {
+              title: "Compare three countries",
+              timing: "Lab",
+              content: "Same endpoint, different names—build a list, loop, and compare one number (population) side by side.",
+              code: {
+                lang: "python",
+                snippet:
+                  'import requests\n\nnames = ["moldova", "romania", "ukraine"]\nfor country in names:\n    r = requests.get(f"https://restcountries.com/v3.1/name/{country}?fields=name,population", timeout=10)\n    if r.status_code == 200:\n        d = r.json()[0]\n        print(f"{d[\'name\'][\'common\']}: {d[\'population\']:,}")\n',
+              },
+              task: "Pick any three countries (include Moldova). Print name and population for each in a loop.",
+            },
+            {
+              title: "When the API says no",
+              timing: "Lab",
+              content:
+                "A misspelled or fictional country should return 404—not a crash. Wrap the request in try/except for network issues.",
+              code: {
+                lang: "python",
+                snippet:
+                  'import requests\n\ndef fetch_country(name):\n    url = f"https://restcountries.com/v3.1/name/{name}?fields=name,population"\n    try:\n        r = requests.get(url, timeout=10)\n    except requests.RequestException as e:\n        print("Network error:", e)\n        return None\n    if r.status_code != 200:\n        print(f"{name}: status {r.status_code}")\n        return None\n    return r.json()[0]\n\nprint(fetch_country("moldova")["name"]["common"])\nprint(fetch_country("atlantis"))',
+              },
+              task: "Run fetch_country for moldova and for atlantis (fake). Confirm atlantis prints a message and returns None.",
+            },
+            {
+              title: "Save a country snapshot",
+              timing: "Lab",
+              content: "Thursday you will save API data to use in a script. Today: write Moldova’s JSON to data/moldova.json.",
+              code: {
+                lang: "python",
+                snippet:
+                  'from pathlib import Path\nimport json\nimport requests\n\nPath("data").mkdir(exist_ok=True)\nr = requests.get("https://restcountries.com/v3.1/name/moldova?fields=name,capital,population,borders,languages", timeout=10)\nif r.status_code == 200:\n    Path("data/moldova.json").write_text(json.dumps(r.json()[0], indent=2))\n    print("saved data/moldova.json")',
+              },
+              task: "Save your favorite country from today’s lab into data/ as pretty-printed JSON.",
             },
           ],
-          homework: {
-            title: "Fetch + reflect",
-            desc: "Short write-up in comments at the bottom of your notebook.",
-            tasks: [
-              "Screenshot or paste one JSON response snippet with a comment explaining two keys.",
-              "Write a function fetch_profile(username) -> dict that returns .json() or None on failure.",
-              "Optional: cache results to a local data/ folder as pretty-printed JSON.",
+          challengeTab: {
+            title: "Country passport & border report",
+            content:
+              "You are building a tiny travel research tool. Moldova is home base—you fetch any country by name, print a readable passport card, list who borders Moldova with populations, and save the JSON. Same skills as Thursday’s build: GET, check status, parse JSON, show results.",
+            task:
+              "1) Write fetch_country(name) → first country dict or None (reuse your lab version). 2) Write print_passport(country) that shows common name, capital, population (with commas), languages, and flag PNG URL. 3) Call both for Moldova, then for a fake country. 4) Loop Moldova’s border codes and print each neighbor’s name and population. 5) Save Moldova’s full JSON to data/moldova_passport.json.",
+            code: {
+              lang: "python",
+              snippet:
+                'import requests\nfrom pathlib import Path\nimport json\n\nFIELDS = "name,capital,population,languages,borders,flags"\n\n\ndef fetch_country(name):\n    pass\n\n\ndef print_passport(country):\n    pass\n\n\n# Moldova card + neighbors + save JSON',
+            },
+            hints: [
+              "Name search returns a list — use return r.json()[0] on success.",
+              "URL: https://restcountries.com/v3.1/name/{name}?fields=...",
+              "Neighbors: moldova[\"borders\"] then alpha/{code} for each.",
+              "Optional: .get on name.official if you want a second line on the card.",
+            ],
+          },
+          postClass: {
+            title: "Answer key (spoilers)",
+            desc: "Worked solutions for lab practice cells and the Challenge tab project. Try the lab first—use this to check your work or get unstuck.",
+            links: [
+              {
+                label: "Download answer key notebook (.ipynb)",
+                href: "/lesson/week2_day2_key.ipynb",
+                download: "week2_day2_key.ipynb",
+              },
             ],
           },
         },

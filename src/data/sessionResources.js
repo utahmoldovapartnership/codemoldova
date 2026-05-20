@@ -193,6 +193,12 @@ const BY_KEY = {
       group: 'Read',
       items: [
         {
+          label: 'REST Countries — documentation',
+          href: 'https://restcountries.com/',
+          source: 'restcountries.com',
+          note: 'Free country data, no API key. Try endpoints in the browser.',
+        },
+        {
           label: 'An overview of HTTP (MDN)',
           href: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview',
           source: 'MDN',
@@ -221,10 +227,10 @@ const BY_KEY = {
       group: 'Try',
       items: [
         {
-          label: 'Public APIs for projects',
-          href: 'https://github.com/public-apis/public-apis',
-          source: 'GitHub',
-          note: 'Pick something small and rate-limit friendly.',
+          label: 'Browse Moldova in the API',
+          href: 'https://restcountries.com/v3.1/name/moldova?fields=name,capital,population,borders,languages,flags',
+          source: 'restcountries.com',
+          note: 'See the JSON shape before you code.',
         },
       ],
     },

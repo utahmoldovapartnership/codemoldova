@@ -696,6 +696,19 @@ export function LessonResources({ resources, embedded = false }) {
   )
 }
 
+function postClassLinkProps(link) {
+  const href = typeof link?.href === 'string' ? link.href.trim() : ''
+  if (!href) return null
+  const downloadName =
+    typeof link.download === 'string' && link.download.trim()
+      ? link.download.trim()
+      : href.match(/\/([^/?#]+\.(ipynb|csv))$/i)?.[1]
+  if (downloadName) {
+    return { href, download: downloadName }
+  }
+  return { href, target: '_blank', rel: 'noopener noreferrer' }
+}
+
 export function LessonPostClass({ postClass, embedded = false, titleId = 'lesson-session-resources-heading' }) {
   if (!postClass?.links?.length) return null
   const El = embedded ? 'div' : 'section'
@@ -712,19 +725,22 @@ export function LessonPostClass({ postClass, embedded = false, titleId = 'lesson
         </h2>
         {postClass.desc ? <p className="mt-4 max-w-prose text-base text-ink/70">{postClass.desc}</p> : null}
         <ul className="mt-6 space-y-2">
-          {postClass.links.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-mono text-sm text-ink underline decoration-dart/50 underline-offset-2 transition-colors hover:text-dart"
-              >
-                {link.label}
-                <span className="sr-only"> (opens in a new tab)</span>
-              </a>
-            </li>
-          ))}
+          {postClass.links.map((link) => {
+            const anchorProps = postClassLinkProps(link)
+            if (!anchorProps) return null
+            const isDownload = Boolean(anchorProps.download)
+            return (
+              <li key={link.href}>
+                <a
+                  {...anchorProps}
+                  className="font-mono text-sm text-ink underline decoration-dart/50 underline-offset-2 transition-colors hover:text-dart"
+                >
+                  {link.label}
+                  <span className="sr-only">{isDownload ? ' (downloads a file)' : ' (opens in a new tab)'}</span>
+                </a>
+              </li>
+            )
+          })}
         </ul>
       </div>
     </El>

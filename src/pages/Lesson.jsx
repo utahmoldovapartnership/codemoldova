@@ -322,6 +322,10 @@ function LessonTabbedBody({
   }
   const tabButtonFocusClass = tabFocusByDay[dayKey] ?? tabFocusByDay.thu
 
+  const hasChallengeTab = Boolean(
+    typeof session.challengeTab?.task === 'string' && session.challengeTab.task.trim(),
+  )
+
   const lessonTabs = isBuildTrackMode
     ? [
         { id: 'beginner', label: 'Beginner' },
@@ -330,7 +334,7 @@ function LessonTabbedBody({
       ]
     : [
         { id: 'lab', label: 'Lab' },
-        { id: 'homework', label: 'Homework' },
+        hasChallengeTab ? { id: 'challenge', label: 'Challenge' } : { id: 'homework', label: 'Homework' },
         { id: 'main', label: 'Main points' },
         { id: 'resources', label: 'Resources' },
       ]
@@ -437,7 +441,7 @@ function LessonTabbedBody({
                         />
                       </div>
                     ) : null}
-                    {session.labChallenge ? (
+                    {session.labChallenge && !hasChallengeTab ? (
                       <div className="mt-12 border-t border-black/15 pt-10">
                         <LessonLabChallenge challenge={session.labChallenge} dayKey={dayKey} embedded />
                       </div>
@@ -472,8 +476,10 @@ function LessonTabbedBody({
               )
             ) : null}
 
-            {activeLessonTab === 'homework' ? (
-              session.homework?.tasks?.length ? (
+            {activeLessonTab === 'homework' || activeLessonTab === 'challenge' ? (
+              hasChallengeTab ? (
+                <LessonLabChallenge challenge={session.challengeTab} dayKey={dayKey} embedded kicker="Challenge" />
+              ) : session.homework?.tasks?.length ? (
                 <LessonHomework homework={session.homework} embedded />
               ) : (
                 <LessonTabEmpty>No homework listed for this session.</LessonTabEmpty>
