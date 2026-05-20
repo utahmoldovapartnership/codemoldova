@@ -326,6 +326,13 @@ function LessonTabbedBody({
     typeof session.challengeTab?.task === 'string' && session.challengeTab.task.trim(),
   )
 
+  const hasHomework = Boolean(session.homework?.tasks?.length)
+  const secondaryTab = hasChallengeTab
+    ? { id: 'challenge', label: 'Challenge' }
+    : hasHomework
+      ? { id: 'homework', label: 'Homework' }
+      : null
+
   const lessonTabs = isBuildTrackMode
     ? [
         { id: 'beginner', label: 'Beginner' },
@@ -334,7 +341,7 @@ function LessonTabbedBody({
       ]
     : [
         { id: 'lab', label: 'Lab' },
-        hasChallengeTab ? { id: 'challenge', label: 'Challenge' } : { id: 'homework', label: 'Homework' },
+        ...(secondaryTab ? [secondaryTab] : []),
         { id: 'main', label: 'Main points' },
         { id: 'resources', label: 'Resources' },
       ]

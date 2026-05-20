@@ -5,7 +5,7 @@ export const sessions = [
 
   { week: 2, day: "mon", date: "2026-05-18", label: "Data structures" },
   { week: 2, day: "wed", date: "2026-05-20", label: "APIs & the internet" },
-  { week: 2, day: "thu", date: "2026-05-21", label: "Fetch real data, store + display" },
+  { week: 2, day: "thu", date: "2026-05-21", label: "Gemini chat agent" },
 
   { week: 3, day: "mon", date: "2026-05-25", label: "Functions" },
   { week: 3, day: "wed", date: "2026-05-27", label: "Error handling + debugging" },

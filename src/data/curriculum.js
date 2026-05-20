@@ -653,71 +653,105 @@ END`,
           },
         },
         thu: {
-          title: "Fetch, store, display",
+          title: "Gemini chat agent",
           date: "May 21",
-          desc: "Build day: pull live JSON, save it locally, and show a simple text summary\u2014still Python, still Cursor. This mirrors how real scripts snapshot data before dashboards exist.",
-          preview: "requests + json module + pathlib for folders; print a human-readable table in the terminal.",
+          desc: "Build day: call Google\u2019s Gemini Flash API from Python and ship a tiny terminal chat agent. Wednesday you talked to movie servers with GET; today you send messages to a model with an API key and keep a running conversation. Download the notebook, set up Google AI Studio, then work top to bottom\u2014no homework tab, just the lab and stretch tiers below.",
+          preview: "Google AI Studio API key \u00b7 google-genai \u00b7 one-shot reply \u00b7 multi-turn chat loop \u00b7 optional save chat log to data/.",
+          goal: "Leave class with a working chat loop using Gemini Flash, your API key stored safely outside Git, and a custom system prompt that shapes how the bot behaves.",
+          labDurationLabel: "60 min",
+          labExampleUrl: "/lesson/week2_thu_chat.ipynb",
+          labExampleDownload: "week2_thu_chat.ipynb",
+          labExampleLabel: "Download lab notebook (.ipynb)",
           steps: [
             {
-              title: "Pick an API and fields",
-              content: "Choose three fields you care about (for example login, id, public_repos). Confirm you may call it from class networks.",
-              task: "List the fields you will extract on paper.",
+              title: "Get a Gemini API key",
+              content:
+                "Sign in at Google AI Studio (aistudio.google.com), open API keys, create a key for this course. Copy it once\u2014you will not see it again. Never paste keys into GitHub, WhatsApp, or screenshots. In Cursor\u2019s terminal: export GEMINI_API_KEY=\"your-key\" (Mac/Linux) or set it in PowerShell for Windows. The notebook walks through each click.",
+              task: "Confirm import os; os.environ[\"GEMINI_API_KEY\"] prints something starting with AI (not the full key out loud).",
+              links: [
+                { label: "Google AI Studio", href: "https://aistudio.google.com/" },
+                { label: "Create an API key", href: "https://aistudio.google.com/apikey" },
+              ],
             },
             {
-              title: "Write fetch_to_disk.py",
-              content: "Save raw JSON to data/snapshot.json using pathlib.Path.mkdir(exist_ok=True). Pretty-print with json.dump(..., indent=2).",
-              task: "Running the script twice overwrites or versions the file—your choice, but document it in a comment.",
-              code: { lang: "python", snippet: "from pathlib import Path\nimport json, requests\nPath(\"data\").mkdir(exist_ok=True)\ndata = requests.get(\"...\", timeout=10).json()\nPath(\"data/snapshot.json\").write_text(json.dumps(data, indent=2))" },
+              title: "Install google-genai",
+              content:
+                "Google\u2019s current Python SDK is google-genai (not the older google-generativeai package). Install once per machine: python3 -m pip install google-genai",
+              task: "Run from google import genai in a notebook cell with no ImportError.",
+              links: [{ label: "Gemini API quickstart (Python)", href: "https://ai.google.dev/gemini-api/docs/quickstart" }],
             },
             {
-              title: "Display without a GUI",
-              content: "Print aligned columns using f-strings with widths, or print bullet lines. Goal: a classmate understands the snapshot in five seconds.",
-              task: "Script prints at least three labeled values derived from the JSON.",
+              title: "One message, one reply",
+              content:
+                "Create a client with your key, call client.models.generate_content with model gemini-2.0-flash, print response.text. This proves the key and Wi\u2011Fi work before you build a loop.",
+              task: "Ask the model one coding question and print the answer in the notebook.",
             },
             {
-              title: "Error handling path",
-              content: "If the request fails, write an error.json with the status code and timestamp instead of crashing.",
-              task: "Demonstrate both success and forced-failure runs to a mentor.",
+              title: "Add a system prompt",
+              content:
+                "A system instruction sets personality and rules\u2014for example \u201cYou are a patient Python tutor for beginners; keep answers under 80 words.\u201d Pass it when you create the chat session.",
+              task: "Change the system prompt to match your project (movie critic, study buddy, etc.) and run one test message.",
+            },
+            {
+              title: "Build the chat loop",
+              content:
+                "Use client.chats.create(model=\"gemini-2.0-flash\", config={...}) then while True: read input, break on quit, chat.send_message(user_text), print Bot: and response.text. The SDK remembers prior turns in that chat session.",
+              task: "Hold a three-turn conversation in the terminal, then type quit.",
+            },
+            {
+              title: "Save the conversation (stretch)",
+              content:
+                "Optional: append each user and assistant turn to a list of dicts and write data/chat_log.json with json.dump. Same data/ habit as Wednesday.",
+              task: "If you finish early, save at least four messages from your session to data/chat_log.json.",
             },
           ],
-          homework: {
-            title: "Data snapshot",
-            desc: "Submit a link or file path in class comms as instructed.",
-            tasks: [
-              "Repo folder contains data/snapshot.json generated by your script",
-              "README comment block at top of file listing API URL and fields",
-              "Optional: small chart using text bars (counts of # characters)",
+          resources: [
+            { label: "Google AI Studio", href: "https://aistudio.google.com/" },
+            { label: "API keys", href: "https://aistudio.google.com/apikey" },
+            { label: "Gemini API docs", href: "https://ai.google.dev/gemini-api/docs" },
+            { label: "google-genai on PyPI", href: "https://pypi.org/project/google-genai/" },
+          ],
+          postClass: {
+            title: "Answer key (spoilers)",
+            desc: "Worked cells for setup, first API call, system prompt, chat loop, and saving a log. Try the lab notebook first\u2014use this to check your work or get unstuck.",
+            links: [
+              {
+                label: "Download answer key notebook (.ipynb)",
+                href: "/lesson/week2_thu_chat_key.ipynb",
+                download: "week2_thu_chat_key.ipynb",
+              },
             ],
           },
           challenges: {
             base: {
-              title: "Fetch and print",
-              desc: "Working script + saved JSON.",
+              title: "Working chat agent",
+              desc: "Key in env var, not in Git. One-shot call works, then a quit-able loop.",
               steps: [
-                "GET request with timeout",
-                "Write JSON to disk",
-                "Print a three-line human summary",
+                "GEMINI_API_KEY set in the environment",
+                "gemini-2.0-flash returns a reply to a test question",
+                "while loop: input \u2192 send_message \u2192 print Bot: \u2192 quit exits cleanly",
               ],
             },
             medium: {
-              title: "Multiple records",
-              desc: "Handle a list endpoint.",
+              title: "Custom personality",
+              desc: "Make the bot yours with a system instruction.",
               steps: [
-                "If the API returns a list, save first five items",
-                "Print a numbered list of one field from each item",
-                "Sort items by a numeric field before printing",
+                "System prompt names the bot and sets tone (tutor, critic, coach)",
+                "Bot refuses or redirects off-topic questions per your rules",
+                "Demo three different personalities to a partner (change prompt, restart chat)",
               ],
             },
             hard: {
-              title: "CLI args",
-              desc: "Make the script reusable.",
+              title: "Chat log on disk",
+              desc: "Persist the session like a real app.",
               steps: [
-                "Accept API URL or username as sys.argv[1]",
-                "Validate input and print usage if missing",
-                "Keep json path configurable via second argv",
+                "List of {role, content} dicts grows each turn",
+                "Write data/chat_log.json with indent=2",
+                "Second script or cell reads the file and prints a transcript",
               ],
             },
-            bonus: "Add a --compare flag that loads yesterday\u2019s snapshot if present and prints what changed.",
+            bonus:
+              "Cap replies (max_output_tokens in config) and print a friendly message if the user sends an empty string\u2014do not waste API calls.",
           },
         },
       },
