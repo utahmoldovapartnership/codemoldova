@@ -752,45 +752,151 @@ END`,
       {
         num: 3,
         mon: {
-          title: "Functions",
+          title: "Terminal basics",
           date: "May 25",
-          desc: "Workshop 1: break programs into named, testable pieces. Parameters, return values, default arguments, and docstrings you can read six months later.",
-          preview: "Write small pure functions, call them from notebooks, and avoid global state where possible.",
+          desc: "Workshop 1: the terminal is how developers move through folders, run programs, install tools, and talk to Git. Today is not about memorizing every flag — it is about getting comfortable navigating with text commands on Mac/Linux (Terminal/zsh) or Windows (PowerShell). Work through the lab steps, then finish the three practice tasks and the Challenge tab before Thursday’s CLI build.",
+          preview: "Why the terminal · everyday uses · common commands · cd/ls/pwd · PowerShell vs bash · 3 practices · 1 challenge.",
+          goal: "Leave class able to open a terminal, know where you are (pwd), move between folders (cd), list files (ls/dir), create folders and files, and run python3 and pip from the command line — on your OS.",
+          labDurationLabel: "50 min",
           steps: [
             {
-              title: "def basics",
-              content: "Define once, call many times. Parameters are inputs; return sends a value back to the caller.",
-              task: "Write area_rect(width, height) -> float and call it from three tests in __main__.",
-              code: { lang: "python", snippet: "def double(x):\n    return x * 2\nprint(double(4))" },
+              title: "Why the terminal matters",
+              timing: "Lab",
+              content:
+                "GUIs (clicking icons) hide what the computer is doing. The terminal is a **text interface** — you type commands, the shell runs them, text comes back. Every professional dev uses it daily: run Python scripts, install packages with pip, start web servers, deploy to Vercel, use Git, set API keys with export. Cursor has a built-in terminal (`` Ctrl+` `` or View → Terminal). Same skills work on your laptop, a server, and in CI pipelines.",
+              task: "Open the terminal in Cursor. Type one command and press Enter — even `echo hello` counts.",
             },
             {
-              title: "Defaults and keyword args",
-              content: "Defaults make APIs friendlier; call with greet(name, excited=False).",
-              task: "Add a separator parameter to a print_stats function with default \" | \".",
+              title: "Why you need to know it",
+              timing: "Lab",
+              content:
+                "You already hit the terminal for `pip install`, `export GEMINI_API_KEY=...`, and running notebooks. This week you will build a **CLI tool on Thursday** — that only exists in the terminal. Week 6 is Git from the command line. You cannot click your way through those. The terminal also fails **loudly**: error messages tell you exactly what broke, which makes debugging faster once you learn to read them.",
+              links: [
+                {
+                  label: "MDN — Command line overview",
+                  href: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Environment_setup/Command_line",
+                },
+              ],
+              task: "Name two things you did in this course that required the terminal (or should have). Share with a partner.",
             },
             {
-              title: "Scope",
-              content: "Variables created inside a function stay inside unless returned or declared global (avoid global in homework).",
-              task: "Predict output of nested functions exercise from the board, then run it in Cursor.",
+              title: "How it is used most often",
+              timing: "Lab",
+              content:
+                "Same five jobs, every project:\n\n1. **Navigate** — cd into your project folder\n2. **Inspect** — ls/dir to see files\n3. **Run** — python3 script.py or npm run dev\n4. **Install** — pip install, npm install\n5. **Configure** — export API keys, git config\n\nYou type short commands instead of clicking through folders. Scripts and tutorials assume you can do these without a GUI.",
+              task: "In your own words: what is the difference between “opening a file in Cursor” and “running a file from the terminal”?",
             },
             {
-              title: "Docstrings",
-              content: "Triple-quoted string right under def explains purpose, parameters, and return in one glance.",
-              task: "Add a one-line docstring to every function you write today.",
+              title: "Common commands",
+              timing: "Lab",
+              content:
+                "Mac/Linux (bash/zsh) and Windows (PowerShell) use different names for the same ideas:\n\n| Job | Mac / Linux | Windows PowerShell |\n|-----|-------------|-------------------|\n| Where am I? | pwd | Get-Location (or pwd) |\n| List files | ls | dir (or ls) |\n| Change folder | cd path | cd path |\n| Go up one level | cd .. | cd .. |\n| Make folder | mkdir name | mkdir name |\n| Make empty file | touch name.txt | New-Item name.txt |\n| Show file contents | cat file.txt | Get-Content file.txt |\n| Clear screen | clear | cls |\n| Run Python | python3 file.py | python file.py |\n| Install package | pip install pkg | pip install pkg |\n\nPaths: Mac/Linux use `/Users/you/...`; Windows uses `C:\\Users\\you\\...`. Use Tab to autocomplete folder names.",
+              code: {
+                lang: "bash",
+                snippet:
+                  "# Mac / Linux — run one line at a time\npwd\nls\nmkdir codemoldova-week3\ncd codemoldova-week3\ntouch notes.txt\npython3 --version",
+              },
+              task: "Run pwd and ls in your terminal. Say out loud what each line printed.",
             },
             {
-              title: "Composition",
-              content: "Big programs are small functions wired together. Pass results of one function into another.",
-              task: "Implement total_with_tax(subtotal, rate) using a helper round_money(value).",
+              title: "Navigation walkthrough",
+              timing: "Lab",
+              content:
+                "**Mac / Linux:** Open Terminal in Cursor. `pwd` shows your current folder. `cd Documents` enters Documents (if it exists). `cd ..` goes up. `cd ~` jumps to your home folder. `ls -la` lists all files including hidden ones.\n\n**Windows PowerShell:** Same flow — `Get-Location`, `cd Documents`, `cd ..`, `cd ~`. Use `dir` instead of `ls` if `ls` is not aliased. Right-click the terminal tab → select PowerShell if you see cmd and want PowerShell.\n\n**Cursor tip:** File → Open Folder sets your project root; open the terminal and `pwd` — you should land inside or near that folder.",
+              code: {
+                lang: "powershell",
+                snippet:
+                  "# Windows PowerShell — same ideas\nGet-Location\ndir\ncd Documents\nmkdir codemoldova-week3\ncd codemoldova-week3\nNew-Item notes.txt\npython --version",
+              },
+              task: "Navigate from your home folder into a folder you use for this course. Run pwd/Get-Location at the start and end.",
+            },
+            {
+              title: "Practice 1 — Folder tour",
+              timing: "Practice",
+              content:
+                "Build muscle memory: create a week 3 workspace from scratch using only the terminal.",
+              task: "From your home folder: (1) mkdir codemoldova-week3 if it does not exist, (2) cd into it, (3) run pwd/Get-Location and confirm the path ends with codemoldova-week3, (4) ls/dir and confirm the folder is empty (or list what is there).",
+              code: {
+                lang: "bash",
+                snippet: "cd ~\nmkdir -p codemoldova-week3\ncd codemoldova-week3\npwd\nls",
+              },
+            },
+            {
+              title: "Practice 2 — Create and read a file",
+              timing: "Practice",
+              content:
+                "Files created in the terminal show up instantly in Cursor’s file tree. No Save As dialog required.",
+              task: "Inside codemoldova-week3: (1) create notes.txt, (2) add one line with your name — Mac/Linux: echo \"Your Name\" > notes.txt · PowerShell: Set-Content notes.txt \"Your Name\", (3) cat/Get-Content notes.txt and confirm the text printed.",
+              code: {
+                lang: "bash",
+                snippet: 'touch notes.txt\necho "Ada" > notes.txt\ncat notes.txt',
+              },
+            },
+            {
+              title: "Practice 3 — Run Python from the terminal",
+              timing: "Practice",
+              content:
+                "Notebooks are not the only way to run Python. Scripts and Thursday’s CLI tool run here.",
+              task: "(1) python3 --version (or python --version on Windows). (2) Run a one-liner: python3 -c \"print('hello from terminal')\". (3) pip show requests or pip list | head — confirm pip responds (install requests first if needed).",
+              code: {
+                lang: "bash",
+                snippet: 'python3 --version\npython3 -c "print(\'hello from terminal\')"\npip show requests',
+              },
             },
           ],
+          labCheatsheet: {
+            title: "Terminal quick reference",
+            content: "Keep this open while you practice. Same jobs on every OS — different spellings.",
+            sections: [
+              {
+                title: "Navigation",
+                methods: [
+                  { name: "pwd / Get-Location", desc: "Print current folder path" },
+                  { name: "ls / dir", desc: "List files and folders here" },
+                  { name: "cd folder", desc: "Move into a folder" },
+                  { name: "cd ..", desc: "Move up one level" },
+                  { name: "cd ~", desc: "Jump to home directory" },
+                ],
+              },
+              {
+                title: "Files & folders",
+                methods: [
+                  { name: "mkdir name", desc: "Create a new folder" },
+                  { name: "touch file / New-Item file", desc: "Create an empty file" },
+                  { name: "cat file / Get-Content file", desc: "Print file contents to the terminal" },
+                ],
+              },
+              {
+                title: "Python & tools",
+                methods: [
+                  { name: "python3 script.py", desc: "Run a Python file" },
+                  { name: "python3 -c \"...\"", desc: "Run one line of Python" },
+                  { name: "pip install package", desc: "Install a Python library" },
+                  { name: "export VAR=val", desc: "Set env var (Mac/Linux); PowerShell: $env:VAR=\"val\"" },
+                ],
+              },
+            ],
+          },
+          challengeTab: {
+            title: "Terminal scavenger hunt",
+            content:
+              "One challenge that ties everything together — no new commands, just combine navigation, files, and Python. Show a mentor your terminal when done (or post pwd output in WhatsApp).",
+            task:
+              "Starting from your home folder (`cd ~`): (1) cd into your codemoldova-week3 folder (create it if missing). (2) mkdir data inside it. (3) Create data/me.txt with your first name inside. (4) Run python3 -c \"print('challenge complete')\" from codemoldova-week3. (5) Run pwd and ls/dir data — your output should show the data folder and me.txt.",
+            hints: [
+              "Mac/Linux file: echo \"Mira\" > data/me.txt (after mkdir data).",
+              "PowerShell: Set-Content data/me.txt \"Mira\".",
+              "If python3 fails on Windows, try python instead.",
+              "Wrong folder? pwd first, then cd to fix before continuing.",
+            ],
+          },
           homework: {
-            title: "Function practice",
-            desc: "Create week3_functions.ipynb or functions_lab.py.",
+            title: "Terminal reps before Thursday",
+            desc: "Five minutes a day beats one long cram session. You will need these commands for the CLI build on Thursday.",
             tasks: [
-              "Three related functions for a tiny grade calculator (average, letter_grade).",
-              "Include two assert-style checks using plain if/raise or assert in a __main__ block.",
-              "Optional: type hints def add(a: int, b: int) -> int:",
+              "Open Cursor, open the terminal, cd to your course folder, run ls/dir — do it twice without looking at notes.",
+              "Create a new folder practice-thu and a file idea.txt with one sentence about your CLI tool idea.",
+              "Optional: run clear/cls, then pwd → cd → ls in order from memory.",
             ],
           },
         },
