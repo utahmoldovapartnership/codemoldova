@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "node --test src/lib/courseAccess.test.js",
+    "test": "node --test src/lib/courseAccess.test.js src/lib/lessonMarkdown.test.js src/data/curriculum.test.js",
     "test:security": "npm run build && node --test scripts/course-access-security.test.mjs"
   },
   "dependencies": {

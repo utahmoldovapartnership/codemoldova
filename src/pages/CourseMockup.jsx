@@ -9,7 +9,7 @@
 
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { phases } from '../data/curriculum'
+import { getWeekLabel, phases } from '../data/curriculum'
 import { sessions } from '../data/schedule'
 import PixelIcon from '../components/PixelIcon'
 import { formatWeekRangeString } from '../lib/formatWeekDateRange.js'
@@ -162,7 +162,7 @@ function ThisWeekHero({ status, currentWeek }) {
 
 function WeekRow({ weekNum, isCurrent, isOpen, onToggle }) {
   const weekSessions = getSessionsForWeek(weekNum)
-  const monTitle = weekSessions.mon?.label ?? '—'
+  const weekTitle = getWeekLabel(weekNum)
 
   return (
     <li className={`border-b border-hairline ${isCurrent ? 'bg-val/[0.04]' : ''}`}>
@@ -178,7 +178,7 @@ function WeekRow({ weekNum, isCurrent, isOpen, onToggle }) {
         </span>
         <span className="flex min-w-0 flex-1 items-center justify-between gap-3 sm:gap-4">
           <span className="min-w-0 flex-1 font-serif text-xl leading-tight tracking-tight sm:text-3xl">
-            {monTitle}
+            {weekTitle}
           </span>
           <PixelIcon
             icon="arrow"

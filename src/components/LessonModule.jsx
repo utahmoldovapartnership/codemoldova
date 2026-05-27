@@ -1,4 +1,5 @@
 import CodeBlock from './CodeBlock'
+import LessonRichText from './LessonRichText.jsx'
 
 const TRY_DAY = {
   mon: { box: 'mt-7 border-l-4 border-ube bg-ube/[0.08] px-5 py-4' },
@@ -49,13 +50,13 @@ export default function LessonModule({ steps, variant = 'paper', noRounded = fal
           >
             {step.title}
           </h2>
-          <p
-            className={`mt-5 max-w-prose whitespace-pre-line text-pretty text-base leading-[1.7] sm:text-[17px] ${
-              ink ? 'text-paper/85' : 'text-ink/70'
-            }`}
-          >
-            {step.content}
-          </p>
+          {step.content ? (
+            <LessonRichText
+              text={step.content}
+              tone={ink ? 'ink' : 'default'}
+              className="mt-5 max-w-prose text-pretty text-base sm:text-[17px]"
+            />
+          ) : null}
 
           {step.video?.youtubeId ? (
             <div className="mt-6 space-y-2">
@@ -137,7 +138,9 @@ export default function LessonModule({ steps, variant = 'paper', noRounded = fal
                 }`}
               >
                 {step.tips.map((t, tIdx) => (
-                  <li key={tIdx}>{t}</li>
+                  <li key={tIdx}>
+                    <LessonRichText text={t} tone={ink ? 'ink' : 'default'} />
+                  </li>
                 ))}
               </ul>
             </div>
@@ -151,7 +154,11 @@ export default function LessonModule({ steps, variant = 'paper', noRounded = fal
 
           {step.task ? (
             <div className={ink ? 'mt-7 border-l-4 border-sun/70 bg-sun/10 px-5 py-4' : dayTry.box}>
-              <p className={`text-base leading-relaxed ${ink ? 'text-paper/90' : 'text-ink/80'}`}>{step.task}</p>
+              <LessonRichText
+                text={step.task}
+                tone={ink ? 'ink' : 'task'}
+                className="text-base leading-relaxed"
+              />
             </div>
           ) : null}
         </div>

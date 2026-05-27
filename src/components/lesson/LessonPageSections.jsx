@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import CodeBlock from '../CodeBlock.jsx'
+import LessonRichText from '../LessonRichText.jsx'
 import PixelIcon from '../PixelIcon.jsx'
 
 export function SectionKicker({ kicker, className = '' }) {
@@ -84,12 +85,9 @@ export function LessonSectionGoal({ goal, dayMeta }) {
     <section className="border-t border-hairline py-14 sm:py-16">
       <div className="w-full">
         <SectionKicker kicker="Today's goal" />
-        <p
-          className="mt-4 max-w-prose border-l-4 pl-6 text-lg font-normal leading-relaxed text-ink sm:text-xl"
-          style={{ borderColor: dayMeta.swatch }}
-        >
-          {goal}
-        </p>
+        <div className="mt-4 max-w-prose border-l-4 pl-6" style={{ borderColor: dayMeta.swatch }}>
+          <LessonRichText text={goal} className="text-lg font-normal leading-relaxed sm:text-xl" />
+        </div>
       </div>
     </section>
   )
@@ -132,7 +130,9 @@ export function LessonMainPoints({ points, embedded = false }) {
                 </span>
                 <div>
                   <h3 className="font-serif text-2xl font-medium tracking-tight text-ink">{p.title}</h3>
-                  {p.body ? <p className="mt-2 text-base leading-relaxed text-ink/80">{p.body}</p> : null}
+                  {p.body ? (
+                    <LessonRichText text={p.body} className="mt-2 text-base leading-relaxed" />
+                  ) : null}
                 </div>
               </div>
             </li>
@@ -189,18 +189,6 @@ export function LessonArtifacts({ artifacts, dayKey = 'wed' }) {
   )
 }
 
-const LAB_DAY = {
-  mon: {
-    btnPlaceholder: 'border-dashed border-ube/70 text-ube',
-  },
-  wed: {
-    btnPlaceholder: 'border-dashed border-sun/70 text-sun',
-  },
-  thu: {
-    btnPlaceholder: 'border-dashed border-val/60 text-val',
-  },
-}
-
 /**
  * @param {{ href: string, label: string, downloadFilename?: string | null }[]} [props.labDownloads]
  * @param {{ title: string, intro?: string, exampleHref?: string, exampleLabel?: string, exampleDownloadFilename?: string | null, durationLabel?: string, dayKey?: 'mon' | 'wed' | 'thu', children: import('react').ReactNode, collapsible?: boolean, contained?: boolean }} props
@@ -219,7 +207,6 @@ export function LessonLabBand({
   contained = false,
 }) {
   if (children == null) return null
-  const t = LAB_DAY[dayKey] ?? LAB_DAY.wed
   const labExampleHover = lessonDayHoverButtonClass(dayKey)
   const kicker = durationLabel?.trim() ? `Lab · ${durationLabel.trim()}` : 'Lab'
   const bandClass = contained
@@ -231,7 +218,9 @@ export function LessonLabBand({
     <div className="min-w-0 flex-1">
       <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">{kicker}</p>
       <h2 className="mt-3 font-serif text-3xl font-medium tracking-tight sm:text-5xl">{title}.</h2>
-      {intro ? <p className="mt-3 max-w-prose font-body text-sm leading-relaxed text-ink/65 sm:text-base">{intro}</p> : null}
+      {intro ? (
+        <LessonRichText text={intro} tone="muted" className="mt-3 max-w-prose font-body text-sm sm:text-base" />
+      ) : null}
     </div>
   )
 
@@ -243,9 +232,9 @@ export function LessonLabBand({
 
   const bodyBlock = (
     <>
-      <div className="mt-6 flex flex-wrap gap-3">
-        {downloadItems.length ? (
-          downloadItems.map((d) => (
+      {downloadItems.length ? (
+        <div className="mt-6 flex flex-wrap gap-3">
+          {downloadItems.map((d) => (
             <a
               key={`${d.href}-${d.label}`}
               href={d.href}
@@ -257,15 +246,9 @@ export function LessonLabBand({
               <span>{d.label}</span>
               <span className="sr-only">{d.downloadFilename ? ' (downloads a file)' : ' (opens in a new tab)'}</span>
             </a>
-          ))
-        ) : (
-          <span
-            className={`inline-flex min-h-11 items-center border px-4 font-mono text-xs uppercase tracking-[0.22em] ${t.btnPlaceholder}`}
-          >
-            Lab downloads coming soon
-          </span>
-        )}
-      </div>
+          ))}
+        </div>
+      ) : null}
       <div className="mt-10">{children}</div>
     </>
   )
@@ -389,14 +372,14 @@ export function LessonBuildTrackPanel({ track, dayKey = 'thu', omitDownload = fa
       {task ? (
         <div className={showDownload ? 'border-t border-hairline pt-8' : ''}>
           <SectionKicker kicker="Your task" />
-          <p className="mt-3 max-w-prose whitespace-pre-line text-pretty text-base leading-relaxed text-ink/85 sm:text-[17px]">
+          <div className="mt-3 max-w-prose text-pretty text-base leading-relaxed text-ink/85 sm:text-[17px]">
             {taskBoldLead ? (
               <>
                 <strong className="font-semibold text-ink">{taskBoldLead}</strong>{' '}
               </>
             ) : null}
-            {task}
-          </p>
+            <LessonRichText text={task} as="span" inline />
+          </div>
         </div>
       ) : null}
 
@@ -422,7 +405,7 @@ export function LessonBuildTrackPanel({ track, dayKey = 'thu', omitDownload = fa
             {focus.map((line) => (
               <li key={line} className="flex items-start gap-3 font-body text-base leading-relaxed text-ink/85">
                 <PixelIcon icon="check" size={14} className="mt-1 shrink-0 text-val" />
-                <span>{line}</span>
+                <LessonRichText text={line} />
               </li>
             ))}
           </ul>
@@ -435,7 +418,7 @@ export function LessonBuildTrackPanel({ track, dayKey = 'thu', omitDownload = fa
           <ul className="mt-4 space-y-3 border-l-4 border-val bg-val/[0.06] py-4 pl-5 pr-4">
             {hints.map((h) => (
               <li key={h} className="font-body text-base leading-relaxed text-ink/90">
-                {h}
+                <LessonRichText text={h} />
               </li>
             ))}
           </ul>
@@ -452,7 +435,7 @@ export function LessonBuildTrackPanel({ track, dayKey = 'thu', omitDownload = fa
             {goBeyond.map((line) => (
               <li key={line} className="flex items-start gap-3 font-body text-base leading-relaxed text-ink/85">
                 <PixelIcon icon="sparkle" size={14} className="mt-1 shrink-0 text-sun" />
-                <span>{line}</span>
+                <LessonRichText text={line} />
               </li>
             ))}
           </ul>
@@ -487,7 +470,7 @@ export function LessonLabChallenge({ challenge, dayKey = 'wed', embedded = false
         <SectionKicker kicker={kicker} />
         <h2 className="mt-2 font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">{h2}</h2>
         {challenge.content ? (
-          <p className="mt-4 max-w-prose text-base leading-relaxed text-ink/75 sm:text-[17px]">{challenge.content}</p>
+          <LessonRichText text={challenge.content} tone="muted" className="mt-4 max-w-prose text-base sm:text-[17px]" />
         ) : null}
         {challenge.code?.snippet ? (
           <div className="mt-6">
@@ -496,14 +479,16 @@ export function LessonLabChallenge({ challenge, dayKey = 'wed', embedded = false
         ) : null}
         <div className={tryBox}>
           <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink/50">Your task</p>
-          <p className="mt-3 text-base leading-relaxed text-ink/85">{task}</p>
+          <LessonRichText text={task} tone="task" className="mt-3 text-base leading-relaxed" />
         </div>
         {challenge.hints?.length ? (
           <div className="mt-6 border border-hairline/50 bg-paper px-5 py-4">
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink/50">Hints</p>
             <ul className="mt-3 list-disc space-y-2 pl-5 text-sm leading-relaxed text-ink/80">
               {challenge.hints.map((hint, i) => (
-                <li key={i}>{hint}</li>
+                <li key={i}>
+                  <LessonRichText text={hint} />
+                </li>
               ))}
             </ul>
           </div>
@@ -531,7 +516,7 @@ export function LessonLabCheatsheet({ cheatsheet, embedded = false }) {
         <SectionKicker kicker="Cheatsheet" />
         <h2 className="mt-2 font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">{h2}</h2>
         {cheatsheet.content ? (
-          <p className="mt-4 max-w-prose text-base leading-relaxed text-ink/75 sm:text-[17px]">{cheatsheet.content}</p>
+          <LessonRichText text={cheatsheet.content} tone="muted" className="mt-4 max-w-prose text-base sm:text-[17px]" />
         ) : null}
         <div className="mt-8 space-y-8">
           {sections.map((section) => (
@@ -541,7 +526,9 @@ export function LessonLabCheatsheet({ cheatsheet, embedded = false }) {
                 {section.methods.map((m) => (
                   <div key={m.name} className="grid gap-1 border-b border-hairline/40 pb-3 last:border-0 last:pb-0 sm:grid-cols-[minmax(0,11rem)_1fr] sm:gap-4">
                     <dt className="font-mono text-sm text-mon">{m.name}</dt>
-                    <dd className="text-sm leading-relaxed text-ink/80">{m.desc}</dd>
+                    <dd className="text-sm leading-relaxed text-ink/80">
+                      <LessonRichText text={m.desc} />
+                    </dd>
                   </div>
                 ))}
               </dl>
@@ -581,7 +568,9 @@ export function LessonChallengesAccordion({ challenges, embedded = false }) {
                   ▾
                 </span>
               </summary>
-              <p className="px-2 pb-6 pt-2 font-body text-base leading-relaxed text-ink/80 sm:px-3">{c.desc}</p>
+              <div className="px-2 pb-6 pt-2 font-body text-base leading-relaxed text-ink/80 sm:px-3">
+                <LessonRichText text={c.desc} />
+              </div>
             </details>
           ))}
         </div>
@@ -605,12 +594,14 @@ export function LessonHomework({ homework, embedded = false }) {
         <h2 id={embedded ? undefined : 'hw-heading'} className="mt-2 font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">
           {h2}
         </h2>
-        {homework.desc ? <p className="mt-4 max-w-prose text-base text-ink/70 sm:text-base">{homework.desc}</p> : null}
+        {homework.desc ? (
+          <LessonRichText text={homework.desc} tone="muted" className="mt-4 max-w-prose text-base sm:text-base" />
+        ) : null}
         <ul className="mt-6 space-y-3">
           {homework.tasks.map((t, i) => (
             <li key={i} className="flex items-start gap-4 border-b border-hairline/50 pb-3">
               <PixelIcon icon="sparkle" size={12} className="mt-1 shrink-0 text-val" />
-              <span className="font-body text-base leading-relaxed text-ink/85 sm:text-lg">{t}</span>
+              <LessonRichText text={t} as="span" inline className="font-body text-base leading-relaxed text-ink/85 sm:text-lg" />
             </li>
           ))}
         </ul>
@@ -629,7 +620,7 @@ export function LessonMistakes({ mistakes }) {
           {mistakes.map((m, i) => (
             <li key={i} className="flex items-start gap-4 border-l-4 border-val bg-val/[0.06] px-5 py-4 font-body text-base leading-relaxed text-ink/90">
               <span aria-hidden className="font-mono text-sm font-bold text-val">!</span>
-              <span>{m}</span>
+              <LessonRichText text={m} as="span" inline />
             </li>
           ))}
         </ul>
@@ -744,7 +735,9 @@ export function LessonPostClass({ postClass, embedded = false, titleId = 'lesson
         >
           {postClass.title || 'Optional deep-dives'}
         </h2>
-        {postClass.desc ? <p className="mt-4 max-w-prose text-base text-ink/70">{postClass.desc}</p> : null}
+        {postClass.desc ? (
+          <LessonRichText text={postClass.desc} tone="muted" className="mt-4 max-w-prose text-base" />
+        ) : null}
         <ul className="mt-6 space-y-2">
           {postClass.links.map((link) => {
             const anchorProps = postClassLinkProps(link)

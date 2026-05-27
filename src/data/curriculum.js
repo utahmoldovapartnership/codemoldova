@@ -1,4 +1,5 @@
 import { sessionResourcesFor } from './sessionResources.js'
+import { sessions } from './schedule.js'
 
 export const phases = [
   {
@@ -751,6 +752,7 @@ END`,
       },
       {
         num: 3,
+        label: "Terminal & scripts",
         mon: {
           title: "Terminal basics",
           date: "May 25",
@@ -1868,6 +1870,22 @@ END`,
   },
 
 ]
+
+/** Display title for a week row on the course page (not the same as a single session title). */
+export function getWeekLabel(weekNum) {
+  const w = Number(weekNum)
+  if (!Number.isFinite(w)) return ''
+  for (const phase of phases) {
+    for (const week of phase.weeks) {
+      if (week.num === w) {
+        if (typeof week.label === 'string' && week.label.trim()) return week.label.trim()
+        break
+      }
+    }
+  }
+  const mon = sessions.find((s) => s.week === w && s.day === 'mon')
+  return mon?.label?.trim() || `Week ${w}`
+}
 
 /** Load a single session (mon | wed | thu) for a week number from the curriculum tree. */
 export function getSessionByWeekAndDay(weekNum, dayKey) {

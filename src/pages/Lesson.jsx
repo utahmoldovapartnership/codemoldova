@@ -6,6 +6,7 @@ import LessonModule from '../components/LessonModule'
 import { getSessionByWeekAndDay } from '../data/curriculum'
 import { getAdjacentSessions, sessions } from '../data/schedule'
 import { formatSessionDateLine } from '../lib/formatWeekDateRange.js'
+import LessonRichText from '../components/LessonRichText.jsx'
 import {
   LessonArtifacts,
   LessonBuildTrackPanel,
@@ -381,7 +382,7 @@ function LessonTabbedBody({
               <>
                 <LessonStarterNotebookDownload track={buildTracks.beginner} dayKey={dayKey} />
                 {buildIntro ? (
-                  <p className="mb-8 max-w-prose text-base leading-relaxed text-ink/80 sm:text-[17px]">{buildIntro}</p>
+                  <LessonRichText text={buildIntro} className="mb-8 max-w-prose text-base sm:text-[17px]" />
                 ) : null}
                 <LessonBuildTrackPanel track={buildTracks.beginner} dayKey={dayKey} omitDownload />
               </>
@@ -390,7 +391,7 @@ function LessonTabbedBody({
               <>
                 <LessonStarterNotebookDownload track={buildTracks.advanced} dayKey={dayKey} />
                 {buildIntro ? (
-                  <p className="mb-8 max-w-prose text-base leading-relaxed text-ink/80 sm:text-[17px]">{buildIntro}</p>
+                  <LessonRichText text={buildIntro} className="mb-8 max-w-prose text-base sm:text-[17px]" />
                 ) : null}
                 <LessonBuildTrackPanel track={buildTracks.advanced} dayKey={dayKey} omitDownload />
               </>
