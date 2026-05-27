@@ -1,5 +1,4 @@
 import { Fragment } from 'react'
-import { Link } from 'react-router-dom'
 import heroAccent from '../assets/home-ornaments/2-1.svg'
 import LazyInView from '../components/LazyInView.jsx'
 import PixelIcon from '../components/PixelIcon.jsx'
@@ -20,7 +19,7 @@ import {
  * Home marketing palette (Tailwind: paper, ink, dart, val, sun, ube):
  * - White paper: page bg, type on dart (WhatsApp CTA block, marquee).
  * - Black ink: copy; rules use `border-hairline` (light gray).
- * - Dartmouth dart: marquee band, View course CTA fill, WhatsApp section bg.
+ * - Dartmouth dart: marquee band, Enroll today CTA fill, WhatsApp section bg.
  * - Valentine val: accent hero pill, italics, outcome checks, Thu pillar.
  * - Sunshade sun: marquee hearts, Wed pillar, WhatsApp CTA label accent + Join WhatsApp button.
  * - Bright Ube ube: Mon pillar bar + icon only.
@@ -182,13 +181,15 @@ function Hero() {
 
       <ScrollReveal className="mt-10" delayMs={260} rootMargin="0px 0px 12% 0px">
         <div className="flex flex-wrap gap-3">
-          <Link
-            to="/course"
+          <a
+            href="https://ivorycenter.md/en/codemoldova/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="hm-btn-dart inline-flex min-h-12 items-center gap-3 px-7 font-mono text-xs uppercase tracking-[0.25em]"
           >
-            <span>View course</span>
+            <span>Enroll today</span>
             <PixelIcon icon="arrow" size={12} className="text-current" />
-          </Link>
+          </a>
           <a
             href={whatsappInviteUrl}
             target="_blank"
