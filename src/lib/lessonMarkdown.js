@@ -67,7 +67,13 @@ export function parseInlineMarkdown(text) {
     if (text.startsWith('**', i)) {
       const end = text.indexOf('**', i + 2)
       if (end !== -1) {
-        out.push({ type: 'bold', value: text.slice(i + 2, end) })
+        const inner = text.slice(i + 2, end)
+        // **`print()`** — parse inner backticks as code, not literal ` inside <strong>
+        if (inner.includes('`')) {
+          out.push(...parseInlineMarkdown(inner))
+        } else {
+          out.push({ type: 'bold', value: inner })
+        }
         i = end + 2
         continue
       }
@@ -150,4 +156,35 @@ export function parseLessonBlocks(text) {
   }
 
   return blocks
+}
+
+/**
+ * Split a main-point string into title + optional body for LessonMainPoints.
+ * Ignores `.` `!` `?` inside `inline code` so `.py` does not break the title.
+ *
+ * @param {string} text
+ * @returns {{ title: string, body: string }}
+ */
+export function splitMainPoint(text) {
+  const trimmed = typeof text === 'string' ? text.trim() : ''
+  if (!trimmed) return { title: '', body: '' }
+
+  let inBackticks = false
+  for (let i = 0; i < trimmed.length; i += 1) {
+    if (trimmed[i] === '`') {
+      inBackticks = !inBackticks
+      continue
+    }
+    if (inBackticks || !'.!?'.includes(trimmed[i])) continue
+
+    const after = trimmed.slice(i + 1)
+    if (after.length > 0 && !/^\s/.test(after)) continue
+
+    return {
+      title: trimmed.slice(0, i + 1).trim(),
+      body: after.trim(),
+    }
+  }
+
+  return { title: trimmed, body: '' }
 }

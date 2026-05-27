@@ -153,8 +153,11 @@ export const phases = [
               links: [{ label: "Day 2 survey (Google Form)", href: "https://forms.gle/g4t91p4uhowXa1CD6" }],
             },
             {
-              title: "Review: variables and strings",
-              content: "Quick recall from Monday: a variable is a name for a value; a string is text in quotes. We will reuse print(), assignment, and input() all hour.",
+              title: "Quick review — variables and strings",
+              timing: "Lab",
+              outlineColor: "ube",
+              content:
+                "From Monday:\n\n- **Variable** — name for a value (`name = 'Ada'`)\n- **String** — text in quotes\n- **print()** and **input()** — show output and ask the user a question\n\nWe reuse these all hour.",
               task: "In the notebook §1, run the review cell and change one string so the output uses your name.",
             },
             {
@@ -339,6 +342,14 @@ END`,
           labDataDownload: "week2_animals.csv",
           labDataLabel: "Download animal data (.csv)",
           steps: [
+            {
+              title: "Quick review — Week 1 Python",
+              timing: "Lab",
+              outlineColor: "val",
+              content:
+                "From Week 1:\n\n- **print()** and **input()**\n- **Variables** and **f-strings** — `print(f'Hi, {name}')`\n- **if**, **for**, **while**, and **def** — you will use these with data today",
+              task: "Without opening old files: explain to a partner what `input()` returns (type included).",
+            },
             {
               title: "Imports & important libraries",
               timing: "Lab",
@@ -527,6 +538,14 @@ END`,
             url: "https://docs.google.com/presentation/d/18PTPCEFhMq_xJ9R2LSr91CPS3tFr6oGGNMCBq9BOwq0/edit?usp=sharing",
           },
           steps: [
+            {
+              title: "Quick review — data structures",
+              timing: "Lab",
+              outlineColor: "ube",
+              content:
+                "From Monday:\n\n- **List** — ordered, mutable — `animals[0]`, `.append()`\n- **Dict** — keys and values — `pet[\"name\"]`\n- **DataFrame** — table from CSV — `pd.read_csv()`, `df[df[\"col\"] == value]`",
+              task: "Name one question you can answer faster with a DataFrame than with a plain list.",
+            },
             {
               title: "How a request works",
               timing: "Lab",
@@ -756,11 +775,25 @@ END`,
         mon: {
           title: "Terminal basics",
           date: "May 25",
-          desc: "Workshop 1: the terminal is how developers move through folders, run programs, install tools, and talk to Git. Today is not about memorizing every flag — it is about getting comfortable navigating with text commands on Mac/Linux (Terminal/zsh) or Windows (PowerShell). Work through the lab steps, then finish the three practice tasks and the Challenge tab before Thursday’s CLI build.",
-          preview: "Why the terminal · everyday uses · common commands · cd/ls/pwd · PowerShell vs bash · 3 practices · 1 challenge.",
-          goal: "Leave class able to open a terminal, know where you are (pwd), move between folders (cd), list files (ls/dir), create folders and files, and run python3 and pip from the command line — on your OS.",
+          desc: "Workshop 1: learn the terminal — the text interface you will use all week. **Wednesday** you run Python scripts (including a headline scraper). **Thursday** you schedule a hands-free script with cron. Today: navigation, files, and `python3` from the command line in `codemoldova-week3`.",
+          preview: "Why terminal · cd/ls/pwd · create codemoldova-week3 · run Python · prep for Wed scripts + Thu daily schedule.",
+          goal: "Leave class comfortable in the terminal: pwd, cd, ls/dir, create files, and run `python3` from `~/codemoldova-week3` — ready for Wednesday’s scripts and Thursday’s daily automation.",
+          mainPoints: [
+            "The terminal is how you run `.py` scripts — not only notebooks.",
+            "Use `codemoldova-week3` as your project folder for the rest of this week.",
+            "Wednesday: scripts with `input()` you run by hand. Thursday: same idea, no inputs, on a daily schedule.",
+            "Mac students will use a venv for pip installs starting Wednesday — today just learn `cd` and `python3`.",
+          ],
           labDurationLabel: "50 min",
           steps: [
+            {
+              title: "Quick review — Python so far",
+              timing: "Lab",
+              outlineColor: "val",
+              content:
+                "From Weeks 1–2 (notebooks):\n\n- **print()** and **input()**\n- **Variables**, **if**, **loops**, **functions**\n- **pip install** for libraries like `pandas` and `requests`\n\nToday you run Python from the **terminal** instead of cells.",
+              task: "Run `python3 --version` and `python3 -c \"print('ready for terminal week')\"` once.",
+            },
             {
               title: "Why the terminal matters",
               timing: "Lab",
@@ -772,7 +805,7 @@ END`,
               title: "Why you need to know it",
               timing: "Lab",
               content:
-                "You already hit the terminal for `pip install`, `export GEMINI_API_KEY=...`, and running notebooks. This week you will build a **CLI tool on Thursday** — that only exists in the terminal. Week 6 is Git from the command line. You cannot click your way through those. The terminal also fails **loudly**: error messages tell you exactly what broke, which makes debugging faster once you learn to read them.",
+                "You already used the terminal for `pip install`, `export GEMINI_API_KEY=...`, and notebooks. **This week:**\n\n- **Wednesday** — run Python **scripts** from the terminal (`python3 my_script.py`), install libraries, scrape headlines\n- **Thursday** — ship a script with **no** `input()` and schedule it to run **every day** (cron on Mac)\n\nWeek 6 is Git from the command line — same habit. The terminal fails **loudly**: read the error, paste it into Claude or Cursor, fix one thing, run again.",
               links: [
                 {
                   label: "MDN — Command line overview",
@@ -785,14 +818,14 @@ END`,
               title: "How it is used most often",
               timing: "Lab",
               content:
-                "Same five jobs, every project:\n\n1. **Navigate** — cd into your project folder\n2. **Inspect** — ls/dir to see files\n3. **Run** — python3 script.py or npm run dev\n4. **Install** — pip install, npm install\n5. **Configure** — export API keys, git config\n\nYou type short commands instead of clicking through folders. Scripts and tutorials assume you can do these without a GUI.",
+                "Same five jobs, every project:\n\n1. **Navigate** — `cd` into `codemoldova-week3`\n2. **Inspect** — `ls` / `dir` to see `.py` files and `data/`\n3. **Run** — `python3 script.py` (Wednesday and Thursday)\n4. **Install** — `pip install` inside your venv (Wednesday; Mac setup on the lesson)\n5. **Configure** — export API keys, edit `crontab` (Thursday)\n\nYou type commands instead of clicking through folders. This week’s scripts and scraper all assume you can do 1–3 without a GUI.",
               task: "In your own words: what is the difference between “opening a file in Cursor” and “running a file from the terminal”?",
             },
             {
               title: "Common commands",
               timing: "Lab",
               content:
-                "Mac/Linux (bash/zsh) and Windows (PowerShell) use different names for the same ideas:\n\n| Job | Mac / Linux | Windows PowerShell |\n|-----|-------------|-------------------|\n| Where am I? | pwd | Get-Location (or pwd) |\n| List files | ls | dir (or ls) |\n| Change folder | cd path | cd path |\n| Go up one level | cd .. | cd .. |\n| Make folder | mkdir name | mkdir name |\n| Make empty file | touch name.txt | New-Item name.txt |\n| Show file contents | cat file.txt | Get-Content file.txt |\n| Clear screen | clear | cls |\n| Run Python | python3 file.py | python file.py |\n| Install package | pip install pkg | pip install pkg |\n\nPaths: Mac/Linux use `/Users/you/...`; Windows uses `C:\\Users\\you\\...`. Use Tab to autocomplete folder names.",
+                "Mac/Linux (bash/zsh) and Windows (PowerShell) use different names for the same ideas:\n\n| Job | Mac / Linux | Windows PowerShell |\n|-----|-------------|-------------------|\n| Where am I? | pwd | Get-Location (or pwd) |\n| List files | ls | dir (or ls) |\n| Change folder | cd path | cd path |\n| Go up one level | cd .. | cd .. |\n| Make folder | mkdir name | mkdir name |\n| Make empty file | touch name.txt | New-Item name.txt |\n| Show file contents | cat file.txt | Get-Content file.txt |\n| Clear screen | clear | cls |\n| Run Python | python3 file.py | python file.py |\n| Install package | venv + pip (see Wed) | pip install pkg |\n\nPaths: Mac/Linux use `/Users/you/...`; Windows uses `C:\\Users\\you\\...`. Use Tab to autocomplete folder names.",
               code: {
                 lang: "bash",
                 snippet:
@@ -816,7 +849,7 @@ END`,
               title: "Practice 1 — Folder tour",
               timing: "Practice",
               content:
-                "Build muscle memory: create a week 3 workspace from scratch using only the terminal.",
+                "Build muscle memory: create this week’s workspace from scratch using only the terminal. You will use this folder for every script through Thursday.",
               task: "From your home folder: (1) mkdir codemoldova-week3 if it does not exist, (2) cd into it, (3) run pwd/Get-Location and confirm the path ends with codemoldova-week3, (4) ls/dir and confirm the folder is empty (or list what is there).",
               code: {
                 lang: "bash",
@@ -838,18 +871,27 @@ END`,
               title: "Practice 3 — Run Python from the terminal",
               timing: "Practice",
               content:
-                "Notebooks are not the only way to run Python. Scripts and Thursday’s CLI tool run here.",
-              task: "(1) python3 --version (or python --version on Windows). (2) Run a one-liner: python3 -c \"print('hello from terminal')\". (3) pip show requests or pip list | head — confirm pip responds (install requests first if needed).",
+                "Notebooks are not the only way to run Python. **Wednesday** you run `.py` files from here; **Thursday** you test the exact command cron will use.",
+              task: "From `codemoldova-week3`: (1) `python3 --version` (Windows: try `python`). (2) `python3 -c \"print('hello from terminal')\"`. (3) Say out loud what command you will use Wednesday to run a script file.",
               code: {
                 lang: "bash",
-                snippet: 'python3 --version\npython3 -c "print(\'hello from terminal\')"\npip show requests',
+                snippet:
+                  "cd ~/codemoldova-week3\npython3 --version\npython3 -c \"print('hello from terminal')\"\n# Wednesday you will run: python3 my_automation.py",
               },
             },
           ],
           labCheatsheet: {
             title: "Terminal quick reference",
-            content: "Keep this open while you practice. Same jobs on every OS — different spellings.",
+            content: "Keep this open Mon–Thu. Same jobs on every OS — different spellings.",
             sections: [
+              {
+                title: "This week (Week 3)",
+                methods: [
+                  { name: "Mon (today)", desc: "Terminal + codemoldova-week3 folder" },
+                  { name: "Wed", desc: "Scripts, scraper, my_automation.py with input()" },
+                  { name: "Thu", desc: "Hands-free script + cron daily schedule" },
+                ],
+              },
               {
                 title: "Navigation",
                 methods: [
@@ -873,7 +915,7 @@ END`,
                 methods: [
                   { name: "python3 script.py", desc: "Run a Python file" },
                   { name: "python3 -c \"...\"", desc: "Run one line of Python" },
-                  { name: "pip install package", desc: "Install a Python library" },
+                  { name: "pip install (Wed)", desc: "Inside venv on Mac — see Wednesday lesson" },
                   { name: "export VAR=val", desc: "Set env var (Mac/Linux); PowerShell: $env:VAR=\"val\"" },
                 ],
               },
@@ -882,9 +924,9 @@ END`,
           challengeTab: {
             title: "Terminal scavenger hunt",
             content:
-              "One challenge that ties everything together — no new commands, just combine navigation, files, and Python. Show a mentor your terminal when done (or post pwd output in WhatsApp).",
+              "Combine navigation, files, and Python — same skills you need Wednesday and Thursday. Show a mentor when done (or post `pwd` in WhatsApp).",
             task:
-              "Starting from your home folder (`cd ~`): (1) cd into your codemoldova-week3 folder (create it if missing). (2) mkdir data inside it. (3) Create data/me.txt with your first name inside. (4) Run python3 -c \"print('challenge complete')\" from codemoldova-week3. (5) Run pwd and ls/dir data — your output should show the data folder and me.txt.",
+              "From `cd ~`: (1) `cd codemoldova-week3` (create if missing). (2) `mkdir data`. (3) Create `data/me.txt` with your first name. (4) `python3 -c \"print('challenge complete')\"`. (5) `pwd` and `ls data` — confirm `data/me.txt` exists. Thursday may save files under `data/` too.",
             hints: [
               "Mac/Linux file: echo \"Mira\" > data/me.txt (after mkdir data).",
               "PowerShell: Set-Content data/me.txt \"Mira\".",
@@ -893,235 +935,291 @@ END`,
             ],
           },
           homework: {
-            title: "Terminal reps before Thursday",
-            desc: "Five minutes a day beats one long cram session. You will need these commands to run your Python script from the terminal on Thursday.",
+            title: "Terminal reps before Wednesday",
+            desc: "Short practice so Wednesday and Thursday feel easy. You will live in `codemoldova-week3` for scripts, scraping, and cron.",
             tasks: [
-              "Open Cursor, open the terminal, cd to your course folder, run ls/dir — do it twice without looking at notes.",
-              "Create a new folder practice-thu and a file idea.txt with one sentence about your CLI tool idea.",
-              "Optional: run clear/cls, then pwd → cd → ls in order from memory.",
+              "Open terminal, `cd ~/codemoldova-week3`, `ls` — twice without looking at notes.",
+              "In `idea.txt` (anywhere in that folder), write two lines: (1) a script idea that asks you questions with `input()` for Wednesday, (2) what it should do every morning **without** typing for Thursday.",
+              "Optional: `pwd` → `cd` → `ls` from memory, then `clear` or `cls`.",
             ],
           },
         },
         wed: {
-          title: "Python scripts explained",
+          title: "Scripting",
           date: "May 27",
-          desc: "Workshop 2: notebooks are great for learning cell-by-cell — real projects are usually .py files you run from the terminal. Today we explain how a script is structured, how it differs from a notebook, and how to run one with python3 from your codemoldova-week3 folder. Download the starter script, work through the steps, then finish the practice script before Thursday’s build.",
-          preview: "Notebook vs .py · create a script · def + main() · if __name__ · run with python3 · data/ folder.",
-          goal: "Leave class able to create a .py file, organize code in functions, use if __name__ == \"__main__\", and run your script from the terminal with python3 script.py — no notebook required.",
+          desc: "Workshop 2: terminal review, scripts, why Python, Input→Process→Output, headline scraper, then build your own script with `input()` — you run it by hand today; Thursday schedules it.",
+          preview: "Review → scripts → why Python → 3-step model → install → scraper → build script with input().",
+          goal: "Leave class able to explain scripts in one sentence, describe input/process/output, and run a simple Python automation from the terminal.",
+          slideDeck: {
+            label: "Day 8 · Scripts slide deck",
+            url: "https://docs.google.com/presentation/d/13HmGRSDc4flNS4p2OcKUjz_0Qsjbp3ltVqVfKeBQhKk/edit?usp=sharing",
+          },
           labDurationLabel: "50 min",
-          labExampleUrl: "/lesson/week3_wed_script_starter.py",
-          labExampleDownload: "week3_wed_script_starter.py",
-          labExampleLabel: "Download script starter (.py)",
+          labExampleUrl: "/lesson/week3_wed_headline_scraper_example.py",
+          labExampleDownload: "week3_wed_headline_scraper_example.py",
+          labExampleLabel: "Download headline scraper example (.py)",
+          mainPoints: [
+            "A script is a `.py` file that runs top-to-bottom, usually from the terminal.",
+            "Python is great for scripting because it is readable, cross-platform, and quick to ship.",
+            "Use Input → Process → Output to plan every automation before coding.",
+            "Mac: one venv in `codemoldova-week3`, then `pip install` inside it.",
+            "Scraper: `requests` + BeautifulSoup → saves `.txt` and `.pdf` in Downloads.",
+            "Wednesday scripts use `input()` — you run them by hand. Thursday removes inputs and schedules them.",
+            "AI helps you build faster, but always run, test, and understand the code you keep.",
+          ],
           steps: [
             {
-              title: "Notebook vs script — two ways to run Python",
+              title: "Quick review — terminal basics",
               timing: "Lab",
+              outlineColor: "ube",
               content:
-                "**Notebook (.ipynb):** cells you run one at a time; great for demos and experiments; output appears under each cell.\n\n**Script (.py):** one file, top to bottom, run all at once from the terminal: `python3 myfile.py`. That is how Thursday’s build works and how most apps ship.\n\nSame language — different workflow. You already used both ideas: cells in Week 1–2, `python3 -c \"...\"` on Monday.",
-              task: "Say out loud: one thing you like about notebooks and one reason professionals still use .py files.",
+                "Fast check before scripts:\n\n1. `ls` / `dir` = list files in the current folder\n2. `cd ..` = move up one folder\n3. `pwd` / `Get-Location` = print where you are\n\nYou need these three today to run and debug scripts without getting lost in paths.",
             },
             {
-              title: "Create your first script file",
+              title: "What is a script?",
               timing: "Lab",
               content:
-                "In Cursor: open your **codemoldova-week3** folder (File → Open Folder). New file → save as `hello.py`. Paste the starter or type along. The file tree and terminal should both show the same folder.",
-              task: "Confirm `hello.py` appears in the sidebar inside codemoldova-week3.",
+                "A script is a standalone file that does one specific job when you run it. It can automate a chore, process data, or control a tool from the command line.\n\n**Notebook:** run cell-by-cell.\n**Script:** run top-to-bottom in one command, usually `python3 file.py`.",
+            },
+            {
+              title: "Why we chose Python for scripting",
+              timing: "Lab",
+              content:
+                "Python is ideal for beginner-friendly scripts because:\n\n1. Syntax is readable (less punctuation noise)\n2. Great standard library for files, dates, and automation\n3. Runs on Mac, Linux, and Windows\n4. Huge community and examples when you are stuck",
+              code: {
+                lang: "python",
+                snippet:
+                  'name = "CodeMoldova"\nprint(f"Hi, {name}")',
+              },
+              task: "Type this snippet into a new file `mini.py`, run `python3 mini.py`, then change the name value and run again.",
+            },
+            {
+              title: "3-step scripting model (Input → Process → Output)",
+              timing: "Lab",
+              content:
+                "Use this model from slides:\n\n1. **Input:** data enters (typed text, a file, or a URL)\n2. **Process:** script applies rules/logic\n3. **Output:** result is shown, saved, or triggered\n\nToday's scraper: **Input** = Hacker News URL · **Process** = parse HTML · **Output** = text + PDF in Downloads.",
+              task: "Write one line each for Input, Process, and Output for today's scraper.",
+            },
+            {
+              title: "Install libraries (once)",
+              timing: "Lab",
+              content:
+                "The scraper needs **requests**, **beautifulsoup4**, and **fpdf2**.\n\n**Mac** — run once (copy the block below). Your prompt should show `(.venv)`.\n\n**Windows** — `python -m pip install requests beautifulsoup4 fpdf2`\n\n**New terminal later?** Mac: `cd ~/codemoldova-week3` then `source .venv/bin/activate`.\n\n**Stuck on install errors?** Copy the full terminal output into Claude or Cursor and ask how to fix it.",
+              code: {
+                lang: "bash",
+                snippet:
+                  "mkdir -p ~/codemoldova-week3\ncd ~/codemoldova-week3\npython3 -m venv .venv\nsource .venv/bin/activate\npip install requests beautifulsoup4 fpdf2",
+              },
+              task: "Install finishes with no red errors. Mac: you see `(.venv)` in the prompt.",
+            },
+            {
+              title: "BeautifulSoup — read HTML from the web",
+              timing: "Lab",
+              content:
+                "**requests** — download a page as HTML.\n\n**BeautifulSoup** — find tags in that HTML (titles, links, etc.).\n\nThe example script does the parsing for you today. Skim the file later to see `requests.get` and `BeautifulSoup` in action.",
               links: [
-                { label: "Python tutorial — modules", href: "https://docs.python.org/3/tutorial/modules.html" },
+                { label: "Beautiful Soup documentation", href: "https://www.crummy.com/software/BeautifulSoup/bs4/doc/" },
+                { label: "requests quickstart", href: "https://requests.readthedocs.io/en/latest/user/quickstart/" },
               ],
             },
             {
-              title: "Anatomy of a script",
+              title: "Run the headline scraper",
               timing: "Lab",
               content:
-                "A small script usually has:\n\n1. **Comments** at the top — what the file does\n2. **imports** — libraries you need\n3. **functions** — reusable blocks with `def`\n4. **main()** — the story of what happens when someone runs the file\n5. **`if __name__ == \"__main__\":`** — only run main when this file is executed, not when imported\n\nKeep `main()` thin: call functions, do not dump 200 lines in one block.",
-              code: {
-                lang: "python",
-                snippet:
-                  'def greet(name: str) -> None:\n    print(f"Hello, {name}!")\n\n\ndef main() -> None:\n    name = input("Your name: ").strip() or "friend"\n    greet(name)\n\n\nif __name__ == "__main__":\n    main()',
-              },
-              task: "In hello.py, add a second function `farewell(name)` that prints a goodbye line. Call it from main() after greet().",
-            },
-            {
-              title: "Run the script from the terminal",
-              timing: "Lab",
-              content:
-                "Open the terminal in Cursor (`` Ctrl+` ``). `cd` into codemoldova-week3. Run:\n\n`python3 hello.py` (Mac/Linux) or `python hello.py` (Windows if python3 is not found).\n\nThe program should prompt in the **terminal**, not in a notebook cell. If you see `can't open file`, run `pwd` / `Get-Location` — you are probably in the wrong folder.",
+                "1. **Download** `week3_wed_headline_scraper_example.py` (button above).\n2. **Mac:** `cd ~/codemoldova-week3` and `source .venv/bin/activate`.\n3. **Run:** `python3 ~/Downloads/week3_wed_headline_scraper_example.py` (change the path if you saved the file elsewhere).\n4. Enter how many headlines (try `5`).\n5. Open **~/Downloads/headlines_today.txt** and **~/Downloads/headlines_today.pdf**.\n\nYou should see a title, short summary, and read-more link for each story.\n\n**Something broke?** Paste the error into Claude or Cursor with: I'm running the CodeMoldova headline scraper. Here's my error:",
               code: {
                 lang: "bash",
-                snippet: "cd ~/codemoldova-week3   # adjust path to yours\npwd\nls\npython3 hello.py",
-              },
-              task: "Run hello.py from the terminal twice with two different names. Screenshot or show a mentor your terminal output.",
-            },
-            {
-              title: "Edit → save → run again",
-              timing: "Lab",
-              content:
-                "The loop for script development:\n\n1. Edit the .py file in Cursor\n2. Save (Cmd/Ctrl+S)\n3. Run `python3 hello.py` again in the terminal\n\nNo kernel to restart. If something breaks, read the **traceback** — last line is the error; find the line number in your file.",
-              task: "Introduce a small bug on purpose (typo in a variable name), run the script, read the traceback, fix it, run again.",
-            },
-            {
-              title: "data/ folder and pathlib",
-              timing: "Lab",
-              content:
-                "Scripts often read and write files next to them. Use a **data/** folder so your project stays tidy — same habit as Week 2 JSON saves.\n\n`from pathlib import Path` builds paths that work on Mac and Windows: `Path(\"data\") / \"notes.json\"`.",
-              code: {
-                lang: "python",
                 snippet:
-                  'from pathlib import Path\n\nDATA = Path("data")\nDATA.mkdir(exist_ok=True)\n\nnotes_file = DATA / "notes.txt"\nnotes_file.write_text("Week 3 script\\n", encoding="utf-8")\nprint(notes_file.read_text(encoding="utf-8"))',
+                  "cd ~/codemoldova-week3\nsource .venv/bin/activate\npython3 ~/Downloads/week3_wed_headline_scraper_example.py",
               },
-              task: "Add a cell-free version in a new file `files_demo.py`: create data/, write one line to data/notes.txt, print it with read_text. Run with python3 from the terminal.",
+              task: "Run with `5` headlines. Confirm both files in Downloads look right.",
             },
             {
-              title: "Practice — your own mini-script",
+              title: "Do it yourself — build a script with inputs",
               timing: "Practice",
               content:
-                "Ship a second file `about_me.py` (your name) with at least two functions and `if __name__ == \"__main__\"`. Ideas: print three facts about you, ask one input(), or print a favorite movie from a variable.",
-              task: "Run `python3 about_me.py` successfully from codemoldova-week3. Optional: save one line of output to data/about.txt using pathlib.",
+                "Pick one small automation you want. Examples:\n\n- Ask your name, then print a personalized checklist\n- Type numbers, get a daily total or average\n- Enter a topic, save a quote or tip to a file\n- Type a folder name, list or count files inside\n\nSave as `~/codemoldova-week3/my_automation.py`. Work with AI in Cursor.\n\nPrompt template:\n\"Help me write a beginner Python script that [your goal]. Use `input()` for at least one question. Use Input → Process → Output. Keep it under 40 lines. Add comments and one simple error check.\"\n\nRun it from the terminal and answer the prompts yourself.\n\n**Tomorrow:** you will remove the inputs and make it run on a daily schedule. Today, focus on something useful when *you* run it by hand.\n\n**Stuck?** Paste your error into Claude or Cursor with the prompt you used.",
+              task: "`my_automation.py` runs with `input()`, prints or saves something useful, and you can explain what each part does.",
             },
           ],
           labCheatsheet: {
             title: "Script quick reference",
-            content: "Keep this open while you practice — Thursday’s build uses the same patterns.",
+            content: "Keep this open while you practice today and tomorrow.",
             sections: [
               {
-                title: "File structure",
+                title: "Terminal review",
                 methods: [
-                  { name: "def name():", desc: "Reusable block of code" },
-                  { name: "def main():", desc: "What happens when the script runs" },
-                  { name: 'if __name__ == "__main__":', desc: "Entry point — call main() here" },
+                  { name: "pwd / Get-Location", desc: "Print current folder path" },
+                  { name: "ls / dir", desc: "List files in current folder" },
+                  { name: "cd ..", desc: "Move up one folder" },
                 ],
               },
               {
-                title: "Terminal",
+                title: "Run scripts",
                 methods: [
-                  { name: "cd folder", desc: "Move into your project folder first" },
-                  { name: "python3 file.py", desc: "Run the whole script" },
-                  { name: "ls / dir", desc: "Confirm .py and data/ are present" },
+                  { name: "python3 file.py", desc: "Run a script on Mac/Linux" },
+                  { name: "python file.py", desc: "Windows fallback if python3 is missing" },
+                  { name: "Ctrl+C", desc: "Stop a running script in terminal" },
                 ],
               },
               {
-                title: "Files",
+                title: "3-step script model",
                 methods: [
-                  { name: "Path(\"data\")", desc: "Folder next to your script" },
-                  { name: ".mkdir(exist_ok=True)", desc: "Create folder if missing" },
-                  { name: ".read_text() / .write_text()", desc: "Read or write a text file" },
+                  { name: "Input", desc: "What data enters the script" },
+                  { name: "Process", desc: "What logic changes or uses the data" },
+                  { name: "Output", desc: "What result the script prints or saves" },
                 ],
               },
-            ],
-          },
-          challengeTab: {
-            title: "Script port challenge",
-            content:
-              "Take **one idea** from a Week 1 or Week 2 notebook (temperature labels, double(n), a print from your movie search) and rewrite it as a plain .py file with functions + main. No API keys required for the base challenge.",
-            task:
-              "(1) New file `port.py` in codemoldova-week3. (2) At least two def functions. (3) if __name__ block. (4) Run with python3 port.py from the terminal. (5) Show a mentor or post pwd + ls in WhatsApp.",
-            hints: [
-              "Start small — five to fifteen lines of real logic beats copying a whole notebook.",
-              "If you port the guessing game, use input() in a while loop inside main().",
-              "Week 2 students: printing a hard-coded movie dict counts if you explain it to a partner.",
+              {
+                title: "Headline scraper (today)",
+                methods: [
+                  { name: "source .venv/bin/activate", desc: "Mac — before every run" },
+                  { name: "python3 file.py", desc: "Run the downloaded example" },
+                  { name: "headlines_today.pdf", desc: "Output in ~/Downloads" },
+                ],
+              },
             ],
           },
           homework: {
-            title: "Script reps before build day",
-            desc: "Thursday combines terminal + script. You should be able to cd to your folder and run a .py file without re-reading Monday’s notes.",
+            title: "Short script review",
+            desc: "Five to ten minutes tonight: polish the script you will upgrade tomorrow.",
             tasks: [
-              "Run hello.py and about_me.py (or port.py) from the terminal twice each.",
-              "Create data/ if you have not — one text or JSON file inside it.",
-              "Optional: copy one function from a Week 2 notebook into a .py file and import nothing except stdlib.",
+              "Run `python3 my_automation.py` (Mac: activate `.venv` first). Confirm inputs still work.",
+              "Write one sentence in a comment at the top: what should this script do every day without prompts?",
+              "Ask AI for one small improvement (clearer output or better variable names), then test again.",
             ],
           },
         },
         thu: {
-          title: "Terminal + script build",
+          title: "Daily automation build",
           date: "May 28",
-          desc: "Build day: combine Monday’s terminal skills with Wednesday’s scripts. You will cd into codemoldova-week3, run a tool with command-line arguments (sys.argv), save data under data/, and demo it live from the terminal — not from a notebook cell.",
-          preview: "cd → python3 tool.py command · sys.argv · data/ JSON · usage message · tiered stretch goals.",
-          goal: "Ship a terminal-run Python script with at least two commands, a data/ file that persists between runs, and a printed usage line when someone runs it wrong.",
+          desc: "Build day: take Wednesday’s script (or a new idea) and ship a hands-free version — no `input()` — that runs on a daily schedule from the terminal. Mac students use cron; you will test paths, logs, and demo a silent run.",
+          preview: "Remove inputs → save daily_script.py → test full path → crontab → check log → stretch if done early.",
+          goal: "Ship a script that runs with zero typing, is scheduled once per day, and writes output you can verify in a log file.",
           labDurationLabel: "60 min",
           labExampleUrl: "/lesson/week3_thu_build_starter.py",
           labExampleDownload: "week3_thu_build_starter.py",
-          labExampleLabel: "Download build starter (.py)",
+          labExampleLabel: "Optional: pathlib / JSON starter (.py)",
+          mainPoints: [
+            "Cron cannot answer `input()` — your script must run hands-free.",
+            "Use full paths to venv `python3` and your `.py` file in the crontab line.",
+            "Test the exact cron command manually once before you leave class.",
+            "Save cron output to a log file so you can prove the schedule ran.",
+          ],
           steps: [
             {
-              title: "Terminal setup — same folder as your script",
+              title: "Open your project folder",
               content:
-                "Open Cursor’s terminal. `cd` into **codemoldova-week3**. Run `pwd` / `Get-Location` and `ls` / `dir` — you should see your .py files and a data/ folder (create data/ if missing). Every command today starts from here.",
-              task: "Paste your pwd output in WhatsApp or show a mentor before you code new features.",
+                "In Cursor’s terminal:\n\n`cd ~/codemoldova-week3`\n\nMac: `source .venv/bin/activate` — you should see `(.venv)`.\n\nRun `ls` and confirm `my_automation.py` from yesterday (or start fresh today).",
               code: {
                 lang: "bash",
-                snippet: "cd ~/codemoldova-week3\npwd\nls -la",
+                snippet: "cd ~/codemoldova-week3\nsource .venv/bin/activate\npwd\nls",
               },
+              task: "You are in `codemoldova-week3` with venv active (Mac).",
             },
             {
-              title: "Pick your project",
+              title: "Choose your build",
+              timing: "Lab",
               content:
-                "Choose **one** tool to build (rename the starter file to match):\n\n• **Journal** — add / list short notes saved in data/notes.json\n• **Watchlist** — add / list movies (reuse Week 2 JSON ideas)\n• **Quiz cards** — add / list Q&A pairs from input()\n• **Unit converter** — convert km↔miles or °C↔°F from sys.argv numbers\n• **Your idea** — clear it with a mentor first\n\nWrite the usage line you want **before** you code: `python3 tool.py add \"hello\"`",
-              task: "Tell a partner your project name and two commands it will support.",
+                "Pick **one** path:\n\n**A — Upgrade Wednesday’s script** — Keep the same idea, but remove every `input()`. Read settings from a file, use fixed defaults, or hard-code one example so it always does the same useful job.\n\n**B — New daily script** — Something small that makes sense every morning: quote of the day from a text file, append today's date to a journal, refresh a headlines file, countdown reminder, etc.\n\nSave as `~/codemoldova-week3/daily_script.py` (or keep the name `my_automation.py` if you upgraded it).\n\nAsk AI:\n\"Convert this script to run with **no** `input()`. It should work when cron runs it unattended. Save output to a file in Downloads or `data/`.\"",
+              task: "Tell a partner: Path A or B, and what your script will do each day without anyone typing.",
             },
             {
-              title: "Commands with sys.argv",
+              title: "Build the hands-free version",
+              timing: "Lab",
               content:
-                "`import sys` — `sys.argv` is a list of strings from the terminal. Example: `python3 tool.py greet Ada` → sys.argv[0] is tool.py, [1] is greet, [2] is Ada.\n\nIf len(sys.argv) is too small, print usage and exit — do not crash with IndexError.",
+                "Rules for today:\n\n- **No** `input()` anywhere\n- Script must finish on its own every time\n- Write something useful to disk (file in `~/Downloads` or `data/`)\n\nRun manually once:\n\n`python3 daily_script.py`\n\nFix until it works with **zero** questions asked.",
+              task: "Run `python3 daily_script.py` twice. Both runs succeed with no typing.",
+            },
+            {
+              title: "Schedule it — run every day (Mac: cron)",
+              timing: "Lab",
+              content:
+                "**1. Get full paths** (copy exactly what terminal prints):\n\n`which python3` → e.g. `/Users/you/codemoldova-week3/.venv/bin/python3`\n\nScript → `/Users/you/codemoldova-week3/daily_script.py`\n\n**2. Test the cron command once** (replace `/Users/you/`):\n\n`/Users/you/codemoldova-week3/.venv/bin/python3 /Users/you/codemoldova-week3/daily_script.py`\n\n**3. Open your schedule:** `crontab -e`\n\n**4. Paste one line** (example = every day at **8:00 AM**):\n\n`0 8 * * * /Users/you/codemoldova-week3/.venv/bin/python3 /Users/you/codemoldova-week3/daily_script.py >> /Users/you/Downloads/daily_script.log 2>&1`\n\n**Time format:** `minute hour * * *`\n\n- `0 8 * * *` → 8:00 AM daily\n- `30 18 * * *` → 6:30 PM daily\n\n**5. Check the log** after a test run or tomorrow:\n\n`cat ~/Downloads/daily_script.log`\n\n**Windows:** Task Scheduler → Create Basic Task → Daily → Start a program → `.venv\\Scripts\\python.exe` with argument = full path to `daily_script.py`.\n\n**Mac must be on** at the scheduled time. Sleeping laptop may skip a run.\n\n**Stuck?** Paste your crontab line + log file into Claude or Cursor: \"Help me schedule my Python script to run daily on Mac with cron.\"",
               code: {
-                lang: "python",
+                lang: "bash",
                 snippet:
-                  'import sys\n\nif len(sys.argv) < 2:\n    print("Usage: python3 tool.py greet <name>")\n    sys.exit(1)\n\ncmd = sys.argv[1]\nif cmd == "greet":\n    name = sys.argv[2] if len(sys.argv) > 2 else "friend"\n    print(f"Hello, {name}!")',
+                  "cd ~/codemoldova-week3\nsource .venv/bin/activate\nwhich python3\n\n# Test (replace /Users/you/)\n/Users/you/codemoldova-week3/.venv/bin/python3 /Users/you/codemoldova-week3/daily_script.py\n\n# crontab -e — paste:\n0 8 * * * /Users/you/codemoldova-week3/.venv/bin/python3 /Users/you/codemoldova-week3/daily_script.py >> /Users/you/Downloads/daily_script.log 2>&1\n\n# Check log\ncat ~/Downloads/daily_script.log",
               },
-              task: "Run the build starter: `python3 week3_thu_build_starter.py greet YourName` and `python3 week3_thu_build_starter.py list`.",
+              task: "Crontab line saved. Log file exists after you run the test command (or after the scheduled time).",
             },
             {
-              title: "Functions + data/ persistence",
+              title: "Demo — silent run",
+              timing: "Lab",
               content:
-                "Split logic: `load_items()`, `save_items()`, `cmd_add(...)`, `cmd_list()`, `main()`. Save JSON in data/ so running the script again remembers what you added. Use pathlib.Path like Wednesday.",
-              task: "Implement **add** and **list** (or your equivalents) so list shows what add saved after you run the script twice.",
+                "Show a partner:\n\n1. Your script file (no `input()` in the code)\n2. One manual run from terminal — no typing at prompts\n3. Your crontab line or Task Scheduler screenshot\n4. The log file or output file proving it worked",
+              task: "Partner signs off: script runs hands-free and schedule is set.",
             },
             {
-              title: "Demo from the terminal",
+              title: "Finished early?",
+              timing: "Stretch",
               content:
-                "Build day means a live demo: open terminal, cd, run commands in order, no clicking Run in a notebook. Fix paths with pwd if python says file not found.",
-              task: "Demo to a partner: wrong usage → usage message; add two items → list shows both.",
+                "Pick **one** bonus:\n\n- **Second schedule** — different time, or run the headline scraper on cron too (use full paths + a separate `.log` file)\n- **Better output** — timestamp every line in the log, or save a dated file like `report_2026-05-28.txt`\n- **Smarter defaults** — read options from `data/config.json` so you can change behavior without editing Python\n- **Windows deep dive** — document your Task Scheduler steps in README for a friend on Windows\n\nAsk AI for help on whichever bonus you pick.",
+              task: "Complete one bonus and show the mentor what changed.",
             },
           ],
+          labCheatsheet: {
+            title: "Daily automation quick reference",
+            content: "Use during build day.",
+            sections: [
+              {
+                title: "Before cron",
+                methods: [
+                  { name: "No input()", desc: "Cron cannot type answers" },
+                  { name: "python3 daily_script.py", desc: "Must work with zero prompts" },
+                  { name: "which python3", desc: "Copy full path for crontab" },
+                ],
+              },
+              {
+                title: "Mac cron",
+                methods: [
+                  { name: "crontab -e", desc: "Edit schedule" },
+                  { name: "0 8 * * * …", desc: "8:00 AM every day" },
+                  { name: ">> …log 2>&1", desc: "Save errors + output" },
+                  { name: "cat ~/Downloads/daily_script.log", desc: "Verify it ran" },
+                ],
+              },
+            ],
+          },
           homework: {
-            title: "README stub",
-            desc: "Create README.md in codemoldova-week3 with three sections: what the tool does, example commands (copy-paste from your terminal history), one thing you would add next week.",
+            title: "Confirm your schedule",
+            desc: "Make sure tomorrow’s run will actually happen.",
             tasks: [
-              "At least two working commands documented",
-              "data/ file listed (what gets saved)",
-              "Optional: third command or argparse --help stretch",
+              "Open `~/Downloads/daily_script.log` (or run the test command again) and confirm new output.",
+              "Add 3 lines to README.md: what the script does daily, your cron time, full paths you used.",
+              "Optional: change the schedule to a time you will have your laptop open.",
             ],
           },
           challenges: {
             base: {
-              title: "Terminal script that works",
-              desc: "Run from codemoldova-week3 with sys.argv commands.",
+              title: "Hands-free script",
+              desc: "Runs with no input() and saves or prints output.",
               steps: [
-                "cd into project folder; python3 tool.py runs without file-not-found",
-                "Two commands work (e.g. add + list, or greet + list)",
-                "Wrong invocation prints a usage line, not a traceback",
+                "daily_script.py (or upgraded my_automation.py) exists in codemoldova-week3",
+                "python3 script.py finishes with zero prompts",
+                "Output file or log shows the script did something useful",
               ],
             },
             medium: {
-              title: "Persistent data/",
-              desc: "JSON or text in data/ survives closing the terminal.",
+              title: "Scheduled daily",
+              desc: "Cron or Task Scheduler line added.",
               steps: [
-                "add saves to data/*.json (or .txt)",
-                "list reads the same file and prints items",
-                "Run add twice, list once — both items appear",
+                "Full paths to venv python + script in the schedule",
+                "Test command run manually once with no errors",
+                "daily_script.log created in Downloads (or your chosen log path)",
               ],
             },
             hard: {
-              title: "Third command or delete",
-              desc: "More like a real CLI.",
+              title: "Reliable daily run",
+              desc: "Polish for real use.",
               steps: [
-                "Third command: clear, delete <id>, search <word>, or convert with two numbers",
-                "main() stays short — logic lives in functions",
-                "Optional: try/except around int() or JSON load with a friendly message",
+                "try/except around file/network code with a message in the log",
+                "Dated output filename or timestamp in the log",
+                "README documents the schedule time and how to check the log",
               ],
             },
             bonus:
-              "Port a Week 2 movie search into a script command that calls requests (key still in env var, never in the file). Or swap sys.argv for argparse --help.",
+              "Finished early task: second cron job, config.json settings, or schedule the headline scraper too — no input(), separate log file.",
           },
         },
       },
@@ -1140,6 +1238,14 @@ END`,
           desc: "Workshop 1: structure with semantic HTML, style with CSS, and preview locally from Cursor\u2019s file tree or Live Server if you use the extension.",
           preview: "Build a single-page profile skeleton with headings, lists, links, and a linked stylesheet.",
           steps: [
+            {
+              title: "Quick review — terminal & scripts",
+              timing: "Lab",
+              outlineColor: "val",
+              content:
+                "From Week 3:\n\n- **cd**, **ls**, **pwd** — move and inspect folders\n- **python3 script.py** — run a file from the terminal\n- **Scripts** — `.py` files; Wednesday used **input()**, Thursday scheduled hands-free runs",
+              task: "Open terminal, `cd` to your project folder, and `ls` — confirm you remember the path.",
+            },
             {
               title: "HTML document outline",
               content: "doctype, html, head, body, meta charset, title, viewport meta for phones.",
@@ -1185,6 +1291,14 @@ END`,
           desc: "Workshop 2: flexbox and grid for real layouts, spacing rhythm, and a Figma pass\u2014export a simple frame to match colors and type scales (free tier is fine).",
           preview: "Translate a tiny design spec into CSS variables and reusable classes.",
           steps: [
+            {
+              title: "Quick review — HTML & CSS",
+              timing: "Lab",
+              outlineColor: "ube",
+              content:
+                "From Monday:\n\n- Semantic tags — `header`, `main`, `footer`, `nav`\n- Link a stylesheet — `<link rel=\"stylesheet\" href=\"styles.css\">`\n- **Box model** — margin, padding, `max-width` for readable layouts",
+              task: "Open Monday’s `index.html` in the browser — point to one tag and one CSS rule you wrote.",
+            },
             {
               title: "Flex vs grid decision",
               content: "Flex for one-dimensional rows/columns; grid for two-dimensional dashboards and card galleries.",
@@ -1301,6 +1415,14 @@ END`,
           preview: "Attach a main.js bundle (or single file) and keep console.log as your first debugger.",
           steps: [
             {
+              title: "Quick review — your webpage",
+              timing: "Lab",
+              outlineColor: "val",
+              content:
+                "From Week 4:\n\n- **index.html** structure and a linked **styles.css**\n- **Flex or grid** for card rows\n- **CSS variables** for colors you reuse",
+              task: "Open your live or local page — name one HTML section and one CSS class you would explain to a friend.",
+            },
+            {
               title: "let and const",
               content: "Prefer const by default; let when reassigned. Avoid var in new code.",
               task: "Refactor a snippet from var to const/let and explain why each choice.",
@@ -1343,6 +1465,14 @@ END`,
           desc: "Workshop 2: listen for clicks, inputs, and keyboard; update the DOM safely; debounce a noisy handler lightly if you reach it.",
           preview: "Event listeners, event objects, preventDefault, and basic form handling.",
           steps: [
+            {
+              title: "Quick review — JavaScript basics",
+              timing: "Lab",
+              outlineColor: "ube",
+              content:
+                "From Monday:\n\n- **const** and **let** — prefer const unless you reassign\n- **Functions** — named or arrow\n- **document.querySelector** — grab an element\n- **fetch** — await response.json() for APIs",
+              task: "In DevTools console on your page, run one `querySelector` and change `.textContent`.",
+            },
             {
               title: "addEventListener pattern",
               content: "Select node, attach listener, keep handler functions named for stack traces.",
@@ -1463,6 +1593,14 @@ END`,
           preview: "Cursor\u2019s Source Control UI plus terminal commands as backup.",
           steps: [
             {
+              title: "Quick review — JavaScript in the browser",
+              timing: "Lab",
+              outlineColor: "val",
+              content:
+                "From Week 5:\n\n- **DOM** — querySelector, textContent, classList\n- **Events** — addEventListener('click', ...)\n- **fetch** — same idea as Python requests, but in the browser",
+              task: "Name one interactive thing on your Week 5 app (button, form, toggle) you could demo in 10 seconds.",
+            },
+            {
               title: "Why Git",
               content: "Snapshots, diffs, blame, collaboration. Your future self thanks you.",
               task: "Initialize or clone: pick the path your machine is on.",
@@ -1508,6 +1646,14 @@ END`,
           desc: "Workshop 2: static hosting on Vercel from GitHub, environment previews, and what \u201cbuild command\u201d means when we only have static files.",
           preview: "Connect repo, pick root, verify HTTPS, roll back a bad deploy.",
           steps: [
+            {
+              title: "Quick review — Git basics",
+              timing: "Lab",
+              outlineColor: "ube",
+              content:
+                "From Monday:\n\n- **git status** — what changed\n- **git add** + **git commit -m** — save a snapshot\n- **git push** — send commits to GitHub\n- **.gitignore** — never commit secrets or node_modules",
+              task: "In a practice repo, run `git status` and explain staged vs unstaged to a partner.",
+            },
             {
               title: "Vercel import",
               content: "Import Git repository, confirm framework preset (Other) for static, deploy.",
@@ -1624,6 +1770,14 @@ END`,
           preview: "Create a table, insert rows, select with filters from the dashboard or a tiny script.",
           steps: [
             {
+              title: "Quick review — ship to the web",
+              timing: "Lab",
+              outlineColor: "val",
+              content:
+                "From Week 6:\n\n- **Git** — commit, push, meaningful messages\n- **Vercel** — import repo, production URL on `main`\n- **README** — live demo link strangers can open",
+              task: "Paste your production URL in chat — confirm it still loads.",
+            },
+            {
               title: "Why a database",
               content: "Concurrent writes, querying, relationships. Contrast with JSON snapshots from week 2.",
               task: "List two features you gain over flat files.",
@@ -1668,6 +1822,14 @@ END`,
           desc: "Workshop 2: read-only client fetch from the browser to a public endpoint; understand CORS; never expose service-role keys in frontend bundles.",
           preview: "Wire a minimal page listing rows from Supabase REST or a tiny serverless function if mentors provide one.",
           steps: [
+            {
+              title: "Quick review — databases",
+              timing: "Lab",
+              outlineColor: "ube",
+              content:
+                "From Monday:\n\n- **Table** — rows and columns (like a spreadsheet)\n- **SELECT**, **INSERT**, **WHERE** — read and filter data\n- **Supabase** — hosted Postgres + dashboard SQL editor",
+              task: "Run one `SELECT` that returns only rows you inserted — confirm you see your data.",
+            },
             {
               title: "CORS story",
               content: "Browsers block cross-origin reads unless headers allow. Supabase handles for its domain when configured.",

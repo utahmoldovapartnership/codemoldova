@@ -310,6 +310,23 @@ const BY_KEY = {
 
   '3:mon': [
     {
+      group: 'This week',
+      items: [
+        {
+          label: 'Wednesday — Scripting lesson',
+          href: '/lesson/3/wed',
+          source: 'CodeMoldova',
+          note: 'Headline scraper + build my_automation.py with input().',
+        },
+        {
+          label: 'Thursday — Daily automation build',
+          href: '/lesson/3/thu',
+          source: 'CodeMoldova',
+          note: 'Remove inputs, schedule with cron, check the log file.',
+        },
+      ],
+    },
+    {
       group: 'Read',
       items: [
         {
@@ -372,6 +389,18 @@ const BY_KEY = {
           source: 'python.org',
           note: 'Path("data") / "file.json" instead of string slashes.',
         },
+        {
+          label: 'Beautiful Soup 4 documentation',
+          href: 'https://www.crummy.com/software/BeautifulSoup/bs4/doc/',
+          source: 'crummy.com',
+          note: 'Parse HTML with soup.select() and get_text().',
+        },
+        {
+          label: 'requests — HTTP for Humans',
+          href: 'https://requests.readthedocs.io/en/latest/user/quickstart/',
+          source: 'requests.readthedocs.io',
+          note: 'You already used requests in Week 2 — today for HTML pages.',
+        },
       ],
     },
     {
@@ -389,10 +418,10 @@ const BY_KEY = {
       group: 'Try',
       items: [
         {
-          label: 'json — save and load data',
-          href: 'https://docs.python.org/3/library/json.html',
-          source: 'python.org',
-          note: 'Same idea as Week 2 watchlist files — now inside a script.',
+          label: 'Hacker News (example scrape source)',
+          href: 'https://news.ycombinator.com/',
+          source: 'ycombinator.com',
+          note: 'Open in browser first, then compare to your script output.',
         },
       ],
     },
@@ -403,16 +432,16 @@ const BY_KEY = {
       group: 'Read',
       items: [
         {
-          label: 'sys.argv — arguments from the terminal',
-          href: 'https://docs.python.org/3/library/sys.html#sys.argv',
-          source: 'python.org',
-          note: 'python3 tool.py greet Ada → sys.argv is the list of pieces.',
+          label: 'Crontab.guru — cron cheat sheet',
+          href: 'https://crontab.guru/',
+          source: 'crontab.guru',
+          note: 'Type a schedule like 0 8 * * * and see it in plain English.',
         },
         {
-          label: 'argparse (optional stretch)',
-          href: 'https://docs.python.org/3/library/argparse.html',
-          source: 'python.org',
-          note: 'Automatic --help and flags when you outgrow sys.argv.',
+          label: 'Python schedule module (optional)',
+          href: 'https://schedule.readthedocs.io/',
+          source: 'schedule.readthedocs.io',
+          note: 'Alternative to cron — runs while script stays open. Cron is simpler for true daily runs.',
         },
       ],
     },

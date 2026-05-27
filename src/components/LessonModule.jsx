@@ -7,6 +7,24 @@ const TRY_DAY = {
   thu: { box: 'mt-7 border-l-4 border-val bg-val/[0.08] px-5 py-4' },
 }
 
+/** Highlighted review steps — Mon red (val), Wed pink (ube). */
+const OUTLINE_STEP = {
+  val: 'bg-val/[0.08] border-val/70 ring-1 ring-val/25',
+  ube: 'bg-ube/[0.08] border-ube/70 ring-1 ring-ube/25',
+}
+
+function stepCardClass(ink, noRounded, outlineColor) {
+  const rounded = noRounded ? '' : 'rounded-card '
+  if (ink) {
+    const outline =
+      outlineColor === 'val' ? 'border-val/55' : outlineColor === 'ube' ? 'border-ube/55' : ''
+    return `${rounded}border border-paper/15 bg-paper/[0.06] p-6 sm:p-8 ${outline}`.trim()
+  }
+  const base = `${rounded}border border-hairline/50 p-6 sm:p-8`
+  const fill = outlineColor && OUTLINE_STEP[outlineColor] ? OUTLINE_STEP[outlineColor] : 'bg-paper'
+  return `${base} ${fill}`.trim()
+}
+
 function tryDayForPaper(dayKey) {
   if (dayKey in TRY_DAY) return TRY_DAY[dayKey]
   return TRY_DAY.wed
@@ -36,11 +54,7 @@ export default function LessonModule({ steps, variant = 'paper', noRounded = fal
     <div className="space-y-8">
       {steps.map((step, i) => (
         <div
-          className={
-            ink
-              ? `${noRounded ? '' : 'rounded-card '}border border-paper/15 bg-paper/[0.06] p-6 sm:p-8`
-              : `${noRounded ? '' : 'rounded-card '}border border-hairline/50 bg-paper p-6 sm:p-8`
-          }
+          className={stepCardClass(ink, noRounded, step?.outlineColor)}
           key={`${step.title}-${i}`}
         >
           <h2

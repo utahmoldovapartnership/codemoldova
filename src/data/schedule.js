@@ -8,8 +8,8 @@ export const sessions = [
   { week: 2, day: "thu", date: "2026-05-21", label: "Gemini chat agent" },
 
   { week: 3, day: "mon", date: "2026-05-25", label: "Terminal basics" },
-  { week: 3, day: "wed", date: "2026-05-27", label: "Python scripts explained" },
-  { week: 3, day: "thu", date: "2026-05-28", label: "Terminal + script build" },
+  { week: 3, day: "wed", date: "2026-05-27", label: "Scripting" },
+  { week: 3, day: "thu", date: "2026-05-28", label: "Daily automation build" },
 
   { week: 4, day: "mon", date: "2026-06-01", label: "HTML & CSS" },
   { week: 4, day: "wed", date: "2026-06-03", label: "Layouts, styling + Figma" },

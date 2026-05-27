@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import CodeBlock from '../CodeBlock.jsx'
 import LessonRichText from '../LessonRichText.jsx'
+import { splitMainPoint } from '../../lib/lessonMarkdown.js'
 import PixelIcon from '../PixelIcon.jsx'
 
 export function SectionKicker({ kicker, className = '' }) {
@@ -98,14 +99,7 @@ export function LessonMainPoints({ points, embedded = false }) {
   const pointParts = points.map((point) => {
     const text = typeof point === 'string' ? point.trim() : ''
     if (!text) return { title: '', body: '' }
-
-    const firstSentenceMatch = text.match(/^[^.!?]+[.!?]/)
-    if (firstSentenceMatch) {
-      const title = firstSentenceMatch[0].trim()
-      const body = text.slice(firstSentenceMatch[0].length).trim()
-      return { title, body }
-    }
-    return { title: text, body: 'Focus on this during lab so you can apply it without copying step-by-step.' }
+    return splitMainPoint(text)
   })
 
   const El = embedded ? 'div' : 'section'
@@ -129,7 +123,14 @@ export function LessonMainPoints({ points, embedded = false }) {
                   <PixelIcon icon="check" size={20} className="text-current" />
                 </span>
                 <div>
-                  <h3 className="font-serif text-2xl font-medium tracking-tight text-ink">{p.title}</h3>
+                  {p.title ? (
+                    <LessonRichText
+                      text={p.title}
+                      inline
+                      as="span"
+                      className="block font-serif text-2xl font-medium tracking-tight !text-ink [&_code]:font-mono [&_code]:text-[0.9em]"
+                    />
+                  ) : null}
                   {p.body ? (
                     <LessonRichText text={p.body} className="mt-2 text-base leading-relaxed" />
                   ) : null}
