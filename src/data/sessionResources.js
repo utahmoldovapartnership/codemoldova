@@ -361,16 +361,16 @@ const BY_KEY = {
       group: 'Read',
       items: [
         {
-          label: 'Errors and exceptions',
-          href: 'https://docs.python.org/3/tutorial/errors.html',
+          label: 'Python tutorial — modules and scripts',
+          href: 'https://docs.python.org/3/tutorial/modules.html',
           source: 'python.org',
-          note: 'try, except, raise, finally.',
+          note: 'How .py files relate to import and __name__.',
         },
         {
-          label: 'The traceback module (reading stacks)',
-          href: 'https://docs.python.org/3/library/traceback.html',
+          label: 'pathlib — paths that work on every OS',
+          href: 'https://docs.python.org/3/library/pathlib.html',
           source: 'python.org',
-          note: 'Optional when you print traces yourself.',
+          note: 'Path("data") / "file.json" instead of string slashes.',
         },
       ],
     },
@@ -378,10 +378,10 @@ const BY_KEY = {
       group: 'Watch',
       items: [
         {
-          label: 'Understanding Python tracebacks',
-          href: 'https://www.youtube.com/watch?v=39SZXtT8d7A',
+          label: 'Python Scripts Explained (Tech With Tim)',
+          href: 'https://www.youtube.com/watch?v=hnTkHcfhTog',
           source: 'YouTube',
-          note: 'How to read bottom-to-top.',
+          note: 'Short overview of running .py files from the terminal.',
         },
       ],
     },
@@ -389,10 +389,10 @@ const BY_KEY = {
       group: 'Try',
       items: [
         {
-          label: 'pdb — debugger',
-          href: 'https://docs.python.org/3/library/pdb.html',
+          label: 'json — save and load data',
+          href: 'https://docs.python.org/3/library/json.html',
           source: 'python.org',
-          note: 'breakpoint() and stepping in the terminal.',
+          note: 'Same idea as Week 2 watchlist files — now inside a script.',
         },
       ],
     },
@@ -403,16 +403,16 @@ const BY_KEY = {
       group: 'Read',
       items: [
         {
-          label: 'argparse — command-line interfaces',
-          href: 'https://docs.python.org/3/library/argparse.html',
-          source: 'python.org',
-          note: 'Flags, help text, subcommands.',
-        },
-        {
-          label: 'sys.argv if you skip argparse',
+          label: 'sys.argv — arguments from the terminal',
           href: 'https://docs.python.org/3/library/sys.html#sys.argv',
           source: 'python.org',
-          note: 'Minimal scripts without a library.',
+          note: 'python3 tool.py greet Ada → sys.argv is the list of pieces.',
+        },
+        {
+          label: 'argparse (optional stretch)',
+          href: 'https://docs.python.org/3/library/argparse.html',
+          source: 'python.org',
+          note: 'Automatic --help and flags when you outgrow sys.argv.',
         },
       ],
     },
@@ -420,10 +420,10 @@ const BY_KEY = {
       group: 'Watch',
       items: [
         {
-          label: 'Argparse tutorial (Engineer Man)',
-          href: 'https://www.youtube.com/watch?v=cdblJqCtd8w',
+          label: 'Command Line Basics for Beginners',
+          href: 'https://www.youtube.com/watch?v=5XgBd6rjuDQ',
           source: 'YouTube',
-          note: 'Walkthrough of a small CLI.',
+          note: 'Review pwd, cd, ls before build day if Monday felt fast.',
         },
       ],
     },
@@ -431,10 +431,10 @@ const BY_KEY = {
       group: 'Try',
       items: [
         {
-          label: 'Click (alternative CLI library)',
-          href: 'https://click.palletsprojects.com/',
-          source: 'palletsprojects.com',
-          note: 'Optional stretch beyond argparse.',
+          label: 'MDN — Command line overview',
+          href: 'https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Environment_setup/Command_line',
+          source: 'MDN',
+          note: 'Same terminal skills you will use for npm and git later.',
         },
       ],
     },

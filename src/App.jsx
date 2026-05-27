@@ -4,11 +4,10 @@ import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop.jsx'
 import Home from './pages/Home'
 import Course from './pages/Course'
+import CourseMaterialLayout from './components/CourseMaterialLayout.jsx'
 import Resources from './pages/Resources'
 import Lesson from './pages/Lesson'
-import LessonMockup from './pages/LessonMockup'
-import CourseMockup from './pages/CourseMockup'
-import ResourcesMockup from './pages/ResourcesMockup'
+import { devMockupRoutes } from '@course-dev-routes'
 
 function AppShell() {
   const isHome = true
@@ -33,16 +32,19 @@ function AppShell() {
           <div className="flex min-h-full min-h-0 flex-1 flex-col">
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/course" element={<Course />} />
+              <Route element={<CourseMaterialLayout />}>
+                <Route path="/course" element={<Course />} />
+                <Route path="/resources" element={<Resources />} />
+                <Route path="/lesson/:week/:day" element={<Lesson />} />
+              </Route>
               <Route path="/roadmap" element={<Navigate to="/course" replace />} />
               <Route path="/calendar" element={<Navigate to="/course" replace />} />
-              <Route path="/resources" element={<Resources />} />
               <Route path="/about" element={<Navigate to="/" replace />} />
-              <Route path="/lesson/:week/:day" element={<Lesson />} />
-              <Route path="/lesson-mockup" element={<LessonMockup />} />
-              <Route path="/course-mockup" element={<CourseMockup />} />
-              <Route path="/roadmap-mockup" element={<Navigate to="/course-mockup" replace />} />
-              <Route path="/resources-mockup" element={<ResourcesMockup />} />
+              {devMockupRoutes}
+              <Route path="/lesson-mockup" element={<Navigate to="/course" replace />} />
+              <Route path="/course-mockup" element={<Navigate to="/course" replace />} />
+              <Route path="/roadmap-mockup" element={<Navigate to="/course" replace />} />
+              <Route path="/resources-mockup" element={<Navigate to="/course" replace />} />
             </Routes>
           </div>
         </main>

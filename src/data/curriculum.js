@@ -892,7 +892,7 @@ END`,
           },
           homework: {
             title: "Terminal reps before Thursday",
-            desc: "Five minutes a day beats one long cram session. You will need these commands for the CLI build on Thursday.",
+            desc: "Five minutes a day beats one long cram session. You will need these commands to run your Python script from the terminal on Thursday.",
             tasks: [
               "Open Cursor, open the terminal, cd to your course folder, run ls/dir — do it twice without looking at notes.",
               "Create a new folder practice-thu and a file idea.txt with one sentence about your CLI tool idea.",
@@ -901,114 +901,225 @@ END`,
           },
         },
         wed: {
-          title: "Error handling + debugging",
+          title: "Python scripts explained",
           date: "May 27",
-          desc: "Workshop 2: read tracebacks, use try/except intentionally, log assumptions, and debug in Cursor with breakpoints and the Debug Console where available.",
-          preview: "Make failures loud and localized instead of silent and mysterious.",
+          desc: "Workshop 2: notebooks are great for learning cell-by-cell — real projects are usually .py files you run from the terminal. Today we explain how a script is structured, how it differs from a notebook, and how to run one with python3 from your codemoldova-week3 folder. Download the starter script, work through the steps, then finish the practice script before Thursday’s build.",
+          preview: "Notebook vs .py · create a script · def + main() · if __name__ · run with python3 · data/ folder.",
+          goal: "Leave class able to create a .py file, organize code in functions, use if __name__ == \"__main__\", and run your script from the terminal with python3 script.py — no notebook required.",
+          labDurationLabel: "50 min",
+          labExampleUrl: "/lesson/week3_wed_script_starter.py",
+          labExampleDownload: "week3_wed_script_starter.py",
+          labExampleLabel: "Download script starter (.py)",
           steps: [
             {
-              title: "Anatomy of a traceback",
-              content: "Bottom line is the exception type and message; upward frames show the call path. Teach your eyes to jump to your files first.",
-              task: "Break a small script on purpose and circle the frame that points to your code.",
+              title: "Notebook vs script — two ways to run Python",
+              timing: "Lab",
+              content:
+                "**Notebook (.ipynb):** cells you run one at a time; great for demos and experiments; output appears under each cell.\n\n**Script (.py):** one file, top to bottom, run all at once from the terminal: `python3 myfile.py`. That is how Thursday’s build works and how most apps ship.\n\nSame language — different workflow. You already used both ideas: cells in Week 1–2, `python3 -c \"...\"` on Monday.",
+              task: "Say out loud: one thing you like about notebooks and one reason professionals still use .py files.",
             },
             {
-              title: "try / except / else / finally",
-              content: "Catch specific exceptions (ValueError, KeyError) before broad Exception. Use finally for cleanup when you learn files next week.",
-              task: "Wrap int(input()) so non-numeric input prints a friendly message and re-prompts.",
-              code: { lang: "python", snippet: "try:\n    x = int(input(\"Number: \"))\nexcept ValueError:\n    print(\"That was not an integer.\")" },
+              title: "Create your first script file",
+              timing: "Lab",
+              content:
+                "In Cursor: open your **codemoldova-week3** folder (File → Open Folder). New file → save as `hello.py`. Paste the starter or type along. The file tree and terminal should both show the same folder.",
+              task: "Confirm `hello.py` appears in the sidebar inside codemoldova-week3.",
+              links: [
+                { label: "Python tutorial — modules", href: "https://docs.python.org/3/tutorial/modules.html" },
+              ],
             },
             {
-              title: "raise with clear messages",
-              content: "When an assumption fails, stop early with context: raise ValueError(\"age must be positive\").",
-              task: "Write validate_email(s) that raises if there is no @.",
+              title: "Anatomy of a script",
+              timing: "Lab",
+              content:
+                "A small script usually has:\n\n1. **Comments** at the top — what the file does\n2. **imports** — libraries you need\n3. **functions** — reusable blocks with `def`\n4. **main()** — the story of what happens when someone runs the file\n5. **`if __name__ == \"__main__\":`** — only run main when this file is executed, not when imported\n\nKeep `main()` thin: call functions, do not dump 200 lines in one block.",
+              code: {
+                lang: "python",
+                snippet:
+                  'def greet(name: str) -> None:\n    print(f"Hello, {name}!")\n\n\ndef main() -> None:\n    name = input("Your name: ").strip() or "friend"\n    greet(name)\n\n\nif __name__ == "__main__":\n    main()',
+              },
+              task: "In hello.py, add a second function `farewell(name)` that prints a goodbye line. Call it from main() after greet().",
             },
             {
-              title: "print debugging vs logging mindset",
-              content: "Strategic prints (with labels) still win for short labs. Note what variable changed between lines.",
-              task: "Add three labeled debug prints to a loop that was wrong; remove them after fix.",
+              title: "Run the script from the terminal",
+              timing: "Lab",
+              content:
+                "Open the terminal in Cursor (`` Ctrl+` ``). `cd` into codemoldova-week3. Run:\n\n`python3 hello.py` (Mac/Linux) or `python hello.py` (Windows if python3 is not found).\n\nThe program should prompt in the **terminal**, not in a notebook cell. If you see `can't open file`, run `pwd` / `Get-Location` — you are probably in the wrong folder.",
+              code: {
+                lang: "bash",
+                snippet: "cd ~/codemoldova-week3   # adjust path to yours\npwd\nls\npython3 hello.py",
+              },
+              task: "Run hello.py from the terminal twice with two different names. Screenshot or show a mentor your terminal output.",
             },
             {
-              title: "Cursor tips",
-              content: "Set a breakpoint on a line, run with debugger, inspect locals. If the UI differs by OS, pair with a mentor.",
-              task: "Step through one function call and narrate locals for a partner.",
+              title: "Edit → save → run again",
+              timing: "Lab",
+              content:
+                "The loop for script development:\n\n1. Edit the .py file in Cursor\n2. Save (Cmd/Ctrl+S)\n3. Run `python3 hello.py` again in the terminal\n\nNo kernel to restart. If something breaks, read the **traceback** — last line is the error; find the line number in your file.",
+              task: "Introduce a small bug on purpose (typo in a variable name), run the script, read the traceback, fix it, run again.",
+            },
+            {
+              title: "data/ folder and pathlib",
+              timing: "Lab",
+              content:
+                "Scripts often read and write files next to them. Use a **data/** folder so your project stays tidy — same habit as Week 2 JSON saves.\n\n`from pathlib import Path` builds paths that work on Mac and Windows: `Path(\"data\") / \"notes.json\"`.",
+              code: {
+                lang: "python",
+                snippet:
+                  'from pathlib import Path\n\nDATA = Path("data")\nDATA.mkdir(exist_ok=True)\n\nnotes_file = DATA / "notes.txt"\nnotes_file.write_text("Week 3 script\\n", encoding="utf-8")\nprint(notes_file.read_text(encoding="utf-8"))',
+              },
+              task: "Add a cell-free version in a new file `files_demo.py`: create data/, write one line to data/notes.txt, print it with read_text. Run with python3 from the terminal.",
+            },
+            {
+              title: "Practice — your own mini-script",
+              timing: "Practice",
+              content:
+                "Ship a second file `about_me.py` (your name) with at least two functions and `if __name__ == \"__main__\"`. Ideas: print three facts about you, ask one input(), or print a favorite movie from a variable.",
+              task: "Run `python3 about_me.py` successfully from codemoldova-week3. Optional: save one line of output to data/about.txt using pathlib.",
             },
           ],
+          labCheatsheet: {
+            title: "Script quick reference",
+            content: "Keep this open while you practice — Thursday’s build uses the same patterns.",
+            sections: [
+              {
+                title: "File structure",
+                methods: [
+                  { name: "def name():", desc: "Reusable block of code" },
+                  { name: "def main():", desc: "What happens when the script runs" },
+                  { name: 'if __name__ == "__main__":', desc: "Entry point — call main() here" },
+                ],
+              },
+              {
+                title: "Terminal",
+                methods: [
+                  { name: "cd folder", desc: "Move into your project folder first" },
+                  { name: "python3 file.py", desc: "Run the whole script" },
+                  { name: "ls / dir", desc: "Confirm .py and data/ are present" },
+                ],
+              },
+              {
+                title: "Files",
+                methods: [
+                  { name: "Path(\"data\")", desc: "Folder next to your script" },
+                  { name: ".mkdir(exist_ok=True)", desc: "Create folder if missing" },
+                  { name: ".read_text() / .write_text()", desc: "Read or write a text file" },
+                ],
+              },
+            ],
+          },
+          challengeTab: {
+            title: "Script port challenge",
+            content:
+              "Take **one idea** from a Week 1 or Week 2 notebook (temperature labels, double(n), a print from your movie search) and rewrite it as a plain .py file with functions + main. No API keys required for the base challenge.",
+            task:
+              "(1) New file `port.py` in codemoldova-week3. (2) At least two def functions. (3) if __name__ block. (4) Run with python3 port.py from the terminal. (5) Show a mentor or post pwd + ls in WhatsApp.",
+            hints: [
+              "Start small — five to fifteen lines of real logic beats copying a whole notebook.",
+              "If you port the guessing game, use input() in a while loop inside main().",
+              "Week 2 students: printing a hard-coded movie dict counts if you explain it to a partner.",
+            ],
+          },
           homework: {
-            title: "Harden a script",
-            desc: "Take Tuesday’s fetch script or any class script and make it fail gracefully.",
+            title: "Script reps before build day",
+            desc: "Thursday combines terminal + script. You should be able to cd to your folder and run a .py file without re-reading Monday’s notes.",
             tasks: [
-              "Replace one bare except with a specific type",
-              "Add a helper safe_int(s, default) with try/except",
-              "Optional: collect errors into a list and print a summary at the end",
+              "Run hello.py and about_me.py (or port.py) from the terminal twice each.",
+              "Create data/ if you have not — one text or JSON file inside it.",
+              "Optional: copy one function from a Week 2 notebook into a .py file and import nothing except stdlib.",
             ],
           },
         },
         thu: {
-          title: "Reusable CLI tool",
+          title: "Terminal + script build",
           date: "May 28",
-          desc: "Build day: package the habits from the last three weeks into a small command-line utility with argparse (preferred) or sys.argv if argparse feels heavy.",
-          preview: "Clear help text, subcommands or flags, and clean exits (sys.exit codes).",
+          desc: "Build day: combine Monday’s terminal skills with Wednesday’s scripts. You will cd into codemoldova-week3, run a tool with command-line arguments (sys.argv), save data under data/, and demo it live from the terminal — not from a notebook cell.",
+          preview: "cd → python3 tool.py command · sys.argv · data/ JSON · usage message · tiered stretch goals.",
+          goal: "Ship a terminal-run Python script with at least two commands, a data/ file that persists between runs, and a printed usage line when someone runs it wrong.",
+          labDurationLabel: "60 min",
+          labExampleUrl: "/lesson/week3_thu_build_starter.py",
+          labExampleDownload: "week3_thu_build_starter.py",
+          labExampleLabel: "Download build starter (.py)",
           steps: [
             {
-              title: "Pick a useful micro-tool",
-              content: "Ideas: unit converter, password-like generator, JSON pretty-printer for a file path, or quiz flashcards from a CSV.",
-              task: "Write the help string you want users to see before you code bodies.",
+              title: "Terminal setup — same folder as your script",
+              content:
+                "Open Cursor’s terminal. `cd` into **codemoldova-week3**. Run `pwd` / `Get-Location` and `ls` / `dir` — you should see your .py files and a data/ folder (create data/ if missing). Every command today starts from here.",
+              task: "Paste your pwd output in WhatsApp or show a mentor before you code new features.",
+              code: {
+                lang: "bash",
+                snippet: "cd ~/codemoldova-week3\npwd\nls -la",
+              },
             },
             {
-              title: "Skeleton with argparse",
-              content: "parser = argparse.ArgumentParser(description=...); add arguments; args = parser.parse_args().",
-              task: "Running python3 tool.py --help shows your description and flags.",
-              code: { lang: "python", snippet: "import argparse\np = argparse.ArgumentParser(description=\"Demo CLI\")\np.add_argument(\"--name\", default=\"world\")\nargs = p.parse_args()\nprint(f\"Hello, {args.name}\")" },
+              title: "Pick your project",
+              content:
+                "Choose **one** tool to build (rename the starter file to match):\n\n• **Journal** — add / list short notes saved in data/notes.json\n• **Watchlist** — add / list movies (reuse Week 2 JSON ideas)\n• **Quiz cards** — add / list Q&A pairs from input()\n• **Unit converter** — convert km↔miles or °C↔°F from sys.argv numbers\n• **Your idea** — clear it with a mentor first\n\nWrite the usage line you want **before** you code: `python3 tool.py add \"hello\"`",
+              task: "Tell a partner your project name and two commands it will support.",
             },
             {
-              title: "Implement core logic as functions",
-              content: "Keep if __name__ == \"__main__\": thin—parse args, call run(args).",
-              task: "Main imports only stdlib unless you cleared extras with a mentor.",
+              title: "Commands with sys.argv",
+              content:
+                "`import sys` — `sys.argv` is a list of strings from the terminal. Example: `python3 tool.py greet Ada` → sys.argv[0] is tool.py, [1] is greet, [2] is Ada.\n\nIf len(sys.argv) is too small, print usage and exit — do not crash with IndexError.",
+              code: {
+                lang: "python",
+                snippet:
+                  'import sys\n\nif len(sys.argv) < 2:\n    print("Usage: python3 tool.py greet <name>")\n    sys.exit(1)\n\ncmd = sys.argv[1]\nif cmd == "greet":\n    name = sys.argv[2] if len(sys.argv) > 2 else "friend"\n    print(f"Hello, {name}!")',
+              },
+              task: "Run the build starter: `python3 week3_thu_build_starter.py greet YourName` and `python3 week3_thu_build_starter.py list`.",
             },
             {
-              title: "Exit codes",
-              content: "Return 0 on success; nonzero on validation failure so future you can chain scripts.",
-              task: "Demonstrate success and failure exits from the terminal.",
+              title: "Functions + data/ persistence",
+              content:
+                "Split logic: `load_items()`, `save_items()`, `cmd_add(...)`, `cmd_list()`, `main()`. Save JSON in data/ so running the script again remembers what you added. Use pathlib.Path like Wednesday.",
+              task: "Implement **add** and **list** (or your equivalents) so list shows what add saved after you run the script twice.",
+            },
+            {
+              title: "Demo from the terminal",
+              content:
+                "Build day means a live demo: open terminal, cd, run commands in order, no clicking Run in a notebook. Fix paths with pwd if python says file not found.",
+              task: "Demo to a partner: wrong usage → usage message; add two items → list shows both.",
             },
           ],
           homework: {
-            title: "Polish the tool",
-            desc: "README stub in the same folder: what it does, examples, limitations.",
+            title: "README stub",
+            desc: "Create README.md in codemoldova-week3 with three sections: what the tool does, example commands (copy-paste from your terminal history), one thing you would add next week.",
             tasks: [
-              "At least two flags or positional args",
-              "Docstring on every public function",
-              "Optional: --version flag printing a string constant",
+              "At least two working commands documented",
+              "data/ file listed (what gets saved)",
+              "Optional: third command or argparse --help stretch",
             ],
           },
           challenges: {
             base: {
-              title: "Working CLI",
-              desc: "argparse + functions + friendly errors.",
+              title: "Terminal script that works",
+              desc: "Run from codemoldova-week3 with sys.argv commands.",
               steps: [
-                "python3 tool.py --help works",
-                "Happy path completes with printed result",
-                "Bad input prints usage, not traceback",
+                "cd into project folder; python3 tool.py runs without file-not-found",
+                "Two commands work (e.g. add + list, or greet + list)",
+                "Wrong invocation prints a usage line, not a traceback",
               ],
             },
             medium: {
-              title: "File mode",
-              desc: "Read input from a file path argument.",
+              title: "Persistent data/",
+              desc: "JSON or text in data/ survives closing the terminal.",
               steps: [
-                "Add --input path.txt",
-                "Handle missing file with clear message",
-                "Write output to stdout or optional --out",
+                "add saves to data/*.json (or .txt)",
+                "list reads the same file and prints items",
+                "Run add twice, list once — both items appear",
               ],
             },
             hard: {
-              title: "Subcommands",
-              desc: "Use subparsers for two related tools in one file.",
+              title: "Third command or delete",
+              desc: "More like a real CLI.",
               steps: [
-                "python3 tool.py fmt ...",
-                "python3 tool.py stats ...",
-                "Shared helpers in functions",
+                "Third command: clear, delete <id>, search <word>, or convert with two numbers",
+                "main() stays short — logic lives in functions",
+                "Optional: try/except around int() or JSON load with a friendly message",
               ],
             },
-            bonus: "Publish the folder structure you will later push to GitHub (src/, tests/ empty for now).",
+            bonus:
+              "Port a Week 2 movie search into a script command that calls requests (key still in env var, never in the file). Or swap sys.argv for argparse --help.",
           },
         },
       },
