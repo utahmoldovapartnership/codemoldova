@@ -191,6 +191,53 @@ export function LessonArtifacts({ artifacts, dayKey = 'wed' }) {
 }
 
 /**
+ * @param {{ title: string, intro?: string, dayKey?: 'mon' | 'wed' | 'thu', children: import('react').ReactNode }} props
+ */
+export function LessonContentBand({ title, intro, dayKey = 'mon', children }) {
+  if (children == null) return null
+  return (
+    <section className="relative w-full max-w-none text-ink">
+      <div className="w-full py-8 sm:py-10">
+        <div className="border-b border-black/10 pb-6">
+          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">Lesson</p>
+          <h2 className="mt-3 font-serif text-3xl font-medium tracking-tight sm:text-5xl">{title}.</h2>
+          {intro ? (
+            <LessonRichText text={intro} tone="muted" className="mt-3 max-w-prose font-body text-sm sm:text-base" />
+          ) : null}
+        </div>
+        <div className="pt-6">{children}</div>
+      </div>
+    </section>
+  )
+}
+
+/**
+ * @param {{ tabs: { id: string, label: string }[], activeTabId: string, onGoToTab: (tabId: string) => void }} props
+ */
+export function LessonTabNextNav({ tabs, activeTabId, onGoToTab }) {
+  if (!tabs?.length) return null
+  const index = tabs.findIndex((t) => t.id === activeTabId)
+  const next = index >= 0 && index < tabs.length - 1 ? tabs[index + 1] : null
+  if (!next) return null
+
+  return (
+    <p className="mt-3 max-w-prose text-pretty text-base sm:mt-4 sm:text-[17px]">
+      <button
+        type="button"
+        onClick={() => onGoToTab(next.id)}
+        className="inline-flex items-center gap-2 font-body text-ink underline decoration-ink/40 underline-offset-4 hover:decoration-ink"
+      >
+        <span>
+          Go to {next.label}
+        </span>
+        <PixelIcon icon="arrow" size={12} className="shrink-0 text-current" aria-hidden />
+      </button>
+      <span className="sr-only"> (opens the {next.label} tab)</span>
+    </p>
+  )
+}
+
+/**
  * @param {{ href: string, label: string, downloadFilename?: string | null }[]} [props.labDownloads]
  * @param {{ title: string, intro?: string, exampleHref?: string, exampleLabel?: string, exampleDownloadFilename?: string | null, durationLabel?: string, dayKey?: 'mon' | 'wed' | 'thu', children: import('react').ReactNode, collapsible?: boolean, contained?: boolean }} props
  */
@@ -657,16 +704,28 @@ function normalizeLessonResources(resources) {
     return [
       {
         group: 'Links',
-        items: resources.map(({ label, href, note, source }) => ({
+        items: resources.map(({ label, href, note, source, download }) => ({
           label: label || 'Link',
           href,
           note,
           source,
+          download,
         })),
       },
     ]
   }
   return resources
+}
+
+function lessonResourceLinkProps(item) {
+  const href = typeof item?.href === 'string' ? item.href.trim() : ''
+  if (!href) return null
+  const downloadName =
+    typeof item?.download === 'string' && item.download.trim() ? item.download.trim() : null
+  if (downloadName) {
+    return { href, download: downloadName }
+  }
+  return { href, target: '_blank', rel: 'noopener noreferrer' }
 }
 
 export function LessonResources({ resources, embedded = false }) {
@@ -683,12 +742,13 @@ export function LessonResources({ resources, embedded = false }) {
             <div key={g.group}>
               <h3 className="mb-4 border-b border-hairline pb-2 font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">{g.group}</h3>
               <ul>
-                {(g.items || []).map((it) => (
+                {(g.items || []).map((it) => {
+                  const linkProps = lessonResourceLinkProps(it)
+                  if (!linkProps) return null
+                  return (
                   <li key={it.href}>
                     <a
-                      href={it.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      {...linkProps}
                       className="group flex flex-col gap-2 border-b border-hairline px-2 py-4 transition-colors hover:bg-sun/15 sm:flex-row sm:flex-wrap sm:items-baseline sm:gap-x-6 sm:gap-y-2 sm:px-3 sm:py-5"
                     >
                       <span className="min-w-0 flex-1 font-serif text-lg font-medium tracking-tight sm:text-xl">{it.label}</span>
@@ -697,9 +757,11 @@ export function LessonResources({ resources, embedded = false }) {
                         {it.source ? <span>{it.source}</span> : null}
                         <PixelIcon icon="arrow" size={10} className="text-current" />
                       </span>
+                      <span className="sr-only">{linkProps.download ? ' (downloads a file)' : ' (opens in a new tab)'}</span>
                     </a>
                   </li>
-                ))}
+                  )
+                })}
               </ul>
             </div>
           ))}

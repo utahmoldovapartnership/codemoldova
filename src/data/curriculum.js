@@ -1235,19 +1235,58 @@ END`,
         mon: {
           title: "HTML & CSS literacy",
           date: "Jun 1",
-          desc: "Learn to **read** HTML and CSS so you can work with AI and templates confidently. You will not memorize syntax today — you will understand structure, connect a stylesheet, and ship your first single-page site plus a portfolio repo.",
-          preview: "Walk the reference HTML map, connect style.css, build one topic site with AI, deploy to GitHub + Vercel, add it to your portfolio.",
+          lessonDesc:
+            "Follow the **class slides** and the sections below: where the web started, how it evolved, and how AI changes the way you build. When you are ready to code, switch to the **Lab** tab.",
+          desc: "Download the reference files, walk through HTML and CSS, build one topic site with AI, deploy to GitHub + Vercel, and add your first portfolio card.",
+          goal:
+            "See where the web came from, how building changed with AI, then leave able to read HTML/CSS, ship a single-page site, and link it from your portfolio.",
+          preview:
+            "Lesson: web history and AI-era building · Lab: reference walkthrough → your first deploy.",
           labExampleUrl: "/lesson/week4_reference/index.html",
           labExampleDownload: "index.html",
           labExampleLabel: "Download reference HTML",
           labDataUrl: "/lesson/week4_reference/style.css",
           labDataLabel: "Download reference CSS",
           labDataDownload: "style.css",
-          steps: [
+          slideDeck: {
+            label: "Week 4 · Monday slide deck",
+            url: "https://docs.google.com/presentation/d/1B3BgIacUW956OitI3wJ3yrnNO5FFr46wGPiqNux-ujA/edit?usp=sharing",
+          },
+          lessonSteps: [
+            {
+              title: "Where the web started",
+              content:
+                "In 1989, **Tim Berners-Lee** at CERN proposed a way for scientists to share documents over a network. By 1991 the first public website was live: a simple page of links explaining the project — no ads, no frameworks, just **HTML** (structure) and hyperlinks.\n\nThat first site proved a idea: plain text files with tags could become a global library anyone could browse.",
+              links: [
+                {
+                  label: "First website (CERN, 1991)",
+                  href: "http://info.cern.ch/hypertext/WWW/TheProject.html",
+                },
+              ],
+            },
+            {
+              title: "Early web creativity",
+              content:
+                "The 1990s and 2000s were messy and experimental. Home pages were hand-written; layout was tables and `<font>` tags; GIFs and bright colors were normal. In 2005, **The Million Dollar Homepage** sold one million pixels for \\$1 each — proof that a silly, simple HTML grid could become a real business. It is crude by today’s standards, but it is honest web history: one file, many links, no app store.",
+              links: [
+                {
+                  label: "The Million Dollar Homepage",
+                  href: "https://milliondollarhomepage.com/",
+                },
+              ],
+            },
+            {
+              title: "How HTML and the web evolved",
+              content:
+                "The platform grew in layers:\n\n- **HTML** gained semantic tags (`header`, `nav`, `article`) so structure means something, not just “make it bold”\n- **CSS** (late 1990s onward) separated **look** from **content** — one `style.css` can style a whole site\n- **JavaScript** added interactivity (menus, forms, later full apps)\n- **Frameworks** (React, Next.js, etc.) help teams ship large sites; under the hood they still output HTML and CSS\n- **Mobile** pushed **responsive** design — one page that reflows on phone and desktop\n\nYou do not need every layer today. You need to recognize **HTML + CSS** in the files you and AI produce.",
+            },
+            {
+              title: "Building before AI — and with AI",
+              content:
+                "**Before AI (typical workflow):**\n\n- Read docs and tutorials, copy snippets, trial and error in the editor\n- Designers in Figma; developers hand-code or use templates\n- Slow for beginners; powerful once you know the patterns\n\n**With AI (your workflow this course):**\n\n- You describe the page; AI drafts `index.html` and `style.css`\n- **You** read the output: landmarks, links, classes, spacing — and ask for fixes\n- DevTools + clear prompts replace memorizing every property\n\nThe skill shift: less “type every tag from memory,” more **literacy + direction** — know what good structure looks like, catch mistakes, ship.",
+            },
             {
               title: "Quick review — terminal & scripts",
-              timing: "Lab",
-              outlineColor: "val",
               content:
                 "From Week 3:\n\n- **cd**, **ls**, **pwd** — move and inspect folders\n- **python3 script.py** — run a file from the terminal\n- **Scripts** — `.py` files; Wednesday used **input()**, Thursday scheduled hands-free runs",
               task: "Open terminal, `cd` to your project folder, and `ls` — confirm you remember the path.",
@@ -1255,13 +1294,14 @@ END`,
             {
               title: "Literacy, not memorization",
               content:
-                "When AI or a template gives you HTML/CSS, your job is to **understand** what you are looking at: landmarks, links, lists, images, forms. Writing every tag from memory is optional — reading and directing edits is the skill.",
-              task: "In one sentence, tell a partner what you want to be able to do with HTML/CSS after today.",
+                "When AI or a template gives you HTML/CSS, your job is to **understand** what you are looking at: landmarks, links, lists, images, forms. Writing every tag from memory is optional — reading and directing edits is the skill.\n\nSwitch to the **Lab** tab when you are ready to download the reference files and build.",
             },
+          ],
+          steps: [
             {
               title: "Walkthrough — unstyled reference",
               content:
-                "Download **reference HTML** above (or open from class). Open `index.html` in the browser — no stylesheet yet. Follow the `<!-- TEACH: ... -->` comments in the source and match them to the slide deck.",
+                "Download **reference HTML** above. Open `index.html` in the browser — no stylesheet yet. For line-by-line notes, use **Reference HTML (commented)** in Resources.",
               task: "Point to `header`, `nav`, `main`, and `footer` in your editor and in the browser.",
               links: [
                 { label: "MDN — HTML basics", href: "https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML" },
@@ -1270,7 +1310,7 @@ END`,
             {
               title: "Walkthrough — connect CSS",
               content:
-                "In `index.html` **head**, uncomment `<link rel=\"stylesheet\" href=\"style.css\" />`. Reload. Open `style.css` side-by-side and tie each comment block to what changed (fonts, max-width, nav flex, card padding, link hover).",
+                "In `index.html` **head**, uncomment `<link rel=\"stylesheet\" href=\"style.css\" />`. Reload. Open `style.css` and notice what changed (fonts, max-width, nav flex, card padding, link hover). For annotated CSS, download **Reference CSS (commented)** from Resources.",
               task: "Name one CSS property you can now explain when you see it in a file.",
               links: [
                 { label: "MDN — CSS first steps", href: "https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps" },

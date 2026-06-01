@@ -2,7 +2,7 @@
  * Helpful resources per session (Read · Watch · Try) for lesson pages.
  * Merged in `getSessionByWeekAndDay` when the session object has no `resources` array.
  *
- * @typedef {{ label: string, href: string, source?: string, note?: string }} SessionResourceItem
+ * @typedef {{ label: string, href: string, source?: string, note?: string, download?: string }} SessionResourceItem
  * @typedef {{ group: string, items: SessionResourceItem[] }} SessionResourceGroup
  */
 
@@ -470,6 +470,25 @@ const BY_KEY = {
   ],
 
   '4:mon': [
+    {
+      group: 'Downloads',
+      items: [
+        {
+          label: 'Reference HTML (commented)',
+          href: '/lesson/week4_reference/index.commented.html',
+          download: 'index.commented.html',
+          source: 'CodeMoldova',
+          note: 'Same reference page with HTML comments explaining each tag.',
+        },
+        {
+          label: 'Reference CSS (commented)',
+          href: '/lesson/week4_reference/style.commented.css',
+          download: 'style.commented.css',
+          source: 'CodeMoldova',
+          note: 'Annotated stylesheet — pair with the commented HTML for the walkthrough.',
+        },
+      ],
+    },
     {
       group: 'Read',
       items: [

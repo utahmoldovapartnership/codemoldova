@@ -1,38 +1,66 @@
 <!DOCTYPE html>
+<!-- Every HTML page starts with <!DOCTYPE html> so the browser uses modern rules. -->
 <html lang="en">
+  <!-- <html lang="..."> sets the page language (helps screen readers and search). -->
+
   <head>
+    <!-- <head> holds metadata — not visible on the page itself. -->
+
     <meta charset="UTF-8" />
+    <!-- charset=UTF-8 supports letters from many languages (including Romanian). -->
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- viewport makes the page scale correctly on phones. -->
+
     <meta
       name="description"
       content="CodeMoldova Week 4 — reference page showing common HTML tags."
     />
+    <!-- description is a short summary for search engines and link previews. -->
+
     <title>HTML Reference — CodeMoldova Week 4</title>
-    <!-- <link rel="stylesheet" href="style.css" /> -->
+    <!-- <title> appears in the browser tab and bookmarks. -->
+
+    <!-- Uncomment the line below for the CSS walkthrough (Monday part 2). -->
+    <!-- <link rel="stylesheet" href="style.commented.css" /> -->
   </head>
 
   <body>
+    <!-- <body> is everything the user sees. -->
+
     <header>
+      <!-- <header> = top banner for the page or a section. -->
       <h1>HTML Reference Map</h1>
+      <!-- <h1> is the main heading — use one per page when possible. -->
       <p>
-        This file is <strong>unstyled</strong> on purpose. Open it in a browser, then
-        uncomment the stylesheet link in <code>&lt;head&gt;</code> when you are ready
-        for part 2.
+        This file is <strong>unstyled</strong> on purpose.
+        <!-- <strong> = important text (usually bold). -->
+        Open the commented download from Resources when you want line-by-line notes.
+        <em>Then</em>
+        <!-- <em> = emphasis (usually italic). -->
+        compare with the clean reference files.
       </p>
     </header>
 
     <nav aria-label="Main navigation">
+      <!-- <nav> wraps navigation links. aria-label helps screen readers. -->
       <a href="#about">About</a>
+      <!-- <a href="..."> = link. #about jumps to id="about" on this page. -->
       <a href="#article-demo">Article</a>
       <a href="#contact">Contact</a>
       <a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer">
         MDN HTML docs (external)
       </a>
+      <!-- target="_blank" opens in a new tab; rel="noopener noreferrer" is a security best practice. -->
     </nav>
 
     <main>
+      <!-- <main> = the primary content (one per page). -->
+
       <section id="about">
+        <!-- <section> groups related content; id="..." creates a jump target for links. -->
         <h2>About this reference</h2>
+        <!-- <h2> is a section heading (smaller than h1). -->
         <p>
           You do not need to memorize every tag. Goal: when you open an HTML file
           (yours, AI-generated, or a template), you can
@@ -40,6 +68,7 @@
         </p>
 
         <h3>Why semantic tags?</h3>
+        <!-- <h3> is a subsection heading. -->
         <p>
           Tags like <code>header</code>, <code>nav</code>, and <code>main</code> describe
           <em>meaning</em>, not just appearance. Prefer them over bare
@@ -47,6 +76,7 @@
         </p>
 
         <ul>
+          <!-- <ul> = unordered (bulleted) list. -->
           <li>Landmarks help accessibility tools navigate your page.</li>
           <li>Clear structure makes AI edits more reliable.</li>
           <li>CSS can target semantic tags consistently.</li>
@@ -58,23 +88,27 @@
 
         <h3>Ordered list</h3>
         <ol>
+          <!-- <ol> = ordered (numbered) list. -->
           <li>Read the HTML file top to bottom.</li>
           <li>Uncomment the stylesheet link in &lt;head&gt;.</li>
           <li>Reload and compare with <code>style.css</code>.</li>
         </ol>
 
         <figure>
+          <!-- <figure> groups media + optional caption. -->
           <img
             src="https://placehold.co/600x200/4f7cff/ffffff?text=Example+image"
             alt="Placeholder banner showing where a real photo would go"
             width="600"
             height="200"
           />
+          <!-- <img> is self-closing. Always include alt="..." — describe the image for accessibility. -->
           <figcaption>Example image with a caption (figcaption).</figcaption>
         </figure>
 
         <p>
           <button type="button">Example button</button>
+          <!-- <button> is for actions (we add JavaScript in Week 5). type="button" avoids accidental form submit. -->
           Buttons and links look different when CSS is connected.
         </p>
       </section>
@@ -83,6 +117,8 @@
         <h2>Article and aside</h2>
 
         <article class="card">
+          <!-- <article> = self-contained content (blog post, card, news item). -->
+          <!-- class="card" is a hook for CSS — many elements can share a class. -->
           <h3>Sample project card</h3>
           <p>
             In your portfolio you will link to projects hosted on their own GitHub
@@ -92,6 +128,7 @@
         </article>
 
         <aside>
+          <!-- <aside> = tangential content (sidebar tip, related note). -->
           <h3>Tip</h3>
           <p>
             Use a <code>div</code> only when no semantic tag fits. Do not wrap
@@ -103,6 +140,7 @@
       <section id="grouping-div">
         <h2>div vs semantic tags</h2>
         <div class="wrapper-example">
+          <!-- <div> has no meaning — it is a generic box for layout/grouping. -->
           <p>
             This paragraph sits inside a <code>div</code> with
             <code>class="wrapper-example"</code>. The class name is for you and
@@ -116,7 +154,9 @@
         <p>You are not building forms by hand today — just recognize the tags.</p>
 
         <form action="#" method="post">
+          <!-- <form> collects user input. action/method matter when you have a real backend (later). -->
           <label for="name">Name</label>
+          <!-- <label for="id"> ties the label to an input with matching id. -->
           <input id="name" name="name" type="text" placeholder="Your name" />
 
           <label for="email">Email</label>
@@ -124,6 +164,7 @@
 
           <label for="message">Message</label>
           <textarea id="message" name="message" rows="4" placeholder="Say hello"></textarea>
+          <!-- <textarea> is for longer text. -->
 
           <button type="submit">Send (demo only)</button>
         </form>
@@ -131,6 +172,7 @@
     </main>
 
     <footer>
+      <!-- <footer> = bottom of page (copyright, links, credits). -->
       <p>CodeMoldova 2026 — Week 4 HTML reference. Edit and reuse freely.</p>
       <p>
         <a href="#about">Back to top</a>

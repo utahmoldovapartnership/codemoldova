@@ -13,6 +13,8 @@ import {
   LessonChallengesAccordion,
   LessonHero,
   LessonHomework,
+  LessonContentBand,
+  LessonTabNextNav,
   LessonLabBand,
   LessonLabChallenge,
   LessonLabCheatsheet,
@@ -116,8 +118,9 @@ function buildArtifacts(session, dayKey) {
 
 function buildMainPoints(session) {
   if (session.mainPoints?.length) return session.mainPoints
-  if (session.steps?.length) {
-    return session.steps.slice(0, 5).map((s) => {
+  const steps = session.lessonSteps?.length ? session.lessonSteps : session.steps
+  if (steps?.length) {
+    return steps.slice(0, 5).map((s) => {
       const detail = [s.content, s.task, Array.isArray(s.tips) && s.tips.length ? s.tips[0] : '']
         .filter((v) => typeof v === 'string' && v.trim())
         .map((v) => v.trim())
@@ -308,6 +311,7 @@ function LessonTabbedBody({
   mainPoints,
   challengesList,
   isThu,
+  showLesson,
   showLab,
   labExample,
   labDownloads,
@@ -316,7 +320,9 @@ function LessonTabbedBody({
   const baseId = useId()
   const buildTracks = session.buildTracks
   const isBuildTrackMode = Boolean(buildTracks)
-  const [activeLessonTab, setActiveLessonTab] = useState(() => (isBuildTrackMode ? 'beginner' : 'lab'))
+  const [activeLessonTab, setActiveLessonTab] = useState(() =>
+    isBuildTrackMode ? 'beginner' : showLesson ? 'lesson' : 'lab',
+  )
   const lessonPanelId = `${baseId}-lesson-tabs-panel`
 
   const tabFocusByDay = {
@@ -344,13 +350,25 @@ function LessonTabbedBody({
         { id: 'resources', label: 'Resources' },
       ]
     : [
-        { id: 'lab', label: 'Lab' },
+        ...(showLesson ? [{ id: 'lesson', label: 'Lesson' }] : []),
+        ...(showLab ? [{ id: 'lab', label: 'Lab' }] : []),
         ...(secondaryTab ? [secondaryTab] : []),
         { id: 'main', label: 'Main points' },
         { id: 'resources', label: 'Resources' },
       ]
 
   const buildIntro = typeof session.desc === 'string' ? session.desc.trim() : ''
+  const lessonIntro =
+    typeof session.lessonDesc === 'string' && session.lessonDesc.trim()
+      ? session.lessonDesc.trim()
+      : ''
+
+  const goToTab = (tabId) => {
+    setActiveLessonTab(tabId)
+    requestAnimationFrame(() => {
+      document.getElementById(lessonPanelId)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    })
+  }
 
   return (
     <section className={`lesson-tabs lesson-tabs--${dayKey} border-t border-hairline`}>
@@ -421,6 +439,16 @@ function LessonTabbedBody({
           </>
         ) : (
           <>
+            {activeLessonTab === 'lesson' ? (
+              showLesson ? (
+                <LessonContentBand title={session.title} intro={lessonIntro} dayKey={dayKey}>
+                  <LessonModule steps={session.lessonSteps} variant="paper" noRounded dayKey={dayKey} />
+                </LessonContentBand>
+              ) : (
+                <LessonTabEmpty>No lesson content listed for this session yet.</LessonTabEmpty>
+              )
+            ) : null}
+
             {activeLessonTab === 'lab' ? (
               showLab ? (
                 <LessonLabBand
@@ -529,6 +557,7 @@ function LessonTabbedBody({
             ) : null}
           </>
         )}
+        <LessonTabNextNav tabs={lessonTabs} activeTabId={activeLessonTab} onGoToTab={goToTab} />
       </div>
     </section>
   )
@@ -608,6 +637,7 @@ export default function Lesson() {
   const labExample = resolveLabExample(session)
   const labDownloads = resolveLabDownloads(session)
   const labDurationLabel = estimateLabDurationLabel(session)
+  const showLesson = Boolean(session.lessonSteps?.length)
   const showLab = Boolean(session.steps?.length)
 
   return (
@@ -641,6 +671,7 @@ export default function Lesson() {
             mainPoints={mainPoints}
             challengesList={challengesList}
             isThu={isThu}
+            showLesson={showLesson}
             showLab={showLab}
             labExample={labExample}
             labDownloads={labDownloads}

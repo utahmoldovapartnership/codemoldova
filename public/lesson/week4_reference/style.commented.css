@@ -1,10 +1,11 @@
-/* Reset */
+/* Box model — include padding and border inside width calculations. */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
 
+/* Light reset — browsers add default margins; we set a consistent baseline. */
 body,
 h1,
 h2,
@@ -15,7 +16,7 @@ ol {
   margin: 0;
 }
 
-/* Base */
+/* body — page-wide font, colors, and comfortable line height. */
 body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   line-height: 1.6;
@@ -23,7 +24,7 @@ body {
   background-color: #f4f6fb;
 }
 
-/* Header */
+/* header — spacing and a subtle bottom border separate it from content. */
 header {
   padding: 2rem 1.5rem 1.5rem;
   background-color: #ffffff;
@@ -36,7 +37,7 @@ header h1 {
   margin-bottom: 0.5rem;
 }
 
-/* Navigation */
+/* nav — flex lays links in a row with gaps (one-dimensional layout). */
 nav {
   display: flex;
   flex-wrap: wrap;
@@ -46,6 +47,7 @@ nav {
   border-bottom: 1px solid #d8deea;
 }
 
+/* links — color, underline, and :hover / :focus-visible for keyboard users. */
 a {
   color: #4f7cff;
   text-decoration: underline;
@@ -61,13 +63,14 @@ a:focus-visible {
   outline-offset: 2px;
 }
 
-/* Main layout */
+/* main — max-width + margin auto centers readable content on wide screens. */
 main {
   max-width: 42rem;
   margin: 0 auto;
   padding: 2rem 1.5rem 3rem;
 }
 
+/* section spacing — each section gets room to breathe. */
 section {
   margin-bottom: 2.5rem;
 }
@@ -83,6 +86,7 @@ section h3 {
   margin-bottom: 0.5rem;
 }
 
+/* lists — padding-left indents bullets/numbers from the edge. */
 ul,
 ol {
   padding-left: 1.5rem;
@@ -93,6 +97,7 @@ li + li {
   margin-top: 0.35rem;
 }
 
+/* inline code — monospace snippet style inside paragraphs. */
 code {
   font-family: ui-monospace, "Cascadia Code", monospace;
   font-size: 0.9em;
@@ -101,7 +106,7 @@ code {
   border-radius: 4px;
 }
 
-/* Media */
+/* images — never wider than their container. */
 img {
   max-width: 100%;
   height: auto;
@@ -119,7 +124,7 @@ figcaption {
   margin-top: 0.5rem;
 }
 
-/* Cards */
+/* .card — class selector; box model with padding, border, radius. */
 .card {
   padding: 1.25rem;
   background-color: #ffffff;
@@ -132,6 +137,7 @@ figcaption {
   margin-top: 0;
 }
 
+/* aside — visually distinct sidebar note. */
 aside {
   padding: 1rem 1.25rem;
   background-color: #eef2ff;
@@ -139,7 +145,7 @@ aside {
   border-radius: 0 8px 8px 0;
 }
 
-/* Forms */
+/* form — stack labels and fields with gap (flex column). */
 form {
   display: flex;
   flex-direction: column;
@@ -161,6 +167,7 @@ textarea {
   border-radius: 6px;
 }
 
+/* button — looks clickable; distinct from links. */
 button {
   font: inherit;
   cursor: pointer;
@@ -181,7 +188,7 @@ button:focus-visible {
   outline-offset: 2px;
 }
 
-/* Footer */
+/* footer — muted text, centered, top border. */
 footer {
   text-align: center;
   padding: 2rem 1.5rem;
