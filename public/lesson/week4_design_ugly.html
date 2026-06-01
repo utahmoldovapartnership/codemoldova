@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ugly Example — CodeMoldova Week 4</title>
+    <style>
+      /* Intentionally bad design — compare with week4_design_pretty.html */
+      body {
+        font-family: "Comic Sans MS", "Papyrus", cursive;
+        background-color: #ff00ff;
+        color: #ffff00;
+        text-align: center;
+        margin: 0;
+        padding: 4px;
+        line-height: 1;
+      }
+      h1 {
+        font-size: 48px;
+        text-decoration: underline overline;
+        color: #00ff00;
+        margin: 2px;
+      }
+      h2 {
+        font-size: 10px;
+        color: #cccccc;
+      }
+      p {
+        font-size: 9px;
+        width: 100%;
+        margin: 0;
+      }
+      nav a {
+        color: #ff0000;
+        font-size: 22px;
+        margin: 0 40px;
+        text-decoration: none;
+      }
+      nav a:hover {
+        color: #ff0000;
+      }
+      section {
+        border: 5px dashed red;
+        padding: 0;
+        margin: 0;
+      }
+      button {
+        background: yellow;
+        color: yellow;
+        border: none;
+        font-size: 8px;
+        padding: 1px;
+        cursor: default;
+      }
+      .card {
+        background: lime;
+        transform: rotate(-2deg);
+      }
+      img {
+        width: 900px;
+        max-width: none;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      li {
+        display: inline;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>WELCOME TO MY SITE!!!</h1>
+      <p>everything is centered and hard to read on purpose</p>
+    </header>
+
+    <nav>
+      <a href="#about">about</a>
+      <a href="#projects">projects</a>
+      <a href="#contact">contact</a>
+    </nav>
+
+    <main>
+      <section id="about">
+        <h2>About</h2>
+        <p>
+          This page has the same content structure as the pretty example, but the
+          design choices are terrible: clashing colors, no spacing rhythm, tiny
+          body text, huge random headings, and no max-width for reading.
+        </p>
+      </section>
+
+      <section id="projects">
+        <h2>Projects</h2>
+        <article class="card">
+          <h3>Project One</h3>
+          <p>A short description that is squished and hard to scan.</p>
+          <a href="#">View project</a>
+        </article>
+        <article class="card">
+          <h3>Project Two</h3>
+          <p>Another card with no clear hierarchy or hover states.</p>
+          <button type="button">Click me?</button>
+        </article>
+        <img
+          src="https://placehold.co/600x120/ff00ff/000000?text=Too+wide+image"
+          alt="Decorative placeholder"
+        />
+        <ul>
+          <li>bullet</li>
+          <li>points</li>
+          <li>inline</li>
+        </ul>
+      </section>
+
+      <section id="contact">
+        <h2>Contact</h2>
+        <p>Email me maybe — link looks like body text.</p>
+        <a href="mailto:hello@example.com">hello@example.com</a>
+      </section>
+    </main>
+
+    <footer>
+      <p>footer text also centered wall of noise</p>
+    </footer>
+  </body>
+</html>

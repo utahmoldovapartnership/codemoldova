@@ -1,0 +1,203 @@
+/* TEACH: Box model — include padding and border inside width calculations. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* TEACH: Light reset — browsers add default margins; we set a consistent baseline. */
+body,
+h1,
+h2,
+h3,
+p,
+ul,
+ol {
+  margin: 0;
+}
+
+/* TEACH: body — page-wide font, colors, and comfortable line height. */
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.6;
+  color: #1a1d26;
+  background-color: #f4f6fb;
+}
+
+/* TEACH: header — spacing and a subtle bottom border separate it from content. */
+header {
+  padding: 2rem 1.5rem 1.5rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #d8deea;
+}
+
+header h1 {
+  font-size: 2rem;
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+}
+
+/* TEACH: nav — flex lays links in a row with gaps (one-dimensional layout). */
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #d8deea;
+}
+
+/* TEACH: links — color, underline, and :hover / :focus-visible for keyboard users. */
+a {
+  color: #4f7cff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: #3a62d9;
+}
+
+a:focus-visible {
+  outline: 2px solid #4f7cff;
+  outline-offset: 2px;
+}
+
+/* TEACH: main — max-width + margin auto centers readable content on wide screens. */
+main {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+/* TEACH: section spacing — each section gets room to breathe. */
+section {
+  margin-bottom: 2.5rem;
+}
+
+section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+section h3 {
+  font-size: 1.125rem;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+/* TEACH: lists — padding-left indents bullets/numbers from the edge. */
+ul,
+ol {
+  padding-left: 1.5rem;
+  margin-top: 0.75rem;
+}
+
+li + li {
+  margin-top: 0.35rem;
+}
+
+/* TEACH: inline code — monospace snippet style inside paragraphs. */
+code {
+  font-family: ui-monospace, "Cascadia Code", monospace;
+  font-size: 0.9em;
+  background-color: #e8ecf4;
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+
+/* TEACH: images — never wider than their container. */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+figure {
+  margin: 1rem 0;
+}
+
+figcaption {
+  font-size: 0.875rem;
+  color: #5c6478;
+  margin-top: 0.5rem;
+}
+
+/* TEACH: .card — class selector; box model with padding, border, radius. */
+.card {
+  padding: 1.25rem;
+  background-color: #ffffff;
+  border: 1px solid #d8deea;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+}
+
+.card h3 {
+  margin-top: 0;
+}
+
+/* TEACH: aside — visually distinct sidebar note. */
+aside {
+  padding: 1rem 1.25rem;
+  background-color: #eef2ff;
+  border-left: 4px solid #4f7cff;
+  border-radius: 0 8px 8px 0;
+}
+
+/* TEACH: form — stack labels and fields with gap (flex column). */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 24rem;
+  margin-top: 1rem;
+}
+
+label {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+input,
+textarea {
+  font: inherit;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid #c5cdd9;
+  border-radius: 6px;
+}
+
+/* TEACH: button — looks clickable; distinct from links. */
+button {
+  font: inherit;
+  cursor: pointer;
+  padding: 0.55rem 1rem;
+  background-color: #4f7cff;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  width: fit-content;
+}
+
+button:hover {
+  background-color: #3a62d9;
+}
+
+button:focus-visible {
+  outline: 2px solid #1a1d26;
+  outline-offset: 2px;
+}
+
+/* TEACH: footer — muted text, centered, top border. */
+footer {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  font-size: 0.9rem;
+  color: #5c6478;
+  border-top: 1px solid #d8deea;
+  background-color: #ffffff;
+}
+
+footer p + p {
+  margin-top: 0.5rem;
+}

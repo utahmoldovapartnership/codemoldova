@@ -5,7 +5,7 @@
 
 /** @typedef {{ type: 'text', value: string } | { type: 'bold' | 'code' | 'kbd', value: string }} InlineSegment */
 
-/** @typedef {{ type: 'p', lines: string[] } | { type: 'ol', items: string[] } | { type: 'table', rows: string[][] }} ContentBlock */
+/** @typedef {{ type: 'p', lines: string[] } | { type: 'ol', items: string[] } | { type: 'table', rows: string[][] } | { type: 'pre', code: string, lang?: string }} ContentBlock */
 
 /**
  * @param {string} line
@@ -118,6 +118,21 @@ export function parseLessonBlocks(text) {
     const line = lines[i]
     if (!line.trim()) {
       i += 1
+      continue
+    }
+
+    const fenceMatch = line.trim().match(/^```(\w*)$/)
+    if (fenceMatch) {
+      const lang = fenceMatch[1] || undefined
+      i += 1
+      /** @type {string[]} */
+      const codeLines = []
+      while (i < lines.length && !/^```\s*$/.test(lines[i].trim())) {
+        codeLines.push(lines[i])
+        i += 1
+      }
+      if (i < lines.length) i += 1
+      blocks.push({ type: 'pre', code: codeLines.join('\n'), lang })
       continue
     }
 

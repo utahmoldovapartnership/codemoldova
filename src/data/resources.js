@@ -98,6 +98,12 @@ export const resources = {
       tag: "tool",
     },
     {
+      title: "CodeMoldova portfolio template",
+      desc: "Clone this Next.js hub for Week 4+. Links to each project’s live Vercel site — edit data/projects.ts after every session.",
+      url: "https://github.com/utahmoldovapartnership/porfolio-template",
+      tag: "tool",
+    },
+    {
       title: "GitHub Pages",
       desc: "Host a static website directly from a GitHub repo. It is completely free.",
       url: "https://pages.github.com",
@@ -189,7 +195,7 @@ export const resources = {
     },
     {
       title: "OpenWeather API",
-      desc: "Free weather API we use in Week 4. Sign up for a free key.",
+      desc: "Free weather API we use in Week 3 API labs. Sign up for a free key.",
       url: "https://openweathermap.org/api",
       tag: "tool",
     },

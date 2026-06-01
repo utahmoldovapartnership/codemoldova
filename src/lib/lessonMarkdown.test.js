@@ -72,4 +72,14 @@ describe('parseLessonBlocks', () => {
       ['1', '2'],
     ])
   })
+
+  it('parses fenced code blocks', () => {
+    const blocks = parseLessonBlocks('Intro.\n\n```bash\ngit clone repo\ncd repo\n```\n\n1. **Next**')
+    assert.equal(blocks.length, 3)
+    assert.equal(blocks[0].type, 'p')
+    assert.equal(blocks[1].type, 'pre')
+    assert.equal(blocks[1].lang, 'bash')
+    assert.match(blocks[1].code, /git clone/)
+    assert.equal(blocks[2].type, 'ol')
+  })
 })

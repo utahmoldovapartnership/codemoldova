@@ -144,6 +144,17 @@ export default function LessonRichText({
       )
     }
 
+    if (block.type === 'pre') {
+      return (
+        <pre
+          key={key}
+          className="overflow-x-auto rounded border border-hairline/60 bg-ink/[0.04] p-4 font-mono text-[0.85em] leading-relaxed text-ink/90"
+        >
+          <code>{block.code}</code>
+        </pre>
+      )
+    }
+
     const paragraph = block.lines.join('\n')
     return (
       <p key={key} className={`whitespace-pre-line leading-[1.7] ${toneClasses.p}`}>

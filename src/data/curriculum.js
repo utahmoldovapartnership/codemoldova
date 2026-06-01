@@ -1233,10 +1233,16 @@ END`,
       {
         num: 4,
         mon: {
-          title: "HTML & CSS",
+          title: "HTML & CSS literacy",
           date: "Jun 1",
-          desc: "Workshop 1: structure with semantic HTML, style with CSS, and preview locally from Cursor\u2019s file tree or Live Server if you use the extension.",
-          preview: "Build a single-page profile skeleton with headings, lists, links, and a linked stylesheet.",
+          desc: "Learn to **read** HTML and CSS so you can work with AI and templates confidently. You will not memorize syntax today — you will understand structure, connect a stylesheet, and ship your first single-page site plus a portfolio repo.",
+          preview: "Walk the reference HTML map, connect style.css, build one topic site with AI, deploy to GitHub + Vercel, add it to your portfolio.",
+          labExampleUrl: "/lesson/week4_reference/index.html",
+          labExampleDownload: "index.html",
+          labExampleLabel: "Download reference HTML",
+          labDataUrl: "/lesson/week4_reference/style.css",
+          labDataLabel: "Download reference CSS",
+          labDataDownload: "style.css",
           steps: [
             {
               title: "Quick review — terminal & scripts",
@@ -1247,162 +1253,233 @@ END`,
               task: "Open terminal, `cd` to your project folder, and `ls` — confirm you remember the path.",
             },
             {
-              title: "HTML document outline",
-              content: "doctype, html, head, body, meta charset, title, viewport meta for phones.",
-              task: "Create index.html with header, main, footer landmarks.",
+              title: "Literacy, not memorization",
+              content:
+                "When AI or a template gives you HTML/CSS, your job is to **understand** what you are looking at: landmarks, links, lists, images, forms. Writing every tag from memory is optional — reading and directing edits is the skill.",
+              task: "In one sentence, tell a partner what you want to be able to do with HTML/CSS after today.",
+            },
+            {
+              title: "Walkthrough — unstyled reference",
+              content:
+                "Download **reference HTML** above (or open from class). Open `index.html` in the browser — no stylesheet yet. Follow the `<!-- TEACH: ... -->` comments in the source and match them to the slide deck.",
+              task: "Point to `header`, `nav`, `main`, and `footer` in your editor and in the browser.",
               links: [
-                { label: "MDN \u2014 HTML basics", href: "https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML" },
+                { label: "MDN — HTML basics", href: "https://developer.mozilla.org/en-US/docs/Learn/HTML/Introduction_to_HTML" },
               ],
             },
             {
-              title: "Common tags",
-              content: "p, a, ul/li, img with alt text, button (for later JS).",
-              task: "Add a nav with three anchor links to sections on the same page (#about).",
+              title: "Walkthrough — connect CSS",
+              content:
+                "In `index.html` **head**, uncomment `<link rel=\"stylesheet\" href=\"style.css\" />`. Reload. Open `style.css` side-by-side and tie each comment block to what changed (fonts, max-width, nav flex, card padding, link hover).",
+              task: "Name one CSS property you can now explain when you see it in a file.",
+              links: [
+                { label: "MDN — CSS first steps", href: "https://developer.mozilla.org/en-US/docs/Learn/CSS/First_steps" },
+              ],
             },
             {
-              title: "CSS file link",
-              content: "styles.css beside index.html; reset margins lightly; set font-family and background colors matching your taste while staying readable.",
-              task: "Change link colors for :hover and :focus-visible for accessibility.",
+              title: "DevTools literacy",
+              content:
+                "Right-click → Inspect. Find which rule sets color or spacing. Toggle a property off and on. Use what you learn to **prompt AI** (“increase line-height on body”, “add max-width on main”) rather than typing blind.",
+              task: "Change one spacing value in DevTools, then ask AI to apply the same idea in your project file.",
             },
             {
-              title: "Box model",
-              content: "margin, border, padding, width/max-width. Center content with margin: 0 auto and max-width.",
-              task: "Make the layout readable at 375px width using relative units (rem, %).",
+              title: "Challenge — your first single-page site",
+              timing: "Lab",
+              content:
+                "Pick **one** topic below. Use AI + today’s reference to create `index.html` + `style.css` in a new folder (header, nav, main sections, footer). Keep it simple and readable.\n\n1. **Hometown guide** — 3 places + why you like them\n2. **Hobby deep-dive** — what it is, gear/steps, why it matters\n3. **Study playlist** — 5 tracks/albums + mood for coding\n4. **Local food map** — 3 spots, what to order, price vibe\n5. **Dream trip** — destination, itinerary, packing list",
+              task: "Open your page locally in the browser before deploying.",
             },
             {
-              title: "DevTools peek",
-              content: "Inspect element in the browser: see computed styles, toggle classes, experiment—then copy working CSS back to your file.",
-              task: "Fix one spacing bug using DevTools before leaving class.",
+              title: "Ship — GitHub + Vercel",
+              content:
+                "Create a **new GitHub repo** for this project only (not your portfolio). Push `index.html` + `style.css`. Import the repo on Vercel → deploy → copy the **HTTPS** live URL.",
+              task: "Post the live URL in the class thread.",
+              links: [
+                { label: "Vercel — static sites", href: "https://vercel.com/docs/frameworks/static" },
+              ],
+            },
+            {
+              title: "Portfolio — clone template + first card",
+              content:
+                "Your **portfolio** is a separate repo (Next.js hub that **links** to project sites — it does not host them).\n\n```bash\ngit clone https://github.com/utahmoldovapartnership/porfolio-template.git yourname-portfolio\ncd yourname-portfolio\nnpm install\nnpm run dev\n```\n\n1. Push to **your** GitHub repo `yourname-portfolio`\n2. Import on Vercel — preset **Next.js**\n3. Edit `data/site.ts` (name, bio, contact)\n4. Edit `data/projects.ts` — fill **`monday-site`**: `title`, `description`, `liveUrl`, `repoUrl` (optional: screenshot in `public/projects/` and set `thumbnail`)",
+              task: "Portfolio deploys on Vercel; `monday-site` has your Monday live + repo URLs.",
+              links: [
+                { label: "Portfolio template (GitHub)", href: "https://github.com/utahmoldovapartnership/porfolio-template" },
+                { label: "Vercel — Next.js deploy", href: "https://vercel.com/docs/frameworks/nextjs" },
+              ],
             },
           ],
           homework: {
-            title: "Mark up your story",
-            desc: "Personal facts can be fictional for privacy.",
+            title: "Site + portfolio live",
+            desc: "Finish in class if possible; otherwise complete before Wednesday.",
             tasks: [
-              "Semantic sections for about, projects, contact",
-              "External stylesheet with at least five rulesets",
-              "One responsive tweak (stack columns under 600px using flex or grid)",
+              "Monday project: public Vercel URL + GitHub repo",
+              "Portfolio: `monday-site` in data/projects.ts with liveUrl + repoUrl",
+              "Optional: README on project repo with one sentence about the topic",
             ],
           },
         },
         wed: {
-          title: "Layouts, styling, Figma",
+          title: "Design for the AI era",
           date: "Jun 3",
-          desc: "Workshop 2: flexbox and grid for real layouts, spacing rhythm, and a Figma pass\u2014export a simple frame to match colors and type scales (free tier is fine).",
-          preview: "Translate a tiny design spec into CSS variables and reusable classes.",
+          desc: "Design is what separates usable AI output from great sites. Compare ugly vs pretty examples, learn prompting and reference hunting (Material, inspiration sites), touch Figma lightly, then ship **v2** of Monday’s site and update your portfolio.",
+          preview: "Ugly vs pretty HTML, design tactics for AI, redesign Monday’s site as v2, deploy, portfolio card 2.",
+          labExampleUrl: "/lesson/week4_design_ugly.html",
+          labExampleDownload: "week4_design_ugly.html",
+          labExampleLabel: "Download ugly design example",
+          labDataUrl: "/lesson/week4_design_pretty.html",
+          labDataLabel: "Download pretty design example",
+          labDataDownload: "week4_design_pretty.html",
           steps: [
             {
-              title: "Quick review — HTML & CSS",
+              title: "Quick review — Monday site",
               timing: "Lab",
               outlineColor: "ube",
               content:
-                "From Monday:\n\n- Semantic tags — `header`, `main`, `footer`, `nav`\n- Link a stylesheet — `<link rel=\"stylesheet\" href=\"styles.css\">`\n- **Box model** — margin, padding, `max-width` for readable layouts",
-              task: "Open Monday’s `index.html` in the browser — point to one tag and one CSS rule you wrote.",
+                "From Monday:\n\n- Semantic landmarks — `header`, `nav`, `main`, `footer`\n- Linked stylesheet — `<link rel=\"stylesheet\" href=\"style.css\">`\n- You can **read** tags and basic CSS, even if AI wrote most of it",
+              task: "Open Monday’s repo locally — name one HTML tag and one CSS rule you can explain.",
             },
             {
-              title: "Flex vs grid decision",
-              content: "Flex for one-dimensional rows/columns; grid for two-dimensional dashboards and card galleries.",
-              task: "Build a 3-card feature row that wraps on small screens.",
+              title: "Ugly vs pretty",
+              content:
+                "Download both design examples. Same **content structure**, different CSS. List what makes the ugly page hard to use (clashing colors, no hierarchy, cramped type, no max-width) vs the pretty page (variables, spacing rhythm, clear headings, hover/focus).",
+              task: "Write three “do” rules and three “don’t” rules for your own redesign.",
             },
             {
-              title: "CSS variables",
-              content: "Define :root { --ink: #0d0f14; --accent: #4f7cff; } and reuse.",
-              task: "Refactor three repeated colors into variables.",
+              title: "Design when AI builds",
+              content:
+                "Ask for **layout and tokens before code**: audience, mood, 2–3 colors, font vibe. Request **3 distinct directions**, pick one, then generate HTML/CSS. Iterate with screenshots: “more whitespace”, “stronger h1 hierarchy”.",
+              task: "Write one design prompt you will use on Monday’s site (role + constraints + output format).",
+              links: [
+                { label: "Claude", href: "https://claude.ai" },
+                { label: "Material Design 3", href: "https://m3.material.io/" },
+              ],
             },
             {
-              title: "Figma basics",
-              content: "Frames, auto-layout, text styles. Export CSS for colors or copy hex into your variables table.",
-              task: "Recreate one hero block from a mentor-provided starter file or your own wireframe.",
+              title: "Reference hunting",
+              content:
+                "Steal **structure**, not pixels: browse Material components, [Google Fonts](https://fonts.google.com/), [Land-book](https://land-book.com/) or [Mobbin](https://mobbin.com/) for nav patterns, card grids, and button styles. Describe what you like in words for AI.",
+              task: "Save one screenshot or link of a site layout you want to echo (not copy exactly).",
+            },
+            {
+              title: "Figma (optional, ~5 min)",
+              content:
+                "Figma is one tool among many — AI design tools are rising. If you use Figma: quick frame, auto-layout, copy hex into your prompt. Not required to finish today.",
+              task: "Optional: export one color hex from Figma into your AI prompt.",
               links: [
                 { label: "Figma Learn", href: "https://help.figma.com/hc/en-us/categories/360002051613" },
               ],
             },
             {
-              title: "Typography scale",
-              content: "Pick a modular scale (1.125 or 1.2) for h1–p; line-height 1.4–1.6 for body.",
-              task: "Apply consistent heading sizes across sections.",
+              title: "Challenge — Monday site v2",
+              timing: "Lab",
+              content:
+                "Redesign Monday’s site to be **visually appealing**. Use the same repo. Save as `index-v2.html` + `style-v2.css` **or** replace `index.html` / `style.css` on a `v2` branch — mentor will pick one pattern for the room.",
+              task: "v2 loads locally and looks clearly better than Monday v1.",
             },
             {
-              title: "Polish passes",
-              content: "Focus states, contrast check, image sizing object-fit: cover where needed.",
-              task: "Run a quick Lighthouse accessibility pass on the local file if available.",
+              title: "Ship v2 + portfolio card 2",
+              content:
+                "Push to GitHub → Vercel redeploys on your **project** repo. In your portfolio repo, update **`wednesday-v2`** in `data/projects.ts` with the v2 `liveUrl`, `repoUrl`, title, and descriptions. Optional: add a screenshot to `public/projects/` for the card thumbnail.",
+              task: "Portfolio `wednesday-v2` entry is clickable (liveUrl set) and opens your redesigned site.",
+              links: [
+                { label: "Portfolio template (GitHub)", href: "https://github.com/utahmoldovapartnership/porfolio-template" },
+              ],
             },
           ],
           homework: {
-            title: "Design-to-CSS",
-            desc: "Screenshot your Figma frame next to your page in the README notes.",
+            title: "v2 live + portfolio",
+            desc: "Optional: README before/after screenshot or one paragraph on design choices.",
             tasks: [
-              "Match three tokens (color or font-size) between Figma and CSS variables",
-              "Grid or flex layout for the projects section",
-              "Optional: dark theme toggle using a class on body",
+              "v2 on Vercel (HTTPS)",
+              "Portfolio: wednesday-v2 in data/projects.ts updated",
+              "Optional: compare to ugly/pretty checklist from class",
             ],
           },
         },
         thu: {
-          title: "Personal webpage goes live",
+          title: "Second project ship day",
           date: "Jun 4",
-          desc: "Build day: ship the page from Monday/Wednesday. We will use GitHub Pages or Vercel later for DNS-friendly URLs\u2014for today, get static files online with the workflow your mentor demos.",
-          preview: "index.html + styles (+ optional images/) in a public repo.",
+          desc: "Build day: a **new** site in a **new** repo — apply HTML literacy, CSS, and Wednesday’s design tactics from the start. Deploy and add **portfolio card 3**.",
+          preview: "New idea, new repo, design-first build, GitHub + Vercel, portfolio updated.",
           steps: [
             {
-              title: "Asset check",
-              content: "Compress large images, verify alt text, fix broken relative paths (./styles.css).",
-              task: "Open the site via file:// then note what breaks when moved to hosting.",
+              title: "Assets and paths",
+              content:
+                "Compress large images, every `img` has `alt`, paths like `./style.css` work from repo root. Test locally before push.",
+              task: "Open DevTools → Network tab → reload; no 404 on CSS or images.",
             },
             {
-              title: "GitHub repo (preview)",
-              content: "Create github.com/yourname/codemoldova-site with README describing the page. Full Git mechanics come week 6—follow the live demo closely.",
-              task: "Remote main contains index.html at repo root or /docs as instructed.",
+              title: "Mini recap",
+              timing: "Lab",
+              outlineColor: "val",
+              content:
+                "Today’s checklist:\n\n- **HTML** — `header`, `nav`, `main`, `footer`, semantic sections\n- **CSS** — linked stylesheet, variables, spacing, readable `max-width`\n- **Design** — hierarchy, contrast, hover/focus; prompt AI with references",
+              task: "Skim your Monday and Wednesday repos — one thing you will do better on today’s site.",
             },
             {
-              title: "Enable hosting",
-              content: "GitHub Pages from main / root or Vercel static import—pick one path the room uses together.",
-              task: "Share the HTTPS URL in the class thread.",
+              title: "Pick a new project",
+              content:
+                "New **GitHub repo** (not Monday’s). Pick one idea or ask AI for five ideas in a niche you care about:\n\n- Personal **now** page (goals, tools you use)\n- Fan page (game, artist, team)\n- Event invite (fake meetup + schedule)\n- Mini resource list (best free tools for students)\n- Cause one-pager (facts + how to help)\n- **Or:** AI-generated list → you choose",
+              task: "Write the repo name and one-sentence pitch in your README.",
             },
             {
-              title: "Smoke test on phone",
-              content: "Real devices catch tap targets and font sizes desktops hide.",
-              task: "Fix at least one mobile issue you notice.",
+              title: "Build + design pass",
+              timing: "Lab",
+              content:
+                "Create `index.html` + `style.css`. Apply Wednesday’s tactics: tokens, spacing, clear headings, good contrast. Use AI deliberately — you review every section.",
+              task: "Phone-width check: readable text without horizontal scroll.",
+            },
+            {
+              title: "Ship + portfolio card 3",
+              content:
+                "Push Thursday site to its **own** GitHub repo → Vercel (static HTML). In your portfolio repo, fill **`thursday-site`** in `data/projects.ts` with `liveUrl`, `repoUrl`, title, and descriptions.",
+              task: "Share Thursday project URL + portfolio hub URL in the class thread.",
+              links: [
+                { label: "GitHub — create a repo", href: "https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository" },
+                { label: "Vercel — deploy", href: "https://vercel.com/docs/deployments/overview" },
+                { label: "Portfolio template (GitHub)", href: "https://github.com/utahmoldovapartnership/porfolio-template" },
+              ],
             },
           ],
           homework: {
-            title: "Live URL checklist",
-            desc: "Post URL + one sentence on what you still want to improve.",
+            title: "Three projects on portfolio",
+            desc: "All three Week 4 cards should have working links.",
             tasks: [
-              "Public HTTPS link loads under 5 seconds on LTE",
-              "Contact section has a working mailto: or link",
-              "Optional: custom favicon",
+              "Thursday project live on Vercel (static repo)",
+              "Portfolio: monday-site, wednesday-v2, thursday-site all have liveUrl set",
+              "Optional: custom favicon on Thursday project or portfolio thumbnails",
             ],
           },
           challenges: {
             base: {
-              title: "Deployed static page",
-              desc: "Hosted index.html + css.",
+              title: "New repo deployed",
+              desc: "Thursday site is a separate repo from Monday.",
               steps: [
-                "Repo link shared",
-                "Page matches local design within reason",
-                "No broken images",
+                "Public GitHub repo with index.html at root",
+                "Vercel HTTPS URL loads",
+                "thursday-site in data/projects.ts complete",
               ],
             },
             medium: {
-              title: "Projects section",
-              desc: "Three cards with links to GitHub or placeholders.",
+              title: "Design checklist pass",
+              desc: "Self-review against ugly vs pretty lesson.",
               steps: [
-                "Card grid responsive",
-                "Each card has title, blurb, link",
-                "Hover states",
+                "Clear h1 → body hierarchy",
+                "Readable line-height and max-width",
+                "Link/button hover or focus visible",
               ],
             },
             hard: {
-              title: "Custom domain later",
-              desc: "Document steps even if DNS waits.",
+              title: "README design notes",
+              desc: "Document intent for Demo Day future-you.",
               steps: [
-                "README section: how to point a domain (outline)",
-                "Enforce HTTPS if host allows",
-                "Optional: add analytics snippet comment-only for now",
+                "What the site is for",
+                "One design choice you are proud of",
+                "One thing to improve later",
               ],
             },
-            bonus: "Add a tiny dark-mode default aligned with CodeMoldova site colors from class.",
+            bonus: "Custom favicon on the Thursday project.",
           },
         },
       },
@@ -1419,7 +1496,7 @@ END`,
               timing: "Lab",
               outlineColor: "val",
               content:
-                "From Week 4:\n\n- **index.html** structure and a linked **styles.css**\n- **Flex or grid** for card rows\n- **CSS variables** for colors you reuse",
+                "From Week 4:\n\n- **index.html** structure and a linked **style.css**\n- **Portfolio repo** — cards linking to each project’s Vercel URL\n- **Design** — hierarchy, spacing, CSS variables from Wednesday",
               task: "Open your live or local page — name one HTML section and one CSS class you would explain to a friend.",
             },
             {
@@ -1589,7 +1666,7 @@ END`,
         mon: {
           title: "Git & GitHub",
           date: "Jun 15",
-          desc: "Workshop 1: version control vocabulary\u2014repo, commit, branch, remote, push, pull\u2014and the GitHub flow used in class: authenticate, clone, commit, push.",
+          desc: "Workshop 1: deepen version control you already used in Week 4\u2014repo, commit, branch, remote, push, pull\u2014and the GitHub flow: authenticate, clone, commit, push with clearer messages and branches.",
           preview: "Cursor\u2019s Source Control UI plus terminal commands as backup.",
           steps: [
             {
@@ -1599,6 +1676,14 @@ END`,
               content:
                 "From Week 5:\n\n- **DOM** — querySelector, textContent, classList\n- **Events** — addEventListener('click', ...)\n- **fetch** — same idea as Python requests, but in the browser",
               task: "Name one interactive thing on your Week 5 app (button, form, toggle) you could demo in 10 seconds.",
+            },
+            {
+              title: "Quick review — Week 4 deploy loop",
+              timing: "Lab",
+              outlineColor: "val",
+              content:
+                "You already shipped in Week 4:\n\n- **Project repos** — one site per repo, `index.html` at root\n- **Portfolio repo** — links to each live Vercel URL\n- **Push** — GitHub update triggers Vercel redeploy\n\nToday we learn Git **properly** (status, branches, .gitignore), not the first time you push.",
+              task: "Open one Week 4 project repo and your portfolio repo — confirm both still deploy on Vercel.",
             },
             {
               title: "Why Git",
@@ -2014,7 +2099,7 @@ END`,
             {
               title: "Afterwards",
               content: "Update README with Demo Day tag, pin repo, share on social if comfortable.",
-              task: "Optional: add project to personal portfolio site from week 4.",
+              task: "Optional: add your final project card to your Week 4 portfolio repo (live + repo links).",
             },
           ],
           homework: {

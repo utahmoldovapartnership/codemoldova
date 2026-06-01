@@ -102,6 +102,9 @@ export function readStoredUnlockToken() {
 }
 
 export function readCourseAccessUnlocked() {
+  if (typeof import.meta !== 'undefined' && import.meta.env?.DEV) {
+    return true
+  }
   return readStoredUnlockToken() != null
 }
 
