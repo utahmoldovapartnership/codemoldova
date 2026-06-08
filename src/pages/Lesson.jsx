@@ -91,7 +91,7 @@ function buildChallengesAccordionList(c) {
  */
 function buildArtifacts(session, dayKey) {
   const out = []
-  const showSlides = dayKey !== 'thu'
+  const showSlides = dayKey !== 'thu' && session.hideClassSlides !== true
   if (showSlides) {
     if (session.slideDeck?.label) {
       const url = typeof session.slideDeck.url === 'string' ? session.slideDeck.url.trim() : ''

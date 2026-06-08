@@ -15,9 +15,9 @@ export const sessions = [
   { week: 4, day: "wed", date: "2026-06-03", label: "Design for the AI era" },
   { week: 4, day: "thu", date: "2026-06-04", label: "Second project ship day" },
 
-  { week: 5, day: "mon", date: "2026-06-08", label: "JavaScript basics" },
-  { week: 5, day: "wed", date: "2026-06-10", label: "DOM manipulation + events" },
-  { week: 5, day: "thu", date: "2026-06-11", label: "Interactive web app" },
+  { week: 5, day: "mon", date: "2026-06-08", label: "React: Rock Paper Scissors" },
+  { week: 5, day: "wed", date: "2026-06-10", label: "React: state & events" },
+  { week: 5, day: "thu", date: "2026-06-11", label: "React project build day" },
 
   { week: 6, day: "mon", date: "2026-06-15", label: "Git & GitHub" },
   { week: 6, day: "wed", date: "2026-06-17", label: "Deployment + hosting" },

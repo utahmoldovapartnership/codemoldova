@@ -831,7 +831,7 @@ END`,
                 snippet:
                   "# Mac / Linux — run one line at a time\npwd\nls\nmkdir codemoldova-week3\ncd codemoldova-week3\ntouch notes.txt\npython3 --version",
               },
-              task: "Run pwd and ls in your terminal. Say out loud what each line printed.",
+              task: "Run pwd and ls in your terminal. Note what each line printed.",
             },
             {
               title: "Navigation walkthrough",
@@ -872,7 +872,7 @@ END`,
               timing: "Practice",
               content:
                 "Notebooks are not the only way to run Python. **Wednesday** you run `.py` files from here; **Thursday** you test the exact command cron will use.",
-              task: "From `codemoldova-week3`: (1) `python3 --version` (Windows: try `python`). (2) `python3 -c \"print('hello from terminal')\"`. (3) Say out loud what command you will use Wednesday to run a script file.",
+              task: "From `codemoldova-week3`: (1) `python3 --version` (Windows: try `python`). (2) `python3 -c \"print('hello from terminal')\"`. (3) Write in your notes what command you will use Wednesday to run a script file.",
               code: {
                 lang: "bash",
                 snippet:
@@ -1339,10 +1339,10 @@ END`,
               ],
             },
             {
-              title: "Portfolio — clone template + first card",
+              title: "Portfolio — clone template + add your project",
               content:
-                "Your **portfolio** is a separate repo (Next.js hub that **links** to project sites — it does not host them).\n\n```bash\ngit clone https://github.com/utahmoldovapartnership/porfolio-template.git yourname-portfolio\ncd yourname-portfolio\nnpm install\nnpm run dev\n```\n\n1. Push to **your** GitHub repo `yourname-portfolio`\n2. Import on Vercel — preset **Next.js**\n3. Edit `data/site.ts` (name, bio, contact)\n4. Edit `data/projects.ts` — fill **`monday-site`**: `title`, `description`, `liveUrl`, `repoUrl` (optional: screenshot in `public/projects/` and set `thumbnail`)",
-              task: "Portfolio deploys on Vercel; `monday-site` has your Monday live + repo URLs.",
+                "Your **portfolio** is a separate repo (Next.js hub that **links** to project sites — it does not host them).\n\n```bash\ngit clone https://github.com/utahmoldovapartnership/porfolio-template.git yourname-portfolio\ncd yourname-portfolio\nnpm install\nnpm run dev\n```\n\n1. Push to **your** GitHub repo `yourname-portfolio`\n2. Import on Vercel — preset **Next.js**\n3. Edit `data/site.ts` (name, bio, contact)\n4. Edit `data/projects.ts` — add a **project entry** with `title`, `description`, `liveUrl`, `repoUrl` (optional: screenshot in `public/projects/`). Use whatever key/slug fits — copy the pattern from the template.",
+              task: "Portfolio deploys on Vercel; your Monday project card links to your live + repo URLs.",
               links: [
                 { label: "Portfolio template (GitHub)", href: "https://github.com/utahmoldovapartnership/porfolio-template" },
                 { label: "Vercel — Next.js deploy", href: "https://vercel.com/docs/frameworks/nextjs" },
@@ -1354,7 +1354,7 @@ END`,
             desc: "Finish in class if possible; otherwise complete before Wednesday.",
             tasks: [
               "Monday project: public Vercel URL + GitHub repo",
-              "Portfolio: `monday-site` in data/projects.ts with liveUrl + repoUrl",
+              "Portfolio: project entry in data/projects.ts with liveUrl + repoUrl",
               "Optional: README on project repo with one sentence about the topic",
             ],
           },
@@ -1363,7 +1363,7 @@ END`,
           title: "Design for the AI era",
           date: "Jun 3",
           desc: "Design is what separates usable AI output from great sites. Compare ugly vs pretty examples, learn prompting and reference hunting (Material, inspiration sites), touch Figma lightly, then ship **v2** of Monday’s site and update your portfolio.",
-          preview: "Ugly vs pretty HTML, design tactics for AI, redesign Monday’s site as v2, deploy, portfolio card 2.",
+          preview: "Ugly vs pretty HTML, design tactics for AI, redesign Monday’s site as v2, deploy, add to portfolio.",
           labExampleUrl: "/lesson/week4_design_ugly.html",
           labExampleDownload: "week4_design_ugly.html",
           labExampleLabel: "Download ugly design example",
@@ -1418,10 +1418,10 @@ END`,
               task: "v2 loads locally and looks clearly better than Monday v1.",
             },
             {
-              title: "Ship v2 + portfolio card 2",
+              title: "Ship v2 + add to portfolio",
               content:
-                "Push to GitHub → Vercel redeploys on your **project** repo. In your portfolio repo, update **`wednesday-v2`** in `data/projects.ts` with the v2 `liveUrl`, `repoUrl`, title, and descriptions. Optional: add a screenshot to `public/projects/` for the card thumbnail.",
-              task: "Portfolio `wednesday-v2` entry is clickable (liveUrl set) and opens your redesigned site.",
+                "Push to GitHub → Vercel redeploys on your **project** repo. In your portfolio repo, **add or update** a project entry in `data/projects.ts` with the v2 `liveUrl`, `repoUrl`, `title`, and `description`. Same card as Monday (updated URL) or a new card for v2 — your choice. Optional: screenshot in `public/projects/`.",
+              task: "Portfolio card for your redesigned site is clickable and opens the v2 live URL.",
               links: [
                 { label: "Portfolio template (GitHub)", href: "https://github.com/utahmoldovapartnership/porfolio-template" },
               ],
@@ -1432,7 +1432,7 @@ END`,
             desc: "Optional: README before/after screenshot or one paragraph on design choices.",
             tasks: [
               "v2 on Vercel (HTTPS)",
-              "Portfolio: wednesday-v2 in data/projects.ts updated",
+              "Portfolio: project entry in data/projects.ts updated with v2 liveUrl + repoUrl",
               "Optional: compare to ugly/pretty checklist from class",
             ],
           },
@@ -1440,7 +1440,7 @@ END`,
         thu: {
           title: "Second project ship day",
           date: "Jun 4",
-          desc: "Build day: a **new** site in a **new** repo — apply HTML literacy, CSS, and Wednesday’s design tactics from the start. Deploy and add **portfolio card 3**.",
+          desc: "Build day: a **new** site in a **new** repo — apply HTML literacy, CSS, and Wednesday’s design tactics from the start. Deploy and add it to your portfolio.",
           preview: "New idea, new repo, design-first build, GitHub + Vercel, portfolio updated.",
           steps: [
             {
@@ -1471,9 +1471,9 @@ END`,
               task: "Phone-width check: readable text without horizontal scroll.",
             },
             {
-              title: "Ship + portfolio card 3",
+              title: "Ship + add to portfolio",
               content:
-                "Push Thursday site to its **own** GitHub repo → Vercel (static HTML). In your portfolio repo, fill **`thursday-site`** in `data/projects.ts` with `liveUrl`, `repoUrl`, title, and descriptions.",
+                "Push Thursday site to its **own** GitHub repo → Vercel (static HTML). In your portfolio repo, add a **new project entry** in `data/projects.ts` with `liveUrl`, `repoUrl`, `title`, and `description`. Copy the pattern from your existing cards.",
               task: "Share Thursday project URL + portfolio hub URL in the class thread.",
               links: [
                 { label: "GitHub — create a repo", href: "https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository" },
@@ -1483,11 +1483,11 @@ END`,
             },
           ],
           homework: {
-            title: "Three projects on portfolio",
-            desc: "All three Week 4 cards should have working links.",
+            title: "Projects on portfolio",
+            desc: "Each shipped Week 4 project should have a working portfolio link.",
             tasks: [
               "Thursday project live on Vercel (static repo)",
-              "Portfolio: monday-site, wednesday-v2, thursday-site all have liveUrl set",
+              "Portfolio: each project entry in data/projects.ts has liveUrl + repoUrl set",
               "Optional: custom favicon on Thursday project or portfolio thumbnails",
             ],
           },
@@ -1498,7 +1498,7 @@ END`,
               steps: [
                 "Public GitHub repo with index.html at root",
                 "Vercel HTTPS URL loads",
-                "thursday-site in data/projects.ts complete",
+                "New project entry in data/projects.ts with liveUrl + repoUrl",
               ],
             },
             medium: {
@@ -1526,171 +1526,499 @@ END`,
       {
         num: 5,
         mon: {
-          title: "JavaScript basics",
+          title: "React fundamentals",
           date: "Jun 8",
-          desc: "Workshop 1: scripts in the browser\u2014variables, functions, arrays, template strings, and fetch revisiting your API week from Python\u2019s perspective.",
-          preview: "Attach a main.js bundle (or single file) and keep console.log as your first debugger.",
+          hideClassSlides: true,
+          lessonDesc:
+            "Follow the **Lesson** tab first — what React is, what frameworks are, and why this course uses Next.js in a **separate** project repo. **Lab:** use AI to build Rock Paper Scissors. When you are ready to code, switch to **Lab**.",
+          desc: "Workshop 1: Lesson on React and frameworks, then Lab in a new Next.js repo — use AI to scaffold the project and build a Rock Paper Scissors game with components and JSX.",
+          goal:
+            "Explain React\u2019s role on the web, compare framework options honestly, and ship a playable Rock Paper Scissors game in a new Next.js repo built with AI.",
+          preview:
+            "Lesson: React good/bad \u00b7 frameworks \u00b7 why Next.js \u00b7 Lab: AI \u2192 Rock Paper Scissors \u00b7 Challenge: scoreboard stretch.",
+          labDurationLabel: "50 min",
+          mainPoints: [
+            "React builds **interactive UI** from **components** and **JSX**",
+            "React is a **library**; **Next.js** is a **framework** (routing, build, deploy)",
+            "**Separate repo** this week \u2014 portfolio only gets a link Thursday",
+            "**Use AI to build** \u2014 scaffold, game logic, and polish; you review every file",
+            "**Props** and **components** \u2014 even a simple game splits into reusable pieces",
+          ],
+          lessonSteps: [
+            {
+              title: "Where we left off (Week 4)",
+              content:
+                "You shipped three **static** HTML/CSS sites and a **portfolio hub** that links to them. Static pages are great for content that rarely changes.\n\nThis week you build **interactive** apps \u2014 buttons, forms, and lists that update without a full page reload.",
+              task: "Name one feature you could not build with only HTML/CSS from Week 4 (e.g. live counter, add-to-list).",
+            },
+            {
+              title: "The problem React solves",
+              content:
+                "The old approach: `document.querySelector` + manual DOM edits \u2014 fine for tiny demos, painful at scale.\n\nReact\u2019s idea: describe **what the UI should look like** for the current data. When data changes, React updates the screen. UI becomes a function of **state** (Wednesday deep dive).",
+              links: [{ label: "React \u2014 Quick Start", href: "https://react.dev/learn" }],
+            },
+            {
+              title: "What React is",
+              content:
+                "React is a **JavaScript library** for building user interfaces \u2014 not a database, not a server.\n\nCreated at Meta; open source; used on Instagram, Netflix, Airbnb, and thousands of products. You write **components** \u2014 functions that return **JSX** (HTML-like syntax). Compose small pieces into full pages.",
+            },
+            {
+              title: "React vs React Native",
+              content:
+                "**React** (what you learn this week) targets the **web browser**. Your JSX becomes HTML elements like `<button>` and `<div>`.\n\n**React Native** uses the **same React ideas** \u2014 components, JSX, props, state \u2014 but builds **mobile apps** for iOS and Android, not websites. Instead of `<div>` you use `<View>`; instead of `<p>` you use `<Text>`. One codebase can ship to both app stores.\n\n| | **React (web)** | **React Native (mobile)** |\n|--|-----------------|---------------------------|\n| Runs in | Browser | Phone / tablet app |\n| UI output | HTML + CSS | Native iOS/Android widgets |\n| Deploy to | Vercel, URL | App Store, Google Play |\n\nLearn React on the web first; React Native skills transfer later if you want to build phone apps.",
+              links: [
+                { label: "React Native \u2014 Getting started", href: "https://reactnative.dev/docs/getting-started" },
+              ],
+              task: "Name one app on your phone that might be built with React Native (hint: many Meta apps).",
+            },
+            {
+              title: "What React is good at",
+              content:
+                "- **Interactive interfaces** \u2014 forms, dashboards, toggles, live lists\n- **Reusable components** \u2014 build once, reuse with different props\n- **Complex front-ends** where many parts share and update the same data\n- **Ecosystem** \u2014 jobs, docs, AI training data, community answers\n- **Component thinking** pairs well with AI \u2014 \u201cBuild a Rock Paper Scissors game with ChoiceButton components\u201d",
+            },
+            {
+              title: "What React is bad at (honest limits)",
+              content:
+                "- **Simple brochure sites** \u2014 static HTML is faster (your Week 4 sites!)\n- **Tiny scripts or automations** \u2014 Python in the terminal is the right tool (Week 3)\n- **Content-only blogs** without extra setup \u2014 SSR/SSG helps (Next.js)\n- **Learning curve** \u2014 JSX, build tools, and state take time\n- **Not full-stack alone** \u2014 React is the **view** layer; APIs and databases are separate",
+              task: "Give one example from your life that fits \u201cstatic site\u201d vs \u201cReact app.\u201d",
+            },
+            {
+              title: "JavaScript bridge (minimum before JSX)",
+              content:
+                "You do not need to be a JS expert \u2014 you need these patterns:\n\n- `const` / `let`, arrow functions `() => {}`, template strings\n- Arrays: `.map()`, `.filter()` \u2014 render lists in React\n- Destructuring: `const { title } = props`",
+              code: {
+                lang: "javascript",
+                snippet:
+                  'const skills = ["html", "css", "python"];\nconst loud = skills.map((s) => s.toUpperCase());\nconsole.log(loud.join(", "));\n\nconst props = { title: "CodeMoldova" };\nconst { title } = props;\nconsole.log(title);',
+              },
+              task: "In DevTools console or a scratch file, `.map()` an array of three strings to uppercase.",
+            },
+            {
+              title: "What is a framework?",
+              content:
+                "**Library (React):** tools you call when you need them \u2014 flexible, more decisions.\n\n**Framework (Next.js, etc.):** opinionated structure \u2014 routing, folders, build, often a deploy path.\n\nAnalogy: React = LEGO bricks; Next.js = a kit with baseplate, instructions, and a box. Frameworks still output HTML/CSS/JS to the browser \u2014 same platform as Week 4.",
+            },
+            {
+              title: "Framework options (quick tour)",
+              content:
+                "| Option | Vibe | When it shines |\n|--------|------|----------------|\n| **Vanilla HTML/CSS/JS** | No build step | Landing pages, Week 4-style sites |\n| **React + Vite** | Lean React SPA | Learning React without Next opinions |\n| **Next.js (React)** | Full-stack React framework | Apps + SEO + Vercel deploy |\n| **Vue / Nuxt** | Gentle docs | Teams preferring Vue |\n| **Svelte / SvelteKit** | Less boilerplate | Performance-focused small apps |\n| **Angular** | Heavy, enterprise | Large corporate codebases |\n\nNo wrong career choice \u2014 **shipping one stack deeply** beats sampling five. This course picks **Next.js + React** for reasons below.",
+            },
+            {
+              title: "Why we chose Next.js (for your React project)",
+              content:
+                "1. **You already deployed Next.js** \u2014 portfolio hub from Week 4; same Vercel flow\n2. **Industry standard** \u2014 React + Next.js matches real jobs\n3. **File structure** \u2014 `app/`, `components/` are predictable for AI and humans\n4. **Separate repo** \u2014 you learn in `yourname-react-app`; portfolio **links** to it Thursday; you do **not** edit portfolio components this week\n5. **AI scaffolds it well** \u2014 Cursor/Claude generate a working Next.js app from one prompt",
+              links: [
+                { label: "Next.js \u2014 Getting Started", href: "https://nextjs.org/docs/app/getting-started" },
+                { label: "Portfolio template (GitHub)", href: "https://github.com/utahmoldovapartnership/porfolio-template" },
+              ],
+            },
+            {
+              title: "This week\u2019s workflow",
+              content:
+                "- **Mon:** Lesson (now) \u2192 Lab (AI + Rock Paper Scissors) \u2192 Challenge (scoreboard stretch)\n- **Wed:** state + events \u2192 todo lab (practice only)\n- **Thu:** choose your own React project \u2192 deploy \u2192 one edit in portfolio `data/projects.ts`",
+              task: "Open the **Lab** tab when the framework picture makes sense.",
+            },
+          ],
           steps: [
             {
-              title: "Quick review — your webpage",
+              title: "Quick review — Week 4",
               timing: "Lab",
               outlineColor: "val",
               content:
-                "From Week 4:\n\n- **index.html** structure and a linked **style.css**\n- **Portfolio repo** — cards linking to each project’s Vercel URL\n- **Design** — hierarchy, spacing, CSS variables from Wednesday",
-              task: "Open your live or local page — name one HTML section and one CSS class you would explain to a friend.",
+                "From Week 4:\n\n- Three **static** project repos + Vercel URLs\n- **Portfolio hub** \u2014 cards in `data/projects.ts` linking out\n- **HTML/CSS literacy** \u2014 you read what AI generates\n\nThis week: new repo `yourname-react-app`. **Do not code inside the portfolio repo.**",
+              task: "Open your portfolio hub URL \u2014 confirm your existing project cards work. React code this week lives in a separate repo, not the portfolio.",
             },
             {
-              title: "let and const",
-              content: "Prefer const by default; let when reassigned. Avoid var in new code.",
-              task: "Refactor a snippet from var to const/let and explain why each choice.",
+              title: "Create GitHub repo",
+              content:
+                "On GitHub: create an empty repo `yourname-react-app` (no README if you will paste AI output). Clone locally, open the folder in Cursor.",
+              task: "Terminal: `git clone` your repo URL, `cd` into it, confirm `pwd` ends with `yourname-react-app`.",
+              links: [
+                {
+                  label: "GitHub \u2014 create a repo",
+                  href: "https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository",
+                },
+              ],
             },
             {
-              title: "Functions and arrows",
-              content: "function name() {} vs const name = () => {} — pick one style per file for consistency.",
-              task: "Write sum(nums) using reduce or a for loop.",
+              title: "AI scaffold — Next.js project",
+              content:
+                "**Rule today: AI writes first, you review.** Paste the prompt below into Cursor (Agent mode). Do not hand-type the boilerplate \u2014 read what AI generates, then run commands yourself.",
+              code: {
+                lang: "text",
+                snippet:
+                  "Create a minimal Next.js 15 app in this empty folder:\n- App Router, TypeScript\n- app/page.tsx with a simple heading\n- components/ folder ready for game files\n- README with npm install and npm run dev instructions\nDo not add extra pages or auth. Keep files small.",
+              },
+              task: "After AI finishes, list three files it created and what each is for.",
             },
             {
-              title: "DOM access without frameworks",
-              content: "document.querySelector, textContent, classList.add.",
-              task: "Change a headline string from JS after load.",
+              title: "Install and run",
+              content:
+                "In the project folder terminal:\n\n```bash\nnpm install\nnpm run dev\n```\n\nOpen localhost in your browser. If AI left errors, paste the terminal output back into Cursor and ask it to fix.",
+              task: "Dev server runs with no install errors.",
             },
             {
-              title: "fetch in the browser",
-              content: "await fetch(url); check response.ok; await response.json().",
-              task: "Log one field from a public JSON endpoint to the console.",
-              code: { lang: "javascript", snippet: "const r = await fetch('https://api.github.com/users/github');\nconsole.log((await r.json()).login);" },
+              title: "AI — Rock Paper Scissors game",
+              timing: "Lab",
+              content:
+                "Paste the game prompt into Cursor. AI should create a **client component** (with `'use client'`) and wire it into `app/page.tsx`.\n\nYou need:\n\n- Three buttons: Rock, Paper, Scissors\n- Computer picks randomly\n- Screen shows both choices and Win / Lose / Tie\n- At least **2 components** (e.g. `RockPaperScissors` + `ChoiceButton` or `ResultBanner`)",
+              code: {
+                lang: "text",
+                snippet:
+                  "Build a Rock Paper Scissors game for this Next.js app:\n- components/RockPaperScissors.tsx with 'use client'\n- Three buttons for rock, paper, scissors\n- On click: save player choice, pick random computer choice, show winner\n- Show player pick, computer pick, and result text (You win / You lose / Tie)\n- Extract at least one child component with props (e.g. ChoiceButton with label and onPick)\n- Import the game in app/page.tsx\n- Simple readable styling, mobile-friendly\nKeep logic in plain functions I can read. No extra libraries.",
+              },
+              task: "Play one full round in the browser \u2014 all three buttons work and a result appears.",
             },
             {
-              title: "Modules optional",
-              content: "If time: type=\"module\" script tag and export/import between files.",
-              task: "Split utils into math.js imported by main.js.",
+              title: "Read what AI built",
+              content:
+                "Before changing anything, trace the code AI wrote:\n\n- Which file has **`'use client'`**? Why?\n- Where are **props** passed between components?\n- Where does the **winner** get decided?\n\nYou do not need to memorize every line \u2014 you need to **find** answers when something breaks.",
+              links: [
+                {
+                  label: "Next.js \u2014 Project structure",
+                  href: "https://nextjs.org/docs/app/getting-started/project-structure",
+                },
+              ],
+              task: "Point to one prop in your code and explain what it carries.",
+            },
+            {
+              title: "AI polish — make it yours",
+              content:
+                "Ask AI for **one** visual upgrade. Examples:\n\n- Emoji on buttons\n- Dark card layout with clear headings\n- Bigger tap targets for phone\n\nReview the diff before you accept. Reject changes you cannot explain.",
+              code: {
+                lang: "text",
+                snippet:
+                  "Polish my Rock Paper Scissors UI: add emoji to each choice button, center the layout, and make buttons large enough for mobile. Do not change the game logic.",
+              },
+              task: "Game still works after polish. You can name one style change AI made.",
+            },
+            {
+              title: "Fix with AI",
+              content:
+                "Something broken? **Do not guess for 20 minutes.** Copy the error from terminal or browser console into Cursor:\n\n\u201cThis error appeared when I clicked Scissors: [paste error]. Fix RockPaperScissors.tsx only.\u201d\n\nThat is how professional devs use AI.",
+              task: "If you hit a bug, fix it with an AI prompt and note what the real problem was.",
+            },
+            {
+              title: "Git — first push",
+              content:
+                "Commit your working game. Push to GitHub. Wednesday continues in the **same repo** (todo app replaces or lives beside the game).",
+              task: "`git status` clean after push; GitHub shows your Rock Paper Scissors commit.",
             },
           ],
-          homework: {
-            title: "JS warm-up",
-            desc: "Extend your personal page or a fresh sandbox/ folder.",
-            tasks: [
-              "Button that increments a counter on each click",
-              "Function formatDate(d) returning a short string",
-              "Optional: fetch GitHub avatar URL into an <img>",
+          challengeTab: {
+            title: "Rock Paper Scissors — scoreboard",
+            content:
+              "Base game must still work. Use **AI** to add a simple scoreboard \u2014 do not rebuild from scratch.",
+            task:
+              "Ask AI to add: (1) **Win / loss / tie counters** that update each round, (2) a **Play again** or **Reset scores** button, (3) scores displayed on screen. Test three rounds and confirm counts match. `npm run dev` stays error-free.",
+            hints: [
+              "Prompt: \u201cAdd win, loss, and tie state to RockPaperScissors.tsx. Show counts on screen. Add Reset scores button.\u201d",
+              "If counts look wrong, console.log after each round before asking AI again.",
+              "Wednesday will teach `useState` in depth \u2014 today it is OK if AI wrote the state for you; read where it lives.",
             ],
           },
         },
         wed: {
-          title: "DOM manipulation + events",
+          title: "React state & events",
           date: "Jun 10",
-          desc: "Workshop 2: listen for clicks, inputs, and keyboard; update the DOM safely; debounce a noisy handler lightly if you reach it.",
-          preview: "Event listeners, event objects, preventDefault, and basic form handling.",
+          hideClassSlides: true,
+          lessonDesc:
+            "**Lesson** tab explains state, re-rendering, `'use client'`, and events. **Lab:** use AI to build the todo app step by step. **Challenge** stretches with filters or a `TaskItem` component.",
+          desc: "Workshop 2: Lesson on state and interactivity, then Lab in your React repo \u2014 use AI to build a todo app with `useState`, events, and controlled inputs.",
+          goal:
+            "Understand why interactive React needs state; use AI to ship a working todo add/complete flow in `yourname-react-app`; read and own the code AI writes.",
+          preview:
+            "Lesson: state \u00b7 useState \u00b7 client components \u00b7 Lab: AI \u2192 TodoApp \u00b7 Challenge: filter or TaskItem.",
+          labDurationLabel: "50 min",
+          mainPoints: [
+            "**State** = data that changes while the user uses the app",
+            "**Use AI to build** \u2014 prompt for components, then read every `useState` and handler",
+            "Next.js: **`'use client'`** on any file using hooks or browser events",
+            "**Controlled inputs** \u2014 input `value` tied to state",
+            "**Lists** \u2014 store array in state, `map` to JSX, stable `key` per row",
+          ],
+          lessonSteps: [
+            {
+              title: "Quick review — Monday",
+              content:
+                "From Monday:\n\n- **Rock Paper Scissors** in `yourname-react-app` \u2014 built with AI\n- **Components** + **props** \u2014 e.g. choice buttons, result display\n- **Separate repo** \u2014 not your portfolio",
+              task: "Open your React repo \u2014 name two component files from the RPS game.",
+            },
+            {
+              title: "Static vs interactive UI",
+              content:
+                "Monday\u2019s game updates when you **click** \u2014 no page reload. That is interactive UI. The browser keeps JavaScript running **in the tab** to hold choices and scores. React keeps the screen in sync when that data changes. Wednesday you learn the mechanism (`useState`) behind what AI may have already written.",
+            },
+            {
+              title: "What is state?",
+              content:
+                "**State** = memory a component keeps between renders (counter value, todo list, form text).\n\nDifferent from **props** (from parent) and plain **variables** inside a function (reset every render unless stored in state). When state updates, React **re-renders** \u2014 runs your component again with new data.",
+            },
+            {
+              title: "useState in one minute",
+              content:
+                "`const [count, setCount] = useState(0)` \u2014 `count` is current value, `setCount` updates it.\n\nNever mutate directly: `count++` is wrong \u2192 `setCount(count + 1)` is right. Two counters on screen = two separate states.",
+              code: {
+                lang: "tsx",
+                snippet:
+                  "'use client';\nimport { useState } from 'react';\n\nexport function Counter() {\n  const [count, setCount] = useState(0);\n  return (\n    <button onClick={() => setCount(count + 1)}>\n      Clicks: {count}\n    </button>\n  );\n}",
+              },
+              links: [
+                {
+                  label: "React \u2014 State: a component\u2019s memory",
+                  href: "https://react.dev/learn/state-a-components-memory",
+                },
+              ],
+            },
+            {
+              title: "Why 'use client' in Next.js",
+              content:
+                "Next.js App Router defaults to **Server Components** \u2014 run on the server, no hooks in the browser.\n\n**`useState`, `onClick`, `onChange`** need a **Client Component**. Add `'use client'` as the **first line** of files that use hooks or events.\n\nRule: **page can stay server**; import a client component for interactive parts.",
+              links: [
+                {
+                  label: "Next.js \u2014 Server and Client Components",
+                  href: "https://nextjs.org/docs/app/getting-started/server-and-client-components",
+                },
+              ],
+            },
+            {
+              title: "Events in React",
+              content:
+                "`onClick={() => setCount(c => c + 1)}` \u2014 camelCase, pass a **function** not a string.\n\n`onChange` on inputs fires on every keystroke. Handlers can be inline or named above the `return`. React wraps browser events so they behave consistently.",
+            },
+            {
+              title: "Controlled inputs",
+              content:
+                "Bind the input to state:\n\n`<input value={text} onChange={e => setText(e.target.value)} />`\n\nReact **controls** the value \u2014 single source of truth. Needed for todo fields, search boxes, and forms.",
+              code: {
+                lang: "tsx",
+                snippet:
+                  "const [text, setText] = useState('');\nreturn (\n  <>\n    <input value={text} onChange={(e) => setText(e.target.value)} />\n    <p>You typed: {text}</p>\n  </>\n);",
+              },
+            },
+            {
+              title: "Lists and keys",
+              content:
+                "Store todos in state: `[{ id: 1, text: 'Buy milk', done: false }]`\n\nRender: `tasks.map(task => <TaskRow key={task.id} task={task} />)`\n\n**`key`** helps React track rows \u2014 use a stable unique `id`, not array index if items reorder.",
+              links: [{ label: "React \u2014 Rendering lists", href: "https://react.dev/learn/rendering-lists" }],
+            },
+            {
+              title: "Conditional rendering",
+              content:
+                "Empty list: `{tasks.length === 0 && <p>No tasks yet</p>}`\n\nDone styling: `className={task.done ? 'line-through' : ''}`\n\nShow/hide UI from state \u2014 no manual `display: none` hacks.",
+            },
+            {
+              title: "Today\u2019s lab target",
+              content:
+                "Build **`TodoApp`** with AI \u2014 add a task, mark done or remove, list renders from state. Thursday you polish this into your shipped project.",
+              task: "Switch to the **Lab** tab.",
+            },
+          ],
           steps: [
             {
-              title: "Quick review — JavaScript basics",
+              title: "Quick review — components & props",
               timing: "Lab",
               outlineColor: "ube",
               content:
-                "From Monday:\n\n- **const** and **let** — prefer const unless you reassign\n- **Functions** — named or arrow\n- **document.querySelector** — grab an element\n- **fetch** — await response.json() for APIs",
-              task: "In DevTools console on your page, run one `querySelector` and change `.textContent`.",
+                "From Monday:\n\n- **Rock Paper Scissors** game in `components/`\n- **AI-built** client component with buttons and results\n- **`npm run dev`** in `yourname-react-app`\n\nSame rule today: **prompt AI, then read the code** before you accept changes.",
+              task: "Start the dev server. Play one round of Rock Paper Scissors to confirm it still works.",
             },
             {
-              title: "addEventListener pattern",
-              content: "Select node, attach listener, keep handler functions named for stack traces.",
-              task: "Wire three buttons to three different handlers logging which fired.",
+              title: "AI warm-up — counter component",
+              content:
+                "Before the full todo, ask AI for a tiny **`useState`** demo. Paste the prompt, review the file it creates, then import it in `page.tsx`.",
+              code: {
+                lang: "text",
+                snippet:
+                  "Create components/Counter.tsx for my Next.js app:\n- 'use client' at the top\n- useState starting at 0\n- One button that increments count on click\n- Show the number on screen\nImport Counter in app/page.tsx below my Rock Paper Scissors game (or replace the page content temporarily).",
+              },
+              task: "Click the counter \u2014 number updates without page reload. Find `useState` in the file AI wrote.",
             },
             {
-              title: "Forms",
-              content: "submit event, FormData, reading values without reloading if you preventDefault.",
-              task: "Build a fake signup form that prints a greeting under the form.",
+              title: "Read the state AI used",
+              content:
+                "Open `Counter.tsx` and answer:\n\n- Where is **`useState`** declared?\n- What function runs on **`onClick`**?\n- Why does the number on screen change without a page reload?\n\nYou are learning to **audit** AI output, not just copy-paste.",
+              task: "Point to the `setCount` (or equivalent) line in your file.",
             },
             {
-              title: "Creating nodes",
-              content: "document.createElement, appendChild, DocumentFragment for batches.",
-              task: "Build a todo list UI that only uses DOM APIs (no persistence yet).",
+              title: "AI — controlled input practice",
+              content:
+                "Prompt AI for a small text field that mirrors what you type. Keeps the todo input simpler later.",
+              code: {
+                lang: "text",
+                snippet:
+                  "Add components/NameField.tsx to my Next.js app:\n- 'use client'\n- useState for text string\n- Controlled input: value + onChange\n- Paragraph below showing \"You typed: ...\"\nImport it in app/page.tsx for practice.",
+              },
+              task: "Typing updates the preview text character by character.",
             },
             {
-              title: "Accessibility",
-              content: "Focus management, aria-live for dynamic text, label for inputs.",
-              task: "Navigate your UI with keyboard only; fix the first blocker you find.",
+              title: "AI — list in state (mini step)",
+              content:
+                "Optional 5-minute step: ask AI for a button that appends strings to a list in state and renders `<li>` rows. Same pattern as todo tasks, smaller scope.",
+              code: {
+                lang: "text",
+                snippet:
+                  "Add components/SimpleList.tsx: 'use client', useState array of strings, button adds a hardcoded item, map to li with keys. Import on page.tsx.",
+              },
+              task: "Skip if short on time \u2014 go straight to TodoApp. Otherwise add two items via button.",
             },
             {
-              title: "Debug in DevTools",
-              content: "Breakpoints in Sources, watch expressions, console.table for arrays.",
-              task: "Fix an off-by-one bug in a list renderer using a breakpoint.",
+              title: "AI — build TodoApp",
+              timing: "Lab",
+              content:
+                "This is today\u2019s main build. Paste the prompt into Cursor. Review every handler before you run.\n\nYou need:\n\n- Text input + **Add** button\n- Each row: task text + **Done** (strike or remove)\n- List renders entirely from state\n- **`'use client'`** on the todo file",
+              code: {
+                lang: "text",
+                snippet:
+                  "Build components/TodoApp.tsx for my Next.js app:\n- 'use client'\n- useState for tasks array: { id, text, done }\n- useState for draft text in the input\n- Add button: append new task, clear input\n- Each row: show text + Done button (toggle done with strike-through OR remove)\n- Map tasks to JSX with stable keys (use id)\n- Empty state: \"No tasks yet\" when list is empty\n- Import TodoApp in app/page.tsx as the main interactive section\nKeep it one file unless a child component is obvious. No extra libraries.",
+              },
+              task: "Add two tasks, mark one done \u2014 UI matches state.",
+            },
+            {
+              title: "AI polish — empty state + layout",
+              content:
+                "Ask AI to improve readability without breaking behavior. Review the diff.",
+              code: {
+                lang: "text",
+                snippet:
+                  "Polish TodoApp.tsx: show \"No tasks yet\" when empty, add spacing/padding, make Add button and input full-width on mobile. Do not change add/done logic.",
+              },
+              task: "Refresh with zero tasks \u2014 empty message appears. Todo still adds and completes.",
+            },
+            {
+              title: "Fix with AI",
+              content:
+                "Errors are normal. Paste the **exact** terminal or browser error into Cursor:\n\n\u201cWhen I click Add in TodoApp I get: [paste error]. Fix TodoApp.tsx only. Keep 'use client'.\u201d\n\nIterate until add + done work.",
+              task: "If something broke, you fixed it with a prompt \u2014 note what was wrong (missing 'use client', wrong key, etc.).",
+            },
+            {
+              title: "Git push",
+              content:
+                "Commit your working todo. Push to GitHub. Thursday you pick a **new** project idea in the same repo (or replace the home page).",
+              task: "GitHub shows today\u2019s commits on `yourname-react-app`.",
+              links: [{ label: "Vercel \u2014 Next.js", href: "https://vercel.com/docs/frameworks/nextjs" }],
             },
           ],
-          homework: {
-            title: "Event practice",
-            desc: "Keep code in script.js linked from your page.",
-            tasks: [
-              "Toggle dark mode class on body with a button",
-              "Input range updates a live label",
-              "Optional: localStorage saves theme choice",
+          challengeTab: {
+            title: "Todo upgrades",
+            content:
+              "Your todo from the lab must still add and complete tasks. Use **AI** for the upgrade \u2014 pick one option below and paste a clear prompt.",
+            task:
+              "**A \u2014 Filter tabs:** All / Active / Done buttons; list filters by `done` flag.\n\n**B \u2014 TaskItem component:** Extract row into `TaskItem.tsx` with props `text`, `done`, `onToggle`, `onRemove`.\n\n**C \u2014 Stats line:** Show \u201c3 tasks, 1 done\u201d below the list from state (no new libraries).",
+            hints: [
+              "Prompt A: \u201cAdd All / Active / Done filter buttons to TodoApp. Keep full tasks in state, filter before map.\u201d",
+              "Prompt B: \u201cExtract TaskItem.tsx with props text, done, onToggle, onRemove. Use in TodoApp.\u201d",
+              "If hooks fail, check `'use client'` is line 1 \u2014 ask AI to fix before you edit blindly.",
             ],
           },
         },
         thu: {
-          title: "Interactive web app",
+          title: "React app build day",
           date: "Jun 11",
-          desc: "Build day: one cohesive mini-app\u2014quiz, habit tracker, or flashcards\u2014using only HTML/CSS/JS taught so far.",
-          preview: "State in memory, clear UI states, and a reset control.",
+          desc: "Build day: pick your own React project in `yourname-react-app` (Wednesday\u2019s todo stays as practice \u2014 today you ship something you choose). Deploy on Vercel and add it as the **next project card** on your portfolio.",
+          preview: "Pick a project \u2192 AI build \u2192 deploy \u2192 add to portfolio.",
+          goal:
+            "Ship a deployed interactive React app you chose yourself; add it as the next project card on your portfolio hub.",
           steps: [
             {
+              title: "Quick review — React week so far",
+              timing: "Lab",
+              outlineColor: "val",
+              content:
+                "You already built:\n\n- **Monday** \u2014 Rock Paper Scissors (components, props, AI)\n- **Wednesday** \u2014 Todo app (`useState`, events, lists)\n\nToday: **your idea** in the same repo. Skills you reuse: `'use client'`, `useState`, buttons, inputs, AI prompts.",
+              task: "Name one thing from Mon or Wed you will reuse today (e.g. button handlers, list in state).",
+            },
+            {
+              title: "Pick your project",
+              content:
+                "Choose **one** app to ship today. Stuck? Ask AI: \u201cGive me 5 small React app ideas for a beginner with useState, in these categories: Quick & Visual, Games, Moldova-flavored, Utilities.\u201d\n\n**Quick & Visual** \u2014 fast to polish, satisfying demo\n- Mood picker (emoji buttons change background + message)\n- Quote board (button fetches or cycles quotes)\n- Digital name card / link tree for you\n- Countdown to a date (exam, trip, Demo Day)\n\n**Games** \u2014 interactive and fun to demo\n- Tic-tac-toe or memory card match\n- Number guessing game with guess history\n- Dice roller with last 5 rolls shown\n\n**Moldova-flavored** \u2014 local context, great for Demo Day\n- Chi\u0219in\u0103u café list with filter buttons (your favorites)\n- Moldovan phrase flashcards (RO/RU \u2192 English)\n- Favorite places in Moldova picker (map-style list, not a real map)\n- \u201cWhat to eat today\u201d \u2014 m\u0103m\u0103lig\u0103, pl\u0103cinte, sarmale roulette\n\n**Utilities** \u2014 practical mini-tools\n- Tip calculator or split-bill helper\n- Study timer / pomodoro with start-stop\n- Unit converter (km/miles, \u00b0C/\u00b0F)\n- Simple expense tracker for the week",
+              task: "Write your project name + one sentence pitch in README before you code.",
+            },
+            {
               title: "Define MVP",
-              content: "One screen, three interactions, win/lose or completion feedback.",
-              task: "Write acceptance criteria in README.",
+              content:
+                "One screen, **three interactions**, clear feedback. Examples: click \u2192 something changes, type \u2192 list updates, button \u2192 score increments.\n\nWrite acceptance criteria in README \u2014 what must work when you demo.",
+              task: "README has a bullet list of 3 interactions that must work on deploy.",
             },
             {
-              title: "Structure state",
-              content: "Single object or small module holding arrays and current index.",
-              task: "Console.log state after each action until stable.",
+              title: "Build with AI",
+              timing: "Lab",
+              content:
+                "Same repo `yourname-react-app`. You can replace `app/page.tsx` content or add a new main component.\n\nPaste a prompt like:\n\n\u201cBuild [your idea] as components/MyApp.tsx with 'use client', useState, and at least 2 child components. Wire it into app/page.tsx. Mobile-friendly. No extra libraries.\u201d\n\nReview every file. Wednesday\u2019s todo code can stay in the repo \u2014 it does not have to be on the home page.",
+              code: {
+                lang: "text",
+                snippet:
+                  "Build a [YOUR IDEA] app in my Next.js repo:\n- components/MyThursdayApp.tsx with 'use client'\n- useState for the main interaction\n- At least 2 components with props\n- 3 user interactions (buttons, input, or toggles)\n- Import as the main content on app/page.tsx\n- Simple clean styling, works on phone\nExplain what each useState variable holds in a comment.",
+              },
+              task: "MVP works locally \u2014 all 3 interactions demo-able.",
             },
             {
-              title: "Wire UI",
-              content: "Buttons call handlers that mutate state then re-render a section.",
-              task: "No full page reloads.",
+              title: "Polish + fix with AI",
+              content:
+                "Phone-width check, empty states, readable labels. Broken? Paste errors into Cursor with the filename.\n\n\u201cPolish MyThursdayApp for mobile. Fix: [paste error].\u201d",
+              task: "No horizontal scroll on phone; no red error overlay.",
             },
             {
-              title: "Polish",
-              content: "Loading copy, disabled buttons when illegal, simple animations via CSS transitions.",
-              task: "Demo on mobile and desktop.",
+              title: "Deploy React app",
+              content:
+                "Push to GitHub \u2192 Vercel import as **Next.js** \u2192 copy **HTTPS** live URL. Test in incognito.",
+              task: "Live URL loads your Thursday project; core interactions work on phone.",
+              links: [{ label: "Vercel \u2014 Next.js", href: "https://vercel.com/docs/frameworks/nextjs" }],
+            },
+            {
+              title: "Portfolio — add your next card",
+              content:
+                "In your **portfolio repo only**, edit `data/projects.ts` and add a **new project entry** (the next card on your projects page):\n\n- `title`, `description` (name your Thursday project)\n- `liveUrl` (Vercel React app)\n- `repoUrl` (GitHub)\n- Optional: screenshot in `public/projects/`\n\nUse whatever key/slug fits your file \u2014 copy the pattern from your existing cards.",
+              task: "Portfolio hub shows your new card; clicking it opens your deployed React app.",
+              links: [
+                { label: "Portfolio template (GitHub)", href: "https://github.com/utahmoldovapartnership/porfolio-template" },
+              ],
+            },
+            {
+              title: "Demo",
+              content:
+                "Partner opens **portfolio hub** \u2192 clicks your new project card \u2192 your app works on phone.",
+              task: "Post portfolio URL + React app URL + project name in the class thread.",
             },
           ],
           homework: {
-            title: "Ship the app",
-            desc: "Deploy alongside your static site or as /app path.",
+            title: "Project live on portfolio",
+            desc: "Portfolio shows your new React project card; app works from incognito.",
             tasks: [
-              "Public URL works",
-              "README lists controls and known bugs",
-              "Optional: persist scores with localStorage",
+              "Thursday project: public Vercel URL + GitHub repo",
+              "Portfolio: new entry in data/projects.ts with liveUrl + repoUrl",
+              "README names your project and lists what the 3 interactions do",
             ],
           },
           challenges: {
             base: {
-              title: "Playable MVP",
-              desc: "Three interactions and feedback.",
+              title: "Deployed MVP",
+              desc: "Your chosen app + new portfolio card.",
               steps: [
-                "Rules explained on page",
-                "Win/lose path",
-                "Reset",
+                "Vercel HTTPS URL loads",
+                "Three interactions work as README describes",
+                "Portfolio card links to liveUrl + repoUrl",
               ],
             },
             medium: {
-              title: "Timer or streak",
-              desc: "Add time pressure or scoring.",
+              title: "Polish + structure",
+              desc: "Feels finished, not hacked together.",
               steps: [
-                "Countdown or stopwatch",
-                "Score label",
-                "Game over modal",
+                "2+ components with props",
+                "Portfolio card has thumbnail or strong description",
+                "README lists controls and stack (Next.js, React)",
               ],
             },
             hard: {
-              title: "Data-driven content",
-              desc: "Load questions from a static JSON file with fetch.",
+              title: "Data from an API",
+              desc: "useEffect + public API in your project.",
               steps: [
-                "questions.json in repo",
-                "Handles load errors",
-                "Shuffle option",
+                "Fetch on load or button (quotes, weather, GitHub user, etc.)",
+                "Loading and error states in UI",
+                "Explain fetch in README in one sentence",
               ],
             },
-            bonus: "Animate correct/incorrect answers with CSS keyframes.",
+            bonus: "`localStorage` saves user data between visits, or custom favicon on the React app.",
           },
         },
       },
@@ -1710,12 +2038,12 @@ END`,
           preview: "Cursor\u2019s Source Control UI plus terminal commands as backup.",
           steps: [
             {
-              title: "Quick review — JavaScript in the browser",
+              title: "Quick review — React app",
               timing: "Lab",
               outlineColor: "val",
               content:
-                "From Week 5:\n\n- **DOM** — querySelector, textContent, classList\n- **Events** — addEventListener('click', ...)\n- **fetch** — same idea as Python requests, but in the browser",
-              task: "Name one interactive thing on your Week 5 app (button, form, toggle) you could demo in 10 seconds.",
+                "From Week 5:\n\n- **Components** + **JSX** in `yourname-react-app`\n- **`useState`** + **`'use client'`** for interactivity\n- **Portfolio** \u2014 new project card links to your Thursday React app",
+              task: "Name one interactive thing on your Week 5 React app you could demo in 10 seconds.",
             },
             {
               title: "Quick review — Week 4 deploy loop",
