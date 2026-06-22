@@ -19,15 +19,15 @@ export const sessions = [
   { week: 5, day: "wed", date: "2026-06-10", label: "React: state & events" },
   { week: 5, day: "thu", date: "2026-06-11", label: "React project build day" },
 
-  { week: 6, day: "mon", date: "2026-06-15", label: "Git & GitHub" },
-  { week: 6, day: "wed", date: "2026-06-17", label: "Deployment + hosting" },
-  { week: 6, day: "thu", date: "2026-06-18", label: "Push a project live with Git" },
+  { week: 6, day: "mon", date: "2026-06-15", label: "Why apps forget" },
+  { week: 6, day: "wed", date: "2026-06-17", label: "Read from Supabase in React" },
+  { week: 6, day: "thu", date: "2026-06-18", label: "Save and load" },
 
-  { week: 7, day: "mon", date: "2026-06-22", label: "Databases + backend basics" },
-  { week: 7, day: "wed", date: "2026-06-24", label: "Connecting frontend to backend" },
-  { week: 7, day: "thu", date: "2026-06-25", label: "Final project day 1" },
+  { week: 7, day: "mon", date: "2026-06-22", label: "Pick & scaffold final project" },
+  { week: 7, day: "wed", date: "2026-06-24", label: "Smart feature, done safely" },
+  { week: 7, day: "thu", date: "2026-06-25", label: "Vertical slice" },
 
-  { week: 8, day: "mon", date: "2026-06-29", label: "Final project polish + README" },
+  { week: 8, day: "mon", date: "2026-06-29", label: "Polish + README" },
   { week: 8, day: "wed", date: "2026-07-01", label: "Demo Day 🎉" },
 ]
 

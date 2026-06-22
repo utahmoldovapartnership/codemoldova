@@ -65,8 +65,8 @@ const WEEKS = [
   { n: '03', phase: 'Python Foundations', title: 'Terminal & scripts', range: 'May 25 – May 28' },
   { n: '04', phase: 'Web Development', title: 'HTML, CSS, layout & Figma', range: 'Jun 01 – Jun 04' },
   { n: '05', phase: 'Web Development', title: 'React & Rock Paper Scissors', range: 'Jun 08 – Jun 11' },
-  { n: '06', phase: 'Backend + Shipping', title: 'Git, deploy, ship with Git', range: 'Jun 15 – Jun 18' },
-  { n: '07', phase: 'Backend + Shipping', title: 'Database, connect frontend, project start', range: 'Jun 22 – Jun 25' },
+  { n: '06', phase: 'Full-stack apps', title: 'Database, React data, save & load', range: 'Jun 15 – Jun 18' },
+  { n: '07', phase: 'Full-stack apps', title: 'Capstone auth, Gemini route, ship slice', range: 'Jun 22 – Jun 25' },
   { n: '08', phase: 'Final Project', title: 'Polish, README & Demo Day', range: 'Jun 29 – Jul 01' },
 ]
 

@@ -21,7 +21,7 @@ const DAY_META = {
   thu: { label: 'Thursday',  short: 'Thu', type: 'Build Day',  swatch: '#EF453F', icon: 'rocket'   },
 }
 
-const PHASE_NAMES = ['Python Foundations', 'Web Development', 'Backend + Shipping', 'Final Project']
+const PHASE_NAMES = ['Python Foundations', 'Web Development', 'Full-stack apps', 'Final Project']
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 

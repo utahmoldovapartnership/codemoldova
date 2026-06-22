@@ -2026,364 +2026,823 @@ END`,
   },
   {
     id: 3,
-    title: "Backend + Shipping",
+    title: "Full-stack apps",
     color: "#0b8f4f",
     weeks: [
       {
         num: 6,
         mon: {
-          title: "Git & GitHub",
+          title: "Why apps forget, and how to fix it",
           date: "Jun 15",
-          desc: "Workshop 1: deepen version control you already used in Week 4\u2014repo, commit, branch, remote, push, pull\u2014and the GitHub flow: authenticate, clone, commit, push with clearer messages and branches.",
-          preview: "Cursor\u2019s Source Control UI plus terminal commands as backup.",
-          steps: [
+          lessonDesc:
+            "Read the **Lesson** tab slowly \u2014 this is the mental model day. Then open **Lab** for Supabase dashboard hands-on only (no React today). Use **Resources** if you want a video recap.",
+          desc: "Lesson: why apps forget and what a database is. Lab: create a Supabase project and `notes` table with real rows in the dashboard only.",
+          goal:
+            "Explain why apps \u201cforget\u201d and create a live Supabase table with real rows \u2014 using only the dashboard.",
+          preview:
+            "Lesson: RAM vs database \u00b7 tables mental model \u00b7 Supabase dashboard \u00b7 Lab: 5 rows in `notes`.",
+          mainPoints: [
+            "**`useState` resets on refresh** \u2014 Week 5 apps forget unless data lives elsewhere",
+            "**Files vs database** \u2014 Week 2 JSON was one machine; databases serve many users from one place",
+            "**Table = rows + columns** \u2014 like a spreadsheet with an `id` and `created_at`",
+            "**Supabase** = Postgres + dashboard + API (React connects Wednesday)",
+            "**Next week: login** \u2014 capstone rows belong to one user, not the whole class",
+          ],
+          lessonSteps: [
             {
-              title: "Quick review — React app",
-              timing: "Lab",
-              outlineColor: "val",
+              title: "Where we left off",
               content:
-                "From Week 5:\n\n- **Components** + **JSX** in `yourname-react-app`\n- **`useState`** + **`'use client'`** for interactivity\n- **Portfolio** \u2014 new project card links to your Thursday React app",
-              task: "Name one interactive thing on your Week 5 React app you could demo in 10 seconds.",
+                "From **Week 5:** your React app keeps data in **`useState`** \u2014 refresh the page and interactive state is gone unless you rebuilt it.\n\nFrom **Week 2:** you saved a watchlist to `data/watchlist.json` \u2014 better, but still one file on one machine.\n\nToday we ask: **where should data live** so your app remembers?",
+              task: "Open your Week 5 React app, add a todo or score, refresh \u2014 watch it disappear.",
             },
             {
-              title: "Quick review — Week 4 deploy loop",
-              timing: "Lab",
-              outlineColor: "val",
+              title: "Apps forget",
               content:
-                "You already shipped in Week 4:\n\n- **Project repos** — one site per repo, `index.html` at root\n- **Portfolio repo** — links to each live Vercel URL\n- **Push** — GitHub update triggers Vercel redeploy\n\nToday we learn Git **properly** (status, branches, .gitignore), not the first time you push.",
-              task: "Open one Week 4 project repo and your portfolio repo — confirm both still deploy on Vercel.",
+                "While your app runs, data can sit in **RAM** (React state). Close the tab or refresh \u2014 gone.\n\n**`localStorage`** can save small strings in the browser \u2014 useful, but not a full product backend (no multi-user queries, easy to clear, hard to secure).\n\nA **database** stores rows on a server. Your deployed app asks the server for data \u2014 same data on phone, laptop, and after refresh.",
             },
             {
-              title: "Why Git",
-              content: "Snapshots, diffs, blame, collaboration. Your future self thanks you.",
-              task: "Initialize or clone: pick the path your machine is on.",
+              title: "Tables mental model",
+              content:
+                "Think spreadsheet:\n\n| Concept | Meaning |\n|---------|--------|\n| **Table** | One kind of thing (`notes`, `users`, `entries`) |\n| **Row** | One record |\n| **Column** | One field (`text`, `created_at`) |\n| **Primary key** | Unique `id` per row |\n\nWeek 2 JSON was a **list of dicts** in a file. A table is the grown-up version \u2014 queryable, shared, persistent.",
             },
             {
-              title: "Core commands",
-              content: "git status, add, commit -m, push, pull. Understand what each does to the three trees.",
-              task: "Make two commits with clear messages on a practice readme.",
-              links: [
-                { label: "GitHub Git docs", href: "https://docs.github.com/en/get-started/using-git" },
-                { label: "Oh Sh, Git!?", href: "https://ohshitgit.com/" },
-              ],
+              title: "What is Supabase?",
+              content:
+                "**Supabase** = hosted **PostgreSQL** database + dashboard + API.\n\nYou already deploy front-ends on **Vercel**. Supabase is where **persistent data** lives for full-stack apps.\n\nThis week: Monday dashboard \u2192 Wednesday read in React \u2192 Thursday write from a form. **No React today** \u2014 just the mental model and hands-on in the Supabase UI.",
+              links: [{ label: "Supabase docs", href: "https://supabase.com/docs" }],
             },
             {
-              title: ".gitignore",
-              content: "Ignore node_modules, .env, OS junk. Never commit secrets.",
-              task: "Add a .gitignore that skips .DS_Store and any API key file pattern your mentor provides.",
+              title: "Supabase in 100 seconds",
+              video: {
+                youtubeId: "zBZgdTb-dns",
+                title: "Supabase in 100 Seconds",
+                caption: "Fireship \u2014 quick orientation before the dashboard lab.",
+              },
             },
             {
-              title: "Branches (intro)",
-              content: "Create feature branch, merge via PR in GitHub UI if available.",
-              task: "Open a PR that only changes README.",
+              title: "Security preview (RLS)",
+              content:
+                "Supabase gives you an **anon public key** for browser apps. That sounds scary \u2014 so you use **Row Level Security (RLS)** policies to limit what the key can do.\n\n- **Wednesday:** read policy on a shared demo `notes` table\n- **Thursday:** insert policy on the same demo table\n- **Week 7 capstone:** each user only sees rows where `user_id` matches their login\n\n**Never** put the **service role** key in frontend code \u2014 mentors only.",
             },
             {
-              title: "Recover from mistakes",
-              content: "git checkout -- file before commit; git restore in modern Git; never force-push main in class.",
-              task: "Practice discarding an uncommitted change safely.",
+              title: "Auth teaser (Week 7)",
+              content:
+                "Real apps ask **who are you?** before saving personal data. Next week your **capstone** will have:\n\n- Sign up with **name, email, password**\n- A **profile** row\n- **Entries** only you can see\n\nToday\u2019s shared `notes` table is practice \u2014 anyone in class could read everyone\u2019s rows. That is intentional for learning.",
+            },
+            {
+              title: "This week\u2019s path",
+              content:
+                "- **Today (Mon):** Supabase dashboard \u2014 create `notes`, insert rows, run `SELECT`\n- **Wed:** read those rows in `yourname-react-app` with `useEffect`\n- **Thu:** form writes a row; refresh still shows it\n\nSwitch to the **Lab** tab when the picture makes sense.",
+              task: "Open the **Lab** tab and create your Supabase project.",
             },
           ],
-          homework: {
-            title: "Git hygiene",
-            desc: "Bring a laptop with Git installed or use Cursor bundled tools per setup docs.",
-            tasks: [
-              "Fork or create fresh repo codemoldova-2026-<yourname>",
-              "Three meaningful commits on different days or topics",
-              "Optional: enable branch protection rules (read-only exercise)",
-            ],
+          steps: [
+            {
+              title: "Quick review \u2014 Week 5 forgets",
+              timing: "Lab",
+              outlineColor: "val",
+              content:
+                "Open `yourname-react-app`. Use any interactive feature (todo, game score). **Refresh the browser.**\n\nThat disappearing data is exactly what we fix this week \u2014 first in the database, then in React.",
+              task: "Confirm you saw state disappear on refresh.",
+            },
+            {
+              title: "Create Supabase project",
+              content:
+                "Go to [supabase.com](https://supabase.com) \u2192 New project. Naming: `codemoldova-yourname` or similar.\n\nWait for the project to finish provisioning (1\u20132 minutes).",
+              task: "Dashboard opens with Table Editor, SQL Editor, and Settings visible.",
+              links: [{ label: "Supabase \u2014 Dashboard", href: "https://supabase.com/dashboard" }],
+            },
+            {
+              title: "Create the `notes` table",
+              content:
+                "Table Editor \u2192 **New table** \u2192 name: `notes`\n\nColumns:\n\n- `id` \u2014 type **uuid**, default `gen_random_uuid()`, primary key\n- `text` \u2014 type **text**\n- `created_at` \u2014 type **timestamptz**, default `now()`\n\nSave table.",
+              task: "Empty `notes` table appears in Table Editor.",
+            },
+            {
+              title: "Insert 5 rows manually",
+              content:
+                "Table Editor \u2192 `notes` \u2192 **Insert row** (or bulk insert). Add five short notes \u2014 mix silly and real.\n\nYou are the database admin right now \u2014 no code required.",
+              task: "Five rows visible in the grid.",
+            },
+            {
+              title: "SQL Editor \u2014 read them back",
+              content:
+                "SQL Editor \u2192 run:\n\n```sql\nSELECT * FROM notes ORDER BY created_at DESC;\n```\n\nSame data as the grid \u2014 this is what React will request on Wednesday.",
+              task: "Query returns your five rows.",
+            },
+            {
+              title: "Save URL and anon key (not Git)",
+              content:
+                "Project Settings \u2192 **API** \u2192 copy:\n\n- **Project URL**\n- **anon public** key\n\nPaste into a private notes file or password manager. **Wednesday** needs these in `.env.local`. Do **not** commit to GitHub.",
+              task: "Both values saved somewhere safe off-repo.",
+            },
+            {
+              title: "Deliverable check",
+              timing: "Lab",
+              content:
+                "You are done Monday when:\n\n- [ ] Supabase project exists\n- [ ] `notes` table has **5 rows**\n- [ ] You ran `SELECT * FROM notes`\n- [ ] URL + anon key saved (not in Git)\n\nPost a **screenshot** of Table Editor (5 rows) in the class thread. Redact your anon key.",
+              task: "Screenshot posted or shown to mentor.",
+            },
+          ],
+          challengeTab: {
+            title: "Stretch: category column",
+            content:
+              "In Table Editor, add a `category` text column to `notes`. Update a few rows. Run:\n\n```sql\nSELECT * FROM notes WHERE category = 'school';\n```",
+            task: "Filtered query returns only rows you tagged.",
           },
         },
         wed: {
-          title: "Deployment + hosting",
+          title: "Read from Supabase in React",
           date: "Jun 17",
-          desc: "Workshop 2: static hosting on Vercel from GitHub, environment previews, and what \u201cbuild command\u201d means when we only have static files.",
-          preview: "Connect repo, pick root, verify HTTPS, roll back a bad deploy.",
-          steps: [
+          hideClassSlides: true,
+          lessonDesc:
+            "**Lesson** first (`useEffect` + Supabase). Then **Lab** in `yourname-react-app`. Stuck? Paste errors into Cursor. **Challenge** if you finish early.",
+          desc: "Lesson: load data with useEffect and the Supabase JS client. Lab: display your Monday notes in React with loading and empty states.",
+          goal:
+            "Fetch rows from your Monday `notes` table and display them in React with loading and empty states.",
+          preview:
+            "Lesson: useEffect + Supabase client \u00b7 Lab: NotesList \u00b7 Challenge: refresh + sort.",
+          labDurationLabel: "50 min",
+          mainPoints: [
+            "**`useEffect`** runs after first paint \u2014 good for \u201cload data on open\u201d",
+            "**Supabase client** in browser uses **anon key** + RLS (safe when policies are tight)",
+            "**Three UI states:** loading, error, empty list",
+            "**.env.local** holds URL + anon key \u2014 never commit",
+            "**Ask AI** to wire fetch \u2014 you verify `'use client'` and env var names",
+          ],
+          lessonSteps: [
             {
-              title: "Quick review — Git basics",
-              timing: "Lab",
-              outlineColor: "ube",
+              title: "Quick review \u2014 Monday table",
               content:
-                "From Monday:\n\n- **git status** — what changed\n- **git add** + **git commit -m** — save a snapshot\n- **git push** — send commits to GitHub\n- **.gitignore** — never commit secrets or node_modules",
-              task: "In a practice repo, run `git status` and explain staged vs unstaged to a partner.",
+                "You created **`notes`** with `id`, `text`, `created_at` and inserted rows in the Supabase dashboard.\n\nYou saved **Project URL** and **anon key** for today. Same table, same project.",
+              task: "Open Supabase Table Editor \u2014 confirm your rows are still there.",
             },
             {
-              title: "Vercel import",
-              content: "Import Git repository, confirm framework preset (Other) for static, deploy.",
-              task: "Share preview URL from dashboard.",
+              title: "Why useState alone is not enough",
+              content:
+                "Week 5 kept list data in **`useState`** \u2014 great for clicks and typing, but the data lives only in the browser until you fetch from somewhere else.\n\nServer data (database rows) arrives **asynchronously**. You need a place to store `{ loading, error, data }` and a hook to **trigger the fetch** when the page loads.",
+            },
+            {
+              title: "useEffect on mount",
+              content:
+                "```javascript\nuseEffect(() => {\n  loadNotes();\n}, []);\n```\n\nThe empty `[]` means **run once** after the first render \u2014 same timing idea as \u201cwhen the page opens.\u201d\n\nInside `loadNotes`, call Supabase, then `setData`, `setLoading(false)`, or `setError`.",
               links: [
-                { label: "Vercel docs", href: "https://vercel.com/docs" },
+                { label: "React \u2014 useEffect", href: "https://react.dev/reference/react/useEffect" },
               ],
             },
             {
-              title: "Production vs preview",
-              content: "Every branch/PR can get previews; production tracks main.",
-              task: "Open a preview from an experimental branch if permitted.",
+              title: "Supabase JS client",
+              content:
+                "Install `@supabase/supabase-js`. Create a client from env vars:\n\n- `NEXT_PUBLIC_SUPABASE_URL`\n- `NEXT_PUBLIC_SUPABASE_ANON_KEY`\n\n```javascript\nconst { data, error } = await supabase.from('notes').select('*');\n```\n\n**Never** put the service role key in React.",
+              links: [
+                { label: "Supabase JS quickstart", href: "https://supabase.com/docs/reference/javascript/introduction" },
+              ],
             },
             {
-              title: "Caching gotchas",
-              content: "Hard refresh, cache headers for assets. Rename files with hash later in career.",
-              task: "Verify CSS updates appear after deploy without local-only tricks.",
+              title: "Data flow",
+              content:
+                "```\nReact (browser) \u2192 Supabase REST API \u2192 Postgres `notes` table\n```\n\nYour component **requests** rows. Supabase **returns JSON**. You **map** to `<li>` or cards.\n\nShow **loading** while waiting, **error** if policy or network fails, **empty** if zero rows.",
             },
             {
-              title: "Custom domains (overview)",
-              content: "DNS A/CNAME records at registrar—capture steps even if you stay on vercel.app this week.",
-              task: "Document domain steps in README for future you.",
+              title: "useEffect explained (video)",
+              video: {
+                youtubeId: "0ZJgIjIuY7U",
+                title: "Learn useEffect In 13 Minutes",
+                caption: "Web Dev Simplified \u2014 pairs with today\u2019s lab.",
+              },
             },
             {
-              title: "Rollback",
-              content: "Redeploy previous working deployment from the UI.",
-              task: "Simulate a broken index.html and roll back in class.",
+              title: "Open the Lab",
+              content:
+                "You will work in **`yourname-react-app`** (Week 5 repo). Enable RLS + read policy with mentor SQL, then ask AI to build `NotesList.tsx`.\n\n**Rule:** AI writes first, you review. Broken? Paste **exact error + filename** into Cursor.",
+              task: "Switch to the **Lab** tab.",
             },
           ],
-          homework: {
-            title: "Hosting notes",
-            desc: "Screenshot your Vercel project settings (redact tokens).",
-            tasks: [
-              "Production URL linked in repo About",
-              "README badge or link row: Live demo",
-              "Optional: enable Vercel analytics (free tier)",
+          steps: [
+            {
+              title: "Quick review \u2014 Week 5 React",
+              timing: "Lab",
+              outlineColor: "val",
+              content:
+                "From Week 5:\n\n- **`'use client'`** on interactive files\n- **`useState`** for UI state\n- **`.map()`** to render lists (Wednesday todo)\n\nToday adds **`useEffect`** + **Supabase** for data that survives refresh.",
+              task: "Open `yourname-react-app` in Cursor.",
+            },
+            {
+              title: "AI workflow reminder",
+              content:
+                "**Rule:** Paste prompts into **Cursor Agent**. If something breaks:\n\n\u201cFix only [filename]. Keep behavior: [one sentence]. Error: [paste full error].\u201d\n\nDo **not** paste API keys into chat.",
+            },
+            {
+              title: "Install Supabase client",
+              content:
+                "In project terminal:\n\n```bash\nnpm install @supabase/supabase-js\n```",
+              task: "`package.json` lists `@supabase/supabase-js`.",
+            },
+            {
+              title: "Create .env.local",
+              content:
+                "Project root `.env.local`:\n\n```\nNEXT_PUBLIC_SUPABASE_URL=https://xxxx.supabase.co\nNEXT_PUBLIC_SUPABASE_ANON_KEY=eyJ...\n```\n\nConfirm `.gitignore` includes `.env*`. Restart `npm run dev` after saving.",
+              task: "Env file exists and is not tracked by Git.",
+            },
+            {
+              title: "Run RLS SQL (read policy)",
+              content:
+                "Supabase \u2192 SQL Editor \u2192 run the class **`week6_demo_rls.sql`** (at least the **SELECT** policy).\n\nDownload from course site or mentor link. Without this, fetch may return **permission denied**.",
+              task: "SELECT policy enabled on `notes`.",
+              links: [
+                {
+                  label: "Download week6_demo_rls.sql",
+                  href: "/lesson/week6_demo_rls.sql",
+                  download: "week6_demo_rls.sql",
+                },
+              ],
+            },
+            {
+              title: "AI \u2014 build NotesList",
+              timing: "Lab",
+              content:
+                "Paste into Cursor:",
+              code: {
+                lang: "text",
+                snippet:
+                  "Add components/NotesList.tsx to my Next.js app:\n- 'use client' at top\n- useState for notes array, loading boolean, error string\n- useEffect on mount: fetch from Supabase table 'notes' with select('*')\n- Show 'Loading...' while loading\n- Show error message if error\n- Show 'No notes yet' if empty array\n- Map notes to li or div showing text and created_at\n- Create lib/supabaseClient.ts using createClient with NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY\nImport NotesList in app/page.tsx",
+              },
+              task: "Browser lists your Monday rows (or empty state if table cleared).",
+            },
+            {
+              title: "Fix with AI",
+              content:
+                "Common fixes: missing `'use client'`, wrong env var names, forgot to restart dev server, RLS policy missing.\n\nPaste DevTools console or terminal error into Cursor.",
+              task: "Notes visible without red error overlay.",
+            },
+            {
+              title: "Deliverable check",
+              timing: "Lab",
+              content:
+                "Done when:\n\n- [ ] `NotesList` shows your dashboard rows\n- [ ] Loading state appears briefly on refresh\n- [ ] Empty message if table has zero rows\n- [ ] No secrets committed to Git",
+              task: "Demo to partner or post screenshot.",
+            },
+          ],
+          challengeTab: {
+            title: "List upgrades",
+            content: "Your list must still load. Use AI for one upgrade:",
+            task:
+              "**A \u2014 Refresh button:** re-runs fetch on click.\n\n**B \u2014 Newest first:** sort by `created_at` descending before map.\n\n**C \u2014 Count line:** show \u201cLoaded N notes\u201d below the list.",
+            hints: [
+              "Prompt: \u201cAdd a Refresh button to NotesList that re-fetches from Supabase.\u201d",
+              "Prompt: \u201cSort notes by created_at descending before rendering.\u201d",
             ],
           },
         },
         thu: {
-          title: "Push a project live with Git",
+          title: "Save and load",
           date: "Jun 18",
-          desc: "Build day: take any shipped artifact (site, JS app, Python CLI) and run the full loop: clean repo, meaningful commits, push, verify hosted output matches local.",
-          preview: "If the host only serves static files, package the web pieces; for Python-only projects, publish docs + screenshot in README and host the HTML/JS pieces if any.",
-          steps: [
+          lessonDesc:
+            "**Lesson** = 2-minute goal. **Lab** = build the full round trip. Hit **Base** tier before stretch tiers.",
+          desc: "Build day: form inserts into `notes`, list updates, data survives browser refresh. If you leave able to save and reload, the hard part is done.",
+          goal:
+            "Add a form that inserts into `notes` and a list that still works after browser refresh.",
+          preview: "Lab: AddNoteForm + insert \u00b7 refresh test \u00b7 tiers: delete, edit, filter.",
+          mainPoints: [
+            "**Controlled input** \u2014 Week 5 Wed: `value` + `onChange` + submit",
+            "**Insert** \u2014 `supabase.from('notes').insert({ text })`",
+            "**Re-fetch** after save (or append to state)",
+            "**Refresh test** \u2014 proof data is real, not just useState",
+            "**Week 7** \u2014 login so only you see your entries",
+          ],
+          lessonSteps: [
             {
-              title: "Choose artifact",
-              content: "Pick one project you are proud of from weeks 4–5 or polish the CLI README with usage GIF/text.",
-              task: "Confirm license and no secrets in history.",
+              title: "Today\u2019s loop",
+              content:
+                "```\nType in form \u2192 Submit \u2192 INSERT into Postgres \u2192 List updates \u2192 Refresh browser \u2192 rows still there\n```\n\nThis is the **full round trip**. Week 7 adds **login** so rows are private per user.\n\nToday\u2019s demo table is **shared** (class practice) \u2014 anyone can read/write with the demo policies.",
             },
             {
-              title: "Repo hygiene",
-              content: "README: title, screenshot, setup, deploy link, known issues.",
-              task: "Add MIT or course-default license if required.",
-            },
-            {
-              title: "CI optional",
-              content: "GitHub Actions hello world is optional stretch—focus on clean push.",
-              task: "git push origin main and watch Vercel/GitHub Pages build succeed.",
-            },
-            {
-              title: "Verify",
-              content: "Open incognito window, throttle network, confirm assets load.",
-              task: "Post final URL to the class thread.",
+              title: "Open the Lab",
+              content:
+                "Same repo (`yourname-react-app`), same `notes` table, same env vars as Wednesday. You add **write** on top of **read**.",
+              task: "Switch to the **Lab** tab.",
             },
           ],
-          homework: {
-            title: "Release checklist",
-            desc: "Treat this like a tiny launch.",
-            tasks: [
-              "Live URL + repo URL in one message",
-              "At least five commits across the project lifetime or today if new",
-              "Optional: tag v1.0.0",
-            ],
-          },
+          steps: [
+            {
+              title: "Quick review \u2014 NotesList",
+              timing: "Lab",
+              outlineColor: "val",
+              content:
+                "Wednesday\u2019s `NotesList` should still load rows. If not, fix that first before adding a form.",
+              task: "List loads on `npm run dev`.",
+            },
+            {
+              title: "AI workflow reminder",
+              content:
+                "Paste prompts into Cursor Agent. Errors? \u201cFix only [file]. Error: [paste].\u201d Never commit `.env.local`.",
+            },
+            {
+              title: "Run INSERT policy SQL",
+              content:
+                "SQL Editor \u2192 run the **insert** section of `week6_demo_rls.sql`.\n\nWithout INSERT policy, form submit returns permission denied.",
+              links: [
+                {
+                  label: "Download week6_demo_rls.sql",
+                  href: "/lesson/week6_demo_rls.sql",
+                  download: "week6_demo_rls.sql",
+                },
+              ],
+              task: "INSERT policy active on `notes`.",
+            },
+            {
+              title: "AI \u2014 build AddNoteForm",
+              timing: "Lab",
+              content:
+                "Paste into Cursor:",
+              code: {
+                lang: "text",
+                snippet:
+                  "Add components/AddNoteForm.tsx to my Next.js app:\n- 'use client'\n- useState for draft text string\n- Controlled text input (value + onChange)\n- Submit button calls supabase.from('notes').insert({ text: draft })\n- On success: clear draft and call onAdded callback prop\n- Show error message if insert fails\nUse the same supabase client as NotesList",
+              },
+              task: "Form renders on page.",
+            },
+            {
+              title: "Wire form + list",
+              content:
+                "Parent page holds a `refreshKey` or callback so after insert, `NotesList` re-fetches.\n\nAsk AI: \u201cWire AddNoteForm and NotesList on app/page.tsx. After successful insert, refresh the list.\u201d",
+              task: "Submit adds a row to the list without manual refresh.",
+            },
+            {
+              title: "Hard test \u2014 browser refresh",
+              content:
+                "Add a note via form. **Refresh the browser (F5).** Row must still appear.\n\nThat proves data lives in **Supabase**, not only React state.",
+              task: "Screenshot or GIF of refresh test for class thread.",
+            },
+            {
+              title: "Git commit + push",
+              content:
+                "Commit: `Add Supabase notes read and write`. Push to GitHub (Week 4/5 habit).",
+              task: "GitHub shows today\u2019s commits.",
+            },
+            {
+              title: "Deliverable check",
+              timing: "Lab",
+              content:
+                "Done when:\n\n- [ ] Form inserts a new row\n- [ ] List shows it\n- [ ] **Refresh** still shows the row\n- [ ] Screenshot posted\n\n**Bridge to Week 7:** capstone uses **login** \u2014 only you see your entries.",
+              task: "Base tier complete.",
+            },
+          ],
           challenges: {
             base: {
-              title: "Green deploy",
-              desc: "Main branch hosts latest static build.",
+              title: "Save and reload",
+              desc: "Insert via form; list after refresh.",
               steps: [
-                "Clean build",
-                "README link works",
-                "No console errors on load",
+                "Form submit inserts row",
+                "List updates",
+                "Browser refresh still shows row",
               ],
             },
             medium: {
-              title: "Branch preview",
-              desc: "Use a PR to change copy and merge after review.",
+              title: "Delete or done",
+              desc: "Remove or mark-done per row.",
               steps: [
-                "Feature branch",
-                "Preview URL shared",
-                "Merged to main",
+                "Button per row",
+                "Deletes or updates in Supabase",
+                "List reflects change after refresh",
               ],
             },
             hard: {
-              title: "404 page",
-              desc: "Custom 404.html for static hosts.",
+              title: "Edit row",
+              desc: "Update existing note text.",
               steps: [
-                "Friendly message",
-                "Link home",
-                "Styled consistently",
+                "Edit UI for one row",
+                "supabase.update works",
+                "Persists after refresh",
               ],
             },
-            bonus: "Add a simple robots.txt and sitemap.xml stub for learning.",
+            bonus: "Client-side search or filter across loaded notes.",
           },
         },
       },
       {
         num: 7,
         mon: {
-          title: "Databases + backend basics",
+          title: "Pick & scaffold the final project",
           date: "Jun 22",
-          desc: "Workshop 1: why persistent storage beats files; tables/rows; intro to Supabase (hosted Postgres) or SQLite for offline demos\u2014follow whichever stack mentors standardize on.",
-          preview: "Create a table, insert rows, select with filters from the dashboard or a tiny script.",
-          steps: [
+          hideClassSlides: true,
+          lessonDesc:
+            "**Lesson** = pick what you track + required auth shape. **Lab** = new repo + sign-up working today. Every capstone shares login + personal list; flavor is yours.",
+          desc: "Choose your tracker app, scaffold yourname-capstone-2026, run capstone SQL, and complete sign-up with name, email, password.",
+          goal:
+            "Choose your tracker app idea, scaffold `yourname-capstone-2026`, and complete sign-up with name, email, password.",
+          preview:
+            "Lesson: capstone flavors + auth schema \u00b7 Lab: new repo + sign-up \u00b7 Challenge: log out + second user.",
+          labDurationLabel: "55 min",
+          mainPoints: [
+            "**Same shape for everyone:** auth \u2192 profile \u2192 personal `entries`",
+            "**Password** \u2014 Supabase Auth only; never in a SQL table",
+            "**`user_id` on every entry** \u2014 RLS checks `auth.uid()`",
+            "**Pick one thing to track** \u2014 habits, expenses, phrases, workouts, etc.",
+            "**AI scaffolds pages** \u2014 you test sign-up before leaving class",
+          ],
+          lessonSteps: [
             {
-              title: "Quick review — ship to the web",
-              timing: "Lab",
-              outlineColor: "val",
+              title: "Week 6 recap",
               content:
-                "From Week 6:\n\n- **Git** — commit, push, meaningful messages\n- **Vercel** — import repo, production URL on `main`\n- **README** — live demo link strangers can open",
-              task: "Paste your production URL in chat — confirm it still loads.",
+                "Last week you read/wrote a **shared** `notes` table \u2014 anyone with the demo policy could see class data.\n\nYour **capstone** is a real app: **sign up**, **profile**, **entries only you see**.",
             },
             {
-              title: "Why a database",
-              content: "Concurrent writes, querying, relationships. Contrast with JSON snapshots from week 2.",
-              task: "List two features you gain over flat files.",
+              title: "Capstone flavors (what you track)",
+              content:
+                "Pick **one** thing users log after login. Auth shape is fixed; flavor is yours:\n\n| Flavor | Examples | Optional Gemini (Wed) |\n|--------|----------|------------------------|\n| **Moldova** | Caf\u00e9 visits, phrases learned, what I ate | Suggest a dish from mood |\n| **Utilities** | Study sessions, expenses, habits | Summarize weekly log |\n| **Creative** | Story ideas, mood journal | Expand entry text |\n| **Health / life** | Workouts, water, sleep notes | Coach encouragement |\n\nWrite one sentence: **who** is it for and **what** do they track?",
             },
             {
-              title: "SQL shape",
-              content: "SELECT, INSERT, WHERE, LIMIT. Primary keys and timestamps.",
-              task: "Run three example queries in the SQL editor provided.",
+              title: "Required schema",
+              content:
+                "```\nauth.users (email + password \u2014 managed by Supabase)\n    \u2192 profiles (id, name)\n    \u2192 entries (id, user_id, content, created_at)\n```\n\n**Password rule:** `signUp({ email, password })` handles hashing. **Never** `INSERT` a password column.\n\n**Name** goes in `profiles` (or `user_metadata` on sign-up).",
             },
             {
-              title: "Supabase project",
-              content: "New project, copy anon key carefully (public by design—still no secrets in client for privileged ops). Row Level Security awareness lecture-only.",
-              task: "Create students table with name text and created_at default now().",
+              title: "Email confirmation + redirect URLs",
+              content:
+                "Supabase \u2192 **Authentication** \u2192 Providers \u2192 Email enabled.\n\nFor class, mentor may **disable Confirm email** so sign-in works immediately. If confirmation is on, check inbox/spam after sign-up.\n\n**URL configuration:** add `http://localhost:3000` and your future Vercel URL under Redirect URLs.",
               links: [
-                { label: "Supabase docs", href: "https://supabase.com/docs" },
+                { label: "Supabase Auth docs", href: "https://supabase.com/docs/guides/auth" },
               ],
             },
             {
-              title: "Python or JS client (pick one)",
-              content: "Insert and read one row using the official client from a notebook cell or script.",
-              task: "Print latest three rows ordered by created_at desc.",
+              title: "Session on refresh",
+              content:
+                "Use `supabase.auth.getSession()` on load and `onAuthStateChange` so refresh keeps you signed in. Ask AI to wire this on your home page.\n\n```javascript\nsupabase.auth.onAuthStateChange((_event, session) => {\n  setSession(session);\n});\n```",
             },
             {
-              title: "Migrations mindset",
-              content: "Schema changes are versioned in real teams—for class, note manual ALTER examples only.",
-              task: "Write ALTER TABLE add column favorite_tool text; in notes (do not run destructive drops).",
+              title: "Supabase Auth (video)",
+              video: {
+                youtubeId: "Q7-DI39epR8",
+                title: "Supabase Auth with React",
+                caption: "Sign-up and sign-in flow before you scaffold your capstone.",
+              },
+            },
+            {
+              title: "README charter",
+              content:
+                "Top of README:\n\n1. **Problem** (one sentence)\n2. **User** (who)\n3. **Tracked field** (what they log)\n4. **v1 done** / **out of scope**\n\nOpen **Lab** when ready to scaffold.",
+              task: "Switch to the **Lab** tab.",
             },
           ],
-          homework: {
-            title: "Schema sketch",
-            desc: "Diagram primary keys for two related tables on paper.",
-            tasks: [
-              "Create five seed rows",
-              "Write SELECT returning filtered subset",
-              "Optional: foreign key explanation in README",
+          steps: [
+            {
+              title: "Quick review \u2014 Week 6 round trip",
+              timing: "Lab",
+              outlineColor: "val",
+              content:
+                "You proved read + write + refresh on `notes`. Capstone adds **auth** so `entries` are private per user.",
+              task: "Name one flavor you want to build.",
+            },
+            {
+              title: "Pick flavor + README charter",
+              content:
+                "Write problem, user, tracked field, v1 done, out-of-scope at top of README in your new repo.",
+              task: "README charter filled in.",
+            },
+            {
+              title: "Create GitHub repo",
+              content:
+                "New empty repo: `yourname-capstone-2026`. Clone, open in Cursor.",
+              task: "`pwd` ends with capstone repo name.",
+              links: [
+                {
+                  label: "GitHub \u2014 create a repo",
+                  href: "https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository",
+                },
+              ],
+            },
+            {
+              title: "AI scaffold Next.js",
+              content:
+                "Paste into Cursor (empty folder):",
+              code: {
+                lang: "text",
+                snippet:
+                  "Create a minimal Next.js 15 app in this folder:\n- App Router, TypeScript\n- app/page.tsx placeholder\n- components/ folder\n- lib/ folder for supabase client\n- README with npm install and npm run dev\nNo auth pages yet \u2014 just structure.",
+              },
+              task: "`npm install` and `npm run dev` work.",
+            },
+            {
+              title: "Install Supabase + env",
+              content:
+                "```bash\nnpm install @supabase/supabase-js\n```\n\n`.env.local`:\n\n```\nNEXT_PUBLIC_SUPABASE_URL=...\nNEXT_PUBLIC_SUPABASE_ANON_KEY=...\n```\n\nSame Supabase project as Week 6 is fine \u2014 add new tables alongside `notes`.",
+              task: "Env vars documented in README table.",
+            },
+            {
+              title: "Run capstone SQL",
+              content:
+                "SQL Editor \u2192 run **`week7_capstone_schema.sql`** (profiles + entries + RLS).",
+              links: [
+                {
+                  label: "Download week7_capstone_schema.sql",
+                  href: "/lesson/week7_capstone_schema.sql",
+                  download: "week7_capstone_schema.sql",
+                },
+              ],
+              task: "`profiles` and `entries` tables exist in Table Editor.",
+            },
+            {
+              title: "Supabase Auth settings",
+              content:
+                "Enable Email provider. Set Site URL `http://localhost:3000`. Add redirect URLs for localhost (and Vercel when you have it).\n\nConfirm email: follow mentor setting (on or off).",
+              task: "Auth settings saved.",
+            },
+            {
+              title: "AI \u2014 sign up and sign in pages",
+              timing: "Lab",
+              content:
+                "Paste into Cursor:",
+              code: {
+                lang: "text",
+                snippet:
+                  "Add auth to my Next.js capstone app:\n- app/signup/page.tsx: fields name, email, password. On submit: supabase.auth.signUp({ email, password, options: { data: { name } } }). Then insert into profiles (id from user.id, name).\n- app/login/page.tsx: email, password, signInWithPassword, redirect to /\n- lib/supabaseClient.ts with createClient from env\n- 'use client' on form pages\n- Show error messages from Supabase on failure",
+              },
+              task: "Sign-up creates a user in Supabase Auth dashboard.",
+            },
+            {
+              title: "Home \u2014 session gate",
+              content:
+                "Ask AI: \u201cOn app/page.tsx, use getSession and onAuthStateChange. If no session, show links to /login and /signup. If session, show 'Welcome, {name}' from profiles and text 'Dashboard builds Thursday'.\u201d",
+              task: "After sign-up, home shows your name.",
+            },
+            {
+              title: "Git push",
+              content: "Commit and push. No secrets in repo.",
+              task: "GitHub shows capstone repo.",
+            },
+            {
+              title: "Deliverable check",
+              timing: "Lab",
+              content:
+                "Done when:\n\n- [ ] README charter written\n- [ ] `profiles` + `entries` tables + RLS live\n- [ ] Sign-up works in dev\n- [ ] Home shows name when logged in\n- [ ] Repo URL in class thread",
+              task: "Test account created.",
+            },
+          ],
+          challengeTab: {
+            title: "Auth polish",
+            content: "Base sign-up must work first.",
+            task:
+              "**A \u2014 Log out button** that calls `signOut` and returns to login.\n\n**B \u2014 Header email** from session.\n\n**C \u2014 Second test user** \u2014 prove two accounts are separate.",
+            hints: [
+              "Prompt: \u201cAdd Log out button calling supabase.auth.signOut().\u201d",
             ],
           },
         },
         wed: {
-          title: "Connecting frontend to backend",
+          title: "The smart feature, done safely",
           date: "Jun 24",
-          desc: "Workshop 2: read-only client fetch from the browser to a public endpoint; understand CORS; never expose service-role keys in frontend bundles.",
-          preview: "Wire a minimal page listing rows from Supabase REST or a tiny serverless function if mentors provide one.",
+          hideClassSlides: true,
+          lessonDesc:
+            "**Lesson** = why API keys cannot live in React. **Lab** = Gemini through `app/api/chat/route.ts`. Reuses Week 2 key \u2014 new hiding place.",
+          desc: "Lesson: client vs server secrets. Lab: Gemini via Next.js Route Handler with GEMINI_API_KEY only on server.",
+          goal:
+            "Call Gemini from your capstone through a server route; API key only in server env.",
+          preview:
+            "Lesson: Route Handlers \u00b7 Lab: /api/chat \u00b7 signed-in UI \u00b7 Vercel env.",
+          mainPoints: [
+            "**Week 2:** Gemini from Python + `GEMINI_API_KEY` in terminal",
+            "**Browser cannot hold secrets** \u2014 anyone can read client JS",
+            "**Route Handler** = server code Next.js runs on Vercel",
+            "**`GEMINI_API_KEY`** in `.env.local` and Vercel \u2014 no `NEXT_PUBLIC_`",
+            "**Signed-in only** \u2014 hide AI UI without session",
+          ],
+          lessonSteps: [
+            {
+              title: "Week 2 Gemini recap",
+              content:
+                "Week 2 Thursday: **`gemini-2.0-flash`**, API key in **environment** (not Git), system prompt for personality.\n\nSame key can power your capstone \u2014 but **not** from React files.",
+              links: [
+                { label: "Google AI Studio", href: "https://aistudio.google.com/" },
+              ],
+            },
+            {
+              title: "Why the browser is unsafe for keys",
+              content:
+                "Anything in `'use client'` code ships to the browser. Users can open DevTools and steal a **Gemini key** \u2014 your bill, your problem.\n\n**Rule:** keys that cost money or access private data stay on the **server**.",
+            },
+            {
+              title: "Client vs server flow",
+              content:
+                "```\nBrowser \u2192 fetch('/api/chat', { message }) \u2192 Route Handler \u2192 Gemini API \u2192 JSON { reply } \u2192 Browser displays\n```\n\nThe key lives in `process.env.GEMINI_API_KEY` inside `app/api/chat/route.ts` only.",
+              links: [
+                { label: "Next.js Route Handlers", href: "https://nextjs.org/docs/app/building-your-application/routing/route-handlers" },
+              ],
+            },
+            {
+              title: "Next.js API routes (video)",
+              video: {
+                youtubeId: "27Uj6BeIDV0",
+                title: "Next.js Route Handlers",
+                caption: "Codevolution \u2014 how app/api/.../route.ts works in the App Router.",
+              },
+            },
+            {
+              title: "Vercel environment variables",
+              content:
+                "Local: `.env.local` with `GEMINI_API_KEY=...` (no `NEXT_PUBLIC_` prefix).\n\nDeploy: Vercel project \u2192 Settings \u2192 Environment Variables \u2192 same name. Redeploy after adding.\n\nAlso ensure Supabase vars are set on Vercel for production auth.",
+              links: [
+                { label: "Vercel env vars", href: "https://vercel.com/docs/projects/environment-variables" },
+              ],
+            },
+            {
+              title: "Open the Lab",
+              content: "Build `/api/chat` and a signed-in-only chat UI. Switch to **Lab**.",
+              task: "Lab tab open.",
+            },
+          ],
           steps: [
             {
-              title: "Quick review — databases",
+              title: "Quick review \u2014 session check",
               timing: "Lab",
               outlineColor: "ube",
               content:
-                "From Monday:\n\n- **Table** — rows and columns (like a spreadsheet)\n- **SELECT**, **INSERT**, **WHERE** — read and filter data\n- **Supabase** — hosted Postgres + dashboard SQL editor",
-              task: "Run one `SELECT` that returns only rows you inserted — confirm you see your data.",
+                "Monday\u2019s sign-in should still work. Today\u2019s AI UI only appears when `session` exists.",
+              task: "Log in to capstone locally.",
             },
             {
-              title: "CORS story",
-              content: "Browsers block cross-origin reads unless headers allow. Supabase handles for its domain when configured.",
-              task: "Observe a CORS error in DevTools when misconfigured on purpose in a demo branch.",
+              title: "AI workflow reminder",
+              content:
+                "Paste prompts into Cursor. Never put `AIza` keys in client files. Search project for `AIza` before pushing.",
             },
             {
-              title: "Anon key usage",
-              content: "Public anon key in frontend is normal; policies must limit damage—today read-only policies only.",
-              task: "Fetch JSON and render <ul> of names.",
+              title: "Install Gemini SDK",
+              content:
+                "```bash\nnpm install @google/generative-ai\n```\n\nWeek 2 used Python `google-genai` \u2014 in Next.js we use **`@google/generative-ai`**.",
+              task: "Package installs without error.",
             },
             {
-              title: "Loading and empty states",
-              content: "Spinner text, error banner, empty list message.",
-              task: "Implement three UI states: loading, error, data.",
+              title: "Add GEMINI_API_KEY locally",
+              content:
+                "`.env.local`:\n\n```\nGEMINI_API_KEY=your-week2-key\n```\n\nRestart dev server. **Not** `NEXT_PUBLIC_GEMINI_API_KEY`.",
+              task: "Key in env only.",
             },
             {
-              title: "Env separation",
-              content: "Use Vercel environment variables for URLs/keys where applicable; .env.local gitignored for dev.",
-              task: "Document required env vars in README.",
+              title: "AI \u2014 Route Handler",
+              timing: "Lab",
+              content:
+                "Paste into Cursor:",
+              code: {
+                lang: "text",
+                snippet:
+                  "Create app/api/chat/route.ts for my Next.js app:\n- POST only, read JSON body { message: string }\n- Use @google/generative-ai with process.env.GEMINI_API_KEY\n- Model gemini-2.0-flash\n- System instruction: friendly assistant for my tracker app flavor\n- Return JSON { reply: string }\n- Return 500 with error message if key missing\n- Return 401 if you can check session (optional stretch)",
+              },
+              task: "POST to /api/chat returns JSON in dev (test with curl or temporary button).",
             },
             {
-              title: "Security chat",
-              content: "Service role key stays server-only; SQL injection sketch at high level.",
-              task: "List one rule you will follow on final projects.",
+              title: "AI \u2014 client chat UI",
+              timing: "Lab",
+              content:
+                "Paste into Cursor:",
+              code: {
+                lang: "text",
+                snippet:
+                  "Add components/ChatPanel.tsx:\n- 'use client'\n- Only render if user session exists (prop or hook)\n- Textarea + Send button\n- fetch('/api/chat', { method: 'POST', body: JSON.stringify({ message }) })\n- Show loading, error, and reply text\n- Import on home page below welcome message",
+              },
+              task: "One AI reply displays in browser.",
+            },
+            {
+              title: "Fix with AI",
+              content:
+                "Common issues: key not loaded (restart server), wrong import, CORS not needed for same-origin `/api/chat`, 404 if file not named `route.ts`.",
+              task: "Chat works locally.",
+            },
+            {
+              title: "Vercel env + redeploy",
+              content:
+                "Add `GEMINI_API_KEY` in Vercel dashboard. Redeploy. Test on preview URL if time.",
+              task: "Production has key set (even if AI tested only locally today).",
+            },
+            {
+              title: "Deliverable check",
+              timing: "Lab",
+              content:
+                "Done when:\n\n- [ ] One Gemini reply works in dev\n- [ ] No `AIza` string in any `'use client'` file\n- [ ] Chat UI hidden or disabled when logged out\n- [ ] `GEMINI_API_KEY` listed in README env table",
+              task: "Search project for `AIza` \u2014 only server/env.",
             },
           ],
-          homework: {
-            title: "Integration homework",
-            desc: "Keep dataset tiny and respectful of rate limits.",
-            tasks: [
-              "Page loads rows on open",
-              "Refresh button re-fetches",
-              "Optional: search box filters client-side",
+          challengeTab: {
+            title: "Smarter AI",
+            content: "Chat must still work.",
+            task:
+              "**A \u2014 Custom system prompt** for your tracker flavor (study coach, food buddy, etc.).\n\n**B \u2014 Save reply** to `entries` with current `user_id` after AI responds.\n\n**C \u2014 401** from API when not authenticated.",
+            hints: [
+              "Week 2 system prompt pattern: personality + length limit.",
             ],
           },
         },
         thu: {
-          title: "Final project day 1",
+          title: "Vertical slice",
           date: "Jun 25",
-          desc: "Build day: propose scope, spike riskiest unknown (auth, API, layout), set milestones for week 8.",
-          preview: "Exit with a repo, README charter, and one merged vertical slice.",
-          steps: [
+          lessonDesc:
+            "**Lab** is the whole class. Minimum **Base** = sign in \u2192 add entry \u2192 see only yours \u2192 deployed URL.",
+          desc: "Build day: authenticated user adds a tracked item and sees their private list on Vercel.",
+          goal:
+            "Ship one complete loop on Vercel: sign in, add entry, see only your rows, refresh persists.",
+          preview: "Base: auth loop deployed \u00b7 Medium: edit/delete \u00b7 Hard: Gemini in save flow.",
+          mainPoints: [
+            "**Vertical slice** \u2014 one path end-to-end, not five half-features",
+            "**`insert` must include `user_id`** from `session.user.id`",
+            "**RLS** \u2014 empty list but insert ok? Policy bug \u2014 paste error to AI",
+            "**Deploy** \u2014 Supabase + Gemini env vars on Vercel + auth redirect URL",
+            "**Two test users** \u2014 prove isolation",
+          ],
+          lessonSteps: [
             {
-              title: "Pitch in 60 seconds",
-              content: "Problem, user, tech stack, demo hook.",
-              task: "Write the pitch bullets at top of README.",
+              title: "Base tier checklist",
+              content:
+                "Minimum **done** today:\n\n1. Sign up with name, email, password\n2. Sign in \u2192 dashboard\n3. Form adds row to `entries` with your `user_id`\n4. List shows **only your** rows\n5. Refresh \u2192 still signed in, still your data\n6. Sign out \u2192 cannot see entries\n7. **Deployed** HTTPS URL on Vercel\n\nOpen **Lab** \u2014 no new features after class tonight.",
             },
             {
-              title: "Scope guardrails",
-              content: "One primary user story done well beats five half-done. Pick Python, web, or hybrid aligned to your strengths.",
-              task: "Define v1 done and out-of-scope list.",
-            },
-            {
-              title: "Vertical slice",
-              content: "End-to-end path: UI or CLI → data → visible result.",
-              task: "Merge one working slice to main today.",
-            },
-            {
-              title: "Risks",
-              content: "Note dependencies on keys, hardware, or teammates.",
-              task: "Add ISSUES.md or GitHub Issues with three tasks.",
+              title: "Start building",
+              content: "Fix blockers only overnight. Ship the slice first.",
+              task: "Lab tab.",
             },
           ],
-          homework: {
-            title: "Checkpoint",
-            desc: "Mentor sign-off on scope in class doc.",
-            tasks: [
-              "Repo link posted",
-              "README charter complete",
-              "Demo script outline (30–45s)",
-            ],
-          },
+          steps: [
+            {
+              title: "Quick review \u2014 Mon + Wed",
+              timing: "Lab",
+              outlineColor: "val",
+              content:
+                "Auth pages from Monday. Optional `/api/chat` from Wednesday. Today: **AddEntryForm** + **EntryList** = core product.",
+              task: "Logged in locally.",
+            },
+            {
+              title: "AI \u2014 entry form + list",
+              timing: "Lab",
+              content:
+                "Paste into Cursor:",
+              code: {
+                lang: "text",
+                snippet:
+                  "Add to my capstone Next.js app:\n- components/AddEntryForm.tsx: 'use client', controlled content textarea, submit inserts into entries with user_id from session.user.id\n- components/EntryList.tsx: fetch entries for current user (RLS filters), loading/error/empty states, map to list\n- app/page.tsx or app/dashboard/page.tsx: show both when session exists; redirect to /login if not\n- Empty state: 'No entries yet \u2014 add your first'\n- On successful insert, refresh list",
+              },
+              task: "Add one entry locally; list shows it.",
+            },
+            {
+              title: "Empty + error states",
+              content:
+                "Ask AI to polish: loading text, error banner if RLS denies, friendly empty message.",
+              task: "All three states demo-able.",
+            },
+            {
+              title: "Two-user isolation test",
+              content:
+                "Sign out. Create **second** test account. Add different entries. Each user sees only their list.\n\nIf user A sees user B data, RLS is wrong \u2014 paste policy error to AI.",
+              task: "Isolation confirmed.",
+            },
+            {
+              title: "Deploy to Vercel",
+              content:
+                "Push to GitHub. Vercel: **Next.js** preset. Set env vars:\n\n- `NEXT_PUBLIC_SUPABASE_URL`\n- `NEXT_PUBLIC_SUPABASE_ANON_KEY`\n- `GEMINI_API_KEY` (if using AI)\n\nSupabase Auth: add production URL to redirect allow list.",
+              links: [{ label: "Vercel \u2014 Next.js", href: "https://vercel.com/docs/frameworks/nextjs" }],
+              task: "Production URL loads.",
+            },
+            {
+              title: "Production smoke test",
+              content:
+                "Incognito: sign up or sign in on **live URL**. Add entry. Refresh. Still works.",
+              task: "Core loop works on phone + production.",
+            },
+            {
+              title: "Deliverable check",
+              timing: "Lab",
+              content:
+                "Post in thread:\n\n- [ ] Production URL\n- [ ] Test account email/password for mentor (not your personal password)\n- [ ] One sentence what you track",
+              task: "Base tier on production.",
+            },
+          ],
           challenges: {
             base: {
-              title: "Charter + slice",
-              desc: "README + working path.",
+              title: "Deployed personal loop",
+              desc: "Sign in, add, list, refresh on Vercel.",
               steps: [
-                "Pitch written",
-                "Slice merged",
-                "Next milestones listed",
+                "HTTPS URL works",
+                "Add entry as user A",
+                "Only A rows visible",
+                "Refresh persists session + data",
               ],
             },
             medium: {
-              title: "Second story",
-              desc: "Add adjacent feature behind flag.",
+              title: "Edit or delete",
+              desc: "Manage own entries + header name.",
               steps: [
-                "Feature branch",
-                "Document flag in README",
-                "Merged or PR open",
+                "Edit or delete own row",
+                "Header shows profile name",
+                "Still isolated per user",
               ],
             },
             hard: {
-              title: "Automated check",
-              desc: "GitHub Action running npm test or python -m py_compile on push.",
+              title: "Gemini in the loop",
+              desc: "AI suggests or improves before save.",
               steps: [
-                "Workflow file committed",
-                "Green check on PR",
-                "Badge in README",
+                "Gemini integrated into save flow",
+                "Signed-in only",
+                "Works on deploy",
               ],
             },
-            bonus: "Sketch database schema diagram in Excalidraw and link PNG.",
+            bonus: "Password reset flow or profile edit page.",
           },
         },
       },
@@ -2397,88 +2856,184 @@ END`,
       {
         num: 8,
         mon: {
-          title: "Final project polish + README",
+          title: "Polish + README",
           date: "Jun 29",
-          desc: "Workshop 1: documentation that sells your work\u2014README sections, screenshots, architecture diagram, setup steps, and a honest limitations list.",
-          preview: "Make it easy for a stranger on GitHub to run or view your project in under five minutes.",
-          steps: [
+          hideClassSlides: true,
+          lessonDesc:
+            "**Lesson** = polish checklist + demo script. **Lab** = README, screenshots, portfolio card, timed practice.",
+          desc: "Polish empty/error/mobile states, write README strangers can follow, add capstone to portfolio, rehearse 2-minute demo.",
+          goal:
+            "README a stranger can follow; portfolio links capstone; 2-minute demo script rehearsed.",
+          preview:
+            "Lesson: polish + demo script \u00b7 Lab: README + portfolio card \u00b7 Challenge: peer review.",
+          labDurationLabel: "50 min",
+          mainPoints: [
+            "**Empty / loading / error** \u2014 every screen state intentional",
+            "**Mobile** \u2014 no horizontal scroll; readable tap targets",
+            "**README** \u2014 demo link, env vars, setup steps, screenshots",
+            "**Demo account** \u2014 test user for live Demo Day",
+            "**Portfolio** \u2014 new `data/projects.ts` entry (copy Week 5 pattern)",
+          ],
+          lessonSteps: [
             {
-              title: "README template",
-              content: "Title, description, demo link, stack, setup, scripts, env vars, roadmap, credits.",
-              task: "Fill every section—even if some say “not implemented”.",
+              title: "Polish checklist",
+              content:
+                "Walk your production URL on **phone width**:\n\n- [ ] Sign up / sign in / sign out clear\n- [ ] Empty list message friendly\n- [ ] Loading text while fetching\n- [ ] Error banner if network or RLS fails\n- [ ] No horizontal scroll\n- [ ] Buttons big enough to tap",
             },
             {
-              title: "Screenshots and GIFs",
-              content: "Capture key flows; store in /docs/images.",
-              task: "Add at least two images to README.",
+              title: "Demo script template (~45s)",
+              content:
+                "1. **Problem** (one plain sentence)\n2. **Sign in** (demo account)\n3. **Add** one tracked item\n4. **Show** personal list\n5. **Stack** (one sentence): Next.js, Supabase Auth, optional Gemini\n\nPractice without opening your editor \u2014 show the **live app** only.",
             },
             {
-              title: "Code cleanup",
-              content: "Remove dead files, format consistently, ensure .gitignore correct.",
-              task: "Run your host’s build locally if applicable.",
+              title: "Demo account",
+              content:
+                "Create `demo@yourapp.test` or similar **test user** for Demo Day so you do not type your personal password on screen.\n\nNote credentials in README for mentors only (or share privately).",
             },
             {
-              title: "Practice talk",
-              content: "Two-minute spoken run-through with timer; note rough transitions.",
-              task: "Record audio privately if helpful; delete after.",
+              title: "Backup recording",
+              content:
+                "Record 60s screen capture of core loop. Upload to Drive or GitHub release if Wi\u2011Fi might fail Wednesday.",
             },
             {
-              title: "Checklist handoff",
-              content: "Verify demo URL, test on incognito, prep fallback video if live demo risky.",
-              task: "Paste final checklist into README Demo section.",
+              title: "README sections",
+              content:
+                "Title \u00b7 Problem \u00b7 Live demo link \u00b7 Stack \u00b7 Setup (`npm install`, `npm run dev`) \u00b7 Env var table \u00b7 Screenshots \u00b7 Limitations \u00b7 What I would add next",
+              task: "Open **Lab** to fill README and portfolio.",
             },
           ],
-          homework: {
-            title: "Polish pass",
-            desc: "Optional peer review swap.",
-            tasks: [
-              "Peer reviews one classmate README",
-              "Implement or ticket one feedback item",
-              "Optional: add CONTRIBUTING.md stub",
-            ],
+          steps: [
+            {
+              title: "Quick review \u2014 Thursday slice",
+              timing: "Lab",
+              outlineColor: "val",
+              content:
+                "Production URL should run sign in \u2192 add \u2192 list. Today is **polish and story**, not new features.",
+              task: "Open production URL in incognito.",
+            },
+            {
+              title: "AI polish pass",
+              content:
+                "Paste into Cursor:",
+              code: {
+                lang: "text",
+                snippet:
+                  "Polish my capstone Next.js app for mobile and UX:\n- Improve empty state copy on EntryList\n- Add clear error message if Supabase fetch fails\n- Ensure forms and buttons work on narrow screens (no horizontal scroll)\n- Do not change auth or RLS logic",
+              },
+              task: "Phone-width check passes.",
+            },
+            {
+              title: "README fill-in",
+              content:
+                "Complete every README section. Include **env var table**:\n\n| Variable | Where |\n|----------|-------|\n| `NEXT_PUBLIC_SUPABASE_URL` | Supabase API settings |\n| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase API settings |\n| `GEMINI_API_KEY` | Google AI Studio (server only) |",
+              task: "Stranger could clone and know which keys they need.",
+            },
+            {
+              title: "Screenshots",
+              content:
+                "Capture sign-in screen + dashboard with list. Add to README (`/docs` folder or inline).",
+              task: "At least two images in README.",
+            },
+            {
+              title: "Portfolio card",
+              content:
+                "In **portfolio repo only**, edit `data/projects.ts` \u2014 add capstone entry:\n\n- `title`, `description`\n- `liveUrl` (Vercel capstone)\n- `repoUrl` (GitHub)\n\nCopy pattern from existing cards. Week 5 React app stays its own card.",
+              links: [
+                {
+                  label: "Portfolio template (GitHub)",
+                  href: "https://github.com/utahmoldovapartnership/porfolio-template",
+                },
+              ],
+              task: "Portfolio hub opens live capstone from new card.",
+            },
+            {
+              title: "Incognito production test",
+              content: "Full loop on production in incognito. Fix blockers with AI.",
+              task: "No red error overlay on demo path.",
+            },
+            {
+              title: "Timed practice talk",
+              content: "2-minute timer. Problem \u2192 sign in \u2192 add \u2192 list. Note one rough transition to smooth Wednesday.",
+              task: "One practice run complete.",
+            },
+            {
+              title: "Deliverable check",
+              timing: "Lab",
+              content:
+                "Done when:\n\n- [ ] Portfolio card links live capstone\n- [ ] README has demo URL + env table + screenshots\n- [ ] Demo script written in README or notes\n- [ ] Backup recording optional but recommended",
+              task: "Post portfolio URL in thread.",
+            },
+          ],
+          challengeTab: {
+            title: "Peer README review",
+            content: "Swap with a classmate. Read their README cold.",
+            task: "Give one clarity fix; implement or ticket one fix they gave you.",
           },
         },
         wed: {
           title: "Demo Day \ud83c\udf89",
           date: "Jul 1",
-          desc: "Celebrate shipped work. Short live demos, what broke, what you learned, applause. No new technical curriculum\u2014focus on communication and pride.",
-          preview: "Arrive with URL ready, slides optional, gratitude mandatory.",
-          steps: [
+          lessonDesc:
+            "No new code. **Lesson** = format + backup plan. Show up with URL and story.",
+          desc: "Celebrate shipped work. ~3 minute live demos: problem, sign in, core loop, applause.",
+          goal: "Deliver ~3 minute demo of your capstone; celebrate the class.",
+          preview: "Live demo \u00b7 backup video \u00b7 portfolio link \u00b7 reflection.",
+          mainPoints: [
+            "**Show the app**, not your editor",
+            "**Problem \u2192 sign in \u2192 core loop** in plain language",
+            "**Backup** \u2014 60s screen recording if Wi\u2011Fi fails",
+            "**Portfolio** updated with capstone card",
+            "**Thank someone** whose project inspired you",
+          ],
+          lessonSteps: [
             {
               title: "Demo format",
-              content: "~3 minutes live or recorded: show the app, not your editor settings. One sentence problem, one sentence tech, then hands-on.",
-              task: "Draft your intro on an index card.",
+              content:
+                "~**3 minutes** live:\n\n1. Intro card \u2014 problem in one sentence anyone understands\n2. Open **production URL** (not localhost)\n3. Sign in with demo account\n4. Add one item; show **your** list\n5. One sentence on stack (Next.js + Supabase + optional AI)\n\nNo scrolling through code. Hands on the product.",
+              task: "Draft intro on a note card or phone.",
             },
             {
               title: "Backup plan",
-              content: "Screen recording 60s, screenshots PDF, or phone hotspot if Wi-Fi wobbles.",
-              task: "Upload backup to Drive or repo release asset.",
+              content:
+                "If Wi\u2011Fi fails: 60s screen recording, screenshot PDF, or phone hotspot.\n\nUpload backup before you present if nervous.",
             },
             {
-              title: "Audience",
-              content: "Speak to friends and family in the room—avoid pure jargon without one plain sentence.",
-              task: "Practice naming one thing you would ship next week.",
+              title: "Audience tip",
+              content:
+                "Friends and family are in the room. After one technical word, add a **plain sentence** (\u201cThis saves your data in a database so refresh does not erase it\u201d).",
             },
             {
               title: "Celebrate others",
-              content: "Take notes on two classmates’ ideas you want to try later.",
-              task: "Write a short congratulation message in the class chat for someone whose project you liked.",
+              content:
+                "During demos, note **two** classmates\u2019 ideas you want to try later. Send one congratulation message in class chat.",
             },
             {
-              title: "Afterwards",
-              content: "Update README with Demo Day tag, pin repo, share on social if comfortable.",
-              task: "Optional: add your final project card to your Week 4 portfolio repo (live + repo links).",
+              title: "After Demo Day",
+              content:
+                "Pin capstone repo on GitHub. Confirm portfolio card works. Optional: share on social.\n\nLight **Lab** steps below if you want a dry run before the room.",
             },
           ],
-          homework: {
-            title: "No heavy homework",
-            desc: "Rest and reflect.",
-            tasks: [
-              "Send mentor one paragraph reflection",
-              "Star the class org template repo if applicable",
-              "Optional: plan your next learning resource for August",
-            ],
-          },
+          steps: [
+            {
+              title: "Dry run (optional)",
+              timing: "Lab",
+              outlineColor: "val",
+              content:
+                "Incognito \u2192 production URL \u2192 demo account \u2192 full loop once.",
+              task: "Dry run under 3 minutes.",
+            },
+            {
+              title: "Backup upload (optional)",
+              content: "Screen recording to Drive or GitHub release asset.",
+              task: "Backup link saved.",
+            },
+            {
+              title: "Share links (optional)",
+              content:
+                "Post portfolio URL + capstone URL in class thread so mentors can revisit.",
+              task: "Links posted.",
+            },
+          ],
         },
       },
     ],
