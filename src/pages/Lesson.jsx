@@ -646,7 +646,7 @@ export default function Lesson() {
         <div className="layout-shell max-w-6xl min-h-0 min-w-0 flex-1">
           <LessonHero
             dayMeta={dayHero}
-            date={formatSessionDateLine(session.date)}
+            date={formatSessionDateLine(weekNum, dayKey)}
             sessionLabel={sessionCodeLabel(weekNum, dayKey)}
             title={session.title}
             breadcrumb={

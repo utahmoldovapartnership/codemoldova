@@ -1,16 +1,34 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getSessionByWeekAndDay, getWeekLabel, phases } from '../data/curriculum'
+import { getWeekLabel, phases } from '../data/curriculum'
 import { sessions } from '../data/schedule'
 import LazyInView from '../components/LazyInView.jsx'
 import PixelIcon from '../components/PixelIcon.jsx'
 import ScrollReveal from '../components/ScrollReveal.jsx'
-import { sessionTimeLabel } from '../data/site.js'
-import { formatShortSessionWhen, formatWeekRangeString } from '../lib/formatWeekDateRange.js'
+import { sessionDaysLabel, sessionDurationLabel } from '../data/site.js'
+
+const START_WEEK = 1
+
+const PHASE_SWATCHES = ['#DD8CF1', '#F69C40', '#EF453F', '#097251']
+
+function phaseUsesLightText(swatch) {
+  return swatch === '#EF453F' || swatch === '#097251'
+}
+const PHASE_HOVER_CLASSES = [
+  'rm-week-row-btn--ube',
+  'rm-week-row-btn--sun',
+  'rm-week-row-btn--val',
+  'rm-week-row-btn--dart',
+]
+const PHASE_DESCRIPTIONS = [
+  'Start from zero: Cursor, Python basics, data structures, APIs, and small scripts you can run yourself.',
+  'Move onto the web: HTML, CSS, design basics, React, GitHub, and shipping a simple site or app.',
+  'Connect apps to real data with Supabase, then add save/load flows and a safe AI feature.',
+  'Choose a capstone, polish it, write a README, add it to your portfolio, and present on Demo Day.',
+]
 
 const DAY_META = {
   mon: {
-    label: 'Monday',
     short: 'Mon',
     type: 'Workshop 1',
     swatch: '#DD8CF1',
@@ -32,13 +50,6 @@ const DAY_META = {
   },
 }
 
-function parseISO(iso) {
-  if (!iso) return null
-  const [y, m, d] = iso.split('-').map(Number)
-  if (!Number.isFinite(y)) return null
-  return new Date(y, m - 1, d)
-}
-
 function getSessionsForWeek(weekNum) {
   return ['mon', 'wed', 'thu'].reduce((acc, day) => {
     const s = sessions.find((x) => x.week === weekNum && x.day === day)
@@ -47,137 +58,84 @@ function getSessionsForWeek(weekNum) {
   }, {})
 }
 
-function getCourseStatus() {
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  const sortedDates = sessions.map((s) => parseISO(s.date)).filter(Boolean).sort((a, b) => a - b)
-  if (!sortedDates.length) return { status: 'upcoming', currentWeek: 1 }
-  const first = sortedDates[0]
-  const last = sortedDates[sortedDates.length - 1]
-  if (today < first) return { status: 'upcoming', currentWeek: 1 }
-  if (today > last) return { status: 'complete', currentWeek: 8 }
-  const upcoming = sessions
-    .map((s) => ({ ...s, parsed: parseISO(s.date) }))
-    .filter((s) => s.parsed && s.parsed >= today)
-    .sort((a, b) => a.parsed - b.parsed)
-  return { status: 'live', currentWeek: upcoming[0]?.week ?? 1 }
+function getFirstWeekNum(phaseIdx) {
+  return phases[phaseIdx]?.weeks[0]?.num ?? null
 }
 
-function DayCardLarge({ week, day, session }) {
-  const meta = DAY_META[day]
-  if (!session) return null
-  const curriculum = getSessionByWeekAndDay(week, day)
-  const daySummary =
-    curriculum?.preview?.trim() ||
-    curriculum?.desc?.trim() ||
-    'Open the lesson for what we cover today.'
+function PhaseCard({ phaseIdx, title, swatch, description, onSelect }) {
+  const phaseNum = String(phaseIdx + 1).padStart(2, '0')
+  const isDark = phaseUsesLightText(swatch)
   return (
-    <Link
-      to={`/lesson/${week}/${day}`}
-      className="group relative flex h-full min-h-[420px] flex-col justify-between overflow-hidden p-6 text-ink transition-transform duration-300 hover:-translate-y-1 sm:min-h-[460px] sm:p-7"
-      style={{ backgroundColor: meta.swatch }}
+    <button
+      type="button"
+      onClick={() => onSelect(phaseIdx)}
+      className={`group relative flex h-full min-h-[360px] min-w-0 w-full flex-col justify-between overflow-hidden p-6 text-left transition-transform duration-300 hover:-translate-y-1 sm:min-h-[400px] sm:p-7 ${
+        isDark ? 'text-paper' : 'text-ink'
+      }`}
+      style={{ backgroundColor: swatch }}
     >
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] text-ink">
-            <PixelIcon icon={meta.icon} size={12} className="text-ink" />
-            <span>
-              {meta.short} · {meta.type}
-            </span>
-          </p>
-          <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-ink">{formatShortSessionWhen(session.date)}</p>
-        </div>
-        <PixelIcon icon="arrow" size={16} className="text-ink/50 transition-opacity group-hover:text-ink" />
-      </div>
-      <div>
-        <h3 className="font-serif text-3xl font-medium leading-[1.05] tracking-tight sm:text-4xl">{session.label}</h3>
-        <p className="mt-4 max-w-[34ch] text-sm leading-relaxed text-ink/75">{daySummary}</p>
-        <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.3em] text-ink/60 opacity-0 transition-opacity group-hover:opacity-100">
-          Go to lesson →
+      <div className="min-w-0 flex-1">
+        <p className="font-mono text-[11px] uppercase tracking-[0.3em]">Phase {phaseNum}</p>
+        <h2 className="mt-5 break-words font-serif text-[clamp(1.55rem,3vw,2rem)] font-medium leading-[1.05] tracking-tight">
+          {title}
+        </h2>
+        <p className={`mt-5 text-sm leading-relaxed ${isDark ? 'text-paper/80' : 'text-ink/75'}`}>
+          {description}
         </p>
       </div>
-    </Link>
+      <div className="mt-8 flex shrink-0 items-center justify-between gap-4">
+        <span className={`font-mono text-[10px] uppercase tracking-[0.3em] ${isDark ? 'text-paper/65' : 'text-ink/55'}`}>
+          View phase
+        </span>
+        <PixelIcon
+          icon="arrow"
+          size={14}
+          className={`shrink-0 transition-opacity group-hover:opacity-100 ${isDark ? 'text-paper/65 group-hover:text-paper' : 'text-ink/50 group-hover:text-ink'}`}
+        />
+      </div>
+    </button>
   )
 }
 
-function ThisWeekHero({ status, currentWeek }) {
-  const weekSessions = useMemo(() => getSessionsForWeek(currentWeek), [currentWeek])
-  const heroRangeStr = useMemo(() => formatWeekRangeString(weekSessions, { includeTime: true }), [weekSessions])
-
-  const eyebrow = {
-    upcoming: "Let's get started!",
-    live: `This week — Week ${String(currentWeek).padStart(2, '0')}`,
-    complete: 'Course complete',
-  }[status]
-
-  const headline = {
-    upcoming: (
-      <span className="sm:whitespace-nowrap">
-        <span className="block sm:inline">The first week. </span>
-        <em className="block font-normal italic sm:inline hm-val">May 11.</em>
-      </span>
-    ),
-    live: (
-      <>
-        What you&apos;re doing <em className="hm-val italic">this week.</em>
-      </>
-    ),
-    complete: (
-      <>
-        Demo Day shipped. <em className="hm-val italic">CodeMoldova 2026.</em>
-      </>
-    ),
-  }[status]
-
+function PhasesOverview({ onPhaseSelect }) {
   return (
     <section className="border-b border-hairline">
-      <ScrollReveal className="border-b border-hairline py-12 sm:py-16" rootMargin="0px 0px 10% 0px">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
-          <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">{eyebrow}</p>
-            <h1 className="mt-3 font-serif text-[clamp(2.25rem,6vw,4.5rem)] font-medium leading-[1] tracking-tight text-ink">{headline}</h1>
-          </div>
-          {heroRangeStr ? (
-            <p className="w-full whitespace-nowrap text-right font-mono text-[11px] uppercase tracking-[0.25em] text-ink/60 sm:min-w-0 sm:overflow-x-auto">
-              {heroRangeStr}
-            </p>
-          ) : (
-            <p className="w-full text-right font-mono text-[11px] uppercase tracking-[0.25em] text-ink/60">Schedule TBA</p>
-          )}
-        </div>
+      <ScrollReveal className="py-12 sm:py-16" rootMargin="0px 0px 10% 0px">
+        <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">Course path</p>
+        <h1 className="mt-3 max-w-4xl font-serif text-[clamp(2.25rem,6vw,4.5rem)] font-medium leading-[1] tracking-tight text-ink">
+          <span className="block">Four sections,</span>
+          <em className="hm-val block font-normal italic">one buildable path.</em>
+        </h1>
       </ScrollReveal>
-
-      {status === 'complete' ? (
-        <ScrollReveal className="py-16 sm:py-20" delayMs={80} rootMargin="0px 0px 10% 0px">
-          <p className="max-w-2xl text-lg leading-relaxed text-ink/80">
-            The 2026 course wrapped on July 1. Browse the full course below, or check out what students built on Demo Day.
-          </p>
-        </ScrollReveal>
-      ) : (
-        <div className="grid grid-cols-1 gap-4 py-10 sm:grid-cols-3 sm:gap-5 sm:py-14">
-          {['mon', 'wed', 'thu'].map((day, i) => (
-            <ScrollReveal
-              key={day}
-              className="h-full min-h-0"
-              delayMs={100 + i * 130}
-              hiddenTranslate="translate-y-6"
-              rootMargin="0px 0px 15% 0px"
-            >
-              <DayCardLarge week={currentWeek} day={day} session={weekSessions[day]} />
-            </ScrollReveal>
-          ))}
-        </div>
-      )}
+      <div className="grid grid-cols-1 items-stretch gap-4 pb-10 sm:grid-cols-2 sm:gap-5 sm:pb-14 lg:grid-cols-4">
+        {phases.map((phase, i) => (
+          <ScrollReveal
+            key={phase.id ?? i}
+            className="flex h-full min-h-0"
+            delayMs={80 + i * 90}
+            hiddenTranslate="translate-y-6"
+            rootMargin="0px 0px 15% 0px"
+          >
+            <PhaseCard
+              phaseIdx={i}
+              title={phase.title}
+              swatch={PHASE_SWATCHES[i]}
+              description={PHASE_DESCRIPTIONS[i]}
+              onSelect={onPhaseSelect}
+            />
+          </ScrollReveal>
+        ))}
+      </div>
     </section>
   )
 }
 
-function WeekRow({ weekNum, isCurrent, isOpen, onToggle, revealDelay = 0 }) {
+function WeekRow({ weekNum, isOpen, onToggle, revealDelay = 0, phaseHoverClass }) {
   const weekSessions = getSessionsForWeek(weekNum)
   const weekTitle = getWeekLabel(weekNum)
 
   return (
-    <li className={`border-b border-hairline ${isCurrent ? 'bg-val/[0.04]' : ''}`}>
+    <li className="border-b border-hairline">
       <ScrollReveal
         className="block"
         delayMs={revealDelay}
@@ -188,9 +146,8 @@ function WeekRow({ weekNum, isCurrent, isOpen, onToggle, revealDelay = 0 }) {
           type="button"
           onClick={onToggle}
           aria-expanded={isOpen}
-          aria-current={isCurrent ? 'true' : undefined}
           title={isOpen ? 'Click to collapse this week' : 'Click to expand this week'}
-          className="rm-week-row-btn group relative flex w-full max-w-full cursor-pointer items-center gap-3 px-0 py-7 text-left transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dart/30 focus-visible:ring-offset-2 focus-visible:ring-offset-paper sm:gap-4 sm:py-9 md:gap-8"
+          className={`rm-week-row-btn ${phaseHoverClass} group relative flex w-full max-w-full cursor-pointer items-center gap-3 px-0 py-7 text-left transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-dart/30 focus-visible:ring-offset-2 focus-visible:ring-offset-paper sm:gap-4 sm:py-9 md:gap-8`}
         >
           <span className="shrink-0 font-serif text-5xl font-medium leading-none tracking-tight tabular-nums sm:leading-none sm:text-7xl">
             {String(weekNum).padStart(2, '0')}
@@ -202,7 +159,7 @@ function WeekRow({ weekNum, isCurrent, isOpen, onToggle, revealDelay = 0 }) {
             <PixelIcon
               icon="arrow"
               size={12}
-              className={`shrink-0 text-current transition-transform duration-200 ease-out ${isOpen ? 'rotate-90' : 'rotate-0 group-hover:rotate-90'}`}
+              className={`shrink-0 text-current transition-transform duration-200 ease-out ${isOpen ? 'rotate-90' : 'rotate-0'}`}
             />
           </span>
         </button>
@@ -225,10 +182,9 @@ function WeekRow({ weekNum, isCurrent, isOpen, onToggle, revealDelay = 0 }) {
                     <p className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.25em] text-ink">
                       <span aria-hidden className="inline-block h-2 w-2" style={{ backgroundColor: meta.swatch }} />
                       <span>
-                        {meta.label} · {meta.type}
+                        {meta.short} · {meta.type}
                       </span>
                     </p>
-                    <p className="mt-1 font-mono text-[11px] uppercase tracking-[0.2em] text-ink">{formatShortSessionWhen(s.date)}</p>
                     <h4 className="mt-4 font-serif text-xl font-medium leading-tight tracking-tight">{s.label}</h4>
                   </div>
                   <p className="mt-6 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-ink/50 transition-colors group-hover:text-ink/80">
@@ -245,15 +201,7 @@ function WeekRow({ weekNum, isCurrent, isOpen, onToggle, revealDelay = 0 }) {
   )
 }
 
-function FullCourse({ currentWeek }) {
-  const [openWeeks, setOpenWeeks] = useState(() => new Set(currentWeek != null ? [currentWeek] : []))
-  const toggle = (n) =>
-    setOpenWeeks((prev) => {
-      const next = new Set(prev)
-      next.has(n) ? next.delete(n) : next.add(n)
-      return next
-    })
-
+function FullCourse({ openWeeks, onToggleWeek }) {
   return (
     <section id="full-course" className="border-b border-hairline py-20 lg:py-28">
       <ScrollReveal className="mb-10 flex items-end justify-between gap-6 border-b border-hairline pb-8">
@@ -261,21 +209,36 @@ function FullCourse({ currentWeek }) {
           <h2 className="font-serif text-5xl font-medium tracking-tight text-ink sm:text-6xl">Full course</h2>
         </div>
         <p className="hidden font-mono text-xs uppercase tracking-[0.25em] text-ink/60 sm:block">
-          May 11 — Jul 01 · {sessionTimeLabel}
+          8 weeks · {sessionDaysLabel} · {sessionDurationLabel}
         </p>
       </ScrollReveal>
 
       {phases.map((phase, phaseIdx) => {
         const weeksBefore = phases.slice(0, phaseIdx).reduce((n, p) => n + p.weeks.length, 0)
+        const swatch = PHASE_SWATCHES[phaseIdx]
+        const isDark = phaseUsesLightText(swatch)
         return (
-        <div key={phase.id ?? phaseIdx} className="mt-14 first:mt-0">
+        <div key={phase.id ?? phaseIdx} id={`phase-${String(phaseIdx + 1).padStart(2, '0')}`} className="scroll-mt-28 mt-14 first:mt-0">
           <ScrollReveal
-            className="mb-3 flex flex-wrap items-baseline gap-x-4 gap-y-1 border-t border-hairline pt-6"
+            className="mb-3"
             delayMs={phaseIdx * 70}
             hiddenTranslate="translate-y-5"
           >
-            <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/60">Phase {String(phaseIdx + 1).padStart(2, '0')}</span>
-            <h3 className="font-serif text-3xl font-medium tracking-tight text-ink sm:text-4xl">{phase.title}</h3>
+            <div
+              className={`flex flex-wrap items-baseline gap-x-4 gap-y-1 px-5 py-5 sm:px-6 sm:py-6 ${
+                isDark ? 'text-paper' : 'text-ink'
+              }`}
+              style={{ backgroundColor: swatch }}
+            >
+              <span
+                className={`font-mono text-[11px] uppercase tracking-[0.3em] ${
+                  isDark ? 'text-paper/80' : 'text-ink/80'
+                }`}
+              >
+                Phase {String(phaseIdx + 1).padStart(2, '0')}
+              </span>
+              <h3 className="font-serif text-3xl font-medium tracking-tight sm:text-4xl">{phase.title}</h3>
+            </div>
           </ScrollReveal>
 
           <ul className="border-t border-hairline">
@@ -285,10 +248,10 @@ function FullCourse({ currentWeek }) {
                 <WeekRow
                   key={week.num}
                   weekNum={week.num}
-                  isCurrent={week.num === currentWeek}
                   isOpen={openWeeks.has(week.num)}
-                  onToggle={() => toggle(week.num)}
+                  onToggle={() => onToggleWeek(week.num)}
                   revealDelay={revealDelay}
+                  phaseHoverClass={PHASE_HOVER_CLASSES[phaseIdx]}
                 />
               )
             })}
@@ -301,13 +264,41 @@ function FullCourse({ currentWeek }) {
 }
 
 export default function Course() {
-  const { status, currentWeek } = getCourseStatus()
+  const [openWeeks, setOpenWeeks] = useState(() => new Set([START_WEEK]))
+  const [showFullCourse, setShowFullCourse] = useState(false)
+  const [scrollToPhase, setScrollToPhase] = useState(null)
+
+  const toggleWeek = (weekNum) =>
+    setOpenWeeks((prev) => {
+      const next = new Set(prev)
+      next.has(weekNum) ? next.delete(weekNum) : next.add(weekNum)
+      return next
+    })
+
+  const openPhase = (phaseIdx) => {
+    const weekNum = getFirstWeekNum(phaseIdx)
+    if (weekNum != null) {
+      setOpenWeeks((prev) => new Set([...prev, weekNum]))
+    }
+    setShowFullCourse(true)
+    setScrollToPhase(phaseIdx)
+  }
+
+  useEffect(() => {
+    if (scrollToPhase == null) return
+    const phaseId = `phase-${String(scrollToPhase + 1).padStart(2, '0')}`
+    requestAnimationFrame(() => {
+      document.getElementById(phaseId)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      setScrollToPhase(null)
+    })
+  }, [scrollToPhase, showFullCourse, openWeeks])
+
   return (
     <div className="hm-page min-h-full flex-1 font-body antialiased">
       <div className="layout-shell max-w-6xl">
-        <ThisWeekHero status={status} currentWeek={currentWeek} />
-        <LazyInView placeholderClassName="min-h-[36rem] lg:min-h-[42rem]">
-          <FullCourse currentWeek={status === 'live' ? currentWeek : null} />
+        <PhasesOverview onPhaseSelect={openPhase} />
+        <LazyInView forceShow={showFullCourse} placeholderClassName="min-h-[36rem] lg:min-h-[42rem]">
+          <FullCourse openWeeks={openWeeks} onToggleWeek={toggleWeek} />
         </LazyInView>
       </div>
     </div>

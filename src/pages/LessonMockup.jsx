@@ -19,7 +19,7 @@ import {
 // ─── Sample data (same shape as the production mockup example) ───────────────
 const SAMPLE = {
   dayKey: 'mon',
-  date: 'May 11, 2026',
+  date: 'Week 1 · Monday · 2 PM',
   sessionLabel: 'W1D1',
   title: 'Your first lines of Python',
   goal: 'By the end of today you can run Python on your computer and use variables to hold values.',
@@ -61,7 +61,7 @@ Maria is 19 years old`,
     { tier: '★', title: 'Bonus', desc: 'Make the greeting change based on the time of day.' },
   ],
   homework: {
-    due: 'Before Wednesday May 13',
+    due: 'Before Wednesday (Week 1)',
     tasks: [
       'Install Python 3 if you have not yet (link in resources).',
       "Run print('hello') in your terminal and screenshot the result.",
@@ -157,7 +157,7 @@ export default function LessonMockup() {
   const [dayKey, setDayKey] = useState('mon')
   const meta = DAY_META[dayKey]
   const isThu = dayKey === 'thu'
-  const homework = { title: 'Before Wednesday May 13', tasks: SAMPLE.homework.tasks }
+  const homework = { title: 'Before Wednesday (Week 1)', tasks: SAMPLE.homework.tasks }
 
   return (
     <div className="min-h-dvh bg-paper font-body text-ink antialiased">

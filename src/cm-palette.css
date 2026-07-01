@@ -89,6 +89,26 @@
   color: var(--cm-val) !important;
 }
 
+@keyframes hm-ornament-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-14px);
+  }
+}
+
+.hm-ornament-float {
+  animation: hm-ornament-float 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-ornament-float {
+    animation: none;
+  }
+}
+
 .hm-btn-dart {
   position: relative;
   isolation: isolate;
@@ -147,11 +167,7 @@
   color: var(--cm-val) !important;
 }
 
-.hm-week-row:hover {
-  background-color: var(--cm-row-hover) !important;
-}
-
-/** Resources (and other paper surfaces): neutral row hover, same as week rows. */
+/** Resources (and other paper surfaces): neutral row hover. */
 .cm-paper-hover:hover {
   background-color: var(--cm-row-hover) !important;
 }
@@ -373,9 +389,18 @@
   }
 }
 
-/* Course page: week row button hover (same wash as `.hm-week-row` on Home). */
-.rm-week-row-btn:hover {
-  background-color: var(--cm-row-hover) !important;
+/* Course page: week row button hover — light tint per phase (ube / sun / val / dart). */
+.rm-week-row-btn--ube:hover {
+  background-color: rgb(221 140 241 / 0.08) !important;
+}
+.rm-week-row-btn--sun:hover {
+  background-color: rgb(246 156 64 / 0.08) !important;
+}
+.rm-week-row-btn--val:hover {
+  background-color: rgb(239 69 63 / 0.08) !important;
+}
+.rm-week-row-btn--dart:hover {
+  background-color: rgb(9 114 81 / 0.1) !important;
 }
 
 /* ─── Resources page — explicit palette (same `!important` + tokens as other marketing).      */

@@ -8,7 +8,7 @@ export const whatsappInviteUrl =
 /** In-person session schedule (Chișinău local time). */
 export const sessionTimeLabel = '2 PM'
 export const sessionDurationLabel = '1 hour'
-export const sessionDaysLabel = 'Mon · Wed · Thu'
+export const sessionDaysLabel = 'Mon·Wed·Thu'
 export const sessionRhythmLabel = `${sessionDaysLabel} · ${sessionTimeLabel}`
 
 /** Course tuition shown on the home page. */

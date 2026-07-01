@@ -11,7 +11,6 @@ export const phases = [
         num: 1,
         mon: {
           title: "Intro & How computers think",
-          date: "May 11",
           desc: "What a program is, Cursor, and a guided Jupyter notebook (.ipynb). The lesson steps match the notebook: keep both open and run code cells from top to bottom in week1_intro.ipynb. The last step is what you aim to finish today.",
           preview: "Install Cursor, open the starter notebook, run cells, then complete the intro card section in the same file.",
           labExampleUrl: "/lesson/week1_intro.ipynb",
@@ -131,7 +130,6 @@ export const phases = [
         },
         wed: {
           title: "Variables, types, and inputs",
-          date: "May 13",
           goal:
             "Today you move from Monday’s print-and-input basics into a fuller picture of Python: you will store values in variables, branch with if/elif/else, use comparison operators in small calculations, repeat work with for and while loops, and wrap logic in a simple function so Thursday’s mini-builds feel reachable.",
           desc: "Workshop 2 follows the Day 2 slides (PDF or deck): review variables and strings, a short math activity, if / elif / else, comparison operators, for and while loops, then functions. The notebook week1_day2.ipynb uses the same order—run cells top to bottom in Cursor with the slides and lesson page open.",
@@ -223,7 +221,6 @@ export const phases = [
         },
         thu: {
           title: "Number guessing game",
-          date: "May 14",
           hideLessonArtifacts: true,
           goal:
             "Ship a playable number guessing game: the computer holds a secret number, the player keeps guessing in a loop, and you print clear too high / too low hints until they win. You must use a variable for the secret, a while loop, if/elif/else for feedback, a function that checks each guess, and input() every round.",
@@ -326,7 +323,6 @@ END`,
         num: 2,
         mon: {
           title: "Data structures",
-          date: "May 18",
           desc: "Follow the slide deck in class, then work through the notebook: built-in containers (lists, tuples, dicts), pandas DataFrames from CSV, a bar chart, and a short challenge. Download the notebook and animal sample CSV into the same folder in Cursor.",
           preview: "Slides + lab: libraries, lists, tuples, dicts, read_csv, filter/sort/group, bar chart, cheatsheet.",
           goal: "Leave class able to import common libraries, shape data with Python’s built-in structures, load a CSV into a DataFrame, and run the adjust-and-summarize operations you will reuse all course.",
@@ -525,7 +521,6 @@ END`,
         },
         wed: {
           title: "APIs & the internet",
-          date: "May 20",
           desc: "Workshop 2: search real movies with a free IMDb API and browse the Studio Ghibli film catalog—no API key. Download the notebook, work top to bottom, then open the Challenge tab to build your movie night planner.",
           preview: "HTTP, JSON, status codes, search movies, loop a film list, compare ratings, save a watchlist.",
           goal: "Leave class able to call a public API, read JSON about movies, loop over lists of results, handle empty or failed responses, and print a readable movie card.",
@@ -674,7 +669,6 @@ END`,
         },
         thu: {
           title: "Gemini chat agent",
-          date: "May 21",
           desc: "Build day: call Google\u2019s Gemini Flash API from Python and ship a tiny terminal chat agent. Wednesday you talked to movie servers with GET; today you send messages to a model with an API key and keep a running conversation. Download the notebook, set up Google AI Studio, then work top to bottom\u2014no homework tab, just the lab and stretch tiers below.",
           preview: "Google AI Studio API key \u00b7 google-genai \u00b7 one-shot reply \u00b7 multi-turn chat loop \u00b7 optional save chat log to data/.",
           goal: "Leave class with a working chat loop using Gemini Flash, your API key stored safely outside Git, and a custom system prompt that shapes how the bot behaves.",
@@ -774,7 +768,6 @@ END`,
         label: "Terminal & scripts",
         mon: {
           title: "Terminal basics",
-          date: "May 25",
           desc: "Workshop 1: learn the terminal — the text interface you will use all week. **Wednesday** you run Python scripts (including a headline scraper). **Thursday** you schedule a hands-free script with cron. Today: navigation, files, and `python3` from the command line in `codemoldova-week3`.",
           preview: "Why terminal · cd/ls/pwd · create codemoldova-week3 · run Python · prep for Wed scripts + Thu daily schedule.",
           goal: "Leave class comfortable in the terminal: pwd, cd, ls/dir, create files, and run `python3` from `~/codemoldova-week3` — ready for Wednesday’s scripts and Thursday’s daily automation.",
@@ -946,7 +939,6 @@ END`,
         },
         wed: {
           title: "Scripting",
-          date: "May 27",
           desc: "Workshop 2: terminal review, scripts, why Python, Input→Process→Output, headline scraper, then build your own script with `input()` — you run it by hand today; Thursday schedules it.",
           preview: "Review → scripts → why Python → 3-step model → install → scraper → build script with input().",
           goal: "Leave class able to explain scripts in one sentence, describe input/process/output, and run a simple Python automation from the terminal.",
@@ -1092,7 +1084,6 @@ END`,
         },
         thu: {
           title: "Daily automation build",
-          date: "May 28",
           desc: "Build day: take Wednesday’s script (or a new idea) and ship a hands-free version — no `input()` — that runs on a daily schedule from the terminal. Mac students use cron; you will test paths, logs, and demo a silent run.",
           preview: "Remove inputs → save daily_script.py → test full path → crontab → check log → stretch if done early.",
           goal: "Ship a script that runs with zero typing, is scheduled once per day, and writes output you can verify in a log file.",
@@ -1234,7 +1225,6 @@ END`,
         num: 4,
         mon: {
           title: "HTML & CSS literacy",
-          date: "Jun 1",
           lessonDesc:
             "Follow the **class slides** and the sections below: where the web started, how it evolved, and how AI changes the way you build. When you are ready to code, switch to the **Lab** tab.",
           desc: "Download the reference files, walk through HTML and CSS, build one topic site with AI, deploy to GitHub + Vercel, and add your first portfolio card.",
@@ -1361,7 +1351,6 @@ END`,
         },
         wed: {
           title: "Design for the AI era",
-          date: "Jun 3",
           desc: "Design is what separates usable AI output from great sites. Compare ugly vs pretty examples, learn prompting and reference hunting (Material, inspiration sites), touch Figma lightly, then ship **v2** of Monday’s site and update your portfolio.",
           preview: "Ugly vs pretty HTML, design tactics for AI, redesign Monday’s site as v2, deploy, add to portfolio.",
           labExampleUrl: "/lesson/week4_design_ugly.html",
@@ -1439,7 +1428,6 @@ END`,
         },
         thu: {
           title: "Second project ship day",
-          date: "Jun 4",
           desc: "Build day: a **new** site in a **new** repo — apply HTML literacy, CSS, and Wednesday’s design tactics from the start. Deploy and add it to your portfolio.",
           preview: "New idea, new repo, design-first build, GitHub + Vercel, portfolio updated.",
           steps: [
@@ -1527,7 +1515,6 @@ END`,
         num: 5,
         mon: {
           title: "React fundamentals",
-          date: "Jun 8",
           hideClassSlides: true,
           lessonDesc:
             "Follow the **Lesson** tab first — what React is, what frameworks are, and why this course uses Next.js in a **separate** project repo. **Lab:** use AI to build Rock Paper Scissors. When you are ready to code, switch to **Lab**.",
@@ -1720,7 +1707,6 @@ END`,
         },
         wed: {
           title: "React state & events",
-          date: "Jun 10",
           hideClassSlides: true,
           lessonDesc:
             "**Lesson** tab explains state, re-rendering, `'use client'`, and events. **Lab:** use AI to build the todo app step by step. **Challenge** stretches with filters or a `TaskItem` component.",
@@ -1914,7 +1900,6 @@ END`,
         },
         thu: {
           title: "React app build day",
-          date: "Jun 11",
           desc: "Build day: pick your own React project in `yourname-react-app` (Wednesday\u2019s todo stays as practice \u2014 today you ship something you choose). Deploy on Vercel and add it as the **next project card** on your portfolio.",
           preview: "Pick a project \u2192 AI build \u2192 deploy \u2192 add to portfolio.",
           goal:
@@ -2033,7 +2018,6 @@ END`,
         num: 6,
         mon: {
           title: "Why apps forget, and how to fix it",
-          date: "Jun 15",
           lessonDesc:
             "Read the **Lesson** tab slowly \u2014 this is the mental model day. Then open **Lab** for Supabase dashboard hands-on only (no React today). Use **Resources** if you want a video recap.",
           desc: "Lesson: why apps forget and what a database is. Lab: create a Supabase project and `notes` table with real rows in the dashboard only.",
@@ -2153,7 +2137,6 @@ END`,
         },
         wed: {
           title: "Read from Supabase in React",
-          date: "Jun 17",
           hideClassSlides: true,
           lessonDesc:
             "**Lesson** first (`useEffect` + Supabase). Then **Lab** in `yourname-react-app`. Stuck? Paste errors into Cursor. **Challenge** if you finish early.",
@@ -2296,7 +2279,6 @@ END`,
         },
         thu: {
           title: "Save and load",
-          date: "Jun 18",
           lessonDesc:
             "**Lesson** = 2-minute goal. **Lab** = build the full round trip. Hit **Base** tier before stretch tiers.",
           desc: "Build day: form inserts into `notes`, list updates, data survives browser refresh. If you leave able to save and reload, the hard part is done.",
@@ -2424,7 +2406,6 @@ END`,
         num: 7,
         mon: {
           title: "Pick & scaffold the final project",
-          date: "Jun 22",
           hideClassSlides: true,
           lessonDesc:
             "**Lesson** = pick what you track + required auth shape. **Lab** = new repo + sign-up working today. Every capstone shares login + personal list; flavor is yours.",
@@ -2591,7 +2572,6 @@ END`,
         },
         wed: {
           title: "The smart feature, done safely",
-          date: "Jun 24",
           hideClassSlides: true,
           lessonDesc:
             "**Lesson** = why API keys cannot live in React. **Lab** = Gemini through `app/api/chat/route.ts`. Reuses Week 2 key \u2014 new hiding place.",
@@ -2733,7 +2713,6 @@ END`,
         },
         thu: {
           title: "Vertical slice",
-          date: "Jun 25",
           lessonDesc:
             "**Lab** is the whole class. Minimum **Base** = sign in \u2192 add entry \u2192 see only yours \u2192 deployed URL.",
           desc: "Build day: authenticated user adds a tracked item and sees their private list on Vercel.",
@@ -2857,7 +2836,6 @@ END`,
         num: 8,
         mon: {
           title: "Polish + README",
-          date: "Jun 29",
           hideClassSlides: true,
           lessonDesc:
             "**Lesson** = polish checklist + demo script. **Lab** = README, screenshots, portfolio card, timed practice.",
@@ -2972,7 +2950,6 @@ END`,
         },
         wed: {
           title: "Demo Day \ud83c\udf89",
-          date: "Jul 1",
           lessonDesc:
             "No new code. **Lesson** = format + backup plan. Show up with URL and story.",
           desc: "Celebrate shipped work. ~3 minute live demos: problem, sign in, core loop, applause.",

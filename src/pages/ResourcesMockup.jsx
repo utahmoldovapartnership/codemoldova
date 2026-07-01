@@ -154,7 +154,7 @@ function StartHere() {
           <h2 className="mt-3 font-serif text-4xl font-medium tracking-tight sm:text-5xl">Start here.</h2>
         </div>
         <p className="max-w-md font-body text-sm text-ink/70 sm:text-base">
-          Install these three things before May 11. Skip everything else on the page until you have these working.
+          Install these three things before your first session. Skip everything else on the page until you have these working.
         </p>
       </div>
 

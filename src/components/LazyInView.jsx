@@ -15,9 +15,14 @@ export default function LazyInView({
   /** Tailwind min-height class for the placeholder (reduces layout jump while off-screen). */
   placeholderClassName = 'min-h-[12rem]',
   rootMargin = '0px 0px 220px 0px',
+  forceShow = false,
 }) {
   const ref = useRef(null)
-  const [show, setShow] = useState(() => prefersReducedMotion())
+  const [show, setShow] = useState(() => prefersReducedMotion() || forceShow)
+
+  useEffect(() => {
+    if (forceShow) setShow(true)
+  }, [forceShow])
 
   useEffect(() => {
     if (show) return

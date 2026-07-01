@@ -1,4 +1,3 @@
-import { Fragment } from 'react'
 import heroAccent from '../assets/home-ornaments/2-1.svg'
 import LazyInView from '../components/LazyInView.jsx'
 import PixelIcon from '../components/PixelIcon.jsx'
@@ -26,17 +25,7 @@ import {
  */
 // ─── Home content (data inline; other pages use src/data/*) ────────────────
 
-const HERO_PILLS = [coursePriceLabel, 'Chișinău 2026', '8 weeks', sessionRhythmLabel, `${sessionDurationLabel} sessions`]
-
-const MARQUEE_ITEMS = [
-  'CODEMOLDOVA',
-  'CHIȘINĂU',
-  sessionTimeLabel,
-  'MAY — JUL 2026',
-  'PYTHON · WEB · DATA',
-  'TAUGHT IN PERSON',
-  'ALL LEVELS WELCOME',
-]
+const HERO_PILLS = [coursePriceLabel, 'Chișinău', '8 weeks', sessionRhythmLabel, `${sessionDurationLabel} sessions`]
 
 const WHO = [
   {
@@ -60,14 +49,14 @@ const WHO = [
 ]
 
 const WEEKS = [
-  { n: '01', phase: 'Python Foundations', title: 'Intro, variables day, number guessing build', range: 'May 11 – May 14' },
-  { n: '02', phase: 'Python Foundations', title: 'Data, APIs, live data', range: 'May 18 – May 21' },
-  { n: '03', phase: 'Python Foundations', title: 'Terminal & scripts', range: 'May 25 – May 28' },
-  { n: '04', phase: 'Web Development', title: 'HTML, CSS, layout & Figma', range: 'Jun 01 – Jun 04' },
-  { n: '05', phase: 'Web Development', title: 'React & Rock Paper Scissors', range: 'Jun 08 – Jun 11' },
-  { n: '06', phase: 'Full-stack apps', title: 'Database, React data, save & load', range: 'Jun 15 – Jun 18' },
-  { n: '07', phase: 'Full-stack apps', title: 'Capstone auth, Gemini route, ship slice', range: 'Jun 22 – Jun 25' },
-  { n: '08', phase: 'Final Project', title: 'Polish, README & Demo Day', range: 'Jun 29 – Jul 01' },
+  { n: '01', phase: 'Python Foundations', title: 'Intro, variables day, number guessing build' },
+  { n: '02', phase: 'Python Foundations', title: 'Data, APIs, live data' },
+  { n: '03', phase: 'Python Foundations', title: 'Terminal & scripts' },
+  { n: '04', phase: 'Web Development', title: 'HTML, CSS, layout & Figma' },
+  { n: '05', phase: 'Web Development', title: 'React & Rock Paper Scissors' },
+  { n: '06', phase: 'Full-stack apps', title: 'Database, React data, save & load' },
+  { n: '07', phase: 'Full-stack apps', title: 'Capstone auth, Gemini route, ship slice' },
+  { n: '08', phase: 'Final Project', title: 'Polish, README & Demo Day' },
 ]
 
 /** Pillar top bar + icon (Bright Ube = Mon bar only; Sunshade = Wed; Valentine = Thu). */
@@ -107,34 +96,6 @@ const VALUES = [
   { title: 'Finish something that runs', body: 'A modest project that compiles and ships teaches more than an ambitious idea stuck in the editor. We help you scope small, reach "it works," then iterate.' },
 ]
 
-function MarqueeSegment({ copyId }) {
-  return (
-    <div className="flex shrink-0 items-center gap-10 pr-10 sm:gap-12 sm:pr-12" aria-hidden={copyId === 'b'}>
-      {MARQUEE_ITEMS.map((t, i) => (
-        <Fragment key={`${copyId}-${t}-${i}`}>
-          {i > 0 ? <PixelIcon icon="heart" size={10} className="hm-marquee-heart" /> : null}
-          <span className="whitespace-nowrap font-mono text-[11px] uppercase tracking-[0.25em]">{t}</span>
-        </Fragment>
-      ))}
-    </div>
-  )
-}
-
-function Marquee() {
-  return (
-    <ScrollReveal rootMargin="0px 0px 32px 0px" threshold={0} hiddenTranslate="translate-y-3">
-      <div className="hm-marquee">
-        <div className="hm-marquee-window">
-          <div className="hm-marquee-track py-3">
-            <MarqueeSegment copyId="a" />
-            <MarqueeSegment copyId="b" />
-          </div>
-        </div>
-      </div>
-    </ScrollReveal>
-  )
-}
-
 function Hero() {
   return (
     <div className="relative text-left">
@@ -146,7 +107,7 @@ function Hero() {
           loading="eager"
           fetchPriority="high"
           decoding="async"
-          className="pointer-events-none absolute right-20 top-10 hidden w-20 select-none opacity-100 md:block xl:right-24 xl:top-80 xl:w-28"
+          className="hm-ornament-float pointer-events-none absolute right-20 top-10 hidden w-20 select-none opacity-100 md:block xl:right-24 xl:top-80 xl:w-28"
         />
       </ScrollReveal>
       <ScrollReveal rootMargin="0px 0px 12% 0px">
@@ -175,7 +136,7 @@ function Hero() {
 
       <ScrollReveal className="mt-12" delayMs={180} rootMargin="0px 0px 12% 0px">
         <p className="max-w-3xl text-lg leading-relaxed text-ink/80">
-          CodeMoldova is an in-person coding course in Chișinău, Moldova! May through July 2026 — {sessionDaysLabel} at {sessionTimeLabel}. Tuition is a {coursePriceNote.toLowerCase()} of {coursePriceAmount}. Learn Python in Cursor (including notebooks), the web stack, GitHub, deployment, and a first look at databases and backends. All experience levels are welcome. Curiosity and desire to learn matter most!
+          CodeMoldova is an in-person coding course in Chișinău, Moldova — eight weeks, {sessionDaysLabel} at {sessionTimeLabel}. Tuition is a {coursePriceNote.toLowerCase()} of {coursePriceAmount}. Learn Python in Cursor (including notebooks), the web stack, GitHub, deployment, and a first look at databases and backends. All experience levels are welcome. Curiosity and desire to learn matter most!
         </p>
       </ScrollReveal>
 
@@ -213,7 +174,7 @@ function About() {
       </ScrollReveal>
       <ScrollReveal className="space-y-6 lg:col-span-7" delayMs={100}>
         <p className="text-lg leading-relaxed text-ink/85">
-          Eight weeks, three sessions a week ({sessionDaysLabel}), one hour each at {sessionTimeLabel}, from May through July — {coursePriceNote.toLowerCase()} of {coursePriceAmount}. Mondays and Wednesdays are both workshop days in Cursor—each session introduces new topics on the syllabus; Thursdays are build days. The path moves from Python foundations into the web, then shipping with Git and a database-backed slice, and closes with a project you choose yourself.
+          Eight weeks, three sessions a week ({sessionDaysLabel}), one hour each at {sessionTimeLabel} — {coursePriceNote.toLowerCase()} of {coursePriceAmount}. Mondays and Wednesdays are both workshop days in Cursor—each session introduces new topics on the syllabus; Thursdays are build days. The path moves from Python foundations into the web, then shipping with Git and a database-backed slice, and closes with a project you choose yourself.
         </p>
         <p className="text-lg leading-relaxed text-ink/85">
           The course is open to anyone motivated enough to join. We deliberately mix people who have never coded with
@@ -309,7 +270,7 @@ function Weeks() {
         <div>
           <h2 className="font-serif text-5xl font-medium tracking-tight text-ink sm:text-6xl">The course</h2>
         </div>
-        <p className="hidden font-mono text-xs uppercase tracking-[0.25em] text-ink/60 sm:block">May 11 — Jul 01</p>
+        <p className="hidden font-mono text-xs uppercase tracking-[0.25em] text-ink/60 sm:block">8 weeks</p>
       </ScrollReveal>
       <ol>
         {WEEKS.map((w, i) => (
@@ -318,7 +279,7 @@ function Weeks() {
               delayMs={40 + i * 55}
               hiddenTranslate="translate-y-4"
               threshold={0.08}
-              className="hm-week-row group grid max-w-full grid-cols-12 grid-rows-3 items-start justify-items-start gap-x-0 gap-y-1 py-7 transition-colors sm:grid-rows-1 sm:items-center sm:gap-y-0 sm:gap-x-8 sm:py-10"
+              className="grid max-w-full grid-cols-12 grid-rows-3 items-start justify-items-start gap-x-0 gap-y-1 py-7 sm:grid-rows-1 sm:items-center sm:gap-y-0 sm:gap-x-8 sm:py-10"
             >
               <span className="col-start-1 row-start-1 row-span-3 self-start font-serif text-5xl font-medium leading-none tracking-tight text-ink sm:col-span-2 sm:row-span-1 sm:leading-none sm:tabular-nums sm:text-7xl">
                 {w.n}
@@ -326,11 +287,8 @@ function Weeks() {
               <span className="col-start-3 col-span-10 row-start-1 min-w-0 font-mono text-[11px] uppercase leading-snug tracking-[0.25em] text-ink/60 sm:col-start-3 sm:col-span-3 sm:row-start-1 sm:leading-none">
                 {w.phase}
               </span>
-              <span className="col-start-3 col-span-10 row-start-2 min-w-0 font-serif text-xl leading-tight tracking-tight sm:col-start-6 sm:col-span-5 sm:row-start-1 sm:text-3xl">
+              <span className="col-start-3 col-span-10 row-start-2 min-w-0 font-serif text-xl leading-tight tracking-tight sm:col-start-6 sm:col-span-6 sm:row-start-1 sm:text-3xl">
                 {w.title}
-              </span>
-              <span className="hm-week-muted col-start-3 col-span-10 row-start-3 min-w-0 overflow-x-auto text-right font-mono text-xs uppercase leading-snug tracking-[0.2em] text-ink/60 sm:col-start-11 sm:col-span-2 sm:row-start-1 sm:w-full sm:justify-self-stretch whitespace-nowrap">
-                {w.range}
               </span>
             </ScrollReveal>
           </li>
@@ -450,9 +408,6 @@ export default function Home() {
   return (
     <div className="hm-page min-h-full flex-1 font-body antialiased">
       <div className="hm-hero-fold flex min-h-0 flex-col">
-        <div className="shrink-0">
-          <Marquee />
-        </div>
         <section
           id="course"
           className="scroll-mt-28 flex min-h-0 flex-1 flex-col"

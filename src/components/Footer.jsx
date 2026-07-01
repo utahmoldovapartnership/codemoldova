@@ -66,8 +66,12 @@ export default function Footer({ homeLight = false }) {
               <PixelIcon icon="terminal" size={14} className={`shrink-0 ${homeLight ? 'cm-logo-term-light' : 'cm-logo-term-dark'}`} />
               <BrandMark variant="footer" homeLight={homeLight} aria-hidden />
             </NavLink>
-            <p className={`mt-3 font-mono text-[11px] uppercase tracking-[0.3em] ${homeLight ? 'text-ink/60' : 'text-muted'}`}>
-              May to July 2026 · {sessionDaysLabel} · {sessionTimeLabel}
+            <p className={`mt-3 font-mono text-[11px] uppercase leading-7 tracking-[0.3em] ${homeLight ? 'text-ink/60' : 'text-muted'}`}>
+              8 weeks
+              <br />
+              {sessionDaysLabel}
+              <br />
+              {sessionTimeLabel}
             </p>
           </div>
 
