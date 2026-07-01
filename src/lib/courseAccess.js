@@ -13,7 +13,7 @@ export const COURSE_ACCESS_MAX_AGE_SEC = 60 * 60 * 24 * 365
  */
 export const COURSE_ACCESS_CODE =
   (typeof import.meta !== 'undefined' && import.meta.env?.VITE_COURSE_ACCESS_CODE) ||
-  'build-ship-moldova-26'
+  'build-ship-moldova'
 
 export function normalizeAccessInput(input) {
   return String(input ?? '')

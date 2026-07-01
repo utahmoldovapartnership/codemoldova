@@ -14,12 +14,12 @@ import {
 
 describe('courseAccess', () => {
   it('normalizes access input (trim, lower case, spaces to hyphens)', () => {
-    assert.equal(normalizeAccessInput('  Build Ship Moldova 26 '), 'build-ship-moldova-26')
+    assert.equal(normalizeAccessInput('  Build Ship Moldova '), 'build-ship-moldova')
   })
 
   it('accepts the configured passphrase', () => {
     assert.equal(isValidAccessCode(COURSE_ACCESS_CODE), true)
-    assert.equal(isValidAccessCode('build ship moldova 26'), true)
+    assert.equal(isValidAccessCode('build ship moldova'), true)
   })
 
   it('rejects wrong passphrases', () => {

@@ -2409,9 +2409,9 @@ END`,
           hideClassSlides: true,
           lessonDesc:
             "**Lesson** = pick what you track + required auth shape. **Lab** = new repo + sign-up working today. Every capstone shares login + personal list; flavor is yours.",
-          desc: "Choose your tracker app, scaffold yourname-capstone-2026, run capstone SQL, and complete sign-up with name, email, password.",
+          desc: "Choose your tracker app, scaffold yourname-capstone, run capstone SQL, and complete sign-up with name, email, password.",
           goal:
-            "Choose your tracker app idea, scaffold `yourname-capstone-2026`, and complete sign-up with name, email, password.",
+            "Choose your tracker app idea, scaffold `yourname-capstone`, and complete sign-up with name, email, password.",
           preview:
             "Lesson: capstone flavors + auth schema \u00b7 Lab: new repo + sign-up \u00b7 Challenge: log out + second user.",
           labDurationLabel: "55 min",
@@ -2484,7 +2484,7 @@ END`,
             {
               title: "Create GitHub repo",
               content:
-                "New empty repo: `yourname-capstone-2026`. Clone, open in Cursor.",
+                "New empty repo: `yourname-capstone`. Clone, open in Cursor.",
               task: "`pwd` ends with capstone repo name.",
               links: [
                 {
